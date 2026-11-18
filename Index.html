@@ -66,7 +66,207 @@
   </style>
 </head>
 <body class="antialiased selection:bg-gold selection:text-navy">
+<!-- ULTRA-LUXURY ELITE CLASSES SPLASH & SITE-WIDE PREMIUM UPGRADE -->
+<div id="elite-luxury-splash" style="
+  position: fixed; inset: 0; z-index: 999999;
+  background: radial-gradient(circle at 50% 25%, rgba(30, 86, 160, 0.45) 0%, transparent 55%),
+              radial-gradient(circle at 50% 85%, rgba(212, 175, 55, 0.22) 0%, transparent 50%),
+              #071120;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 28px; overflow: hidden;
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.9s ease;
+">
+  <!-- Subtle Luxury Grid Overlay -->
+  <div style="
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: linear-gradient(to right, rgba(212,175,55,0.04) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(212,175,55,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  "></div>
 
+  <!-- Animated Dual-Ring Crown Logo -->
+  <div style="position: relative; width: 122px; height: 122px; margin-bottom: 26px; display: flex; align-items: center; justify-content: center;">
+    <div style="
+      position: absolute; inset: -6px; border-radius: 50%;
+      border: 1.5px dashed rgba(212, 175, 55, 0.55);
+      animation: eliteSpinSlow 14s linear infinite;
+    "></div>
+    <div style="
+      position: absolute; inset: 0; border-radius: 50%; padding: 3.5px;
+      background: linear-gradient(135deg, #D4AF37 0%, #FFF3B0 50%, #AA771C 100%);
+      box-shadow: 0 0 45px rgba(212, 175, 55, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.4);
+      animation: elitePulseGlow 2.6s ease-in-out infinite;
+    ">
+      <img src="logo.jpg" alt="ELITE CLASSES" style="
+        width: 100%; height: 100%; object-fit: cover; border-radius: 50%; background: #071120;
+      " />
+    </div>
+  </div>
+
+  <!-- Welcome Pill Badge -->
+  <div style="
+    font-family: 'Poppins', sans-serif; font-size: 10.5px; font-weight: 600;
+    letter-spacing: 3.5px; text-transform: uppercase; color: #F6D86B;
+    background: rgba(212, 175, 55, 0.12); border: 1px solid rgba(212, 175, 55, 0.4);
+    padding: 6px 18px; border-radius: 999px; margin-bottom: 14px;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.15);
+    animation: eliteFadeUp 0.7s ease forwards;
+  ">✦ WELCOME TO THE FUTURE OF LEARNING ✦</div>
+
+  <!-- Shimmering Metallic Brand Title -->
+  <h1 class="elite-shimmer-text" style="
+    font-family: 'Montserrat', sans-serif; font-size: clamp(30px, 7vw, 44px); font-weight: 900;
+    letter-spacing: 3px; margin: 0; line-height: 1.1;
+  ">ELITE CLASSES</h1>
+
+  <!-- Subtitle -->
+  <p style="
+    font-family: 'Poppins', sans-serif; font-size: 13.5px; font-weight: 500;
+    letter-spacing: 1.4px; color: #F1F5F9; margin: 12px 0 6px 0; max-width: 360px;
+  ">An Exclusive Mission For Futuristic Education</p>
+
+  <!-- Founder & Global Tag -->
+  <p style="
+    font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 2px; color: #38BDF8; margin: 0 0 28px 0; text-transform: uppercase;
+  ">By Ravi Yadav • Noida &amp; Worldwide</p>
+
+  <!-- Dynamic Status Text + Progress Bar + Percentage -->
+  <div style="width: 260px; max-width: 85vw;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-family: 'Poppins', sans-serif; font-size: 11px;">
+      <span id="elite-load-status" style="color: #94A3B8; letter-spacing: 0.5px;">Initializing 3D Academic Portal...</span>
+      <span id="elite-load-percent" style="color: #F6D86B; font-weight: 700;">0%</span>
+    </div>
+    <div style="
+      width: 100%; height: 5px; background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px; overflow: hidden; padding: 1px;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+    ">
+      <div id="elite-luxury-bar" style="
+        width: 0%; height: 100%; border-radius: 999px;
+        background: linear-gradient(90deg, #D4AF37, #FFF3B0, #38BDF8);
+        box-shadow: 0 0 12px rgba(246, 216, 107, 0.8);
+        transition: width 3.7s cubic-bezier(0.22, 1, 0.36, 1);
+      "></div>
+    </div>
+  </div>
+</div>
+
+<!-- SITE-WIDE LUXURY ENHANCEMENT STYLES -->
+<style>
+  /* Metallic Gold Shimmer Effect */
+  .elite-shimmer-text {
+    background: linear-gradient(110deg, #D4AF37 20%, #FFF7D6 40%, #F6D86B 50%, #FFF7D6 60%, #D4AF37 80%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: eliteShimmer 3.5s linear infinite;
+  }
+  @keyframes eliteShimmer {
+    to { background-position: 200% center; }
+  }
+  @keyframes eliteSpinSlow {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes elitePulseGlow {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 35px rgba(212, 175, 55, 0.45); }
+    50% { transform: scale(1.04); box-shadow: 0 0 55px rgba(246, 216, 107, 0.75); }
+  }
+  @keyframes eliteFadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Custom Luxury Gold Scrollbar for Website */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #071120; }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #D4AF37, #8A640F);
+    border-radius: 99px; border: 2px solid #071120;
+  }
+
+  /* Upgraded Glass Cards & Gold Buttons Across the Entire Website */
+  .glass {
+    box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.12) !important;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.35s ease !important;
+  }
+  .glass:hover {
+    border-color: rgba(212, 175, 55, 0.65) !important;
+    box-shadow: 0 20px 45px -12px rgba(212, 175, 55, 0.22), inset 0 1px 1px rgba(246, 216, 107, 0.3) !important;
+  }
+  .gold-btn {
+    position: relative; overflow: hidden;
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.38) !important;
+    transition: all 0.3s ease !important;
+  }
+  .gold-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(246, 216, 107, 0.6) !important;
+  }
+
+  /* Smooth Scroll Reveal for Website Sections */
+  .elite-reveal {
+    opacity: 0; transform: translateY(22px);
+    transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .elite-reveal-visible {
+    opacity: 1 !important; transform: translateY(0) !important;
+  }
+</style>
+
+<script>
+  (function() {
+    const bar = document.getElementById('elite-luxury-bar');
+    const splash = document.getElementById('elite-luxury-splash');
+    const statusText = document.getElementById('elite-load-status');
+    const percentText = document.getElementById('elite-load-percent');
+
+    // Start progress bar
+    setTimeout(() => { if (bar) bar.style.width = '100%'; }, 80);
+
+    // Live percentage counter (0% to 100% in 3.6s)
+    let pct = 0;
+    const interval = setInterval(() => {
+      pct += 2;
+      if (pct > 100) pct = 100;
+      if (percentText) percentText.textContent = pct + '%';
+      if (statusText) {
+        if (pct === 30) statusText.textContent = 'Loading Rotational Specialists...';
+        if (pct === 64) statusText.textContent = 'Preparing 3D Visual Concepts...';
+        if (pct === 90) statusText.textContent = 'Welcome to ELITE CLASSES!';
+      }
+      if (pct >= 100) clearInterval(interval);
+    }, 68);
+
+    // Dismiss splash smoothly after 4.1 seconds with cinematic zoom-out
+    setTimeout(() => {
+      if (splash) {
+        splash.style.opacity = '0';
+        splash.style.transform = 'scale(1.06)';
+        splash.style.visibility = 'hidden';
+        setTimeout(() => splash.remove(), 950);
+      }
+    }, 4100);
+
+    // Automatically apply smooth scroll-reveal to all major website sections & cards
+    window.addEventListener('DOMContentLoaded', () => {
+      const elements = document.querySelectorAll('section, .glass');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('elite-reveal-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      elements.forEach(el => {
+        el.classList.add('elite-reveal');
+        observer.observe(el);
+      });
+    });
+  })();
+</script>
   <!-- TOP ANNOUNCEMENT BAR -->
   <div class="bg-gradient-to-r from-navyCard via-royal/40 to-navyCard border-b border-gold/20 py-2 px-4 text-center text-[11px] sm:text-xs text-gray-200">
     <span>🚀 Admissions 2026–27: <strong>Noida Home Tuition</strong> & <strong>Global Live Video Classes</strong> • </span>
