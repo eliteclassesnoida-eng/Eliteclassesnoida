@@ -1801,6 +1801,31 @@ function closeVideoRoom() {
   })();
 </script>
 <!-- ================= END OF ELITE SPEED BOOSTER ================= -->
+<!-- ================= ELITE CLS (0.00) & LCP INSTANT FIX ================= -->
+<style>
+  /* 1. Eliminate Layout Shift (CLS) by hiding old hero via CSS immediately before JS runs */
+  .hero, #hero, .hero-section {
+    display: none !important;
+  }
+  /* 2. Prevent Splash Screen from blocking Google LCP measurement */
+  #elite-welcome-splash {
+    animation: eliteAutoVanish 0.45s ease 0.4s forwards !important;
+    pointer-events: none !important;
+  }
+  @keyframes eliteAutoVanish {
+    to {
+      opacity: 0;
+      visibility: hidden;
+      display: none;
+    }
+  }
+  /* 3. Lock Hero height & font rendering to stop layout jump */
+  #elite-master-hero {
+    min-height: 520px;
+    contain: layout style;
+  }
+</style>
+<!-- ================= END OF CLS & LCP FIX ================= -->
 </body>
 </html>
 
