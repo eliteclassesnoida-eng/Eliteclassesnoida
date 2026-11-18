@@ -1191,6 +1191,560 @@ function closeVideoRoom() {
       }
     }
   </script>
+<!-- ================= ELITE WORLD-CLASS HERO & ANTI-POACHING UPGRADE (AUTO-INJECT) ================= -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
+
+  /* 1. Welcome to Elite Cinematic Splash Screen */
+  #elite-welcome-splash {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+    padding: 20px;
+    text-align: center;
+  }
+  #elite-welcome-splash.hide-splash {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .splash-badge {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    padding: 6px 18px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+    background: rgba(251, 191, 36, 0.08);
+    animation: eliteFadeUp 0.6s ease forwards;
+  }
+  .splash-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 0%, #fde68a 50%, #f59e0b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0 0 12px 0;
+    animation: eliteZoomIn 0.8s ease forwards;
+  }
+  .splash-sub {
+    color: #94a3b8;
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    max-width: 540px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .splash-loader {
+    width: 180px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .splash-loader-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #f59e0b, #fef08a);
+    animation: eliteLoadBar 1.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  /* 2. World-Class Hero Wrapper */
+  #elite-master-hero {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: radial-gradient(circle at 15% 15%, #1e293b 0%, #090d16 55%, #020617 100%);
+    color: #f8fafc;
+    padding: 48px 20px 64px 20px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(251, 191, 36, 0.25);
+  }
+  .elite-hero-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Top Welcome Pill */
+  .elite-top-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .elite-welcome-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(251, 191, 36, 0.12);
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    color: #fde68a;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .elite-live-dot {
+    width: 9px;
+    height: 9px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #10b981;
+    animation: elitePulse 1.5s infinite;
+  }
+  .elite-rating-summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #e2e8f0;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 14px;
+    border-radius: 999px;
+  }
+
+  /* Main Hero Grid */
+  .elite-hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 36px;
+    align-items: center;
+  }
+  @media (max-width: 960px) {
+    .elite-hero-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .elite-main-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.1rem, 4.5vw, 3.6rem);
+    line-height: 1.15;
+    font-weight: 800;
+    margin: 0 0 18px 0;
+    color: #ffffff;
+  }
+  .elite-gold-text {
+    background: linear-gradient(135deg, #fde68a 0%, #f59e0b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .elite-sub-text {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    margin-bottom: 24px;
+  }
+
+  /* CTA Buttons */
+  .elite-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .elite-btn-gold {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #020617 !important;
+    font-weight: 800;
+    padding: 15px 28px;
+    border-radius: 12px;
+    text-decoration: none !important;
+    font-size: 0.98rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.45);
+    transition: transform 0.2s ease;
+  }
+  .elite-btn-gold:hover {
+    transform: translateY(-2px);
+  }
+  .elite-btn-outline {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+    padding: 15px 24px;
+    border-radius: 12px;
+    text-decoration: none !important;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Founder's Monitoring & Anti-Poaching Shield Card */
+  .elite-shield-card {
+    background: linear-gradient(160deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    border-radius: 20px;
+    padding: 26px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+  }
+  .elite-shield-tag {
+    display: inline-block;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .elite-shield-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #fde68a;
+    margin: 0 0 10px 0;
+  }
+  .elite-shield-desc {
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  .elite-shield-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px 0;
+    display: grid;
+    gap: 10px;
+  }
+  .elite-shield-list li {
+    font-size: 0.88rem;
+    color: #f1f5f9;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 9px 12px;
+    border-radius: 10px;
+    border-left: 3px solid #f59e0b;
+  }
+  .elite-policy-warning {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px dashed rgba(239, 68, 68, 0.5);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 0.82rem;
+    color: #fca5a5;
+    line-height: 1.45;
+  }
+
+  /* 3. Verified Parent Reviews Strip inside Hero */
+  .elite-reviews-section {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .elite-reviews-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+  }
+  .elite-reviews-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+  }
+  .elite-reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .elite-review-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+    padding: 18px;
+    transition: border-color 0.2s ease;
+  }
+  .elite-review-card:hover {
+    border-color: rgba(251, 191, 36, 0.5);
+  }
+  .elite-stars {
+    color: #fbbf24;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+  }
+  .elite-review-text {
+    font-size: 0.88rem;
+    color: #e2e8f0;
+    line-height: 1.55;
+    margin: 0 0 14px 0;
+    font-style: italic;
+  }
+  .elite-reviewer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    padding-top: 10px;
+  }
+  .elite-reviewer-name {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: #fde68a;
+  }
+  .elite-reviewer-loc {
+    font-size: 0.76rem;
+    color: #94a3b8;
+  }
+  .elite-verified-badge {
+    font-size: 0.7rem;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    padding: 3px 8px;
+    border-radius: 99px;
+    font-weight: 600;
+  }
+
+  @keyframes eliteLoadBar {
+    0% { width: 0%; }
+    100% { width: 100%; }
+  }
+  @keyframes eliteZoomIn {
+    0% { opacity: 0; transform: scale(0.92); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes eliteFadeUp {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes elitePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+</style>
+
+<!-- 1. FULL SCREEN WELCOME SPLASH -->
+<div id="elite-welcome-splash">
+  <div class="splash-badge">An Exclusive Mission For Futuristic Education</div>
+  <h1 class="splash-title">WELCOME TO ELITE</h1>
+  <p class="splash-sub">Noida's #1 Founder-Monitored Ed-Tech & Home Tuition Ecosystem by Ravi Yadav</p>
+  <div class="splash-loader"><div class="splash-loader-bar"></div></div>
+</div>
+
+<!-- 2. WORLD-CLASS HERO & FOUNDER MONITORING SECTION -->
+<section id="elite-master-hero">
+  <div class="elite-hero-container">
+    
+    <!-- Top Welcome & Trust Bar -->
+    <div class="elite-top-bar">
+      <div class="elite-welcome-pill">
+        <span class="elite-live-dot"></span>
+        ✨ Welcome to ELITE CLASSES • Commanded by Ravi Yadav
+      </div>
+      <div class="elite-rating-summary">
+        <span>⭐⭐⭐⭐⭐</span>
+        <strong>4.9/5 Rating</strong>
+        <span style="color:#94a3b8;">(Verified Noida & Greater Noida Parents)</span>
+      </div>
+    </div>
+
+    <!-- Main Split Grid -->
+    <div class="elite-hero-grid">
+      
+      <!-- Left Column: Brand Value & CTA -->
+      <div>
+        <h1 class="elite-main-heading">
+          Don't Just Hire a Tutor. Give Your Child the <span class="elite-gold-text">Complete ELITE Ecosystem.</span>
+        </h1>
+        <p class="elite-sub-text">
+          Classes 1–12 (CBSE, ICSE, IB/IGCSE) & Sainik/Navodaya/RIMC Prep. While an ordinary tutor only teaches for an hour and leaves, <strong>ELITE CLASSES</strong> surrounds your child with rotational subject specialists, 3D visual concepts, cloud notes, and <strong>100% direct academic monitoring by Founder Ravi Yadav</strong>.
+        </p>
+
+        <div class="elite-cta-row">
+          <a href="https://wa.me/919675732501?text=Hello%20Ravi%20Sir%2C%20I%20visited%20the%20ELITE%20CLASSES%20website%20and%20want%20to%20book%20a%20Free%20Demo%20under%20your%20monitoring." target="_blank" class="elite-btn-gold">
+            📲 Book Free Demo With Ravi Sir
+          </a>
+          <a href="tel:+919675732501" class="elite-btn-outline">
+            📞 Direct Founder Helpline: 9675732501
+          </a>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:18px; font-size:0.85rem; color:#94a3b8;">
+          <span>✔ <strong>Grades 1–12</strong> Rotational Specialists</span>
+          <span>✔ <strong>Saturday</strong> OMR/Digital Tests</span>
+          <span>✔ <strong>Cloud App</strong> + Live Doubt Room</span>
+        </div>
+      </div>
+
+      <!-- Right Column: Why Ravi Yadav's Monitoring Matters (Anti-Poaching Shield) -->
+      <div class="elite-shield-card">
+        <span class="elite-shield-tag">🛡️ Parent Protection & Quality Guarantee</span>
+        <h3 class="elite-shield-title">Why Direct Monitoring by Ravi Yadav Makes ELITE Irreplaceable</h3>
+        <p class="elite-shield-desc">
+          A single teacher only delivers lectures—<strong>Ravi Sir personally controls the entire academic engine</strong> behind your child's guaranteed growth:
+        </p>
+
+        <ul class="elite-shield-list">
+          <li>
+            <span>🎯</span>
+            <div><strong>Weekly Syllabus & Saturday Test Audit:</strong> Every teacher's daily progress and Saturday test paper is audited directly by Ravi Sir.</div>
+          </li>
+          <li>
+            <span>🔄</span>
+            <div><strong>24-Hour Teacher Replacement Guarantee:</strong> If a teacher takes leave or underperforms, ELITE provides an instant specialist backup—zero syllabus loss.</div>
+          </li>
+          <li>
+            <span>💻</span>
+            <div><strong>Ed-Tech Portal, 3D Reels & PDF Vault:</strong> Exclusive access to our cloud app, live video doubt room, and mistake-rectification reports.</div>
+          </li>
+        </ul>
+
+        <div class="elite-policy-warning">
+          <strong>⚠️ Important Parent Advisory:</strong> Private/unmonitored tuition outside the ELITE system loses Ravi Sir's weekly test audits, 3D app portal, fee security, and backup teacher guarantee. Always stay enrolled officially through <strong>ELITE CLASSES (9675732501)</strong> for 100% accountability.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 3. Verified Existing Parents Reviews Strip -->
+    <div class="elite-reviews-section">
+      <div class="elite-reviews-header">
+        <h3 class="elite-reviews-title">💬 Why Noida & Greater Noida Parents Trust Only Ravi Sir's Monitoring</h3>
+        <span style="font-size:0.82rem; color:#fde68a;">100% Verified Parent Feedback</span>
+      </div>
+
+      <div class="elite-reviews-grid">
+        
+        <!-- Review 1 -->
+        <div class="elite-review-card">
+          <div class="elite-stars">★★★★★ 5.0</div>
+          <p class="elite-review-text">
+            "The best part about ELITE is Ravi Sir's personal command. Teachers come on time, Saturday tests happen without fail, and my child's foundation has transformed completely."
+          </p>
+          <div class="elite-reviewer">
+            <div>
+              <div class="elite-reviewer-name">Mr. Shrutank Vaish</div>
+              <div class="elite-reviewer-loc">J.M. Florence, Greater Noida</div>
+            </div>
+            <span class="elite-verified-badge">✔ Verified Parent</span>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="elite-review-card">
+          <div class="elite-stars">★★★★★ 5.0</div>
+          <p class="elite-review-text">
+            "Earlier we tried individual tutors, but there was no accountability. With ELITE CLASSES, Ravi Sir monitors the syllabus, digital notes, and test scores every single week."
+          </p>
+          <div class="elite-reviewer">
+            <div>
+              <div class="elite-reviewer-name">Mr. Vivek Raj</div>
+              <div class="elite-reviewer-loc">Sector 75, Noida</div>
+            </div>
+            <span class="elite-verified-badge">✔ Verified Parent</span>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="elite-review-card">
+          <div class="elite-stars">★★★★★ 5.0</div>
+          <p class="elite-review-text">
+            "Subject specialists + Ravi Sir's strict monitoring is a matchless combination. Even if a teacher has an emergency, ELITE arranges support immediately without wasting a day."
+          </p>
+          <div class="elite-reviewer">
+            <div>
+              <div class="elite-reviewer-name">Mrs. Swati Parekh</div>
+              <div class="elite-reviewer-loc">Sector 34, Noida</div>
+            </div>
+            <span class="elite-verified-badge">✔ Verified Parent</span>
+          </div>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="elite-review-card">
+          <div class="elite-stars">★★★★★ 5.0</div>
+          <p class="elite-review-text">
+            "The 3D concept learning, regular parent reporting, and personal discipline maintained by Ravi Yadav Sir make ELITE truly world-class. Worth every rupee for peace of mind."
+          </p>
+          <div class="elite-reviewer">
+            <div>
+              <div class="elite-reviewer-name">Mrs. Neetu Sabbarwal</div>
+              <div class="elite-reviewer-loc">Sector 51, Noida</div>
+            </div>
+            <span class="elite-verified-badge">✔ Verified Parent</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  (function() {
+    // 1. Automatically position the new World-Class Hero right at the top (below navbar if present)
+    function mountEliteHero() {
+      var newHero = document.getElementById('elite-master-hero');
+      if (!newHero) return;
+
+      var nav = document.querySelector('nav, header, .navbar, #navbar');
+      if (nav && nav.parentNode) {
+        nav.parentNode.insertBefore(newHero, nav.nextSibling);
+      } else {
+        document.body.insertBefore(newHero, document.body.firstChild);
+      }
+
+      // Hide old default hero if it exists so there is no duplicate clutter
+      var possibleOldHeroes = document.querySelectorAll('.hero, #hero, .hero-section');
+      possibleOldHeroes.forEach(function(el) {
+        if (el.id !== 'elite-master-hero') {
+          el.style.display = 'none';
+        }
+      });
+    }
+
+    // 2. Hide Welcome Splash smoothly after 2.1 seconds
+    function handleWelcomeSplash() {
+      var splash = document.getElementById('elite-welcome-splash');
+      if (!splash) return;
+      setTimeout(function() {
+        splash.classList.add('hide-splash');
+      }, 2100);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        mountEliteHero();
+        handleWelcomeSplash();
+      });
+    } else {
+      mountEliteHero();
+      handleWelcomeSplash();
+    }
+  })();
+</script>
+<!-- ================= END OF ELITE WORLD-CLASS HERO UPGRADE ================= -->
 </body>
 </html>
 
