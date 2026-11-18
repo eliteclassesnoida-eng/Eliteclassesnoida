@@ -2024,6 +2024,375 @@ function closeVideoRoom() {
   }
 </style>
 <!-- ================= END OF CLS & LCP FIX ================= -->
+<!-- ===================================================================== -->
+<!-- ELITE CLASSES - ALL-IN-ONE MASTER ADMIN CONTROL SUITE (PASTE AT END)  -->
+<!-- ===================================================================== -->
+<style>
+  #ec-master-admin-suite {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(145deg, #0b1120 0%, #111827 100%);
+    border: 1.5px solid #eab308;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 24px auto;
+    max-width: 900px;
+    color: #f8fafc;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+  }
+  .ec-suite-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .ec-suite-title {
+    color: #facc15;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    margin: 0;
+  }
+  .ec-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .ec-tab-btn {
+    background: #1e293b;
+    color: #cbd5e1;
+    border: 1px solid #334155;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .ec-tab-btn.active {
+    background: linear-gradient(90deg, #eab308, #f59e0b);
+    color: #090d16;
+    border-color: #facc15;
+    font-weight: 800;
+  }
+  .ec-panel { display: none; }
+  .ec-panel.active { display: block; }
+  .ec-item-card {
+    background: #162032;
+    border: 1px solid #283548;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .ec-btn-group {
+    display: flex;
+    gap: 8px;
+  }
+  .ec-btn-edit {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .ec-btn-del {
+    background: #dc2626;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .ec-input {
+    width: 100%;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #fff;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    box-sizing: border-box;
+  }
+  .ec-save-btn {
+    background: linear-gradient(90deg, #eab308, #f59e0b);
+    color: #090d16;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+    width: 100%;
+  }
+  /* Modal for Live Editing */
+  #ec-edit-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .ec-modal-box {
+    background: #111827;
+    border: 1px solid #facc15;
+    border-radius: 14px;
+    padding: 20px;
+    width: 100%;
+    max-width: 440px;
+    color: #fff;
+  }
+</style>
+
+<div id="ec-master-admin-suite">
+  <div class="ec-suite-header">
+    <div>
+      <h3 class="ec-suite-title">⚡ ELITE CLASSES — Master Live Control Center</h3>
+      <span style="font-size: 12px; color: #94a3b8;">Manage, Edit & Delete Everything Without Re-Deploying</span>
+    </div>
+    <span id="ec-db-status" style="background: #064e3b; color: #34d399; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;">● Live Sync Active</span>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <div class="ec-tabs">
+    <button type="button" class="ec-tab-btn active" onclick="ecSwitchTab('students', this)">👥 Students (Edit/Remove)</button>
+    <button type="button" class="ec-tab-btn" onclick="ecSwitchTab('videos', this)">🎬 Reels & Videos</button>
+    <button type="button" class="ec-tab-btn" onclick="ecSwitchTab('attendance', this)">📋 Attendance & Logs</button>
+    <button type="button" class="ec-tab-btn" onclick="ecSwitchTab('notes', this)">📚 Notes / Homework</button>
+    <button type="button" class="ec-tab-btn" onclick="ecSwitchTab('settings', this)">⚙️ Live Site Settings</button>
+  </div>
+
+  <!-- Panel 1: Students -->
+  <div id="ec-panel-students" class="ec-panel active">
+    <div id="ec-list-students"><p style="color:#64748b; font-size:13px;">Scanning students database...</p></div>
+  </div>
+
+  <!-- Panel 2: Videos / Reels -->
+  <div id="ec-panel-videos" class="ec-panel">
+    <div id="ec-list-videos"><p style="color:#64748b; font-size:13px;">Scanning videos/reels...</p></div>
+  </div>
+
+  <!-- Panel 3: Attendance & Enquiries -->
+  <div id="ec-panel-attendance" class="ec-panel">
+    <div id="ec-list-attendance"><p style="color:#64748b; font-size:13px;">Scanning attendance & enquiries...</p></div>
+  </div>
+
+  <!-- Panel 4: Notes / Study Materials -->
+  <div id="ec-panel-notes" class="ec-panel">
+    <div id="ec-list-notes"><p style="color:#64748b; font-size:13px;">Scanning notes & homework...</p></div>
+  </div>
+
+  <!-- Panel 5: Live Site Notice & Fee Editor -->
+  <div id="ec-panel-settings" class="ec-panel">
+    <label style="font-size:12px; color:#facc15; display:block; margin-bottom:4px;">Live Announcement / Offer Banner (Shows on Website)</label>
+    <input type="text" id="ec-set-notice" class="ec-input" placeholder="e.g. Admissions Open for 2026-27 | Free 3-Day Demo Class!">
+    
+    <label style="font-size:12px; color:#facc15; display:block; margin-bottom:4px;">WhatsApp / Contact Number</label>
+    <input type="text" id="ec-set-phone" class="ec-input" value="9675732501">
+    
+    <label style="font-size:12px; color:#facc15; display:block; margin-bottom:4px;">Fee Structure Summary (Live Update)</label>
+    <input type="text" id="ec-set-fees" class="ec-input" value="Class 1–5: ₹7,500 | Class 6–8: ₹8,500 | Class 9–10: ₹9,500 | Class 11–12: ₹11,000">
+    
+    <button type="button" class="ec-save-btn" onclick="ecSaveSiteSettings()">💾 Save & Publish Live Changes</button>
+  </div>
+</div>
+
+<!-- Universal Live Edit Modal -->
+<div id="ec-edit-modal">
+  <div class="ec-modal-box">
+    <h4 style="color:#facc15; margin-top:0; margin-bottom:14px;">✏️ Edit Record Live</h4>
+    <div id="ec-modal-fields"></div>
+    <div style="display:flex; gap:10px; margin-top:14px;">
+      <button type="button" class="ec-save-btn" onclick="ecCommitEdit()">✅ Save Changes</button>
+      <button type="button" onclick="document.getElementById('ec-edit-modal').style.display='none'" style="background:#334155; color:#fff; border:none; padding:10px 16px; border-radius:8px; cursor:pointer;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Auto-position inside the Admin Dashboard if found, otherwise keep neatly at bottom
+  const adminTarget = Array.from(document.querySelectorAll('div, section')).find(el => 
+    el.innerText && el.innerText.includes('Enroll Student & Create Live Login') && el.children.length < 15
+  );
+  const suite = document.getElementById('ec-master-admin-suite');
+  if (adminTarget && adminTarget.parentNode) {
+    adminTarget.parentNode.appendChild(suite);
+  }
+
+  // Tab Switcher
+  window.ecSwitchTab = function(tabName, btn) {
+    document.querySelectorAll('.ec-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.ec-tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('ec-panel-' + tabName).classList.add('active');
+    btn.classList.add('active');
+  };
+
+  // Detect Firebase Realtime Database automatically
+  function getDB() {
+    if (typeof firebase !== 'undefined' && firebase.database) return firebase.database();
+    if (window.db) return window.db;
+    return null;
+  }
+
+  let currentEditPath = '';
+  let currentEditObj = {};
+
+  // Universal Delete Function
+  window.ecDeleteRecord = function(path, label) {
+    if (!confirm(`⚠️ Confirm Delete:\nKya aap sach mein "${label}" ko permanently delete karna chahte hain?`)) return;
+    const db = getDB();
+    if (db) {
+      db.ref(path).remove()
+        .then(() => alert(`✅ "${label}" successfully deleted!`))
+        .catch(err => alert('Error: ' + err.message));
+    }
+  };
+
+  // Universal Edit Modal Opener
+  window.ecOpenEdit = function(path, encodedData) {
+    currentEditPath = path;
+    currentEditObj = JSON.parse(decodeURIComponent(encodedData));
+    const container = document.getElementById('ec-modal-fields');
+    container.innerHTML = '';
+
+    Object.keys(currentEditObj).forEach(key => {
+      if (typeof currentEditObj[key] === 'object') return;
+      container.innerHTML += `
+        <label style="font-size:11px; color:#94a3b8; text-transform:uppercase; display:block; margin-bottom:3px;">${key}</label>
+        <input type="text" data-key="${key}" class="ec-input ec-edit-field" value="${String(currentEditObj[key]).replace(/"/g, '&quot;')}">
+      `;
+    });
+    document.getElementById('ec-edit-modal').style.display = 'flex';
+  };
+
+  // Save Edited Data to Firebase
+  window.ecCommitEdit = function() {
+    const db = getDB();
+    if (!db || !currentEditPath) return;
+    document.querySelectorAll('.ec-edit-field').forEach(inp => {
+      currentEditObj[inp.getAttribute('data-key')] = inp.value;
+    });
+    db.ref(currentEditPath).update(currentEditObj)
+      .then(() => {
+        document.getElementById('ec-edit-modal').style.display = 'none';
+        alert('✅ Details updated live!');
+      })
+      .catch(err => alert('Error: ' + err.message));
+  };
+
+  // Save Site Settings
+  window.ecSaveSiteSettings = function() {
+    const db = getDB();
+    if (!db) return alert('Firebase database connected nahi hai.');
+    const settings = {
+      notice: document.getElementById('ec-set-notice').value,
+      phone: document.getElementById('ec-set-phone').value,
+      fees: document.getElementById('ec-set-fees').value,
+      updatedAt: new Date().toISOString()
+    };
+    db.ref('siteSettings').update(settings)
+      .then(() => alert('✅ Website settings & notice live update ho gaye hain!'));
+  };
+
+  // Smart Node Listener (Automatically checks common node names used in your app)
+  function bindSmartCollection(possiblePaths, containerId, formatter) {
+    const db = getDB();
+    const container = document.getElementById(containerId);
+    if (!db) {
+      container.innerHTML = '<p style="color:#f87171; font-size:12px;">Firebase instance auto-detect nahi hua. Ensure this script is below your Firebase config.</p>';
+      return;
+    }
+
+    possiblePaths.forEach(nodeName => {
+      db.ref(nodeName).on('value', snap => {
+        const val = snap.val();
+        if (!val) return;
+        container.innerHTML = '';
+        Object.keys(val).forEach(key => {
+          const item = val[key];
+          const fullPath = `${nodeName}/${key}`;
+          const info = formatter(item, key);
+          const encoded = encodeURIComponent(JSON.stringify(typeof item === 'object' ? item : { value: item }));
+
+          container.innerHTML += `
+            <div class="ec-item-card">
+              <div style="flex:1; min-width:200px;">
+                <div style="color:#fff; font-weight:700; font-size:14px;">${info.title}</div>
+                <div style="color:#94a3b8; font-size:12px; margin-top:3px;">${info.sub}</div>
+              </div>
+              <div class="ec-btn-group">
+                <button type="button" class="ec-btn-edit" onclick="ecOpenEdit('${fullPath}', '${encoded}')">✏️ Edit</button>
+                <button type="button" class="ec-btn-del" onclick="ecDeleteRecord('${fullPath}', '${info.title.replace(/'/g, "")}')">🗑️ Delete</button>
+              </div>
+            </div>
+          `;
+        });
+      });
+    });
+  }
+
+  // Initialize Listeners after page & Firebase load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      // 1. Students
+      bindSmartCollection(['students', 'users', 'enrolledStudents'], 'ec-list-students', (s, k) => ({
+        title: `${s.name || s.studentName || k} ${s.grade || s.class ? '• ' + (s.grade || s.class) : ''}`,
+        sub: `ID: ${s.loginId || s.id || k} | Fee: ${s.feeStatus || s.fees || 'N/A'} | Tutor: ${s.stemTutor || s.tutor || 'Ravi Yadav'}`
+      }));
+
+      // 2. Videos / Reels
+      bindSmartCollection(['videos', 'reels', 'shorts', 'media'], 'ec-list-videos', (v, k) => ({
+        title: v.title || v.caption || 'Published Video / Reel',
+        sub: v.url || v.link || v.videoUrl || k
+      }));
+
+      // 3. Attendance & Enquiries
+      bindSmartCollection(['attendance', 'enquiries', 'logs'], 'ec-list-attendance', (a, k) => ({
+        title: `${a.studentName || a.name || 'Entry'} ${a.subject ? '(' + a.subject + ')' : ''}`,
+        sub: `${a.status || ''} • ${a.date || ''} • ${a.topic || a.message || k}`
+      }));
+
+      // 4. Notes & Homework
+      bindSmartCollection(['notes', 'homework', 'materials', 'pdfs'], 'ec-list-notes', (n, k) => ({
+        title: n.title || n.topic || n.subject || 'Study Material',
+        sub: `Class: ${n.grade || n.class || 'All'} • ${n.date || k}`
+      }));
+
+      // Load saved site settings if present
+      const db = getDB();
+      if (db) {
+        db.ref('siteSettings').once('value', snap => {
+          if (snap.exists()) {
+            const d = snap.val();
+            if (d.notice) document.getElementById('ec-set-notice').value = d.notice;
+            if (d.phone) document.getElementById('ec-set-phone').value = d.phone;
+            if (d.fees) document.getElementById('ec-set-fees').value = d.fees;
+          }
+        });
+      }
+    }, 1000);
+  });
+})();
+</script>
+<!-- ===================================================================== -->
 </body>
 </html>
 
