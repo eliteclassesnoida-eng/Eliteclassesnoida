@@ -2971,7 +2971,7 @@
   setInterval(securePublicUI, 800);
 })();
 </script>
-<!-- ELITE CLASSES: Master Login Security & Custom Admin Password -->
+<!-- ELITE CLASSES: Master Login Security (Safe Fixed Version) -->
 <script>
 (function() {
   const AUTH_KEY = 'elite_v4_custom_admin_auth';
@@ -3028,15 +3028,17 @@
   }
 
   function cleanLoginScreen() {
-    // 1. Hide "1-Click Instant Demo Access" box completely
+    // 1. SAFE: Sirf chhote "1-Click Instant Demo Access" box ko hide karega, page ko nahi
     document.querySelectorAll('div, p, span').forEach(el => {
-      if (el.children.length <= 4 && (el.textContent || '').includes('1-Click Instant Demo Access')) {
-        const box = el.closest('div[class*="border"], div[class*="rounded"]') || el.parentElement;
-        if (box) box.style.setProperty('display', 'none', 'important');
+      if (el.children.length === 0 && (el.textContent || '').includes('1-Click Instant Demo Access')) {
+        const box = el.parentElement;
+        if (box && box !== document.body && box.id !== 'root' && (box.textContent || '').length < 250) {
+          box.style.setProperty('display', 'none', 'important');
+        }
       }
     });
 
-    // 2. Capture & clear pre-filled default login credentials once per open
+    // 2. Default pre-filled ID/Password clear karega
     const passInp = document.querySelector('input[type="password"]');
     if (passInp && !passInp.dataset.ecCleared) {
       const form = passInp.closest('form') || passInp.parentElement.parentElement;
@@ -3055,7 +3057,6 @@
     }
   }
 
-  // Clear inputs again if user switches between Admin / Student / Tutor tabs
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('button');
     if (!btn) return;
@@ -3071,36 +3072,30 @@
     }
   });
 
-  // 3. Intercept "Access Dashboard" to enforce Custom Founder ID & Password
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('button');
     if (!btn || !(btn.textContent || '').includes('Access Dashboard')) return;
-
     const passInp = document.querySelector('input[type="password"]');
     if (!passInp) return;
     const form = passInp.closest('form') || passInp.parentElement.parentElement;
     const userInp = form ? form.querySelector('input:not([type="password"])') : null;
     if (!userInp) return;
 
-    // Check if Admin CMS tab is active
     const adminTab = Array.from(document.querySelectorAll('button')).find(b => (b.textContent || '').trim() === 'Admin CMS');
     const isAdminTab = adminTab && (
       adminTab.className.includes('bg-indigo') ||
       adminTab.className.includes('bg-blue') ||
       adminTab.className.includes('bg-purple') ||
-      getComputedStyle(adminTab).backgroundColor !== 'rgba(0, 0, 0, 0)' && getComputedStyle(adminTab).backgroundColor !== 'rgb(255, 255, 255)'
+      (getComputedStyle(adminTab).backgroundColor !== 'rgba(0, 0, 0, 0)' && getComputedStyle(adminTab).backgroundColor !== 'rgb(255, 255, 255)')
     );
 
     if (isAdminTab && customAuth && customAuth.id && customAuth.pass) {
-      const enteredId = userInp.value.trim();
-      const enteredPass = passInp.value.trim();
-      if (enteredId !== customAuth.id || enteredPass !== customAuth.pass) {
+      if (userInp.value.trim() !== customAuth.id || passInp.value.trim() !== customAuth.pass) {
         e.preventDefault();
         e.stopImmediatePropagation();
         alert('❌ Galat Admin ID ya Password!');
         return;
       }
-      // Valid custom credentials -> temporarily pass original credentials to unlock dashboard
       if (origAdminId && origAdminPass) {
         setNativeValue(userInp, origAdminId);
         setNativeValue(passInp, origAdminPass);
@@ -3108,7 +3103,6 @@
     }
   }, true);
 
-  // 4. Add "🔐 Security" button inside Admin CMS to change Founder ID/Password
   function openSecurityModal() {
     let m = document.getElementById('ec-sec-modal');
     if (m) m.remove();
@@ -3122,7 +3116,7 @@
           <button id="ec-sec-close" style="background:#232942;color:#fff;border:none;border-radius:10px;width:32px;height:32px;cursor:pointer;">✕</button>
         </div>
         <div style="display:flex;flex-direction:column;gap:10px;">
-          <input id="ec-sec-id" value="${customAuth ? customAuth.id : ''}" placeholder="New Founder Admin ID (e.g. ravi_founder)" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
+          <input id="ec-sec-id" value="${customAuth ? customAuth.id : ''}" placeholder="New Founder Admin ID" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
           <input id="ec-sec-pass" type="text" value="${customAuth ? customAuth.pass : ''}" placeholder="New Strong Password..." style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
           <button id="ec-sec-save" style="padding:11px;border-radius:12px;border:none;background:linear-gradient(90deg,#ef4444,#dc2626);color:#fff;font-weight:700;cursor:pointer;">✓ Save New Admin ID & Password</button>
         </div>
@@ -3132,9 +3126,9 @@
     document.getElementById('ec-sec-save').onclick = async () => {
       const id = document.getElementById('ec-sec-id').value.trim();
       const pass = document.getElementById('ec-sec-pass').value.trim();
-      if (!id || pass.length < 6) return alert('Admin ID aur kam se kam 6 characters ka strong password daalein!');
+      if (!id || pass.length < 6) return alert('Admin ID aur kam se kam 6 characters ka password daalein!');
       await saveAuth(id, pass);
-      alert('✅ Founder Admin ID & Password updated & synced to Cloud!');
+      alert('✅ Founder Admin ID & Password saved!');
       m.remove();
     };
   }
