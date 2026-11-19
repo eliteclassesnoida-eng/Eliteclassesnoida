@@ -3752,5 +3752,97 @@
   }, true);
 })();
 </script>
+<!-- === ELITE CLASSES: QUICK PATCH (HIDE STUDENT BUTTONS + PREMIUM LOGO TAGLINE) === -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap');
+
+  .elite-brand-tagline {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+    line-height: 1.25;
+    max-width: 230px;
+    text-align: left;
+  }
+
+  .elite-tagline-main {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    color: #f8fafc;
+  }
+
+  .elite-tagline-by {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.9px;
+    color: #fbbf24;
+    margin-top: 2px;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 768px) {
+    .elite-brand-tagline {
+      max-width: 360px;
+      margin-left: 14px;
+    }
+    .elite-tagline-main {
+      font-size: 13px;
+    }
+    .elite-tagline-by {
+      font-size: 11.5px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    function applyElitePatch() {
+      // 1. Dono "Student App" aur neeche wala "Student" button hide karo
+      // (Super-App Portal aur Login Modal ka "Student/Parent" tab safe rahega)
+      document.querySelectorAll('button, a').forEach(function (el) {
+        var cleanText = (el.textContent || '')
+          .replace(/[^\w\s/-]/g, '')
+          .trim()
+          .toLowerCase();
+
+        if (cleanText === 'student app' || cleanText === 'student') {
+          el.style.setProperty('display', 'none', 'important');
+        }
+      });
+
+      // 2. Logo ke bagal me standard font me Tagline lagao
+      if (!document.querySelector('.elite-brand-tagline')) {
+        var logoImg =
+          document.querySelector('header img, nav img') ||
+          document.querySelector('img[alt*="Elite" i], img[src*="logo" i]');
+
+        if (logoImg && logoImg.parentElement) {
+          var parent = logoImg.parentElement;
+          parent.style.display = 'flex';
+          parent.style.alignItems = 'center';
+
+          var tagBox = document.createElement('div');
+          tagBox.className = 'elite-brand-tagline';
+          tagBox.innerHTML =
+            '<span class="elite-tagline-main">An Exclusive Mission For Futuristic Education</span>' +
+            '<span class="elite-tagline-by">by Ravi Yadav</span>';
+
+          logoImg.insertAdjacentElement('afterend', tagBox);
+        }
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyElitePatch);
+    } else {
+      applyElitePatch();
+    }
+  })();
+</script>
+<!-- === END QUICK PATCH === -->
 </body>
 </html>
