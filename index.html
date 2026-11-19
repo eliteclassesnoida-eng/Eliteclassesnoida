@@ -2879,5 +2879,23 @@
   }, 700);
 })();
 </script>
+<script>
+(function fixEmail() {
+  const replaceAll = () => {
+    document.querySelectorAll('a[href*="support@eliteclassesnoida.com"]').forEach(a => {
+      a.href = a.href.replace(/support@eliteclassesnoida\.com/gi, 'support@eliteclassesnoida.in');
+    });
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeValue.includes('support@eliteclassesnoida.com')) {
+        node.nodeValue = node.nodeValue.replace(/support@eliteclassesnoida\.com/gi, 'support@eliteclassesnoida.in');
+      }
+    }
+  };
+  replaceAll();
+  setTimeout(replaceAll, 1500);
+})();
+</script>
 </body>
 </html>
