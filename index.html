@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth dark">
 <head>
@@ -231,7 +232,7 @@
   </div>
 
   <!-- =====================================================================
-       SECTION 2: FLOATING ROUNDED HEADER NAVBAR (EXACT LUXURY DESIGN)
+       SECTION 2: FLOATING OBSIDIAN GLASS NAVBAR
        ===================================================================== -->
   <header id="top" class="sticky top-0 z-40 px-3 sm:px-6 pt-3">
     <div class="max-w-7xl mx-auto bg-[#111116]/95 backdrop-blur-xl border border-white/10 rounded-2xl px-3 sm:px-5 h-16 flex items-center justify-between gap-2 shadow-2xl">
@@ -259,16 +260,16 @@
 
       <!-- Right: Quick Action Pill Buttons + Sun/Moon Theme Toggle -->
       <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-        <button type="button" onclick="quickDemoLogin('parent')" class="px-2.5 sm:px-3.5 py-2 rounded-xl bg-indigoGlow/15 border border-indigoGlow/50 text-indigo-300 hover:bg-indigoGlow hover:text-white text-[11px] sm:text-xs font-bold transition">
+        <button type="button" onclick="window.quickDemoLogin('parent')" class="px-2.5 sm:px-3.5 py-2 rounded-xl bg-indigoGlow/15 border border-indigoGlow/50 text-indigo-300 hover:bg-indigoGlow hover:text-white text-[11px] sm:text-xs font-bold transition">
           🎓 Student App
         </button>
-        <button type="button" onclick="quickDemoLogin('admin')" class="px-2.5 sm:px-3.5 py-2 rounded-xl bg-champagne/15 border border-champagne/50 text-goldBright hover:bg-champagne hover:text-black text-[11px] sm:text-xs font-bold transition">
+        <button type="button" onclick="window.quickDemoLogin('admin')" class="px-2.5 sm:px-3.5 py-2 rounded-xl bg-champagne/15 border border-champagne/50 text-goldBright hover:bg-champagne hover:text-black text-[11px] sm:text-xs font-bold transition">
           ⚙️ Admin CMS
         </button>
-        <button type="button" onclick="launchLiveVideoRoom('EliteClassesLiveDemo', 'ELITE CLASSES Live HD Studio')" class="hidden md:inline-flex px-3 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/45 text-emerald-300 hover:bg-emerald-500 hover:text-black text-xs font-bold transition">
+        <button type="button" onclick="window.launchLiveVideoRoom('EliteClassesLiveDemo', 'ELITE CLASSES Live HD Studio')" class="hidden md:inline-flex px-3 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/45 text-emerald-300 hover:bg-emerald-500 hover:text-black text-xs font-bold transition">
           🎥 Live
         </button>
-        <button type="button" onclick="toggleThemeMode()" id="theme-btn" aria-label="Toggle Light or Dark Theme" class="w-9 h-9 rounded-full bg-white/5 border border-white/15 text-goldBright hover:border-goldBright flex items-center justify-center text-sm transition shrink-0">
+        <button type="button" onclick="window.toggleThemeMode()" id="theme-btn" aria-label="Toggle Light or Dark Theme" class="w-9 h-9 rounded-full bg-white/5 border border-white/15 text-goldBright hover:border-goldBright flex items-center justify-center text-sm transition shrink-0">
           ☀️
         </button>
       </div>
@@ -281,29 +282,29 @@
   <section class="pt-4 sm:pt-6 pb-8 px-3 sm:px-6">
     <div class="max-w-7xl mx-auto space-y-5">
 
-      <!-- DESIGNER SLIDE POSTER CAROUSEL (FRONT & CENTER, 100% ADMIN CMS EDITABLE) -->
+      <!-- DESIGNER SLIDE POSTER CAROUSEL -->
       <div class="relative rounded-3xl overflow-hidden border border-white/15 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)]">
         <div id="hero-banner-stage" class="min-h-[430px] sm:min-h-[450px] lg:min-h-[470px] flex items-center transition-all duration-500"></div>
 
-        <!-- Left & Right Circular Translucent Arrows (Cleanly Positioned on Edges) -->
-        <button type="button" onclick="stepBanner(-1)" aria-label="Previous Slide" class="absolute left-2.5 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/55 hover:bg-black/80 border border-white/15 text-white keep-white flex items-center justify-center text-lg font-bold backdrop-blur-md transition">
+        <!-- Clean Left & Right Circular Arrows -->
+        <button type="button" onclick="window.stepBanner(-1)" aria-label="Previous Slide" class="absolute left-2.5 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/55 hover:bg-black/80 border border-white/15 text-white keep-white flex items-center justify-center text-lg font-bold backdrop-blur-md transition">
           ‹
         </button>
-        <button type="button" onclick="stepBanner(1)" aria-label="Next Slide" class="absolute right-2.5 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/55 hover:bg-black/80 border border-white/15 text-white keep-white flex items-center justify-center text-lg font-bold backdrop-blur-md transition">
+        <button type="button" onclick="window.stepBanner(1)" aria-label="Next Slide" class="absolute right-2.5 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/55 hover:bg-black/80 border border-white/15 text-white keep-white flex items-center justify-center text-lg font-bold backdrop-blur-md transition">
           ›
         </button>
 
-        <!-- Bottom Slide Dots + Admin Edit Pill -->
+        <!-- Bottom Slide Dots + Edit Slides Button -->
         <div class="absolute bottom-4 left-0 right-0 z-20 px-5 sm:px-10 flex items-center justify-between gap-2 pointer-events-none">
           <div id="hero-banner-dots" class="flex items-center gap-2 pointer-events-auto"></div>
-          <button type="button" onclick="openAdminTabDirect('banners')" class="pointer-events-auto px-3 py-1.5 rounded-full bg-black/55 hover:bg-black/80 border border-white/15 text-[11px] font-bold text-goldBright backdrop-blur-md transition">
+          <button type="button" onclick="window.openAdminTabDirect('banners')" class="pointer-events-auto px-3 py-1.5 rounded-full bg-black/55 hover:bg-black/80 border border-white/15 text-[11px] font-bold text-goldBright backdrop-blur-md transition">
             ✏️ Edit Slides
           </button>
         </div>
       </div>
 
-      <!-- SMART TUTOR & COURSE FINDER STRIP -->
-      <form onsubmit="handleSmartFinder(event)" class="bento-card rounded-3xl p-4 sm:p-5 grid sm:grid-cols-2 lg:grid-cols-5 gap-3 items-center shadow-xl">
+      <!-- SMART TUTOR & COURSE FINDER CARD -->
+      <form onsubmit="window.handleSmartFinder(event)" class="bento-card rounded-3xl p-4 sm:p-5 grid sm:grid-cols-2 lg:grid-cols-5 gap-3 items-center shadow-xl">
         <select id="find-class" required class="w-full px-3.5 py-3 rounded-xl input-clean text-xs font-semibold">
           <option value="Grades 1–5 (Foundation)">Class: Grades 1–5</option>
           <option value="Grades 6–8 (Middle Specialist)" selected>Class: Grades 6–8</option>
@@ -329,7 +330,7 @@
   </section>
 
   <!-- =====================================================================
-       SECTION 4: TRUST & IMPACT METRICS STRIP
+       SECTION 4: TRUST COUNTERS
        ===================================================================== -->
   <section class="py-6 px-3 sm:px-6">
     <div class="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
@@ -353,7 +354,36 @@
   </section>
 
   <!-- =====================================================================
-       SECTION 5: ONE-STOP EDUCATION HUB (FILTERABLE BENTO GRID)
+       SECTION 5: 3-STEP HOW IT WORKS
+       ===================================================================== -->
+  <section id="how-it-works" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <span class="text-xs font-bold uppercase tracking-widest text-indigoGlow">Simple &amp; Transparent Journey</span>
+        <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">How ELITE CLASSES Works</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="bento-card rounded-3xl p-6">
+          <span class="w-10 h-10 rounded-2xl btn-primary font-display font-black text-sm flex items-center justify-center mb-4">01</span>
+          <h3 class="font-display font-bold text-lg text-white">Share Learning Requirement</h3>
+          <p class="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">Choose your class, board or competitive exam, and preferred mode (Noida/Gr. Noida Home Tuition or Live HD Online).</p>
+        </div>
+        <div class="bento-card rounded-3xl p-6">
+          <span class="w-10 h-10 rounded-2xl btn-gold font-display font-black text-sm flex items-center justify-center mb-4">02</span>
+          <h3 class="font-display font-bold text-lg text-white">Free 30-Min Diagnostic &amp; Demo</h3>
+          <p class="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">Take a free demo session with our verified specialist tutor and receive a baseline skill audit personally reviewed by Ravi Sir.</p>
+        </div>
+        <div class="bento-card rounded-3xl p-6">
+          <span class="w-10 h-10 rounded-2xl bg-emerald-500 text-black font-display font-black text-sm flex items-center justify-center mb-4">03</span>
+          <h3 class="font-display font-bold text-lg text-white">Monitored Growth + Super-App</h3>
+          <p class="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">Unlock daily attendance logs, PDF notes, 3D STEM labs, Saturday CBT tests, X-Ray report cards &amp; 24-Hr backup guarantee.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       SECTION 6: FILTERABLE ONE-STOP EDUCATION HUB
        ===================================================================== -->
   <section id="education-hub" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
     <div class="max-w-7xl mx-auto">
@@ -367,11 +397,11 @@
       </div>
 
       <div class="flex flex-wrap gap-2 mb-6">
-        <button type="button" onclick="filterEcosystem('all')" data-cat="all" class="eco-tab px-4 py-2 rounded-xl text-xs font-bold btn-primary">All Programs</button>
-        <button type="button" onclick="filterEcosystem('school')" data-cat="school" class="eco-tab px-4 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">School (Grades 1–12)</button>
-        <button type="button" onclick="filterEcosystem('entrance')" data-cat="entrance" class="eco-tab px-4 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">Sainik / Navodaya / RIMC</button>
-        <button type="button" onclick="filterEcosystem('jeeneet')" data-cat="jeeneet" class="eco-tab px-4 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">IIT-JEE / NEET / CUET</button>
-        <button type="button" onclick="filterEcosystem('govt')" data-cat="govt" class="eco-tab px-4 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">Banking / SSC / UGC NET</button>
+        <button type="button" onclick="window.filterEcosystem('all')" data-cat="all" class="eco-tab px-4 py-2 rounded-xl text-xs font-bold btn-primary">All Programs</button>
+        <button type="button" onclick="window.filterEcosystem('school')" data-cat="school" class="eco-tab px-4 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">School (Grades 1–12)</button>
+        <button type="button" onclick="window.filterEcosystem('entrance')" data-cat="entrance" class="eco-tab px-4 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">Sainik / Navodaya / RIMC</button>
+        <button type="button" onclick="window.filterEcosystem('jeeneet')" data-cat="jeeneet" class="eco-tab px-4 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">IIT-JEE / NEET / CUET</button>
+        <button type="button" onclick="window.filterEcosystem('govt')" data-cat="govt" class="eco-tab px-4 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">Banking / SSC / UGC NET</button>
       </div>
 
       <div id="ecosystem-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
@@ -379,71 +409,43 @@
   </section>
 
   <!-- =====================================================================
-       SECTION 6: 3-STEP JOURNEY + ROTATIONAL POD SIMULATOR + ANTI-POACHING SHIELD
+       SECTION 7: ROTATIONAL POD SIMULATOR + FOUNDER'S ANTI-POACHING SHIELD
        ===================================================================== -->
   <section id="rotational-pod" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
-    <div class="max-w-7xl mx-auto space-y-8">
-      <!-- 3-Step How ELITE Works -->
-      <div>
-        <div class="text-center max-w-2xl mx-auto mb-8">
-          <span class="text-xs font-bold uppercase tracking-widest text-indigoGlow">Simple &amp; Transparent Journey</span>
-          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">How ELITE CLASSES Works</h2>
-        </div>
-        <div class="grid md:grid-cols-3 gap-5">
-          <div class="bento-card rounded-3xl p-6">
-            <span class="w-10 h-10 rounded-2xl btn-primary font-display font-black text-sm flex items-center justify-center mb-4">01</span>
-            <h3 class="font-display font-bold text-lg text-white">Share Learning Requirement</h3>
-            <p class="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">Choose your class, board or competitive exam, and preferred mode (Noida/Gr. Noida Home Tuition or Live HD Online).</p>
-          </div>
-          <div class="bento-card rounded-3xl p-6">
-            <span class="w-10 h-10 rounded-2xl btn-gold font-display font-black text-sm flex items-center justify-center mb-4">02</span>
-            <h3 class="font-display font-bold text-lg text-white">Free 30-Min Diagnostic &amp; Demo</h3>
-            <p class="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">Take a free demo session with our verified specialist tutor and receive a baseline skill audit personally reviewed by Ravi Sir.</p>
-          </div>
-          <div class="bento-card rounded-3xl p-6">
-            <span class="w-10 h-10 rounded-2xl bg-emerald-500 text-black font-display font-black text-sm flex items-center justify-center mb-4">03</span>
-            <h3 class="font-display font-bold text-lg text-white">Monitored Growth + Super-App</h3>
-            <p class="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">Unlock daily attendance logs, PDF notes, 3D STEM labs, Saturday CBT tests, X-Ray report cards &amp; 24-Hr backup guarantee.</p>
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-6 items-stretch">
+      <div class="lg:col-span-7 bento-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-5">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-indigoGlow">Interactive Curriculum Simulator</span>
+          <h3 class="font-display font-extrabold text-2xl text-white mt-1">Rotational Subject-Specialist Pod</h3>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <button type="button" onclick="window.selectPodTab('g1_5')" id="pod-g1_5" class="pod-tab px-3.5 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">Grades 1–5</button>
+            <button type="button" onclick="window.selectPodTab('g6_8')" id="pod-g6_8" class="pod-tab px-3.5 py-2 rounded-xl text-xs font-bold btn-primary">Grades 6–8</button>
+            <button type="button" onclick="window.selectPodTab('g9_12')" id="pod-g9_12" class="pod-tab px-3.5 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">Grades 9–12</button>
+            <button type="button" onclick="window.selectPodTab('entrance')" id="pod-entrance" class="pod-tab px-3.5 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">Entrance Exams</button>
           </div>
         </div>
+        <div id="pod-display" class="space-y-3"></div>
       </div>
 
-      <!-- Rotational Pod Simulator + Founder's Anti-Poaching Shield -->
-      <div class="grid lg:grid-cols-12 gap-6 items-stretch">
-        <div class="lg:col-span-7 bento-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-5">
-          <div>
-            <span class="text-xs font-bold uppercase tracking-widest text-indigoGlow">Interactive Curriculum Simulator</span>
-            <h3 class="font-display font-extrabold text-2xl text-white mt-1">Rotational Subject-Specialist Pod</h3>
-            <div class="flex flex-wrap gap-2 mt-4">
-              <button type="button" onclick="selectPodTab('g1_5')" id="pod-g1_5" class="pod-tab px-3.5 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">Grades 1–5</button>
-              <button type="button" onclick="selectPodTab('g6_8')" id="pod-g6_8" class="pod-tab px-3.5 py-2 rounded-xl text-xs font-bold btn-primary">Grades 6–8</button>
-              <button type="button" onclick="selectPodTab('g9_12')" id="pod-g9_12" class="pod-tab px-3.5 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">Grades 9–12</button>
-              <button type="button" onclick="selectPodTab('entrance')" id="pod-entrance" class="pod-tab px-3.5 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300">Entrance Exams</button>
-            </div>
-          </div>
-          <div id="pod-display" class="space-y-3"></div>
+      <div class="lg:col-span-5 bento-card rounded-3xl p-6 sm:p-8 border-champagne/40 flex flex-col justify-between space-y-4">
+        <div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/15 border border-red-500/40 text-red-400 text-[10px] font-extrabold uppercase">🛡️ Founder's Direct Monitoring Shield</span>
+          <h3 class="font-display font-bold text-xl sm:text-2xl text-white mt-3">Why Ravi Yadav's Direct Control Makes ELITE Irreplaceable</h3>
         </div>
-
-        <div class="lg:col-span-5 bento-card rounded-3xl p-6 sm:p-8 border-champagne/40 flex flex-col justify-between space-y-4">
-          <div>
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/15 border border-red-500/40 text-red-400 text-[10px] font-extrabold uppercase">🛡️ Founder's Direct Monitoring Shield</span>
-            <h3 class="font-display font-bold text-xl sm:text-2xl text-white mt-3">Why Ravi Yadav's Direct Control Makes ELITE Irreplaceable</h3>
-          </div>
-          <ul class="space-y-2.5 text-xs text-zinc-300">
-            <li class="p-3 rounded-xl surface-panel border-l-2 border-champagne"><strong>🎯 Weekly Syllabus &amp; CBT Audit:</strong> Every tutor's daily topic log and Saturday test paper is audited directly by Ravi Sir.</li>
-            <li class="p-3 rounded-xl surface-panel border-l-2 border-indigoGlow"><strong>🔄 24-Hr Backup Tutor Guarantee:</strong> Instant specialist replacement on leave or mismatch—zero syllabus loss.</li>
-            <li class="p-3 rounded-xl surface-panel border-l-2 border-emerald-400"><strong>💻 Full Cloud Super-App Access:</strong> Attendance, PDF notes, 3D STEM labs &amp; official branded receipts included.</li>
-          </ul>
-          <div class="p-3.5 rounded-xl bg-red-500/10 border border-dashed border-red-500/40 text-[11px] text-red-300 leading-relaxed">
-            <strong>⚠️ Anti-Poaching Parent Advisory:</strong> Private/unmonitored tuition outside ELITE loses Ravi Sir's weekly audits, Super-App access, fee protection &amp; backup guarantee. Always stay enrolled officially via <strong>eliteclassesnoida.in (+91 96757 32501)</strong>.
-          </div>
+        <ul class="space-y-2.5 text-xs text-zinc-300">
+          <li class="p-3 rounded-xl surface-panel border-l-2 border-champagne"><strong>🎯 Weekly Syllabus &amp; CBT Audit:</strong> Every tutor's daily topic log and Saturday test paper is audited directly by Ravi Sir.</li>
+          <li class="p-3 rounded-xl surface-panel border-l-2 border-indigoGlow"><strong>🔄 24-Hr Backup Tutor Guarantee:</strong> Instant specialist replacement on leave or mismatch—zero syllabus loss.</li>
+          <li class="p-3 rounded-xl surface-panel border-l-2 border-emerald-400"><strong>💻 Full Cloud Super-App Access:</strong> Attendance, PDF notes, 3D STEM labs &amp; official branded receipts included.</li>
+        </ul>
+        <div class="p-3.5 rounded-xl bg-red-500/10 border border-dashed border-red-500/40 text-[11px] text-red-300 leading-relaxed">
+          <strong>⚠️ Anti-Poaching Parent Advisory:</strong> Private/unmonitored tuition outside ELITE loses Ravi Sir's weekly audits, Super-App access, fee protection &amp; backup guarantee. Always stay enrolled officially via <strong>eliteclassesnoida.in (+91 96757 32501)</strong>.
         </div>
       </div>
     </div>
   </section>
 
   <!-- =====================================================================
-       SECTION 7: VERIFIED SPECIALIST TUTORS SHOWCASE (ADMIN CMS EDITABLE)
+       SECTION 8: VERIFIED SPECIALIST TUTORS SHOWCASE
        ===================================================================== -->
   <section id="tutors-showcase" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
     <div class="max-w-7xl mx-auto">
@@ -453,7 +455,7 @@
           <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">Verified Specialist Tutors</h2>
           <p class="text-xs sm:text-sm text-zinc-400 mt-1">100% live-synced with the Founder Admin CMS directory.</p>
         </div>
-        <button type="button" onclick="openAdminTabDirect('tutors')" class="px-4 py-2 rounded-xl surface-panel hover:border-indigoGlow text-xs font-bold text-indigo-400 self-start sm:self-auto">
+        <button type="button" onclick="window.openAdminTabDirect('tutors')" class="px-4 py-2 rounded-xl surface-panel hover:border-indigoGlow text-xs font-bold text-indigo-400 self-start sm:self-auto">
           ✏️ Edit Tutors in CMS
         </button>
       </div>
@@ -462,7 +464,7 @@
   </section>
 
   <!-- =====================================================================
-       SECTION 8: TRANSPARENT MONTHLY PACKAGES (INR / USD TOGGLE)
+       SECTION 9: INR / USD PRICING TOGGLE
        ===================================================================== -->
   <section id="pricing" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
     <div class="max-w-7xl mx-auto">
@@ -470,8 +472,8 @@
         <span class="text-xs font-bold uppercase tracking-widest text-goldBright">Transparent Monthly Packages</span>
         <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">Choose Your Location &amp; Mode</h2>
         <div class="inline-flex p-1 rounded-2xl surface-panel mt-5">
-          <button type="button" id="btn-inr" onclick="setCurrency('INR')" class="px-4 py-2 rounded-xl text-xs font-bold btn-primary">🇮🇳 India (Noida Home / Hybrid)</button>
-          <button type="button" id="btn-usd" onclick="setCurrency('USD')" class="px-4 py-2 rounded-xl text-xs font-bold text-zinc-400 hover:text-white">🌍 Global (Live Online USD)</button>
+          <button type="button" id="btn-inr" onclick="window.setCurrency('INR')" class="px-4 py-2 rounded-xl text-xs font-bold btn-primary">🇮🇳 India (Noida Home / Hybrid)</button>
+          <button type="button" id="btn-usd" onclick="window.setCurrency('USD')" class="px-4 py-2 rounded-xl text-xs font-bold text-zinc-400 hover:text-white">🌍 Global (Live Online USD)</button>
         </div>
       </div>
 
@@ -527,7 +529,7 @@
   </section>
 
   <!-- =====================================================================
-       SECTION 9: 3D CONCEPT REELS & MICRO-LESSONS HUB (ADMIN CMS EDITABLE)
+       SECTION 10: CONCEPT REELS
        ===================================================================== -->
   <section id="reels-hub" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
     <div class="max-w-7xl mx-auto">
@@ -546,7 +548,25 @@
   </section>
 
   <!-- =====================================================================
-       SECTION 10: VERIFIED PARENT REVIEWS
+       SECTION 11: CATEGORIZED CLICKABLE NOIDA & GREATER NOIDA SERVICEABLE AREAS
+       ===================================================================== -->
+  <section id="locations" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
+    <div class="max-w-7xl mx-auto bento-card rounded-3xl p-6 sm:p-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-indigoGlow">Home Tuition &amp; Global Reach</span>
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">Noida &amp; Greater Noida Serviceable Areas</h2>
+          <p class="text-xs sm:text-sm text-zinc-400 mt-1">Select a zone and click your sector/society to auto-fill your Free Demo booking form.</p>
+        </div>
+        <span class="px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/35 text-emerald-400 text-xs font-bold self-start sm:self-auto">✔ 1-Click Area Selection</span>
+      </div>
+      <div id="area-tabs-bar" class="flex flex-wrap gap-2"></div>
+      <div id="locations-strip" class="flex flex-wrap gap-2.5 text-xs font-semibold"></div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       SECTION 12: VERIFIED PARENT REVIEWS
        ===================================================================== -->
   <section id="reviews" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
     <div class="max-w-7xl mx-auto">
@@ -606,7 +626,7 @@
   </section>
 
   <!-- =====================================================================
-       SECTION 11: FOUNDER SPOTLIGHT (RAVI YADAV)
+       SECTION 13: MEET THE FOUNDER (RAVI YADAV)
        ===================================================================== -->
   <section id="founder" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
     <div class="max-w-5xl mx-auto bento-card rounded-3xl p-6 sm:p-10 grid md:grid-cols-12 gap-7 items-center">
@@ -639,29 +659,7 @@
   </section>
 
   <!-- =====================================================================
-       SECTION 12: CLICKABLE SERVICEABLE AREAS (NOIDA & GREATER NOIDA TABS)
-       ===================================================================== -->
-  <section id="locations" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
-    <div class="max-w-7xl mx-auto bento-card rounded-3xl p-6 sm:p-8 space-y-6">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-widest text-indigoGlow">Home Tuition &amp; Global Reach</span>
-          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">Noida &amp; Greater Noida Serviceable Areas</h2>
-          <p class="text-xs sm:text-sm text-zinc-400 mt-1">Select a zone and click your sector/society to auto-fill your Free Demo booking form.</p>
-        </div>
-        <span class="px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/35 text-emerald-400 text-xs font-bold self-start sm:self-auto">✔ 1-Click Area Selection</span>
-      </div>
-
-      <!-- Categorized Interactive Area Tabs -->
-      <div id="area-tabs-bar" class="flex flex-wrap gap-2"></div>
-
-      <!-- Clickable Sector / Society Chips -->
-      <div id="locations-strip" class="flex flex-wrap gap-2.5 text-xs font-semibold"></div>
-    </div>
-  </section>
-
-  <!-- =====================================================================
-       SECTION 13: FREQUENTLY ASKED QUESTIONS (8-QUESTION ACCORDION)
+       SECTION 14: 8-QUESTION INTERACTIVE FAQ ACCORDION
        ===================================================================== -->
   <section id="faq" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
     <div class="max-w-4xl mx-auto">
@@ -675,7 +673,7 @@
   </section>
 
   <!-- =====================================================================
-       SECTION 14: DUAL FORMS SECTION (PARENT BOOKING + TUTOR RECRUITMENT)
+       SECTION 15: DUAL PARENT DIAGNOSTIC & TUTOR RECRUITMENT FORMS
        ===================================================================== -->
   <section id="book-now" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
     <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-6">
@@ -683,7 +681,7 @@
       <div class="bento-card rounded-3xl p-6 sm:p-8">
         <span class="text-xs font-bold uppercase tracking-wider text-indigoGlow">For Parents &amp; Students</span>
         <h3 class="font-display font-extrabold text-2xl text-white mt-1">Book Free 30-Min Diagnostic Assessment</h3>
-        <form onsubmit="handleParentSubmit(event)" class="space-y-3.5 text-xs sm:text-sm mt-5">
+        <form onsubmit="window.handleParentSubmit(event)" class="space-y-3.5 text-xs sm:text-sm mt-5">
           <div class="grid sm:grid-cols-2 gap-3">
             <input type="text" id="p-student" required placeholder="Student Full Name *" class="w-full px-4 py-3 rounded-xl input-clean" />
             <select id="p-grade" required class="w-full px-4 py-3 rounded-xl input-clean">
@@ -720,7 +718,7 @@
       <div id="join-tutor" class="bento-card rounded-3xl p-6 sm:p-8">
         <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Faculty Recruitment</span>
         <h3 class="font-display font-extrabold text-2xl text-white mt-1">Join as a Subject-Specialist Tutor</h3>
-        <form onsubmit="handleTutorSubmit(event)" class="space-y-3.5 text-xs sm:text-sm mt-5">
+        <form onsubmit="window.handleTutorSubmit(event)" class="space-y-3.5 text-xs sm:text-sm mt-5">
           <div class="grid sm:grid-cols-2 gap-3">
             <input type="text" id="t-name" required placeholder="Educator Full Name *" class="w-full px-4 py-3 rounded-xl input-clean" />
             <input type="text" id="t-qual" required placeholder="Qualification (M.Sc, B.Tech, B.Ed, NET) *" class="w-full px-4 py-3 rounded-xl input-clean" />
@@ -753,7 +751,7 @@
   </section>
 
   <!-- =====================================================================
-       SECTION 15: COMPREHENSIVE MULTI-COLUMN FOOTER + EXACT COPYRIGHT LINE
+       MULTI-COLUMN FOOTER + EXACT COPYRIGHT LINE
        ===================================================================== -->
   <footer class="border-t border-white/10 pt-12 pb-8 px-4 sm:px-6 bg-obsidian">
     <div class="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-8 text-xs text-zinc-400 pb-10 border-b border-white/10">
@@ -770,7 +768,7 @@
           <li><a href="#tutors-showcase" class="hover:text-goldBright">Verified Specialist Tutors</a></li>
           <li><a href="#locations" class="hover:text-goldBright">Noida &amp; Gr. Noida Areas</a></li>
           <li><a href="#faq" class="hover:text-goldBright">FAQs</a></li>
-          <li><button type="button" onclick="openPortalModal()" class="text-indigoGlow font-semibold hover:underline">Student / Admin Super-App</button></li>
+          <li><button type="button" onclick="window.openPortalModal()" class="text-indigoGlow font-semibold hover:underline">Student / Admin Super-App</button></li>
         </ul>
       </div>
       <div class="space-y-2.5">
@@ -797,16 +795,16 @@
   </footer>
 
   <!-- =====================================================================
-       STICKY MOBILE BOTTOM DOCK (EXACT 4-TILE LUXURY OBSIDIAN DESIGN)
+       4-TILE STICKY MOBILE BOTTOM DOCK
        ===================================================================== -->
   <div class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#09090B]/95 backdrop-blur-xl border-t border-white/10 px-2.5 py-2 grid grid-cols-4 gap-2 text-[11px] font-bold">
-    <button type="button" onclick="quickDemoLogin('parent')" class="py-2 rounded-2xl bg-indigoGlow/15 border border-indigoGlow/35 text-indigo-300 flex flex-col items-center justify-center gap-0.5">
+    <button type="button" onclick="window.quickDemoLogin('parent')" class="py-2 rounded-2xl bg-indigoGlow/15 border border-indigoGlow/35 text-indigo-300 flex flex-col items-center justify-center gap-0.5">
       <span class="text-sm">🎓</span><span>Student</span>
     </button>
-    <button type="button" onclick="quickDemoLogin('admin')" class="py-2 rounded-2xl bg-champagne/15 border border-champagne/35 text-goldBright flex flex-col items-center justify-center gap-0.5">
+    <button type="button" onclick="window.quickDemoLogin('admin')" class="py-2 rounded-2xl bg-champagne/15 border border-champagne/35 text-goldBright flex flex-col items-center justify-center gap-0.5">
       <span class="text-sm">⚙️</span><span>Admin</span>
     </button>
-    <button type="button" onclick="launchLiveVideoRoom('EliteClassesMobileLive', 'ELITE CLASSES Live HD Studio')" class="py-2 rounded-2xl bg-emerald-500/15 border border-emerald-500/35 text-emerald-300 flex flex-col items-center justify-center gap-0.5">
+    <button type="button" onclick="window.launchLiveVideoRoom('EliteClassesMobileLive', 'ELITE CLASSES Live HD Studio')" class="py-2 rounded-2xl bg-emerald-500/15 border border-emerald-500/35 text-emerald-300 flex flex-col items-center justify-center gap-0.5">
       <span class="text-sm">🎥</span><span>Live</span>
     </button>
     <a href="#book-now" class="py-2 rounded-2xl btn-gold flex flex-col items-center justify-center gap-0.5 font-extrabold">
@@ -825,36 +823,36 @@
         <h4 id="video-room-title" class="font-display font-bold text-xs sm:text-sm text-white keep-white truncate max-w-[160px] sm:max-w-xs">ELITE CLASSES Live Studio</h4>
       </div>
       <div class="flex flex-wrap items-center gap-1.5">
-        <select id="live-quality-select" onchange="setLiveQuality(this.value)" class="px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-emerald-500/40 text-emerald-300 font-bold text-[11px] outline-none">
+        <select id="live-quality-select" onchange="window.setLiveQuality(this.value)" class="px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-emerald-500/40 text-emerald-300 font-bold text-[11px] outline-none">
           <option value="600">⚡ 360p Low-Data</option>
           <option value="1500" selected>🎬 720p HD</option>
           <option value="3000">💎 1080p Ultra</option>
         </select>
-        <button type="button" id="btn-mode-canvas" onclick="switchClassMode('canvas')" class="px-2.5 sm:px-3 py-1.5 rounded-lg btn-primary font-bold text-xs">✏️ Instant Whiteboard</button>
-        <button type="button" id="btn-mode-video" onclick="switchClassMode('video')" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-800 text-white keep-white font-bold text-xs">🎥 Live HD Video + Share</button>
-        <button type="button" id="btn-mode-board" onclick="switchClassMode('board')" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-800 text-white keep-white font-bold text-xs">📋 Shared Cloud Board</button>
-        <button type="button" id="btn-mode-split" onclick="switchClassMode('split')" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-800 text-indigo-300 font-bold text-xs">⚡ Split Screen</button>
-        <button type="button" onclick="closeVideoRoom()" class="px-3 py-1.5 rounded-lg bg-red-600 text-white keep-white text-xs font-extrabold">Leave ✕</button>
+        <button type="button" id="btn-mode-canvas" onclick="window.switchClassMode('canvas')" class="px-2.5 sm:px-3 py-1.5 rounded-lg btn-primary font-bold text-xs">✏️ Instant Whiteboard</button>
+        <button type="button" id="btn-mode-video" onclick="window.switchClassMode('video')" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-800 text-white keep-white font-bold text-xs">🎥 Live HD Video + Share</button>
+        <button type="button" id="btn-mode-board" onclick="window.switchClassMode('board')" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-800 text-white keep-white font-bold text-xs">📋 Shared Cloud Board</button>
+        <button type="button" id="btn-mode-split" onclick="window.switchClassMode('split')" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-800 text-indigo-300 font-bold text-xs">⚡ Split Screen</button>
+        <button type="button" onclick="window.closeVideoRoom()" class="px-3 py-1.5 rounded-lg bg-red-600 text-white keep-white text-xs font-extrabold">Leave ✕</button>
       </div>
     </div>
 
-    <!-- Instant Built-in Whiteboard + Live Poll -->
+    <!-- Built-in Instant Interactive Whiteboard + Live Poll -->
     <div id="live-canvas-wrapper" class="flex-1 flex flex-col overflow-hidden bg-[#0D0D12] relative">
       <div class="px-3 py-2 bg-[#14141B] border-b border-white/10 flex flex-wrap items-center gap-2 text-xs">
         <span class="text-zinc-400 font-bold">Pen:</span>
-        <button type="button" onclick="setBoardColor('#FFFFFF', false)" class="w-6 h-6 rounded-full bg-white border-2 border-indigoGlow" title="White"></button>
-        <button type="button" onclick="setBoardColor('#6366F1', false)" class="w-6 h-6 rounded-full bg-indigo-500 border border-white/20" title="Indigo"></button>
-        <button type="button" onclick="setBoardColor('#10B981', false)" class="w-6 h-6 rounded-full bg-emerald-500 border border-white/20" title="Emerald"></button>
-        <button type="button" onclick="setBoardColor('#FBBF24', false)" class="w-6 h-6 rounded-full bg-yellow-400 border border-white/20" title="Gold"></button>
-        <button type="button" onclick="setBoardColor('#F43F5E', false)" class="w-6 h-6 rounded-full bg-rose-500 border border-white/20" title="Red"></button>
-        <button type="button" onclick="setBoardColor('rgba(250,204,21,0.35)', true)" class="px-2.5 py-1 rounded-lg bg-yellow-500/20 border border-yellow-500/40 text-yellow-300 font-bold">🖍️ Highlighter</button>
+        <button type="button" onclick="window.setBoardColor('#FFFFFF', false)" class="w-6 h-6 rounded-full bg-white border-2 border-indigoGlow" title="White"></button>
+        <button type="button" onclick="window.setBoardColor('#6366F1', false)" class="w-6 h-6 rounded-full bg-indigo-500 border border-white/20" title="Indigo"></button>
+        <button type="button" onclick="window.setBoardColor('#10B981', false)" class="w-6 h-6 rounded-full bg-emerald-500 border border-white/20" title="Emerald"></button>
+        <button type="button" onclick="window.setBoardColor('#FBBF24', false)" class="w-6 h-6 rounded-full bg-yellow-400 border border-white/20" title="Gold"></button>
+        <button type="button" onclick="window.setBoardColor('#F43F5E', false)" class="w-6 h-6 rounded-full bg-rose-500 border border-white/20" title="Red"></button>
+        <button type="button" onclick="window.setBoardColor('rgba(250,204,21,0.35)', true)" class="px-2.5 py-1 rounded-lg bg-yellow-500/20 border border-yellow-500/40 text-yellow-300 font-bold">🖍️ Highlighter</button>
         <label class="flex items-center gap-1.5 text-zinc-300">Size <input id="board-size-slider" type="range" min="2" max="18" value="4" class="w-16 sm:w-20 accent-indigo-500" /></label>
-        <button type="button" onclick="toggleBoardEraser()" class="px-2.5 py-1 rounded-lg bg-zinc-800 text-zinc-200 font-bold">🧹 Eraser</button>
-        <button type="button" onclick="undoBoardStroke()" class="px-2.5 py-1 rounded-lg bg-zinc-800 text-zinc-200 font-bold">↩ Undo</button>
-        <button type="button" onclick="toggleBoardGrid()" class="px-2.5 py-1 rounded-lg bg-zinc-800 text-indigo-300 font-bold">⊞ Grid</button>
-        <button type="button" onclick="saveBoardPng()" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold">💾 Save PNG</button>
-        <button type="button" onclick="clearLiveBoard()" class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-bold">🗑️ Clear</button>
-        <button type="button" onclick="toggleLivePollBox()" class="px-3 py-1 rounded-lg btn-gold font-extrabold ml-auto">📊 Live Poll</button>
+        <button type="button" onclick="window.toggleBoardEraser()" class="px-2.5 py-1 rounded-lg bg-zinc-800 text-zinc-200 font-bold">🧹 Eraser</button>
+        <button type="button" onclick="window.undoBoardStroke()" class="px-2.5 py-1 rounded-lg bg-zinc-800 text-zinc-200 font-bold">↩ Undo</button>
+        <button type="button" onclick="window.toggleBoardGrid()" class="px-2.5 py-1 rounded-lg bg-zinc-800 text-indigo-300 font-bold">⊞ Grid</button>
+        <button type="button" onclick="window.saveBoardPng()" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold">💾 Save PNG</button>
+        <button type="button" onclick="window.clearLiveBoard()" class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-bold">🗑️ Clear</button>
+        <button type="button" onclick="window.toggleLivePollBox()" class="px-3 py-1 rounded-lg btn-gold font-extrabold ml-auto">📊 Live Poll</button>
       </div>
       <div id="live-canvas-container" class="flex-1 relative overflow-hidden cursor-crosshair">
         <canvas id="live-whiteboard-canvas" class="w-full h-full block touch-none"></canvas>
@@ -862,14 +860,14 @@
         <div id="live-poll-overlay" class="hidden absolute bottom-4 right-4 w-72 p-4 rounded-2xl bg-[#111116]/95 border border-indigoGlow/50 shadow-2xl text-xs space-y-2">
           <div class="flex justify-between items-center">
             <span class="font-bold text-indigo-400 uppercase">📊 Live Quick Poll (A/B/C/D)</span>
-            <button type="button" onclick="toggleLivePollBox()" class="text-zinc-400 hover:text-white">✕</button>
+            <button type="button" onclick="window.toggleLivePollBox()" class="text-zinc-400 hover:text-white">✕</button>
           </div>
           <p class="font-bold text-white keep-white">Tap your answer / concept status:</p>
           <div class="space-y-1.5">
-            <button type="button" onclick="voteLivePoll(0)" class="w-full text-left p-2 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 font-bold flex justify-between"><span>A. Option A / 100% Clear</span><span id="poll-v0">18</span></button>
-            <button type="button" onclick="voteLivePoll(1)" class="w-full text-left p-2 rounded-xl bg-indigoGlow/15 border border-indigoGlow/40 text-indigo-300 font-bold flex justify-between"><span>B. Option B / Good</span><span id="poll-v1">6</span></button>
-            <button type="button" onclick="voteLivePoll(2)" class="w-full text-left p-2 rounded-xl bg-champagne/15 border border-champagne/40 text-goldBright font-bold flex justify-between"><span>C. Option C / 1 More Ex.</span><span id="poll-v2">2</span></button>
-            <button type="button" onclick="voteLivePoll(3)" class="w-full text-left p-2 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-300 font-bold flex justify-between"><span>D. Option D / Repeat</span><span id="poll-v3">1</span></button>
+            <button type="button" onclick="window.voteLivePoll(0)" class="w-full text-left p-2 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 font-bold flex justify-between"><span>A. Option A / 100% Clear</span><span id="poll-v0">18</span></button>
+            <button type="button" onclick="window.voteLivePoll(1)" class="w-full text-left p-2 rounded-xl bg-indigoGlow/15 border border-indigoGlow/40 text-indigo-300 font-bold flex justify-between"><span>B. Option B / Good</span><span id="poll-v1">6</span></button>
+            <button type="button" onclick="window.voteLivePoll(2)" class="w-full text-left p-2 rounded-xl bg-champagne/15 border border-champagne/40 text-goldBright font-bold flex justify-between"><span>C. Option C / 1 More Ex.</span><span id="poll-v2">2</span></button>
+            <button type="button" onclick="window.voteLivePoll(3)" class="w-full text-left p-2 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-300 font-bold flex justify-between"><span>D. Option D / Repeat</span><span id="poll-v3">1</span></button>
           </div>
         </div>
       </div>
@@ -891,7 +889,7 @@
       <div id="branded-pdf-body" class="relative z-10"></div>
       <div class="no-print mt-6 pt-4 border-t border-zinc-200 flex justify-end gap-3 relative z-10">
         <button type="button" onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-zinc-900 text-white keep-white font-bold text-xs">🖨️ Print / Save PDF</button>
-        <button type="button" onclick="closeBrandedPdfModal()" class="px-5 py-2.5 rounded-xl bg-zinc-200 text-zinc-900 font-bold text-xs">Close ✕</button>
+        <button type="button" onclick="window.closeBrandedPdfModal()" class="px-5 py-2.5 rounded-xl bg-zinc-200 text-zinc-900 font-bold text-xs">Close ✕</button>
       </div>
     </div>
   </div>
@@ -910,9 +908,9 @@
           <p id="portal-sub" class="text-[11px] text-zinc-400 truncate">Unified Cloud CMS &amp; Learning Ecosystem</p>
         </div>
         <div class="flex items-center gap-2 shrink-0">
-          <button type="button" id="btn-portal-sync" onclick="refreshCloudData()" class="hidden px-3 py-1.5 rounded-xl bg-indigoGlow/15 text-indigo-400 text-xs font-bold">↻ Sync</button>
-          <button type="button" id="btn-portal-logout" onclick="logoutPortal()" class="hidden px-3 py-1.5 rounded-xl bg-red-500/15 text-red-400 text-xs font-bold">Logout</button>
-          <button type="button" onclick="closePortalModal()" class="w-9 h-9 rounded-xl surface-panel text-zinc-400 hover:text-white flex items-center justify-center font-bold">✕</button>
+          <button type="button" id="btn-portal-sync" onclick="window.refreshCloudData()" class="hidden px-3 py-1.5 rounded-xl bg-indigoGlow/15 text-indigo-400 text-xs font-bold">↻ Sync</button>
+          <button type="button" id="btn-portal-logout" onclick="window.logoutPortal()" class="hidden px-3 py-1.5 rounded-xl bg-red-500/15 text-red-400 text-xs font-bold">Logout</button>
+          <button type="button" onclick="window.closePortalModal()" class="w-9 h-9 rounded-xl surface-panel text-zinc-400 hover:text-white flex items-center justify-center font-bold">✕</button>
         </div>
       </div>
 
@@ -925,22 +923,22 @@
           </div>
 
           <div class="grid grid-cols-3 gap-2">
-            <button type="button" onclick="selectRole('admin')" id="role-admin" class="py-2.5 rounded-xl surface-panel text-zinc-300 font-bold text-xs">Admin CMS</button>
-            <button type="button" onclick="selectRole('parent')" id="role-parent" class="py-2.5 rounded-xl btn-primary font-bold text-xs">Student/Parent</button>
-            <button type="button" onclick="selectRole('tutor')" id="role-tutor" class="py-2.5 rounded-xl surface-panel text-zinc-300 font-bold text-xs">Tutor</button>
+            <button type="button" onclick="window.selectRole('admin')" id="role-admin" class="py-2.5 rounded-xl surface-panel text-zinc-300 font-bold text-xs">Admin CMS</button>
+            <button type="button" onclick="window.selectRole('parent')" id="role-parent" class="py-2.5 rounded-xl btn-primary font-bold text-xs">Student/Parent</button>
+            <button type="button" onclick="window.selectRole('tutor')" id="role-tutor" class="py-2.5 rounded-xl surface-panel text-zinc-300 font-bold text-xs">Tutor</button>
           </div>
 
           <div class="space-y-3 text-sm">
             <input type="text" id="portal-id" value="shivangi09" placeholder="User ID" class="w-full px-4 py-3 rounded-xl input-clean" />
             <input type="password" id="portal-pass" value="elite123" placeholder="Passcode" class="w-full px-4 py-3 rounded-xl input-clean" />
-            <button type="button" onclick="loginPortal()" class="w-full py-3.5 rounded-xl btn-primary font-display font-bold text-sm">Access Dashboard →</button>
+            <button type="button" onclick="window.loginPortal()" class="w-full py-3.5 rounded-xl btn-primary font-display font-bold text-sm">Access Dashboard →</button>
 
             <div class="p-4 rounded-2xl surface-panel space-y-2 text-xs">
               <p class="font-bold text-goldBright">⚡ 1-Click Instant Demo Access:</p>
               <div class="grid grid-cols-3 gap-2">
-                <button type="button" onclick="quickDemoLogin('admin')" class="py-2 rounded-xl bg-champagne/15 border border-champagne/35 text-goldBright font-bold">Admin CMS</button>
-                <button type="button" onclick="quickDemoLogin('parent')" class="py-2 rounded-xl bg-indigoGlow/15 border border-indigoGlow/35 text-indigo-400 font-bold">Student App</button>
-                <button type="button" onclick="quickDemoLogin('tutor')" class="py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/35 text-emerald-400 font-bold">Tutor</button>
+                <button type="button" onclick="window.quickDemoLogin('admin')" class="py-2 rounded-xl bg-champagne/15 border border-champagne/35 text-goldBright font-bold">Admin CMS</button>
+                <button type="button" onclick="window.quickDemoLogin('parent')" class="py-2 rounded-xl bg-indigoGlow/15 border border-indigoGlow/35 text-indigo-400 font-bold">Student App</button>
+                <button type="button" onclick="window.quickDemoLogin('tutor')" class="py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/35 text-emerald-400 font-bold">Tutor</button>
               </div>
             </div>
           </div>
@@ -956,22 +954,46 @@
   </div>
 
   <!-- =====================================================================
-       APPLICATION ENGINE (SANDBOX-SAFE + FIREBASE SYNC + FULL CRUD CMS)
+       APPLICATION ENGINE (100% SYNCHRONOUS LOGIN + ZERO-FAIL MOBILE CHROME)
        ===================================================================== -->
   <script>
     (function () {
       'use strict';
 
-      /* 1. SANDBOX-SAFE STORAGE WRAPPER */
+      /* -------------------------------------------------------------------
+         1. SANDBOX-SAFE STORAGE & STRICT FIREBASE ARRAY NORMALIZER
+         ------------------------------------------------------------------- */
       const memStore = {};
       const safeStorage = {
-        get: (k) => { try { return window.localStorage.getItem(k); } catch (e) { return memStore[k] ?? null; } },
-        set: (k, v) => { try { window.localStorage.setItem(k, String(v)); } catch (e) { memStore[k] = String(v); } }
+        get: (k) => {
+          try { return window.localStorage.getItem(k); } catch (e) { return memStore[k] ?? null; }
+        },
+        set: (k, v) => {
+          try { window.localStorage.setItem(k, String(v)); } catch (e) { memStore[k] = String(v); }
+        }
       };
+
+      /**
+       * Strictly converts Firebase RTDB values (Array, Object map, null, undefined)
+       * into a clean JavaScript Array so .map() and .find() NEVER crash.
+       */
+      function toArray(val, fallback) {
+        if (Array.isArray(val)) {
+          const clean = val.filter(item => item !== null && item !== undefined);
+          return clean.length ? clean : JSON.parse(JSON.stringify(fallback));
+        }
+        if (val && typeof val === 'object') {
+          const vals = Object.values(val).filter(item => item !== null && item !== undefined);
+          return vals.length ? vals : JSON.parse(JSON.stringify(fallback));
+        }
+        return JSON.parse(JSON.stringify(fallback));
+      }
 
       let FIREBASE_DB_URL = safeStorage.get('elite_firebase_url') || "https://eliteclassesnoida-48000-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
-      /* 2. DESIGNER SLIDE POSTERS (EXACT LUXURY RADIAL GLOWS + 100% ADMIN EDITABLE) */
+      /* -------------------------------------------------------------------
+         2. DEFAULT DATA & CURRICULUM CATALOG
+         ------------------------------------------------------------------- */
       const DEFAULT_BANNERS = [
         {
           id: "b1",
@@ -1141,36 +1163,48 @@
         cbtQuestions: DEFAULT_CBT
       };
 
+      function normalizeState(rawObj) {
+        const src = (rawObj && typeof rawObj === 'object') ? rawObj : {};
+        return {
+          banners: toArray(src.banners, DEFAULT_BANNERS),
+          students: toArray(src.students, DEFAULT_STATE.students),
+          notesVault: toArray(src.notesVault, DEFAULT_STATE.notesVault),
+          homeworks: toArray(src.homeworks, DEFAULT_STATE.homeworks),
+          reels: toArray(src.reels, DEFAULT_STATE.reels),
+          attendanceLogs: toArray(src.attendanceLogs, DEFAULT_STATE.attendanceLogs),
+          leads: Array.isArray(src.leads) ? src.leads.filter(Boolean) : (src.leads && typeof src.leads === 'object' ? Object.values(src.leads).filter(Boolean) : []),
+          tutors: toArray(src.tutors, DEFAULT_STATE.tutors),
+          cbtQuestions: toArray(src.cbtQuestions, DEFAULT_CBT)
+        };
+      }
+
       function loadState() {
         try {
           const raw = safeStorage.get('elite_v4_state');
-          if (raw) {
-            const p = JSON.parse(raw);
-            return {
-              ...DEFAULT_STATE, ...p,
-              banners: (p.banners && p.banners.length) ? p.banners : DEFAULT_BANNERS,
-              cbtQuestions: (p.cbtQuestions && p.cbtQuestions.length) ? p.cbtQuestions : DEFAULT_CBT,
-              tutors: (p.tutors && p.tutors.length) ? p.tutors : DEFAULT_STATE.tutors
-            };
-          }
+          if (raw) return normalizeState(JSON.parse(raw));
         } catch (e) {}
-        return JSON.parse(JSON.stringify(DEFAULT_STATE));
+        return normalizeState(DEFAULT_STATE);
       }
 
       let appState = loadState();
 
-      /* 3. TOAST & FIREBASE CLOUD SYNC */
-      function showToast(msg, type = 'info') {
+      /* -------------------------------------------------------------------
+         3. TOAST NOTIFICATIONS & BACKGROUND FIREBASE SYNC
+         ------------------------------------------------------------------- */
+      function showToast(msg, type = 'info', linkUrl = '', linkLabel = '') {
         const stack = document.getElementById('toast-stack');
         if (!stack) return;
         const cls = type === 'success' ? 'border-emerald-500/50 text-emerald-300'
                   : type === 'error' ? 'border-red-500/50 text-red-300'
                   : 'border-indigoGlow/50 text-indigo-300';
         const el = document.createElement('div');
-        el.className = `toast-item px-4 py-3 rounded-2xl bg-[#111116]/95 border ${cls} shadow-2xl text-xs font-semibold backdrop-blur-xl`;
-        el.textContent = msg;
+        el.className = `toast-item px-4 py-3 rounded-2xl bg-[#111116]/95 border ${cls} shadow-2xl text-xs font-semibold backdrop-blur-xl flex items-center justify-between gap-3`;
+        el.innerHTML = `<span>${msg}</span>${linkUrl ? `<a href="${linkUrl}" target="_blank" class="px-2.5 py-1 rounded-lg bg-emerald-500 text-black font-extrabold shrink-0">${linkLabel || 'Open →'}</a>` : ''}`;
         stack.appendChild(el);
-        setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 250); }, 2800);
+        setTimeout(() => {
+          el.style.opacity = '0';
+          setTimeout(() => el.remove(), 260);
+        }, linkUrl ? 5000 : 2800);
       }
 
       async function syncFromCloud() {
@@ -1180,29 +1214,26 @@
           if (!res.ok) return;
           const data = await res.json();
           if (data && typeof data === 'object') {
-            appState = {
-              ...DEFAULT_STATE, ...data,
-              banners: (data.banners && data.banners.length) ? data.banners : DEFAULT_BANNERS,
-              cbtQuestions: (data.cbtQuestions && data.cbtQuestions.length) ? data.cbtQuestions : DEFAULT_CBT,
-              tutors: (data.tutors && data.tutors.length) ? data.tutors : DEFAULT_STATE.tutors
-            };
+            appState = normalizeState(data);
             safeStorage.set('elite_v4_state', JSON.stringify(appState));
+            renderAllPublicSections();
+            if (loggedInUser) renderDashboard();
           }
         } catch (e) {}
-        renderAllPublicSections();
       }
 
-      async function saveToCloud() {
-        safeStorage.set('elite_v4_state', JSON.stringify(appState));
+      function saveToCloud() {
+        try {
+          safeStorage.set('elite_v4_state', JSON.stringify(appState));
+        } catch (e) {}
         renderAllPublicSections();
         if (!FIREBASE_DB_URL) return;
-        try {
-          await fetch(`${FIREBASE_DB_URL.replace(/\/$/, '')}/elite_v4.json`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(appState)
-          });
-        } catch (e) {}
+        // Fire-and-forget background PUT so UI & WhatsApp popups NEVER block
+        fetch(`${FIREBASE_DB_URL.replace(/\/$/, '')}/elite_v4.json`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(appState)
+        }).catch(() => {});
       }
 
       function renderAllPublicSections() {
@@ -1211,13 +1242,16 @@
         renderPublicReels();
       }
 
-      /* 4. THEME TOGGLE, PWA MANIFEST & DESIGNER SLIDE POSTER CAROUSEL */
-      function toggleThemeMode() {
+      /* -------------------------------------------------------------------
+         4. THEME TOGGLE, PWA MANIFEST & DESIGNER SLIDE POSTER CAROUSEL
+         ------------------------------------------------------------------- */
+      window.toggleThemeMode = function () {
         const isLight = document.documentElement.classList.toggle('light-pearl');
         safeStorage.set('elite_theme', isLight ? 'light' : 'dark');
-        document.getElementById('theme-btn').textContent = isLight ? '🌙' : '☀️';
+        const btn = document.getElementById('theme-btn');
+        if (btn) btn.textContent = isLight ? '🌙' : '☀️';
         showToast(isLight ? 'Light Pearl Daylight Mode Active' : 'Obsidian Dark Mode Active');
-      }
+      };
 
       const pwaManifest = {
         name: "ELITE CLASSES - Futuristic Education",
@@ -1233,9 +1267,9 @@
 
       let bannerIdx = 0;
       function renderHeroBanner() {
-        const list = (appState.banners && appState.banners.length) ? appState.banners : DEFAULT_BANNERS;
+        const list = toArray(appState.banners, DEFAULT_BANNERS);
         if (bannerIdx >= list.length) bannerIdx = 0;
-        const b = list[bannerIdx];
+        const b = list[bannerIdx] || DEFAULT_BANNERS[0];
         const stage = document.getElementById('hero-banner-stage');
         const dots = document.getElementById('hero-banner-dots');
         if (!stage) return;
@@ -1248,45 +1282,47 @@
 
         let primaryBtnHtml = `<a href="${b.ctaLink || '#book-now'}" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl btn-gold font-display font-extrabold text-xs sm:text-sm text-center">${b.ctaText || 'Book Free Demo →'}</a>`;
         if (b.ctaAction === 'student_demo') {
-          primaryBtnHtml = `<button type="button" onclick="quickDemoLogin('parent')" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl btn-gold font-display font-extrabold text-xs sm:text-sm text-center">${b.ctaText || 'Try Student Super-App →'}</button>`;
+          primaryBtnHtml = `<button type="button" onclick="window.quickDemoLogin('parent')" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl btn-gold font-display font-extrabold text-xs sm:text-sm text-center">${b.ctaText || 'Try Student Super-App →'}</button>`;
         } else if (b.ctaAction === 'student_cbt') {
-          primaryBtnHtml = `<button type="button" onclick="activeStudentTab='cbt';quickDemoLogin('parent')" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl btn-gold font-display font-extrabold text-xs sm:text-sm text-center">${b.ctaText || 'Launch Live CBT Test →'}</button>`;
+          primaryBtnHtml = `<button type="button" onclick="window.openStudentCbtDirect()" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl btn-gold font-display font-extrabold text-xs sm:text-sm text-center">${b.ctaText || 'Launch Live CBT Test →'}</button>`;
         }
 
         stage.innerHTML = `
           <div class="w-full px-12 sm:px-16 lg:px-20 pt-8 pb-14 sm:py-14 max-w-4xl space-y-5">
             <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-goldBright text-[11px] sm:text-xs font-extrabold uppercase tracking-wider backdrop-blur-md">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-              <span>${b.badge}</span>
+              <span>${b.badge || 'ELITE CLASSES'}</span>
             </div>
             <h1 class="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-white keep-white leading-[1.12] tracking-tight">
-              ${b.headline}
+              ${b.headline || 'Personal 1-on-1 Mentorship'}
             </h1>
             <p class="text-sm sm:text-base text-zinc-200 keep-zinc max-w-2xl leading-relaxed">
-              ${b.subtext}
+              ${b.subtext || ''}
             </p>
             <div class="flex flex-col sm:flex-row gap-3 pt-1">
               ${primaryBtnHtml}
-              <button type="button" onclick="openPortalModal()" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white keep-white font-bold text-xs sm:text-sm backdrop-blur-md transition text-center">
+              <button type="button" onclick="window.openPortalModal()" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white keep-white font-bold text-xs sm:text-sm backdrop-blur-md transition text-center">
                 Open Super-App Portal
               </button>
             </div>
           </div>
         `;
         if (dots) {
-          dots.innerHTML = list.map((_, i) => `<button type="button" onclick="goToBanner(${i})" aria-label="Slide ${i + 1}" class="h-2 rounded-full transition-all ${i === bannerIdx ? 'w-7 bg-goldBright' : 'w-2 bg-white/35'}"></button>`).join('');
+          dots.innerHTML = list.map((_, i) => `<button type="button" onclick="window.goToBanner(${i})" aria-label="Slide ${i + 1}" class="h-2 rounded-full transition-all ${i === bannerIdx ? 'w-7 bg-goldBright' : 'w-2 bg-white/35'}"></button>`).join('');
         }
       }
 
-      function stepBanner(dir) {
-        const len = (appState.banners && appState.banners.length) ? appState.banners.length : DEFAULT_BANNERS.length;
+      window.stepBanner = function (dir) {
+        const len = toArray(appState.banners, DEFAULT_BANNERS).length;
         bannerIdx = (bannerIdx + dir + len) % len;
         renderHeroBanner();
-      }
-      function goToBanner(i) { bannerIdx = i; renderHeroBanner(); }
+      };
+      window.goToBanner = function (i) { bannerIdx = i; renderHeroBanner(); };
 
-      /* 5. SMART TUTOR FINDER, ECOSYSTEM, POD, TUTORS, REELS, AREAS, FAQ */
-      async function handleSmartFinder(e) {
+      /* -------------------------------------------------------------------
+         5. INSTANT SYNCHRONOUS WHATSAPP FORM HANDLERS (MOBILE CHROME SAFE)
+         ------------------------------------------------------------------- */
+      window.handleSmartFinder = function (e) {
         e.preventDefault();
         const cls = document.getElementById('find-class').value;
         const subj = document.getElementById('find-subject').value.trim() || 'All Subjects';
@@ -1295,7 +1331,7 @@
 
         const lead = { id: 'l' + Date.now(), date: new Date().toLocaleDateString('en-IN'), student: 'Quick Finder Inquiry', grade: cls, subject: subj, mode, location: loc, phone: 'Via WhatsApp' };
         appState.leads.unshift(lead);
-        await saveToCloud();
+        saveToCloud(); // Non-blocking background sync
 
         if (document.getElementById('p-grade')) document.getElementById('p-grade').value = cls;
         if (document.getElementById('p-subject')) document.getElementById('p-subject').value = subj;
@@ -1303,19 +1339,87 @@
         if (document.getElementById('p-location')) document.getElementById('p-location').value = loc;
 
         const msg = `Hello Ravi Sir (ELITE CLASSES), I am looking for a Specialist Tutor:%0AClass/Exam: ${encodeURIComponent(cls)}%0ASubject: ${encodeURIComponent(subj)}%0AMode: ${encodeURIComponent(mode)}%0ALocation: ${encodeURIComponent(loc)}`;
-        showToast('Saved inquiry! Opening WhatsApp & booking form...', 'success');
-        try { window.open(`https://wa.me/919675732501?text=${msg}`, '_blank'); } catch (err) {}
-        document.getElementById('book-now').scrollIntoView({ behavior: 'smooth' });
-      }
+        const url = `https://wa.me/919675732501?text=${msg}`;
 
-      function filterEcosystem(cat) {
+        // Synchronous window.open inside user gesture so Mobile Chrome NEVER blocks
+        try { window.open(url, '_blank'); } catch (err) {}
+        showToast('Inquiry saved! Opening WhatsApp...', 'success', url, 'WhatsApp →');
+        const bookEl = document.getElementById('book-now');
+        if (bookEl) bookEl.scrollIntoView({ behavior: 'smooth' });
+      };
+
+      window.handleParentSubmit = function (e) {
+        e.preventDefault();
+        const lead = {
+          id: 'l' + Date.now(),
+          date: new Date().toLocaleDateString('en-IN'),
+          student: document.getElementById('p-student').value.trim(),
+          grade: document.getElementById('p-grade').value,
+          subject: document.getElementById('p-subject').value.trim() || 'All Subjects',
+          mode: document.getElementById('p-mode').value,
+          location: document.getElementById('p-location').value.trim(),
+          phone: document.getElementById('p-phone').value.trim()
+        };
+        appState.leads.unshift(lead);
+        saveToCloud(); // Non-blocking background sync
+
+        const msg = `Hello Ravi Sir (ELITE CLASSES), Free Diagnostic Request:%0AStudent: ${encodeURIComponent(lead.student)}%0AGrade: ${encodeURIComponent(lead.grade)}%0ASubject: ${encodeURIComponent(lead.subject)}%0AMode: ${encodeURIComponent(lead.mode)}%0ALocation: ${encodeURIComponent(lead.location)}%0APhone: ${encodeURIComponent(lead.phone)}`;
+        const url = `https://wa.me/919675732501?text=${msg}`;
+
+        const waLink = document.getElementById('parent-wa-link');
+        const waBox = document.getElementById('parent-wa-box');
+        if (waLink) waLink.href = url;
+        if (waBox) waBox.classList.remove('hidden');
+
+        // Synchronous window.open inside user gesture
+        try { window.open(url, '_blank'); } catch (err) {}
+        showToast('Diagnostic Request Saved!', 'success', url, 'Open WhatsApp →');
+        e.target.reset();
+      };
+
+      window.handleTutorSubmit = function (e) {
+        e.preventDefault();
+        const tutor = {
+          id: 'tutor' + String(appState.tutors.length + 1).padStart(2, '0'),
+          name: document.getElementById('t-name').value.trim(),
+          qual: document.getElementById('t-qual').value.trim(),
+          subject: document.getElementById('t-subject').value,
+          mode: document.getElementById('t-mode').value,
+          area: document.getElementById('t-area').value.trim(),
+          phone: document.getElementById('t-phone').value.trim(),
+          rating: "4.9",
+          rate: 300
+        };
+        appState.tutors.unshift(tutor);
+        saveToCloud(); // Non-blocking background sync
+
+        const msg = `Hello Ravi Sir (ELITE CLASSES), Tutor Application:%0AName: ${encodeURIComponent(tutor.name)} (${encodeURIComponent(tutor.qual)})%0ASubject: ${encodeURIComponent(tutor.subject)}%0AArea: ${encodeURIComponent(tutor.area)}%0APhone: ${encodeURIComponent(tutor.phone)}`;
+        const url = `https://wa.me/919675732501?text=${msg}`;
+
+        const waLink = document.getElementById('tutor-wa-link');
+        const waBox = document.getElementById('tutor-wa-box');
+        if (waLink) waLink.href = url;
+        if (waBox) waBox.classList.remove('hidden');
+
+        // Synchronous window.open inside user gesture
+        try { window.open(url, '_blank'); } catch (err) {}
+        showToast('Tutor Application Added Live!', 'success', url, 'WhatsApp →');
+        e.target.reset();
+      };
+
+      /* -------------------------------------------------------------------
+         6. PUBLIC SECTIONS RENDERERS (ECOSYSTEM, POD, TUTORS, REELS, AREAS, FAQ)
+         ------------------------------------------------------------------- */
+      window.filterEcosystem = function (cat) {
         document.querySelectorAll('.eco-tab').forEach(btn => {
           btn.className = btn.dataset.cat === cat
             ? 'eco-tab px-4 py-2 rounded-xl text-xs font-bold btn-primary'
             : 'eco-tab px-4 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300';
         });
         const items = cat === 'all' ? ECOSYSTEM_PROGRAMS : ECOSYSTEM_PROGRAMS.filter(p => p.cat === cat);
-        document.getElementById('ecosystem-grid').innerHTML = items.map(p => `
+        const grid = document.getElementById('ecosystem-grid');
+        if (!grid) return;
+        grid.innerHTML = items.map(p => `
           <div class="bento-card rounded-3xl p-6 flex flex-col justify-between space-y-4">
             <div class="space-y-3">
               <div class="flex items-center justify-between">
@@ -1328,15 +1432,17 @@
             <a href="#book-now" class="text-xs font-bold text-indigoGlow hover:underline pt-1 inline-flex items-center gap-1">Book Free Diagnostic →</a>
           </div>
         `).join('');
-      }
+      };
 
-      function selectPodTab(key) {
+      window.selectPodTab = function (key) {
         ['g1_5', 'g6_8', 'g9_12', 'entrance'].forEach(k => {
           const el = document.getElementById(`pod-${k}`);
           if (el) el.className = k === key ? 'pod-tab px-3.5 py-2 rounded-xl text-xs font-bold btn-primary' : 'pod-tab px-3.5 py-2 rounded-xl text-xs font-bold surface-panel text-zinc-300';
         });
-        const pod = POD_DATA[key];
-        document.getElementById('pod-display').innerHTML = `
+        const pod = POD_DATA[key] || POD_DATA.g6_8;
+        const disp = document.getElementById('pod-display');
+        if (!disp) return;
+        disp.innerHTML = `
           <div>
             <h4 class="font-display font-bold text-lg text-white">${pod.title}</h4>
             <p class="text-xs text-zinc-400 mt-1">${pod.desc}</p>
@@ -1353,58 +1459,62 @@
             `).join('')}
           </div>
         `;
-      }
+      };
 
       function renderPublicTutors() {
         const grid = document.getElementById('public-tutors-grid');
         if (!grid) return;
-        grid.innerHTML = (appState.tutors || []).map(t => `
+        const tutors = toArray(appState.tutors, DEFAULT_STATE.tutors);
+        grid.innerHTML = tutors.map(t => `
           <div class="bento-card rounded-3xl p-5 flex flex-col justify-between gap-4">
             <div class="space-y-2.5">
               <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-3">
                   <div class="w-11 h-11 rounded-2xl bg-indigoGlow/20 text-indigoGlow font-display font-black text-sm flex items-center justify-center shrink-0">${(t.name || 'T').slice(0,2).toUpperCase()}</div>
                   <div>
-                    <h3 class="font-display font-bold text-sm sm:text-base text-white">${t.name}</h3>
-                    <p class="text-[11px] text-zinc-400">${t.qual}</p>
+                    <h3 class="font-display font-bold text-sm sm:text-base text-white">${t.name || 'Specialist Tutor'}</h3>
+                    <p class="text-[11px] text-zinc-400">${t.qual || ''}</p>
                   </div>
                 </div>
                 <span class="px-2.5 py-1 rounded-full bg-champagne/15 text-goldBright text-[11px] font-bold">★ ${t.rating || '4.9'}</span>
               </div>
               <div class="text-xs space-y-1 pt-1">
-                <p class="text-indigo-400 font-bold">📚 ${t.subject}</p>
-                <p class="text-zinc-400">📍 ${t.area} • ${t.mode}</p>
+                <p class="text-indigo-400 font-bold">📚 ${t.subject || ''}</p>
+                <p class="text-zinc-400">📍 ${t.area || 'Noida'} • ${t.mode || 'Home + Online'}</p>
               </div>
             </div>
-            <button type="button" onclick="bookTutorDemo('${(t.name || '').replace(/'/g, '')}', '${(t.subject || '').replace(/'/g, '')}')" class="w-full py-2.5 rounded-xl surface-panel hover:border-indigoGlow text-xs font-bold text-white transition">
+            <button type="button" onclick="window.bookTutorDemo('${(t.name || '').replace(/'/g, '')}', '${(t.subject || '').replace(/'/g, '')}')" class="w-full py-2.5 rounded-xl surface-panel hover:border-indigoGlow text-xs font-bold text-white transition">
               Book Free Demo With Tutor →
             </button>
           </div>
         `).join('');
       }
 
-      function bookTutorDemo(tutorName, subject) {
-        if (document.getElementById('p-subject')) document.getElementById('p-subject').value = `${subject} (Preferred: ${tutorName})`;
-        document.getElementById('book-now').scrollIntoView({ behavior: 'smooth' });
+      window.bookTutorDemo = function (tutorName, subject) {
+        const subjIn = document.getElementById('p-subject');
+        if (subjIn) subjIn.value = `${subject} (Preferred: ${tutorName})`;
+        const bookEl = document.getElementById('book-now');
+        if (bookEl) bookEl.scrollIntoView({ behavior: 'smooth' });
         showToast(`Selected ${tutorName} — complete your demo booking below!`, 'success');
-      }
+      };
 
       function renderPublicReels() {
         const grid = document.getElementById('public-reels-grid');
         if (!grid) return;
-        grid.innerHTML = (appState.reels || []).map(r => `
+        const reels = toArray(appState.reels, DEFAULT_STATE.reels);
+        grid.innerHTML = reels.map(r => `
           <div class="bento-card rounded-3xl p-5 flex flex-col justify-between gap-4">
             <div>
               <div class="flex items-center justify-between mb-3">
-                <span class="px-2.5 py-1 rounded-full bg-pink-500/15 text-pink-400 text-[10px] font-bold">${r.tag}</span>
-                <span class="text-[11px] text-zinc-400">${r.subject}</span>
+                <span class="px-2.5 py-1 rounded-full bg-pink-500/15 text-pink-400 text-[10px] font-bold">${r.tag || 'Reel'}</span>
+                <span class="text-[11px] text-zinc-400">${r.subject || ''}</span>
               </div>
               <div class="h-36 rounded-2xl bg-gradient-to-br from-indigo-950 via-zinc-900 to-black border border-white/10 flex flex-col items-center justify-center p-4 text-center">
                 <div class="w-11 h-11 rounded-full btn-gold flex items-center justify-center font-black text-base mb-2">▶</div>
-                <p class="font-display font-bold text-sm text-white keep-white">${r.title}</p>
+                <p class="font-display font-bold text-sm text-white keep-white">${r.title || ''}</p>
               </div>
             </div>
-            <a href="${r.url}" target="_blank" class="w-full py-2.5 rounded-xl surface-panel hover:border-indigoGlow text-center text-xs font-bold text-white transition">Watch Video / Reel →</a>
+            <a href="${r.url || '#'}" target="_blank" class="w-full py-2.5 rounded-xl surface-panel hover:border-indigoGlow text-center text-xs font-bold text-white transition">Watch Video / Reel →</a>
           </div>
         `).join('');
       }
@@ -1417,30 +1527,34 @@
         const strip = document.getElementById('locations-strip');
         if (!bar || !strip) return;
         bar.innerHTML = AREA_CATEGORIES.map(c => `
-          <button type="button" onclick="selectAreaCategory('${c.id}')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition ${activeAreaCat === c.id ? 'btn-primary' : 'surface-panel text-zinc-300 hover:border-indigoGlow'}">
+          <button type="button" onclick="window.selectAreaCategory('${c.id}')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition ${activeAreaCat === c.id ? 'btn-primary' : 'surface-panel text-zinc-300 hover:border-indigoGlow'}">
             ${c.label}
           </button>
         `).join('');
         const current = AREA_CATEGORIES.find(c => c.id === activeAreaCat) || AREA_CATEGORIES[0];
         strip.innerHTML = current.areas.map(loc => `
-          <button type="button" onclick="pickLocation('${loc.replace(/'/g, "\\'")}')" class="px-3.5 py-2 rounded-xl border transition ${selectedAreaName === loc ? 'btn-gold border-goldBright font-extrabold' : 'surface-panel text-zinc-300 hover:border-indigoGlow hover:text-white'}">
+          <button type="button" onclick="window.pickLocation('${loc.replace(/'/g, "\\'")}')" class="px-3.5 py-2 rounded-xl border transition ${selectedAreaName === loc ? 'btn-gold border-goldBright font-extrabold' : 'surface-panel text-zinc-300 hover:border-indigoGlow hover:text-white'}">
             📍 ${loc}
           </button>
         `).join('');
       }
-      function selectAreaCategory(id) { activeAreaCat = id; renderAreaTabs(); }
-      function pickLocation(loc) {
+      window.selectAreaCategory = function (id) { activeAreaCat = id; renderAreaTabs(); };
+      window.pickLocation = function (loc) {
         selectedAreaName = loc;
         renderAreaTabs();
-        if (document.getElementById('p-location')) document.getElementById('p-location').value = loc;
-        document.getElementById('book-now').scrollIntoView({ behavior: 'smooth' });
+        const locIn = document.getElementById('p-location');
+        if (locIn) locIn.value = loc;
+        const bookEl = document.getElementById('book-now');
+        if (bookEl) bookEl.scrollIntoView({ behavior: 'smooth' });
         showToast(`📍 Selected ${loc} — Complete your Free Demo booking!`, 'success');
-      }
+      };
 
       function renderFaqs() {
-        document.getElementById('faq-accordion').innerHTML = FAQS.map((f, i) => `
+        const acc = document.getElementById('faq-accordion');
+        if (!acc) return;
+        acc.innerHTML = FAQS.map((f, i) => `
           <div class="bento-card rounded-2xl overflow-hidden">
-            <button type="button" onclick="toggleFaq(${i})" class="w-full px-5 py-4 text-left flex items-center justify-between gap-3">
+            <button type="button" onclick="window.toggleFaq(${i})" class="w-full px-5 py-4 text-left flex items-center justify-between gap-3">
               <span class="font-bold text-xs sm:text-sm text-white">${f.q}</span>
               <span id="faq-icon-${i}" class="text-indigoGlow font-black text-lg shrink-0">+</span>
             </button>
@@ -1448,70 +1562,27 @@
           </div>
         `).join('');
       }
-      function toggleFaq(i) {
+      window.toggleFaq = function (i) {
         const ans = document.getElementById(`faq-ans-${i}`);
         const icon = document.getElementById(`faq-icon-${i}`);
+        if (!ans || !icon) return;
         const isHidden = ans.classList.toggle('hidden');
         icon.textContent = isHidden ? '+' : '−';
-      }
+      };
 
-      function setCurrency(curr) {
+      window.setCurrency = function (curr) {
         document.querySelectorAll('[data-inr]').forEach(el => {
           el.innerHTML = (curr === 'INR' ? el.dataset.inr : el.dataset.usd) + '<span class="text-xs font-normal text-zinc-400"> / month</span>';
         });
-        document.getElementById('btn-inr').className = curr === 'INR' ? 'px-4 py-2 rounded-xl text-xs font-bold btn-primary' : 'px-4 py-2 rounded-xl text-xs font-bold text-zinc-400';
-        document.getElementById('btn-usd').className = curr === 'USD' ? 'px-4 py-2 rounded-xl text-xs font-bold btn-primary' : 'px-4 py-2 rounded-xl text-xs font-bold text-zinc-400';
-      }
+        const btnInr = document.getElementById('btn-inr');
+        const btnUsd = document.getElementById('btn-usd');
+        if (btnInr) btnInr.className = curr === 'INR' ? 'px-4 py-2 rounded-xl text-xs font-bold btn-primary' : 'px-4 py-2 rounded-xl text-xs font-bold text-zinc-400';
+        if (btnUsd) btnUsd.className = curr === 'USD' ? 'px-4 py-2 rounded-xl text-xs font-bold btn-primary' : 'px-4 py-2 rounded-xl text-xs font-bold text-zinc-400';
+      };
 
-      /* 6. BOOKING & TUTOR RECRUITMENT FORMS */
-      async function handleParentSubmit(e) {
-        e.preventDefault();
-        const lead = {
-          id: 'l' + Date.now(),
-          date: new Date().toLocaleDateString('en-IN'),
-          student: document.getElementById('p-student').value.trim(),
-          grade: document.getElementById('p-grade').value,
-          subject: document.getElementById('p-subject').value.trim() || 'All Subjects',
-          mode: document.getElementById('p-mode').value,
-          location: document.getElementById('p-location').value.trim(),
-          phone: document.getElementById('p-phone').value.trim()
-        };
-        appState.leads.unshift(lead);
-        await saveToCloud();
-        const msg = `Hello Ravi Sir (ELITE CLASSES), Free Diagnostic Request:%0AStudent: ${encodeURIComponent(lead.student)}%0AGrade: ${encodeURIComponent(lead.grade)}%0ASubject: ${encodeURIComponent(lead.subject)}%0AMode: ${encodeURIComponent(lead.mode)}%0ALocation: ${encodeURIComponent(lead.location)}%0APhone: ${encodeURIComponent(lead.phone)}`;
-        const url = `https://wa.me/919675732501?text=${msg}`;
-        document.getElementById('parent-wa-link').href = url;
-        document.getElementById('parent-wa-box').classList.remove('hidden');
-        showToast('Diagnostic Request Synced to Admin CMS!', 'success');
-        try { window.open(url, '_blank'); } catch (err) {}
-        e.target.reset();
-      }
-
-      async function handleTutorSubmit(e) {
-        e.preventDefault();
-        const tutor = {
-          id: 'tutor' + String(appState.tutors.length + 1).padStart(2, '0'),
-          name: document.getElementById('t-name').value.trim(),
-          qual: document.getElementById('t-qual').value.trim(),
-          subject: document.getElementById('t-subject').value,
-          mode: document.getElementById('t-mode').value,
-          area: document.getElementById('t-area').value.trim(),
-          phone: document.getElementById('t-phone').value.trim(),
-          rating: "4.9",
-          rate: 300
-        };
-        appState.tutors.unshift(tutor);
-        await saveToCloud();
-        const msg = `Hello Ravi Sir (ELITE CLASSES), Tutor Application:%0AName: ${encodeURIComponent(tutor.name)} (${encodeURIComponent(tutor.qual)})%0ASubject: ${encodeURIComponent(tutor.subject)}%0AArea: ${encodeURIComponent(tutor.area)}%0APhone: ${encodeURIComponent(tutor.phone)}`;
-        const url = `https://wa.me/919675732501?text=${msg}`;
-        document.getElementById('tutor-wa-link').href = url;
-        document.getElementById('tutor-wa-box').classList.remove('hidden');
-        showToast('Tutor Application Added to Directory!', 'success');
-        try { window.open(url, '_blank'); } catch (err) {}
-        e.target.reset();
-      }
-
-      /* 7. ZERO-BUFFERING LIVE CLASSROOM STUDIO */
+      /* -------------------------------------------------------------------
+         7. ZERO-BUFFERING LIVE CLASSROOM STUDIO
+         ------------------------------------------------------------------- */
       let currentRoomClean = 'EliteClassesLive', currentBitrate = '1500';
       let vdoUrl = '', wboUrl = '', bCtx = null, drawing = false, bColor = '#FFFFFF', bErase = false, bHighlight = false, bGrid = true;
       let boardHistory = [];
@@ -1521,14 +1592,14 @@
         return `https://vdo.ninja/?room=${clean}&wc&screenshare&chat&aec=1&ns=1&ag=1&buffer=0&codec=vp9&bitrate=${bitrate}&autostart`;
       }
 
-      function setLiveQuality(bitrate) {
+      window.setLiveQuality = function (bitrate) {
         currentBitrate = bitrate;
         vdoUrl = buildVdoUrl(currentRoomClean, currentBitrate);
         const vf = document.getElementById('video-room-frame');
         if (vf && !vf.classList.contains('hidden')) vf.src = vdoUrl;
         const label = bitrate === '600' ? '360p Low-Data' : bitrate === '3000' ? '1080p Ultra' : '720p HD';
         showToast(`Live Video Quality: ${label}`, 'success');
-      }
+      };
 
       function drawBoardBg() {
         const c = document.getElementById('live-whiteboard-canvas');
@@ -1546,8 +1617,10 @@
       function saveBoardSnapshot() {
         const c = document.getElementById('live-whiteboard-canvas');
         if (!c) return;
-        boardHistory.push(c.toDataURL());
-        if (boardHistory.length > 20) boardHistory.shift();
+        try {
+          boardHistory.push(c.toDataURL());
+          if (boardHistory.length > 20) boardHistory.shift();
+        } catch (e) {}
       }
 
       function initBoardCanvas() {
@@ -1591,16 +1664,16 @@
         }
       }
 
-      function setBoardColor(col, isHighlight = false) { bColor = col; bErase = false; bHighlight = isHighlight; }
-      function toggleBoardEraser() { bErase = !bErase; bHighlight = false; showToast(bErase ? 'Eraser Active' : 'Pen Active'); }
-      function undoBoardStroke() {
+      window.setBoardColor = function (col, isHighlight = false) { bColor = col; bErase = false; bHighlight = isHighlight; };
+      window.toggleBoardEraser = function () { bErase = !bErase; bHighlight = false; showToast(bErase ? 'Eraser Active' : 'Pen Active'); };
+      window.undoBoardStroke = function () {
         if (boardHistory.length <= 1) return showToast('Nothing to undo');
         boardHistory.pop();
         const img = new Image();
         img.onload = () => { const c = document.getElementById('live-whiteboard-canvas'); bCtx.clearRect(0, 0, c.width, c.height); bCtx.drawImage(img, 0, 0); };
         img.src = boardHistory[boardHistory.length - 1];
-      }
-      function saveBoardPng() {
+      };
+      window.saveBoardPng = function () {
         const c = document.getElementById('live-whiteboard-canvas');
         if (!c) return;
         const a = document.createElement('a');
@@ -1608,13 +1681,13 @@
         a.href = c.toDataURL('image/png');
         a.click();
         showToast('Whiteboard saved as PNG!', 'success');
-      }
-      function toggleBoardGrid() { bGrid = !bGrid; drawBoardBg(); saveBoardSnapshot(); }
-      function clearLiveBoard() { drawBoardBg(); saveBoardSnapshot(); showToast('Board cleared'); }
-      function toggleLivePollBox() { document.getElementById('live-poll-overlay').classList.toggle('hidden'); }
-      function voteLivePoll(i) { pollCounts[i]++; document.getElementById(`poll-v${i}`).textContent = pollCounts[i]; showToast('Vote recorded!', 'success'); }
+      };
+      window.toggleBoardGrid = function () { bGrid = !bGrid; drawBoardBg(); saveBoardSnapshot(); };
+      window.clearLiveBoard = function () { drawBoardBg(); saveBoardSnapshot(); showToast('Board cleared'); };
+      window.toggleLivePollBox = function () { document.getElementById('live-poll-overlay').classList.toggle('hidden'); };
+      window.voteLivePoll = function (i) { pollCounts[i]++; document.getElementById(`poll-v${i}`).textContent = pollCounts[i]; showToast('Vote recorded!', 'success'); };
 
-      function launchLiveVideoRoom(roomName, title) {
+      window.launchLiveVideoRoom = function (roomName, title) {
         currentRoomClean = (roomName || 'EliteClassesLive').replace(/[^a-zA-Z0-9]/g, '');
         document.getElementById('video-room-title').textContent = title || 'ELITE CLASSES Live Studio';
         const qSel = document.getElementById('live-quality-select');
@@ -1622,11 +1695,11 @@
         vdoUrl = buildVdoUrl(currentRoomClean, currentBitrate);
         wboUrl = `https://wbo.ophir.dev/boards/EliteClassesNoida_${currentRoomClean}`;
         document.getElementById('video-room-modal').classList.remove('hidden');
-        switchClassMode('canvas');
+        window.switchClassMode('canvas');
         setTimeout(initBoardCanvas, 50);
-      }
+      };
 
-      function switchClassMode(mode) {
+      window.switchClassMode = function (mode) {
         const cw = document.getElementById('live-canvas-wrapper');
         const iw = document.getElementById('live-iframe-wrapper');
         const vf = document.getElementById('video-room-frame');
@@ -1645,77 +1718,128 @@
           if (mode === 'board') { vf.classList.add('hidden'); bf.classList.remove('hidden'); bf.style.height = '100%'; if (!bf.src.includes('wbo.ophir.dev')) bf.src = wboUrl; }
           if (mode === 'split') { vf.classList.remove('hidden'); vf.style.height = '45%'; bf.classList.remove('hidden'); bf.style.height = '55%'; if (!vf.src.includes('vdo.ninja')) vf.src = vdoUrl; if (!bf.src.includes('wbo.ophir.dev')) bf.src = wboUrl; }
         }
-      }
+      };
 
-      function closeVideoRoom() {
+      window.closeVideoRoom = function () {
         document.getElementById('video-room-frame').src = 'about:blank';
         document.getElementById('whiteboard-room-frame').src = 'about:blank';
         document.getElementById('video-room-modal').classList.add('hidden');
-      }
+      };
 
-      /* 8. PORTAL AUTH & ROLE ROUTING */
+      /* -------------------------------------------------------------------
+         8. 100% SYNCHRONOUS INSTANT LOGIN & PORTAL ROUTING (0ms DELAY)
+         ------------------------------------------------------------------- */
       let currentRole = 'parent', loggedInUser = null;
       let activeAdminTab = 'banners', activeStudentTab = 'overview', activeLab = 'bohr';
       let editCtx = {};
 
-      function openPortalModal() {
+      window.openPortalModal = function () {
         document.getElementById('portal-modal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
-      }
-      function closePortalModal() {
-        stopLabAnim(); stopCbtTimer();
+      };
+
+      window.closePortalModal = function () {
+        stopLabAnim();
+        stopCbtTimer();
         document.getElementById('portal-modal').classList.add('hidden');
         document.body.style.overflow = '';
-      }
+      };
 
-      function selectRole(role) {
+      window.selectRole = function (role) {
         currentRole = role;
         ['admin', 'parent', 'tutor'].forEach(r => {
           const el = document.getElementById(`role-${r}`);
           if (el) el.className = r === role ? 'py-2.5 rounded-xl btn-primary font-bold text-xs' : 'py-2.5 rounded-xl surface-panel text-zinc-300 font-bold text-xs';
         });
-        document.getElementById('portal-id').value = role === 'admin' ? 'admin' : role === 'parent' ? (appState.students[0]?.id || 'shivangi09') : (appState.tutors[0]?.id || 'tutor01');
-        document.getElementById('portal-pass').value = 'elite123';
-      }
+        const students = toArray(appState.students, DEFAULT_STATE.students);
+        const tutors = toArray(appState.tutors, DEFAULT_STATE.tutors);
+        const idInput = document.getElementById('portal-id');
+        const passInput = document.getElementById('portal-pass');
+        if (idInput) idInput.value = role === 'admin' ? 'admin' : role === 'parent' ? (students[0]?.id || 'shivangi09') : (tutors[0]?.id || 'tutor01');
+        if (passInput) passInput.value = 'elite123';
+      };
 
-      function quickDemoLogin(role) { openPortalModal(); selectRole(role); loginPortal(); }
-      function openAdminTabDirect(tabId) { activeAdminTab = tabId; quickDemoLogin('admin'); }
+      window.quickDemoLogin = function (role) {
+        window.openPortalModal();
+        window.selectRole(role);
+        window.loginPortal();
+      };
 
-      async function loginPortal() {
-        await syncFromCloud();
-        const uid = document.getElementById('portal-id').value.trim().toLowerCase();
-        const pass = document.getElementById('portal-pass').value.trim();
+      window.openAdminTabDirect = function (tabId) {
+        activeAdminTab = tabId;
+        window.quickDemoLogin('admin');
+      };
+
+      window.openStudentCbtDirect = function () {
+        activeStudentTab = 'cbt';
+        window.quickDemoLogin('parent');
+      };
+
+      /**
+       * 100% SYNCHRONOUS LOGIN — NEVER awaits network before showing dashboard.
+       */
+      window.loginPortal = function () {
+        const uid = (document.getElementById('portal-id')?.value || '').trim().toLowerCase();
+        const pass = (document.getElementById('portal-pass')?.value || '').trim();
+        const students = toArray(appState.students, DEFAULT_STATE.students);
+        const tutors = toArray(appState.tutors, DEFAULT_STATE.tutors);
 
         if (currentRole === 'admin') {
-          if (uid === 'admin' && pass === 'elite123') loggedInUser = { name: 'Ravi Yadav (Founder)' };
-          else return showToast('Invalid Admin login! Use admin / elite123', 'error');
+          if (uid === 'admin' && pass === 'elite123') {
+            loggedInUser = { id: 'admin', name: 'Ravi Yadav (Founder)' };
+          } else {
+            showToast('Invalid Admin login! Use admin / elite123', 'error');
+            return;
+          }
         } else if (currentRole === 'parent') {
-          const s = appState.students.find(x => x.id.toLowerCase() === uid && x.pass === pass);
-          if (s) loggedInUser = s;
-          else return showToast('Invalid Student ID/Pass! Try shivangi09 / elite123', 'error');
+          const s = students.find(x => (x.id || '').toLowerCase() === uid && (x.pass || 'elite123') === pass);
+          if (s) {
+            loggedInUser = s;
+          } else if (uid === 'shivangi09' && pass === 'elite123') {
+            loggedInUser = DEFAULT_STATE.students[0];
+          } else {
+            showToast('Invalid Student ID/Pass! Try shivangi09 / elite123', 'error');
+            return;
+          }
         } else {
-          const t = appState.tutors.find(x => x.id.toLowerCase() === uid) || { id: uid, name: 'Er. Rahul Verma', subject: 'STEM' };
-          if (pass === 'elite123') loggedInUser = t;
-          else return showToast('Invalid Tutor passcode! Use elite123', 'error');
+          const t = tutors.find(x => (x.id || '').toLowerCase() === uid) || { id: uid || 'tutor01', name: 'Er. Rahul Verma', subject: 'STEM' };
+          if (pass === 'elite123') {
+            loggedInUser = t;
+          } else {
+            showToast('Invalid Tutor passcode! Use elite123', 'error');
+            return;
+          }
         }
 
+        // Switch views IMMEDIATELY (0ms)
         document.getElementById('portal-login-view').classList.add('hidden');
         document.getElementById('portal-dashboard-view').classList.remove('hidden');
         document.getElementById('btn-portal-sync').classList.remove('hidden');
         document.getElementById('btn-portal-logout').classList.remove('hidden');
         renderDashboard();
-      }
 
-      async function refreshCloudData() { await syncFromCloud(); renderDashboard(); showToast('Cloud synced!', 'success'); }
+        // Sync latest Firebase data silently in background
+        syncFromCloud();
+      };
 
-      function logoutPortal() {
-        stopLabAnim(); stopCbtTimer();
-        loggedInUser = null; editCtx = {};
+      window.refreshCloudData = function () {
+        showToast('Syncing with Firebase Cloud...', 'info');
+        syncFromCloud().then(() => {
+          renderDashboard();
+          showToast('Cloud synced!', 'success');
+        });
+      };
+
+      window.logoutPortal = function () {
+        stopLabAnim();
+        stopCbtTimer();
+        loggedInUser = null;
+        editCtx = {};
         document.getElementById('portal-dashboard-view').classList.add('hidden');
         document.getElementById('portal-login-view').classList.remove('hidden');
         document.getElementById('btn-portal-sync').classList.add('hidden');
         document.getElementById('btn-portal-logout').classList.add('hidden');
-      }
+      };
 
       function renderDashboard() {
         stopLabAnim();
@@ -1723,60 +1847,68 @@
         const sub = document.getElementById('portal-sub');
         const tabs = document.getElementById('dash-tabs');
         const body = document.getElementById('dash-body');
+        if (!body) return;
 
-        if (currentRole === 'admin') {
-          title.textContent = 'Founder Admin CMS — Full Add / Edit / Delete';
-          sub.textContent = `Posters: ${appState.banners.length} • Students: ${appState.students.length} • Tutors: ${appState.tutors.length} • PDFs: ${appState.notesVault.length}`;
-          const adminTabs = [
-            { id: 'banners', label: '🎨 Slide Posters' },
-            { id: 'students', label: '🎓 Students' },
-            { id: 'tutors', label: '👨‍🏫 Tutors' },
-            { id: 'notes', label: '📄 PDFs/Notes' },
-            { id: 'reels', label: '🎬 Reels' },
-            { id: 'hwcbt', label: '📝 HW & CBT' },
-            { id: 'leads', label: '📊 Leads & Cloud' }
-          ];
-          tabs.innerHTML = adminTabs.map(t => `<button type="button" onclick="switchAdminTab('${t.id}')" class="px-3 py-2 rounded-xl text-xs font-bold ${activeAdminTab === t.id ? 'btn-primary' : 'surface-panel text-zinc-300'}">${t.label}</button>`).join('');
-          renderAdminCMS(body);
-        } else if (currentRole === 'parent') {
-          const stu = appState.students.find(s => s.id === loggedInUser.id) || loggedInUser;
-          title.textContent = `${stu.name} — Student Super-App`;
-          sub.textContent = `${stu.grade} • 🔥 ${stu.streak || 14}-Day Streak • ⚡ ${stu.xp || 1480} XP`;
-          const stuTabs = [
-            { id: 'overview', label: '🏠 Overview, Notes & HW' },
-            { id: 'cbt', label: '📝 CBT Exam Engine' },
-            { id: 'lab', label: '⚛️ 3D STEM Labs' },
-            { id: 'cards', label: '🃏 Flip Flashcards' }
-          ];
-          tabs.innerHTML = stuTabs.map(t => `<button type="button" onclick="switchStudentTab('${t.id}')" class="px-3.5 py-2 rounded-xl text-xs font-bold ${activeStudentTab === t.id ? 'btn-primary' : 'surface-panel text-zinc-300'}">${t.label}</button>`).join('');
-          renderStudentApp(stu, body);
-        } else {
-          title.textContent = `${loggedInUser.name} — Specialist Tutor Portal`;
-          sub.textContent = 'Live Studio + Daily Attendance & Homework Logger';
-          tabs.innerHTML = '';
-          renderTutorApp(body);
+        try {
+          if (currentRole === 'admin') {
+            title.textContent = 'Founder Admin CMS — Full Add / Edit / Delete';
+            sub.textContent = `Posters: ${appState.banners.length} • Students: ${appState.students.length} • Tutors: ${appState.tutors.length} • PDFs: ${appState.notesVault.length}`;
+            const adminTabs = [
+              { id: 'banners', label: '🎨 Slide Posters' },
+              { id: 'students', label: '🎓 Students' },
+              { id: 'tutors', label: '👨‍🏫 Tutors' },
+              { id: 'notes', label: '📄 PDFs/Notes' },
+              { id: 'reels', label: '🎬 Reels' },
+              { id: 'hwcbt', label: '📝 HW & CBT' },
+              { id: 'leads', label: '📊 Leads & Cloud' }
+            ];
+            tabs.innerHTML = adminTabs.map(t => `<button type="button" onclick="window.switchAdminTab('${t.id}')" class="px-3 py-2 rounded-xl text-xs font-bold ${activeAdminTab === t.id ? 'btn-primary' : 'surface-panel text-zinc-300'}">${t.label}</button>`).join('');
+            renderAdminCMS(body);
+          } else if (currentRole === 'parent') {
+            const students = toArray(appState.students, DEFAULT_STATE.students);
+            const stu = students.find(s => s.id === loggedInUser?.id) || loggedInUser || DEFAULT_STATE.students[0];
+            title.textContent = `${stu.name || 'Student'} — Student Super-App`;
+            sub.textContent = `${stu.grade || ''} • 🔥 ${stu.streak || 14}-Day Streak • ⚡ ${stu.xp || 1480} XP`;
+            const stuTabs = [
+              { id: 'overview', label: '🏠 Overview, Notes & HW' },
+              { id: 'cbt', label: '📝 CBT Exam Engine' },
+              { id: 'lab', label: '⚛️ 3D STEM Labs' },
+              { id: 'cards', label: '🃏 Flip Flashcards' }
+            ];
+            tabs.innerHTML = stuTabs.map(t => `<button type="button" onclick="window.switchStudentTab('${t.id}')" class="px-3.5 py-2 rounded-xl text-xs font-bold ${activeStudentTab === t.id ? 'btn-primary' : 'surface-panel text-zinc-300'}">${t.label}</button>`).join('');
+            renderStudentApp(stu, body);
+          } else {
+            title.textContent = `${loggedInUser?.name || 'Specialist Tutor'} — Tutor Portal`;
+            sub.textContent = 'Live Studio + Daily Attendance & Homework Logger';
+            tabs.innerHTML = '';
+            renderTutorApp(body);
+          }
+        } catch (err) {
+          body.innerHTML = `<div class="p-6 rounded-2xl surface-panel text-center space-y-3"><p class="text-sm font-bold text-red-400">Dashboard recovered from a data mismatch.</p><button type="button" onclick="window.refreshCloudData()" class="px-4 py-2 rounded-xl btn-primary text-xs font-bold">↻ Reload Cloud Data</button></div>`;
         }
       }
 
-      function switchAdminTab(t) { activeAdminTab = t; editCtx = {}; renderDashboard(); }
-      function switchStudentTab(t) { activeStudentTab = t; renderDashboard(); }
+      window.switchAdminTab = function (t) { activeAdminTab = t; editCtx = {}; renderDashboard(); };
+      window.switchStudentTab = function (t) { activeStudentTab = t; renderDashboard(); };
 
-      /* 9. FOUNDER ADMIN CMS (FULL ADD / EDIT / DELETE) */
+      /* -------------------------------------------------------------------
+         9. FOUNDER ADMIN CMS (FULL ADD / EDIT / DELETE)
+         ------------------------------------------------------------------- */
       function renderAdminCMS(el) {
         if (activeAdminTab === 'banners') {
           const eb = editCtx.bannerId ? appState.banners.find(x => x.id === editCtx.bannerId) : null;
           el.innerHTML = `
             <div class="grid lg:grid-cols-12 gap-5 text-xs">
-              <form onsubmit="saveBannerForm(event)" class="lg:col-span-5 p-5 rounded-2xl surface-panel space-y-3">
+              <form onsubmit="window.saveBannerForm(event)" class="lg:col-span-5 p-5 rounded-2xl surface-panel space-y-3">
                 <div class="flex justify-between items-center">
                   <p class="font-bold text-goldBright text-sm">${eb ? '✏️ Edit Slide Poster' : '+ Add Designer Slide Poster'}</p>
-                  ${eb ? `<button type="button" onclick="editCtx={};renderDashboard()" class="text-zinc-400 underline">Cancel</button>` : ''}
+                  ${eb ? `<button type="button" onclick="window.cancelEdit()" class="text-zinc-400 underline">Cancel</button>` : ''}
                 </div>
-                <input id="b-badge" required value="${eb ? eb.badge : ''}" placeholder="Top Pill Badge *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
-                <input id="b-headline" required value="${eb ? eb.headline : ''}" placeholder="Main Headline *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
-                <textarea id="b-subtext" required rows="2" placeholder="Subtext *" class="w-full px-3 py-2.5 rounded-xl input-clean">${eb ? eb.subtext : ''}</textarea>
+                <input id="b-badge" required value="${eb ? (eb.badge || '') : ''}" placeholder="Top Pill Badge *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
+                <input id="b-headline" required value="${eb ? (eb.headline || '') : ''}" placeholder="Main Headline *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
+                <textarea id="b-subtext" required rows="2" placeholder="Subtext *" class="w-full px-3 py-2.5 rounded-xl input-clean">${eb ? (eb.subtext || '') : ''}</textarea>
                 <div class="grid grid-cols-2 gap-2">
-                  <input id="b-cta" value="${eb ? eb.ctaText : 'Book Free Demo →'}" placeholder="Button Text" class="px-3 py-2.5 rounded-xl input-clean" />
+                  <input id="b-cta" value="${eb ? (eb.ctaText || '') : 'Book Free Demo →'}" placeholder="Button Text" class="px-3 py-2.5 rounded-xl input-clean" />
                   <input id="b-link" value="${eb ? (eb.ctaLink || '#book-now') : '#book-now'}" placeholder="Button Link" class="px-3 py-2.5 rounded-xl input-clean" />
                 </div>
                 <input id="b-img" value="${eb ? (eb.imageUrl || '') : ''}" placeholder="Optional Poster Image URL (blank = luxury gradient)" class="w-full px-3 py-2.5 rounded-xl input-clean" />
@@ -1788,8 +1920,8 @@
                   <div class="p-3 rounded-xl bg-zinc-900/80 flex justify-between items-start gap-2">
                     <div><p class="font-bold text-white">${b.headline}</p><p class="text-zinc-400">${b.badge}</p></div>
                     <div class="flex gap-1.5 shrink-0">
-                      <button type="button" onclick="editItem('bannerId','${b.id}')" class="px-2.5 py-1 rounded-lg bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button>
-                      <button type="button" onclick="deleteItem('banners','${b.id}')" class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-bold">Delete</button>
+                      <button type="button" onclick="window.editItem('bannerId','${b.id}')" class="px-2.5 py-1 rounded-lg bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button>
+                      <button type="button" onclick="window.deleteItem('banners','${b.id}')" class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-bold">Delete</button>
                     </div>
                   </div>
                 `).join('')}
@@ -1800,26 +1932,26 @@
           const es = editCtx.studentId ? appState.students.find(x => x.id === editCtx.studentId) : null;
           el.innerHTML = `
             <div class="grid lg:grid-cols-12 gap-5 text-xs">
-              <form onsubmit="saveStudentForm(event)" class="lg:col-span-5 p-5 rounded-2xl surface-panel space-y-2.5">
+              <form onsubmit="window.saveStudentForm(event)" class="lg:col-span-5 p-5 rounded-2xl surface-panel space-y-2.5">
                 <div class="flex justify-between items-center">
                   <p class="font-bold text-indigo-400 text-sm">${es ? '✏️ Edit Student' : '+ Enroll Student'}</p>
-                  ${es ? `<button type="button" onclick="editCtx={};renderDashboard()" class="text-zinc-400 underline">Cancel</button>` : ''}
+                  ${es ? `<button type="button" onclick="window.cancelEdit()" class="text-zinc-400 underline">Cancel</button>` : ''}
                 </div>
                 <div class="grid grid-cols-2 gap-2">
-                  <input id="s-name" required value="${es ? es.name : ''}" placeholder="Student Name *" class="px-3 py-2 rounded-xl input-clean" />
-                  <input id="s-grade" required value="${es ? es.grade : ''}" placeholder="Class / Exam *" class="px-3 py-2 rounded-xl input-clean" />
+                  <input id="s-name" required value="${es ? (es.name || '') : ''}" placeholder="Student Name *" class="px-3 py-2 rounded-xl input-clean" />
+                  <input id="s-grade" required value="${es ? (es.grade || '') : ''}" placeholder="Class / Exam *" class="px-3 py-2 rounded-xl input-clean" />
                 </div>
                 <div class="grid grid-cols-2 gap-2">
-                  <input id="s-id" required value="${es ? es.id : ''}" ${es ? 'readonly' : ''} placeholder="Login ID *" class="px-3 py-2 rounded-xl input-clean" />
-                  <input id="s-pass" required value="${es ? es.pass : 'elite123'}" placeholder="Passcode *" class="px-3 py-2 rounded-xl input-clean" />
+                  <input id="s-id" required value="${es ? (es.id || '') : ''}" ${es ? 'readonly' : ''} placeholder="Login ID *" class="px-3 py-2 rounded-xl input-clean" />
+                  <input id="s-pass" required value="${es ? (es.pass || 'elite123') : 'elite123'}" placeholder="Passcode *" class="px-3 py-2 rounded-xl input-clean" />
                 </div>
-                <input id="s-cluster" required value="${es ? es.cluster : ''}" placeholder="Sector / City *" class="w-full px-3 py-2 rounded-xl input-clean" />
+                <input id="s-cluster" required value="${es ? (es.cluster || '') : ''}" placeholder="Sector / City *" class="w-full px-3 py-2 rounded-xl input-clean" />
                 <div class="grid grid-cols-2 gap-2">
-                  <input id="s-stem" value="${es ? es.stemTutor : ''}" placeholder="STEM Tutor" class="px-3 py-2 rounded-xl input-clean" />
-                  <input id="s-hum" value="${es ? es.humTutor : ''}" placeholder="Humanities Tutor" class="px-3 py-2 rounded-xl input-clean" />
+                  <input id="s-stem" value="${es ? (es.stemTutor || '') : ''}" placeholder="STEM Tutor" class="px-3 py-2 rounded-xl input-clean" />
+                  <input id="s-hum" value="${es ? (es.humTutor || '') : ''}" placeholder="Humanities Tutor" class="px-3 py-2 rounded-xl input-clean" />
                 </div>
-                <input id="s-sched" value="${es ? es.schedule : ''}" placeholder="Schedule" class="w-full px-3 py-2 rounded-xl input-clean" />
-                <input id="s-fee" value="${es ? es.feeStatus : 'Paid'}" placeholder="Fee Status" class="w-full px-3 py-2 rounded-xl input-clean" />
+                <input id="s-sched" value="${es ? (es.schedule || '') : ''}" placeholder="Schedule" class="w-full px-3 py-2 rounded-xl input-clean" />
+                <input id="s-fee" value="${es ? (es.feeStatus || 'Paid') : 'Paid'}" placeholder="Fee Status" class="w-full px-3 py-2 rounded-xl input-clean" />
                 <button type="submit" class="w-full py-3 rounded-xl btn-primary font-bold">${es ? 'Update Student' : 'Enroll Student'}</button>
               </form>
               <div class="lg:col-span-7 p-5 rounded-2xl surface-panel space-y-2.5">
@@ -1828,8 +1960,8 @@
                   <div class="p-3 rounded-xl bg-zinc-900/80 flex justify-between items-center gap-2">
                     <div><p class="font-bold text-white">${s.name} (${s.id})</p><p class="text-zinc-400">${s.grade} • ${s.feeStatus}</p></div>
                     <div class="flex gap-1.5 shrink-0">
-                      <button type="button" onclick="editItem('studentId','${s.id}')" class="px-2.5 py-1 rounded-lg bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button>
-                      <button type="button" onclick="deleteItem('students','${s.id}')" class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-bold">Delete</button>
+                      <button type="button" onclick="window.editItem('studentId','${s.id}')" class="px-2.5 py-1 rounded-lg bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button>
+                      <button type="button" onclick="window.deleteItem('students','${s.id}')" class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-bold">Delete</button>
                     </div>
                   </div>
                 `).join('')}
@@ -1840,17 +1972,17 @@
           const et = editCtx.tutorId ? appState.tutors.find(x => x.id === editCtx.tutorId) : null;
           el.innerHTML = `
             <div class="grid lg:grid-cols-12 gap-5 text-xs">
-              <form onsubmit="saveTutorForm(event)" class="lg:col-span-5 p-5 rounded-2xl surface-panel space-y-2.5">
+              <form onsubmit="window.saveTutorForm(event)" class="lg:col-span-5 p-5 rounded-2xl surface-panel space-y-2.5">
                 <div class="flex justify-between items-center">
                   <p class="font-bold text-emerald-400 text-sm">${et ? '✏️ Edit Tutor' : '+ Add Verified Tutor'}</p>
-                  ${et ? `<button type="button" onclick="editCtx={};renderDashboard()" class="text-zinc-400 underline">Cancel</button>` : ''}
+                  ${et ? `<button type="button" onclick="window.cancelEdit()" class="text-zinc-400 underline">Cancel</button>` : ''}
                 </div>
-                <input id="tu-name" required value="${et ? et.name : ''}" placeholder="Tutor Name *" class="w-full px-3 py-2 rounded-xl input-clean" />
-                <input id="tu-qual" required value="${et ? et.qual : ''}" placeholder="Qualification &amp; Exp *" class="w-full px-3 py-2 rounded-xl input-clean" />
-                <input id="tu-subj" required value="${et ? et.subject : ''}" placeholder="Subject Specialization *" class="w-full px-3 py-2 rounded-xl input-clean" />
+                <input id="tu-name" required value="${et ? (et.name || '') : ''}" placeholder="Tutor Name *" class="w-full px-3 py-2 rounded-xl input-clean" />
+                <input id="tu-qual" required value="${et ? (et.qual || '') : ''}" placeholder="Qualification &amp; Exp *" class="w-full px-3 py-2 rounded-xl input-clean" />
+                <input id="tu-subj" required value="${et ? (et.subject || '') : ''}" placeholder="Subject Specialization *" class="w-full px-3 py-2 rounded-xl input-clean" />
                 <div class="grid grid-cols-2 gap-2">
-                  <input id="tu-area" required value="${et ? et.area : ''}" placeholder="Area / Sector *" class="px-3 py-2 rounded-xl input-clean" />
-                  <input id="tu-mode" required value="${et ? et.mode : 'Noida Home + Online'}" placeholder="Mode *" class="px-3 py-2 rounded-xl input-clean" />
+                  <input id="tu-area" required value="${et ? (et.area || '') : ''}" placeholder="Area / Sector *" class="px-3 py-2 rounded-xl input-clean" />
+                  <input id="tu-mode" required value="${et ? (et.mode || 'Noida Home + Online') : 'Noida Home + Online'}" placeholder="Mode *" class="px-3 py-2 rounded-xl input-clean" />
                 </div>
                 <button type="submit" class="w-full py-3 rounded-xl btn-primary font-bold">${et ? 'Update Tutor' : 'Add Tutor Live'}</button>
               </form>
@@ -1860,8 +1992,8 @@
                   <div class="p-3 rounded-xl bg-zinc-900/80 flex justify-between items-center gap-2">
                     <div><p class="font-bold text-white">${t.name}</p><p class="text-zinc-400">${t.subject} • ${t.area}</p></div>
                     <div class="flex gap-1.5 shrink-0">
-                      <button type="button" onclick="editItem('tutorId','${t.id}')" class="px-2.5 py-1 rounded-lg bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button>
-                      <button type="button" onclick="deleteItem('tutors','${t.id}')" class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-bold">Delete</button>
+                      <button type="button" onclick="window.editItem('tutorId','${t.id}')" class="px-2.5 py-1 rounded-lg bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button>
+                      <button type="button" onclick="window.deleteItem('tutors','${t.id}')" class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-bold">Delete</button>
                     </div>
                   </div>
                 `).join('')}
@@ -1872,18 +2004,18 @@
           const en = editCtx.noteId ? appState.notesVault.find(x => x.id === editCtx.noteId) : null;
           el.innerHTML = `
             <div class="grid lg:grid-cols-12 gap-5 text-xs">
-              <form onsubmit="saveNoteForm(event)" class="lg:col-span-5 p-5 rounded-2xl surface-panel space-y-3">
+              <form onsubmit="window.saveNoteForm(event)" class="lg:col-span-5 p-5 rounded-2xl surface-panel space-y-3">
                 <div class="flex justify-between items-center">
                   <p class="font-bold text-emerald-400 text-sm">${en ? '✏️ Edit PDF / Note' : '+ Add PDF / Study Note'}</p>
-                  ${en ? `<button type="button" onclick="editCtx={};renderDashboard()" class="text-zinc-400 underline">Cancel</button>` : ''}
+                  ${en ? `<button type="button" onclick="window.cancelEdit()" class="text-zinc-400 underline">Cancel</button>` : ''}
                 </div>
                 <select id="n-stu" class="w-full px-3 py-2.5 rounded-xl input-clean">
                   <option value="ALL">All Students</option>
                   ${appState.students.map(s => `<option value="${s.id}" ${en && en.studentId===s.id ? 'selected' : ''}>${s.name}</option>`).join('')}
                 </select>
-                <input id="n-subj" required value="${en ? en.subject : ''}" placeholder="Subject *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
-                <input id="n-title" required value="${en ? en.title : ''}" placeholder="PDF Title *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
-                <input id="n-url" type="url" required value="${en ? en.url : ''}" placeholder="PDF / Drive URL *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
+                <input id="n-subj" required value="${en ? (en.subject || '') : ''}" placeholder="Subject *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
+                <input id="n-title" required value="${en ? (en.title || '') : ''}" placeholder="PDF Title *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
+                <input id="n-url" type="url" required value="${en ? (en.url || '') : ''}" placeholder="PDF / Drive URL *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
                 <button type="submit" class="w-full py-3 rounded-xl btn-primary font-bold">${en ? 'Update Note' : 'Publish Note'}</button>
               </form>
               <div class="lg:col-span-7 p-5 rounded-2xl surface-panel space-y-2.5">
@@ -1892,8 +2024,8 @@
                   <div class="p-3 rounded-xl bg-zinc-900/80 flex justify-between items-center gap-2">
                     <div><p class="font-bold text-white">${n.title}</p><p class="text-zinc-400">${n.subject} • ${n.date}</p></div>
                     <div class="flex gap-1.5 shrink-0">
-                      <button type="button" onclick="editItem('noteId','${n.id}')" class="px-2.5 py-1 rounded-lg bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button>
-                      <button type="button" onclick="deleteItem('notesVault','${n.id}')" class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-bold">Delete</button>
+                      <button type="button" onclick="window.editItem('noteId','${n.id}')" class="px-2.5 py-1 rounded-lg bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button>
+                      <button type="button" onclick="window.deleteItem('notesVault','${n.id}')" class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-bold">Delete</button>
                     </div>
                   </div>
                 `).join('')}
@@ -1904,15 +2036,15 @@
           const er = editCtx.reelId ? appState.reels.find(x => x.id === editCtx.reelId) : null;
           el.innerHTML = `
             <div class="grid lg:grid-cols-12 gap-5 text-xs">
-              <form onsubmit="saveReelForm(event)" class="lg:col-span-5 p-5 rounded-2xl surface-panel space-y-3">
+              <form onsubmit="window.saveReelForm(event)" class="lg:col-span-5 p-5 rounded-2xl surface-panel space-y-3">
                 <div class="flex justify-between items-center">
                   <p class="font-bold text-pink-400 text-sm">${er ? '✏️ Edit Reel' : '+ Add Concept Reel'}</p>
-                  ${er ? `<button type="button" onclick="editCtx={};renderDashboard()" class="text-zinc-400 underline">Cancel</button>` : ''}
+                  ${er ? `<button type="button" onclick="window.cancelEdit()" class="text-zinc-400 underline">Cancel</button>` : ''}
                 </div>
-                <input id="r-title" required value="${er ? er.title : ''}" placeholder="Video Title *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
-                <input id="r-subj" required value="${er ? er.subject : ''}" placeholder="Class / Subject *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
-                <input id="r-tag" required value="${er ? er.tag : ''}" placeholder="Tag (e.g. 3D Reel) *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
-                <input id="r-url" type="url" required value="${er ? er.url : ''}" placeholder="Instagram / YouTube URL *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
+                <input id="r-title" required value="${er ? (er.title || '') : ''}" placeholder="Video Title *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
+                <input id="r-subj" required value="${er ? (er.subject || '') : ''}" placeholder="Class / Subject *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
+                <input id="r-tag" required value="${er ? (er.tag || '') : ''}" placeholder="Tag (e.g. 3D Reel) *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
+                <input id="r-url" type="url" required value="${er ? (er.url || '') : ''}" placeholder="Instagram / YouTube URL *" class="w-full px-3 py-2.5 rounded-xl input-clean" />
                 <button type="submit" class="w-full py-3 rounded-xl btn-primary font-bold">${er ? 'Update Reel' : 'Publish Reel'}</button>
               </form>
               <div class="lg:col-span-7 p-5 rounded-2xl surface-panel space-y-2.5">
@@ -1921,8 +2053,8 @@
                   <div class="p-3 rounded-xl bg-zinc-900/80 flex justify-between items-center gap-2">
                     <div><p class="font-bold text-white">${r.title}</p><p class="text-zinc-400">${r.subject} • ${r.tag}</p></div>
                     <div class="flex gap-1.5 shrink-0">
-                      <button type="button" onclick="editItem('reelId','${r.id}')" class="px-2.5 py-1 rounded-lg bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button>
-                      <button type="button" onclick="deleteItem('reels','${r.id}')" class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-bold">Delete</button>
+                      <button type="button" onclick="window.editItem('reelId','${r.id}')" class="px-2.5 py-1 rounded-lg bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button>
+                      <button type="button" onclick="window.deleteItem('reels','${r.id}')" class="px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 font-bold">Delete</button>
                     </div>
                   </div>
                 `).join('')}
@@ -1935,43 +2067,43 @@
           el.innerHTML = `
             <div class="grid lg:grid-cols-2 gap-5 text-xs">
               <div class="p-5 rounded-2xl surface-panel space-y-3">
-                <form onsubmit="saveHwForm(event)" class="space-y-2">
+                <form onsubmit="window.saveHwForm(event)" class="space-y-2">
                   <p class="font-bold text-indigo-400 text-sm">${eh ? '✏️ Edit Homework' : '+ Assign Homework'}</p>
                   <select id="hw-stu" class="w-full px-3 py-2 rounded-xl input-clean">${appState.students.map(s => `<option value="${s.id}">${s.name}</option>`).join('')}</select>
                   <div class="grid grid-cols-2 gap-2">
-                    <input id="hw-subj" required value="${eh ? eh.subject : ''}" placeholder="Subject *" class="px-3 py-2 rounded-xl input-clean" />
-                    <input id="hw-due" required value="${eh ? eh.dueDate : ''}" placeholder="Due Date *" class="px-3 py-2 rounded-xl input-clean" />
+                    <input id="hw-subj" required value="${eh ? (eh.subject || '') : ''}" placeholder="Subject *" class="px-3 py-2 rounded-xl input-clean" />
+                    <input id="hw-due" required value="${eh ? (eh.dueDate || '') : ''}" placeholder="Due Date *" class="px-3 py-2 rounded-xl input-clean" />
                   </div>
-                  <input id="hw-task" required value="${eh ? eh.task : ''}" placeholder="Task *" class="w-full px-3 py-2 rounded-xl input-clean" />
+                  <input id="hw-task" required value="${eh ? (eh.task || '') : ''}" placeholder="Task *" class="w-full px-3 py-2 rounded-xl input-clean" />
                   <button type="submit" class="w-full py-2.5 rounded-xl btn-primary font-bold">${eh ? 'Update HW' : 'Push HW'}</button>
                 </form>
                 <div class="space-y-1.5 pt-2 border-t border-white/10">
-                  ${appState.homeworks.map(h => `<div class="p-2.5 rounded-xl bg-zinc-900/80 flex justify-between items-center"><div><p class="font-bold text-white">${h.subject}</p><p class="text-zinc-400">${h.task}</p></div><div class="flex gap-1"><button type="button" onclick="editItem('hwId','${h.id}')" class="px-2 py-1 rounded bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button><button type="button" onclick="deleteItem('homeworks','${h.id}')" class="px-2 py-1 rounded bg-red-500/20 text-red-400 font-bold">Del</button></div></div>`).join('')}
+                  ${appState.homeworks.map(h => `<div class="p-2.5 rounded-xl bg-zinc-900/80 flex justify-between items-center"><div><p class="font-bold text-white">${h.subject}</p><p class="text-zinc-400">${h.task}</p></div><div class="flex gap-1"><button type="button" onclick="window.editItem('hwId','${h.id}')" class="px-2 py-1 rounded bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button><button type="button" onclick="window.deleteItem('homeworks','${h.id}')" class="px-2 py-1 rounded bg-red-500/20 text-red-400 font-bold">Del</button></div></div>`).join('')}
                 </div>
               </div>
 
               <div class="p-5 rounded-2xl surface-panel space-y-3">
-                <form onsubmit="saveCbtForm(event)" class="space-y-2">
+                <form onsubmit="window.saveCbtForm(event)" class="space-y-2">
                   <p class="font-bold text-goldBright text-sm">${eq ? '✏️ Edit CBT MCQ' : '+ Add CBT MCQ'}</p>
                   <div class="grid grid-cols-2 gap-2">
-                    <input id="q-subj" required value="${eq ? eq.subject : ''}" placeholder="Subject *" class="px-3 py-2 rounded-xl input-clean" />
-                    <input id="q-topic" required value="${eq ? eq.topic : ''}" placeholder="Topic *" class="px-3 py-2 rounded-xl input-clean" />
+                    <input id="q-subj" required value="${eq ? (eq.subject || '') : ''}" placeholder="Subject *" class="px-3 py-2 rounded-xl input-clean" />
+                    <input id="q-topic" required value="${eq ? (eq.topic || '') : ''}" placeholder="Topic *" class="px-3 py-2 rounded-xl input-clean" />
                   </div>
-                  <input id="q-text" required value="${eq ? eq.q : ''}" placeholder="Question *" class="w-full px-3 py-2 rounded-xl input-clean" />
+                  <input id="q-text" required value="${eq ? (eq.q || '') : ''}" placeholder="Question *" class="w-full px-3 py-2 rounded-xl input-clean" />
                   <div class="grid grid-cols-2 gap-2">
-                    <input id="q-o0" required value="${eq ? eq.options[0] : ''}" placeholder="Opt A *" class="px-3 py-2 rounded-xl input-clean" />
-                    <input id="q-o1" required value="${eq ? eq.options[1] : ''}" placeholder="Opt B *" class="px-3 py-2 rounded-xl input-clean" />
-                    <input id="q-o2" required value="${eq ? eq.options[2] : ''}" placeholder="Opt C *" class="px-3 py-2 rounded-xl input-clean" />
-                    <input id="q-o3" required value="${eq ? eq.options[3] : ''}" placeholder="Opt D *" class="px-3 py-2 rounded-xl input-clean" />
+                    <input id="q-o0" required value="${eq && eq.options ? eq.options[0] : ''}" placeholder="Opt A *" class="px-3 py-2 rounded-xl input-clean" />
+                    <input id="q-o1" required value="${eq && eq.options ? eq.options[1] : ''}" placeholder="Opt B *" class="px-3 py-2 rounded-xl input-clean" />
+                    <input id="q-o2" required value="${eq && eq.options ? eq.options[2] : ''}" placeholder="Opt C *" class="px-3 py-2 rounded-xl input-clean" />
+                    <input id="q-o3" required value="${eq && eq.options ? eq.options[3] : ''}" placeholder="Opt D *" class="px-3 py-2 rounded-xl input-clean" />
                   </div>
                   <div class="grid grid-cols-2 gap-2">
                     <select id="q-ans" class="px-3 py-2 rounded-xl input-clean"><option value="0">Ans: A</option><option value="1">Ans: B</option><option value="2">Ans: C</option><option value="3">Ans: D</option></select>
-                    <input id="q-exp" required value="${eq ? eq.exp : ''}" placeholder="Explanation *" class="px-3 py-2 rounded-xl input-clean" />
+                    <input id="q-exp" required value="${eq ? (eq.exp || '') : ''}" placeholder="Explanation *" class="px-3 py-2 rounded-xl input-clean" />
                   </div>
                   <button type="submit" class="w-full py-2.5 rounded-xl btn-gold font-bold">${eq ? 'Update MCQ' : 'Add MCQ'}</button>
                 </form>
                 <div class="space-y-1.5 pt-2 border-t border-white/10">
-                  ${appState.cbtQuestions.map(q => `<div class="p-2.5 rounded-xl bg-zinc-900/80 flex justify-between items-center"><span class="truncate text-white font-semibold">${q.q}</span><div class="flex gap-1 shrink-0"><button type="button" onclick="editItem('cbtId','${q.id}')" class="px-2 py-1 rounded bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button><button type="button" onclick="deleteItem('cbtQuestions','${q.id}')" class="px-2 py-1 rounded bg-red-500/20 text-red-400 font-bold">Del</button></div></div>`).join('')}
+                  ${appState.cbtQuestions.map(q => `<div class="p-2.5 rounded-xl bg-zinc-900/80 flex justify-between items-center"><span class="truncate text-white font-semibold">${q.q}</span><div class="flex gap-1 shrink-0"><button type="button" onclick="window.editItem('cbtId','${q.id}')" class="px-2 py-1 rounded bg-indigoGlow/20 text-indigo-400 font-bold">Edit</button><button type="button" onclick="window.deleteItem('cbtQuestions','${q.id}')" class="px-2 py-1 rounded bg-red-500/20 text-red-400 font-bold">Del</button></div></div>`).join('')}
                 </div>
               </div>
             </div>
@@ -1981,16 +2113,16 @@
             <div class="space-y-4 text-xs">
               <div class="p-4 rounded-2xl surface-panel flex flex-col sm:flex-row gap-2 items-center">
                 <input id="fb-url-in" type="url" value="${FIREBASE_DB_URL}" class="flex-1 w-full px-3 py-2 rounded-xl input-clean" placeholder="Firebase Realtime Database URL" />
-                <button type="button" onclick="saveFbUrl()" class="px-4 py-2 rounded-xl btn-gold font-bold shrink-0">Connect Cloud</button>
+                <button type="button" onclick="window.saveFbUrl()" class="px-4 py-2 rounded-xl btn-gold font-bold shrink-0">Connect Cloud</button>
               </div>
               <div class="grid md:grid-cols-2 gap-4">
                 <div class="p-4 rounded-2xl surface-panel space-y-2">
                   <p class="font-bold text-emerald-400 text-sm">📲 Parent Leads (${appState.leads.length})</p>
-                  ${appState.leads.map((l, i) => `<div class="p-2.5 rounded-xl bg-zinc-900/80 flex justify-between items-center"><div><p class="font-bold text-white">${l.student} (${l.grade})</p><p class="text-zinc-400">${l.location} • ${l.phone}</p></div><button type="button" onclick="deleteByIndex('leads',${i})" class="px-2 py-1 rounded bg-red-500/20 text-red-400 font-bold">Del</button></div>`).join('') || '<p class="text-zinc-400">No leads yet.</p>'}
+                  ${appState.leads.map((l, i) => `<div class="p-2.5 rounded-xl bg-zinc-900/80 flex justify-between items-center"><div><p class="font-bold text-white">${l.student} (${l.grade})</p><p class="text-zinc-400">${l.location} • ${l.phone}</p></div><button type="button" onclick="window.deleteByIndex('leads',${i})" class="px-2 py-1 rounded bg-red-500/20 text-red-400 font-bold">Del</button></div>`).join('') || '<p class="text-zinc-400">No leads yet.</p>'}
                 </div>
                 <div class="p-4 rounded-2xl surface-panel space-y-2">
                   <p class="font-bold text-goldBright text-sm">✅ Attendance Logs (${appState.attendanceLogs.length})</p>
-                  ${appState.attendanceLogs.map((a, i) => `<div class="p-2.5 rounded-xl bg-zinc-900/80 flex justify-between items-center"><div><p class="font-bold text-white">[${a.status}] ${a.studentName}</p><p class="text-zinc-400">${a.subject}: ${a.topic}</p></div><button type="button" onclick="deleteByIndex('attendanceLogs',${i})" class="px-2 py-1 rounded bg-red-500/20 text-red-400 font-bold">Del</button></div>`).join('') || '<p class="text-zinc-400">No logs yet.</p>'}
+                  ${appState.attendanceLogs.map((a, i) => `<div class="p-2.5 rounded-xl bg-zinc-900/80 flex justify-between items-center"><div><p class="font-bold text-white">[${a.status}] ${a.studentName}</p><p class="text-zinc-400">${a.subject}: ${a.topic}</p></div><button type="button" onclick="window.deleteByIndex('attendanceLogs',${i})" class="px-2 py-1 rounded bg-red-500/20 text-red-400 font-bold">Del</button></div>`).join('') || '<p class="text-zinc-400">No logs yet.</p>'}
                 </div>
               </div>
             </div>
@@ -1999,12 +2131,28 @@
       }
 
       /* Admin CRUD Handlers */
-      function editItem(key, id) { editCtx = { [key]: id }; renderDashboard(); }
-      async function deleteItem(col, id) { appState[col] = (appState[col] || []).filter(x => x.id !== id); await saveToCloud(); showToast('Deleted!', 'info'); renderDashboard(); }
-      async function deleteByIndex(col, idx) { appState[col].splice(idx, 1); await saveToCloud(); showToast('Removed!', 'info'); renderDashboard(); }
-      function saveFbUrl() { FIREBASE_DB_URL = document.getElementById('fb-url-in').value.trim(); safeStorage.set('elite_firebase_url', FIREBASE_DB_URL); syncFromCloud(); showToast('Firebase URL updated!', 'success'); }
+      window.cancelEdit = function () { editCtx = {}; renderDashboard(); };
+      window.editItem = function (key, id) { editCtx = { [key]: id }; renderDashboard(); };
+      window.deleteItem = function (col, id) {
+        appState[col] = toArray(appState[col], []).filter(x => x.id !== id);
+        saveToCloud();
+        showToast('Deleted!', 'info');
+        renderDashboard();
+      };
+      window.deleteByIndex = function (col, idx) {
+        if (Array.isArray(appState[col])) appState[col].splice(idx, 1);
+        saveToCloud();
+        showToast('Removed!', 'info');
+        renderDashboard();
+      };
+      window.saveFbUrl = function () {
+        FIREBASE_DB_URL = document.getElementById('fb-url-in').value.trim();
+        safeStorage.set('elite_firebase_url', FIREBASE_DB_URL);
+        syncFromCloud();
+        showToast('Firebase URL updated!', 'success');
+      };
 
-      async function saveBannerForm(e) {
+      window.saveBannerForm = function (e) {
         e.preventDefault();
         const obj = {
           id: editCtx.bannerId || ('b' + Date.now()),
@@ -2019,47 +2167,55 @@
         };
         if (editCtx.bannerId) { const i = appState.banners.findIndex(x => x.id === editCtx.bannerId); if (i >= 0) appState.banners[i] = { ...appState.banners[i], ...obj }; }
         else appState.banners.unshift(obj);
-        editCtx = {}; await saveToCloud(); showToast('Slide poster saved live!', 'success'); renderDashboard();
-      }
-      async function saveStudentForm(e) {
+        editCtx = {}; saveToCloud(); showToast('Slide poster saved live!', 'success'); renderDashboard();
+      };
+
+      window.saveStudentForm = function (e) {
         e.preventDefault();
         const sid = document.getElementById('s-id').value.trim().toLowerCase();
         const obj = { id: sid, pass: document.getElementById('s-pass').value.trim() || 'elite123', name: document.getElementById('s-name').value.trim(), grade: document.getElementById('s-grade').value.trim(), cluster: document.getElementById('s-cluster').value.trim(), stemTutor: document.getElementById('s-stem').value.trim(), humTutor: document.getElementById('s-hum').value.trim(), schedule: document.getElementById('s-sched').value.trim(), feeStatus: document.getElementById('s-fee').value.trim(), liveRoomName: `EliteClasses-${sid}-Live`, latestScore: 'Active', rectificationNote: 'Welcome to ELITE CLASSES!', xp: 250, streak: 1 };
         if (editCtx.studentId) { const i = appState.students.findIndex(x => x.id === editCtx.studentId); if (i >= 0) appState.students[i] = obj; } else appState.students.unshift(obj);
-        editCtx = {}; await saveToCloud(); showToast('Student saved!', 'success'); renderDashboard();
-      }
-      async function saveTutorForm(e) {
+        editCtx = {}; saveToCloud(); showToast('Student saved!', 'success'); renderDashboard();
+      };
+
+      window.saveTutorForm = function (e) {
         e.preventDefault();
         const obj = { id: editCtx.tutorId || ('tutor' + Date.now().toString().slice(-4)), name: document.getElementById('tu-name').value.trim(), qual: document.getElementById('tu-qual').value.trim(), subject: document.getElementById('tu-subj').value.trim(), area: document.getElementById('tu-area').value.trim(), mode: document.getElementById('tu-mode').value.trim(), rating: '4.9', rate: 300 };
         if (editCtx.tutorId) { const i = appState.tutors.findIndex(x => x.id === editCtx.tutorId); if (i >= 0) appState.tutors[i] = obj; } else appState.tutors.unshift(obj);
-        editCtx = {}; await saveToCloud(); showToast('Tutor saved live!', 'success'); renderDashboard();
-      }
-      async function saveNoteForm(e) {
+        editCtx = {}; saveToCloud(); showToast('Tutor saved live!', 'success'); renderDashboard();
+      };
+
+      window.saveNoteForm = function (e) {
         e.preventDefault();
         const obj = { id: editCtx.noteId || ('n' + Date.now()), studentId: document.getElementById('n-stu').value, subject: document.getElementById('n-subj').value.trim(), title: document.getElementById('n-title').value.trim(), url: document.getElementById('n-url').value.trim(), date: new Date().toLocaleDateString('en-IN') };
         if (editCtx.noteId) { const i = appState.notesVault.findIndex(x => x.id === editCtx.noteId); if (i >= 0) appState.notesVault[i] = obj; } else appState.notesVault.unshift(obj);
-        editCtx = {}; await saveToCloud(); showToast('Note saved!', 'success'); renderDashboard();
-      }
-      async function saveReelForm(e) {
+        editCtx = {}; saveToCloud(); showToast('Note saved!', 'success'); renderDashboard();
+      };
+
+      window.saveReelForm = function (e) {
         e.preventDefault();
         const obj = { id: editCtx.reelId || ('r' + Date.now()), title: document.getElementById('r-title').value.trim(), subject: document.getElementById('r-subj').value.trim(), tag: document.getElementById('r-tag').value.trim(), url: document.getElementById('r-url').value.trim() };
         if (editCtx.reelId) { const i = appState.reels.findIndex(x => x.id === editCtx.reelId); if (i >= 0) appState.reels[i] = obj; } else appState.reels.unshift(obj);
-        editCtx = {}; await saveToCloud(); showToast('Reel saved!', 'success'); renderDashboard();
-      }
-      async function saveHwForm(e) {
+        editCtx = {}; saveToCloud(); showToast('Reel saved!', 'success'); renderDashboard();
+      };
+
+      window.saveHwForm = function (e) {
         e.preventDefault();
         const obj = { id: editCtx.hwId || ('h' + Date.now()), studentId: document.getElementById('hw-stu').value, subject: document.getElementById('hw-subj').value.trim(), dueDate: document.getElementById('hw-due').value.trim(), task: document.getElementById('hw-task').value.trim(), status: 'Assigned' };
         if (editCtx.hwId) { const i = appState.homeworks.findIndex(x => x.id === editCtx.hwId); if (i >= 0) appState.homeworks[i] = obj; } else appState.homeworks.unshift(obj);
-        editCtx = {}; await saveToCloud(); showToast('Homework saved!', 'success'); renderDashboard();
-      }
-      async function saveCbtForm(e) {
+        editCtx = {}; saveToCloud(); showToast('Homework saved!', 'success'); renderDashboard();
+      };
+
+      window.saveCbtForm = function (e) {
         e.preventDefault();
         const obj = { id: editCtx.cbtId || ('q' + Date.now()), subject: document.getElementById('q-subj').value.trim(), topic: document.getElementById('q-topic').value.trim(), q: document.getElementById('q-text').value.trim(), options: [document.getElementById('q-o0').value.trim(), document.getElementById('q-o1').value.trim(), document.getElementById('q-o2').value.trim(), document.getElementById('q-o3').value.trim()], ans: parseInt(document.getElementById('q-ans').value, 10), exp: document.getElementById('q-exp').value.trim() };
         if (editCtx.cbtId) { const i = appState.cbtQuestions.findIndex(x => x.id === editCtx.cbtId); if (i >= 0) appState.cbtQuestions[i] = obj; } else appState.cbtQuestions.push(obj);
-        editCtx = {}; await saveToCloud(); showToast('CBT MCQ saved!', 'success'); renderDashboard();
-      }
+        editCtx = {}; saveToCloud(); showToast('CBT MCQ saved!', 'success'); renderDashboard();
+      };
 
-      /* 10. STUDENT SUPER-APP (OVERVIEW, CBT, 3D STEM LABS, FLASHCARDS) */
+      /* -------------------------------------------------------------------
+         10. STUDENT SUPER-APP (OVERVIEW, CBT, 3D STEM LABS, FLASHCARDS)
+         ------------------------------------------------------------------- */
       let cbt = null, cbtInt = null, labAnimId = null, fcIdx = 0;
       function stopCbtTimer() { if (cbtInt) { clearInterval(cbtInt); cbtInt = null; } }
       function stopLabAnim() { if (labAnimId) { cancelAnimationFrame(labAnimId); labAnimId = null; } }
@@ -2074,17 +2230,17 @@
               <div>
                 <span class="text-[10px] font-bold uppercase text-emerald-400">● Continue Learning • 🔥 ${stu.streak || 14}-Day Streak • ⚡ ${stu.xp || 1480} XP • Rank #1</span>
                 <h4 class="font-display font-bold text-xl text-white keep-white mt-1">${stu.name} (${stu.grade})</h4>
-                <p class="text-xs text-zinc-300 keep-zinc">${stu.schedule} • Fee: ${stu.feeStatus}</p>
+                <p class="text-xs text-zinc-300 keep-zinc">${stu.schedule || ''} • Fee: ${stu.feeStatus || 'Active'}</p>
               </div>
               <div class="flex flex-wrap gap-2">
-                <button type="button" onclick="launchLiveVideoRoom('${stu.liveRoomName}', '${stu.name} Live Class')" class="px-5 py-2.5 rounded-xl btn-gold font-bold text-xs">🎥 Join Live Class</button>
-                <button type="button" onclick="openFeeReceiptPdf('${stu.id}')" class="px-4 py-2.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-bold text-xs">🧾 PDF Fee Receipt</button>
+                <button type="button" onclick="window.launchLiveVideoRoom('${stu.liveRoomName || 'EliteClassesLive'}', '${stu.name} Live Class')" class="px-5 py-2.5 rounded-xl btn-gold font-bold text-xs">🎥 Join Live Class</button>
+                <button type="button" onclick="window.openFeeReceiptPdf('${stu.id}')" class="px-4 py-2.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-bold text-xs">🧾 PDF Fee Receipt</button>
               </div>
             </div>
             <div class="grid md:grid-cols-3 gap-4 text-xs">
               <div class="p-5 rounded-2xl surface-panel space-y-2.5">
                 <p class="font-bold text-indigo-400 text-sm">📄 Study Notes &amp; PDFs (${notes.length})</p>
-                ${notes.map(n => `<div class="p-3 rounded-xl bg-zinc-900/80 flex justify-between items-center gap-2"><div><p class="font-bold text-white">${n.title}</p><p class="text-zinc-400">${n.subject}</p></div><a href="${n.url}" target="_blank" class="px-3 py-1 rounded-lg btn-primary font-bold shrink-0">Open</a></div>`).join('')}
+                ${notes.map(n => `<div class="p-3 rounded-xl bg-zinc-900/80 flex justify-between items-center gap-2"><div><p class="font-bold text-white">${n.title}</p><p class="text-zinc-400">${n.subject}</p></div><a href="${n.url}" target="_blank" class="px-3 py-1 rounded-lg btn-primary font-bold shrink-0">Open</a></div>`).join('') || '<p class="text-zinc-400">No notes yet.</p>'}
               </div>
               <div class="p-5 rounded-2xl surface-panel space-y-2.5">
                 <p class="font-bold text-goldBright text-sm">📝 Assigned Homework (${hws.length})</p>
@@ -2105,7 +2261,7 @@
                   <h4 class="font-display font-bold text-xl text-white mt-1">Timed CBT Exam Simulator (+4 / -1)</h4>
                   <p class="text-xs text-zinc-400 mt-1">${appState.cbtQuestions.length} Questions • 10 Min Timer • X-Ray Analytics &amp; Branded PDF Report Card</p>
                 </div>
-                <button type="button" onclick="startCbt()" class="px-6 py-3.5 rounded-xl btn-primary font-bold text-xs shrink-0">🚀 Start CBT Exam →</button>
+                <button type="button" onclick="window.startCbt()" class="px-6 py-3.5 rounded-xl btn-primary font-bold text-xs shrink-0">🚀 Start CBT Exam →</button>
               </div>
             `;
           } else if (cbt.mode === 'active') {
@@ -2119,21 +2275,21 @@
                   </div>
                   <p class="font-bold text-base text-white">${q.q}</p>
                   <div class="space-y-2">
-                    ${q.options.map((o, i) => `<button type="button" onclick="cbtPick(${i})" class="w-full text-left p-3 rounded-xl border text-xs font-semibold ${cbt.ans[cbt.idx]===i ? 'bg-indigoGlow/25 border-indigoGlow text-white' : 'bg-zinc-900/70 border-white/10 text-zinc-300'}">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}
+                    ${q.options.map((o, i) => `<button type="button" onclick="window.cbtPick(${i})" class="w-full text-left p-3 rounded-xl border text-xs font-semibold ${cbt.ans[cbt.idx]===i ? 'bg-indigoGlow/25 border-indigoGlow text-white' : 'bg-zinc-900/70 border-white/10 text-zinc-300'}">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}
                   </div>
                   <div class="flex justify-between pt-2">
-                    <button type="button" onclick="cbtNav(-1)" class="px-4 py-2 rounded-xl surface-panel text-xs font-bold">← Prev</button>
+                    <button type="button" onclick="window.cbtNav(-1)" class="px-4 py-2 rounded-xl surface-panel text-xs font-bold">← Prev</button>
                     ${cbt.idx < cbt.qs.length - 1
-                      ? `<button type="button" onclick="cbtNav(1)" class="px-5 py-2 rounded-xl btn-primary text-xs font-bold">Next →</button>`
-                      : `<button type="button" onclick="submitCbt()" class="px-5 py-2 rounded-xl bg-emerald-500 text-black text-xs font-extrabold">Submit ✔</button>`}
+                      ? `<button type="button" onclick="window.cbtNav(1)" class="px-5 py-2 rounded-xl btn-primary text-xs font-bold">Next →</button>`
+                      : `<button type="button" onclick="window.submitCbt()" class="px-5 py-2 rounded-xl bg-emerald-500 text-black text-xs font-extrabold">Submit ✔</button>`}
                   </div>
                 </div>
                 <div class="lg:col-span-4 p-5 rounded-2xl surface-panel space-y-3">
                   <p class="text-xs font-bold text-goldBright uppercase">Question Palette</p>
                   <div class="grid grid-cols-5 gap-2">
-                    ${cbt.qs.map((_, i) => `<button type="button" onclick="cbt.idx=${i};renderDashboard()" class="h-9 rounded-lg text-xs font-bold ${cbt.ans[i]!==null ? 'bg-emerald-500 text-black' : 'bg-zinc-800 text-zinc-300'} ${i===cbt.idx ? 'ring-2 ring-indigoGlow' : ''}">${i+1}</button>`).join('')}
+                    ${cbt.qs.map((_, i) => `<button type="button" onclick="window.cbtJump(${i})" class="h-9 rounded-lg text-xs font-bold ${cbt.ans[i]!==null ? 'bg-emerald-500 text-black' : 'bg-zinc-800 text-zinc-300'} ${i===cbt.idx ? 'ring-2 ring-indigoGlow' : ''}">${i+1}</button>`).join('')}
                   </div>
-                  <button type="button" onclick="submitCbt()" class="w-full py-2.5 rounded-xl bg-emerald-500 text-black font-extrabold text-xs mt-4">Final Submit →</button>
+                  <button type="button" onclick="window.submitCbt()" class="w-full py-2.5 rounded-xl bg-emerald-500 text-black font-extrabold text-xs mt-4">Final Submit →</button>
                 </div>
               </div>
             `;
@@ -2147,8 +2303,8 @@
                     <h4 class="font-display font-bold text-xl text-white">Score: ${st.score} / ${st.max} (${st.pct}%)</h4>
                   </div>
                   <div class="flex gap-2">
-                    <button type="button" onclick="openReportPdf('${stu.id}')" class="px-4 py-2.5 rounded-xl btn-gold text-xs font-extrabold">🖨️ Branded PDF Report Card</button>
-                    <button type="button" onclick="cbt=null;renderDashboard()" class="px-4 py-2.5 rounded-xl surface-panel text-xs font-bold">↻ Retake</button>
+                    <button type="button" onclick="window.openReportPdf('${stu.id}')" class="px-4 py-2.5 rounded-xl btn-gold text-xs font-extrabold">🖨️ Branded PDF Report Card</button>
+                    <button type="button" onclick="window.resetCbt()" class="px-4 py-2.5 rounded-xl surface-panel text-xs font-bold">↻ Retake</button>
                   </div>
                 </div>
                 <div class="grid grid-cols-3 gap-3 text-center text-xs">
@@ -2163,9 +2319,9 @@
           el.innerHTML = `
             <div class="space-y-4">
               <div class="flex flex-wrap gap-2">
-                <button type="button" onclick="switchLab('bohr')" class="px-3.5 py-2 rounded-xl text-xs font-bold ${activeLab==='bohr' ? 'btn-primary' : 'surface-panel text-zinc-300'}">⚛️ Bohr Atom</button>
-                <button type="button" onclick="switchLab('wave')" class="px-3.5 py-2 rounded-xl text-xs font-bold ${activeLab==='wave' ? 'btn-primary' : 'surface-panel text-zinc-300'}">🌊 Physics Wave</button>
-                <button type="button" onclick="switchLab('pyth')" class="px-3.5 py-2 rounded-xl text-xs font-bold ${activeLab==='pyth' ? 'btn-primary' : 'surface-panel text-zinc-300'}">📐 Pythagoras Lab</button>
+                <button type="button" onclick="window.switchLab('bohr')" class="px-3.5 py-2 rounded-xl text-xs font-bold ${activeLab==='bohr' ? 'btn-primary' : 'surface-panel text-zinc-300'}">⚛️ Bohr Atom</button>
+                <button type="button" onclick="window.switchLab('wave')" class="px-3.5 py-2 rounded-xl text-xs font-bold ${activeLab==='wave' ? 'btn-primary' : 'surface-panel text-zinc-300'}">🌊 Physics Wave</button>
+                <button type="button" onclick="window.switchLab('pyth')" class="px-3.5 py-2 rounded-xl text-xs font-bold ${activeLab==='pyth' ? 'btn-primary' : 'surface-panel text-zinc-300'}">📐 Pythagoras Lab</button>
               </div>
               <div class="grid lg:grid-cols-12 gap-5">
                 <div class="lg:col-span-8 p-3 rounded-2xl bg-[#09090B] border border-white/10">
@@ -2193,15 +2349,16 @@
                 </div>
               </div>
               <div class="flex justify-center gap-3">
-                <button type="button" onclick="fcIdx=(fcIdx-1+FLASHCARDS.length)%FLASHCARDS.length;renderDashboard()" class="px-4 py-2 rounded-xl surface-panel text-xs font-bold">← Prev</button>
-                <button type="button" onclick="fcIdx=(fcIdx+1)%FLASHCARDS.length;renderDashboard()" class="px-4 py-2 rounded-xl btn-primary text-xs font-bold">Next →</button>
+                <button type="button" onclick="window.stepFlashcard(-1)" class="px-4 py-2 rounded-xl surface-panel text-xs font-bold">← Prev</button>
+                <button type="button" onclick="window.stepFlashcard(1)" class="px-4 py-2 rounded-xl btn-primary text-xs font-bold">Next →</button>
               </div>
             </div>
           `;
         }
       }
 
-      function switchLab(l) { activeLab = l; renderDashboard(); }
+      window.switchLab = function (l) { activeLab = l; renderDashboard(); };
+      window.stepFlashcard = function (d) { fcIdx = (fcIdx + d + FLASHCARDS.length) % FLASHCARDS.length; renderDashboard(); };
 
       function initActiveLab() {
         stopLabAnim();
@@ -2267,8 +2424,8 @@
         } else {
           ctrl.innerHTML = `
             <span class="text-emerald-400 font-bold uppercase">Pythagoras Theorem Lab</span>
-            <div><label class="flex justify-between font-bold mb-1"><span>Base (a)</span><span id="pa-v" class="text-indigo-400">6</span></label><input id="pa-s" type="range" min="3" max="12" value="6" oninput="drawPyth()" class="w-full accent-indigo-500" /></div>
-            <div><label class="flex justify-between font-bold mb-1"><span>Height (b)</span><span id="pb-v" class="text-goldBright">8</span></label><input id="pb-s" type="range" min="3" max="12" value="8" oninput="drawPyth()" class="w-full accent-yellow-400" /></div>
+            <div><label class="flex justify-between font-bold mb-1"><span>Base (a)</span><span id="pa-v" class="text-indigo-400">6</span></label><input id="pa-s" type="range" min="3" max="12" value="6" oninput="window.drawPyth()" class="w-full accent-indigo-500" /></div>
+            <div><label class="flex justify-between font-bold mb-1"><span>Height (b)</span><span id="pb-v" class="text-goldBright">8</span></label><input id="pb-s" type="range" min="3" max="12" value="8" oninput="window.drawPyth()" class="w-full accent-yellow-400" /></div>
             <div id="pc-res" class="p-3 rounded-xl bg-zinc-900 font-bold text-emerald-400">c = 10.00</div>
           `;
           window.drawPyth = function () {
@@ -2290,21 +2447,24 @@
         }
       }
 
-      function startCbt() {
-        cbt = { mode: 'active', qs: appState.cbtQuestions, idx: 0, ans: new Array(appState.cbtQuestions.length).fill(null), sec: 600 };
+      window.startCbt = function () {
+        const qs = toArray(appState.cbtQuestions, DEFAULT_CBT);
+        cbt = { mode: 'active', qs, idx: 0, ans: new Array(qs.length).fill(null), sec: 600 };
         stopCbtTimer();
         cbtInt = setInterval(() => {
           if (!cbt || cbt.mode !== 'active') return stopCbtTimer();
           cbt.sec--;
           const clk = document.getElementById('cbt-clock');
           if (clk) clk.textContent = `⏱ ${Math.floor(cbt.sec/60)}:${String(cbt.sec%60).padStart(2,'0')}`;
-          if (cbt.sec <= 0) submitCbt();
+          if (cbt.sec <= 0) window.submitCbt();
         }, 1000);
         renderDashboard();
-      }
-      function cbtPick(i) { cbt.ans[cbt.idx] = i; renderDashboard(); }
-      function cbtNav(d) { const n = cbt.idx + d; if (n >= 0 && n < cbt.qs.length) { cbt.idx = n; renderDashboard(); } }
-      function submitCbt() {
+      };
+      window.cbtPick = function (i) { cbt.ans[cbt.idx] = i; renderDashboard(); };
+      window.cbtJump = function (i) { cbt.idx = i; renderDashboard(); };
+      window.cbtNav = function (d) { const n = cbt.idx + d; if (n >= 0 && n < cbt.qs.length) { cbt.idx = n; renderDashboard(); } };
+      window.resetCbt = function () { cbt = null; renderDashboard(); };
+      window.submitCbt = function () {
         stopCbtTimer();
         let correct = 0, wrong = 0;
         cbt.qs.forEach((q, i) => { if (cbt.ans[i] === q.ans) correct++; else if (cbt.ans[i] !== null) wrong++; });
@@ -2312,16 +2472,18 @@
         cbt.mode = 'result';
         cbt.stats = { correct, wrong, max, score, pct: Math.max(0, Math.round((score / max) * 100)), acc: (correct + wrong) ? Math.round((correct / (correct + wrong)) * 100) : 0 };
         renderDashboard();
-      }
+      };
 
-      /* 11. TUTOR PORTAL & BRANDED PRINTABLE PDF MODALS */
+      /* -------------------------------------------------------------------
+         11. TUTOR PORTAL & BRANDED PRINTABLE PDF MODALS
+         ------------------------------------------------------------------- */
       function renderTutorApp(el) {
         el.innerHTML = `
           <div class="p-4 rounded-2xl surface-panel flex flex-wrap justify-between items-center gap-3">
             <p class="font-bold text-white text-sm">🎥 Launch Live Interactive Classroom</p>
-            <button type="button" onclick="launchLiveVideoRoom('EliteClassesTutorLive', 'Specialist Live Session')" class="px-4 py-2 rounded-xl btn-gold text-xs font-bold">Start Live Studio</button>
+            <button type="button" onclick="window.launchLiveVideoRoom('EliteClassesTutorLive', 'Specialist Live Session')" class="px-4 py-2 rounded-xl btn-gold text-xs font-bold">Start Live Studio</button>
           </div>
-          <form onsubmit="submitTutorLog(event)" class="p-5 rounded-2xl surface-panel space-y-3 text-xs">
+          <form onsubmit="window.submitTutorLog(event)" class="p-5 rounded-2xl surface-panel space-y-3 text-xs">
             <p class="font-bold text-indigo-400 text-sm">Log Daily Attendance &amp; Auto-Sync Homework</p>
             <div class="grid sm:grid-cols-3 gap-2">
               <select id="tl-stu" class="px-3 py-2.5 rounded-xl input-clean">${appState.students.map(s => `<option value="${s.id}">${s.name}</option>`).join('')}</select>
@@ -2335,44 +2497,44 @@
         `;
       }
 
-      async function submitTutorLog(e) {
+      window.submitTutorLog = function (e) {
         e.preventDefault();
         const sid = document.getElementById('tl-stu').value;
         const s = appState.students.find(x => x.id === sid);
         const subj = document.getElementById('tl-subj').value.trim();
         const hw = document.getElementById('tl-hw').value.trim();
-        appState.attendanceLogs.unshift({ id: 'a' + Date.now(), date: new Date().toLocaleDateString('en-IN'), studentId: sid, studentName: s ? s.name : sid, tutorName: loggedInUser.name, subject: subj, topic: document.getElementById('tl-topic').value.trim(), status: document.getElementById('tl-stat').value, rating: '5/5' });
+        appState.attendanceLogs.unshift({ id: 'a' + Date.now(), date: new Date().toLocaleDateString('en-IN'), studentId: sid, studentName: s ? s.name : sid, tutorName: loggedInUser?.name || 'Tutor', subject: subj, topic: document.getElementById('tl-topic').value.trim(), status: document.getElementById('tl-stat').value, rating: '5/5' });
         if (hw) appState.homeworks.unshift({ id: 'h' + Date.now(), studentId: sid, subject: subj, task: hw, dueDate: 'Next Class', status: 'Assigned' });
-        await saveToCloud();
+        saveToCloud();
         showToast('Attendance & Homework Logged!', 'success');
         e.target.reset();
-      }
+      };
 
       function openBrandedPdf(html) {
         document.getElementById('branded-pdf-body').innerHTML = html;
         document.getElementById('branded-pdf-modal').classList.remove('hidden');
       }
-      function closeBrandedPdfModal() { document.getElementById('branded-pdf-modal').classList.add('hidden'); }
+      window.closeBrandedPdfModal = function () { document.getElementById('branded-pdf-modal').classList.add('hidden'); };
 
-      function openFeeReceiptPdf(sid) {
-        const s = appState.students.find(x => x.id === sid) || loggedInUser;
+      window.openFeeReceiptPdf = function (sid) {
+        const s = appState.students.find(x => x.id === sid) || loggedInUser || DEFAULT_STATE.students[0];
         openBrandedPdf(`
           <div class="flex justify-between items-center border-b-2 border-zinc-900 pb-4 mb-5">
             <div><h2 class="font-display font-black text-2xl">ELITE CLASSES</h2><p class="text-xs text-zinc-500">An Exclusive Mission For Futuristic Education • eliteclassesnoida.in</p></div>
             <div class="text-right text-xs"><p class="font-bold">OFFICIAL FEE RECEIPT</p><p>Date: ${new Date().toLocaleDateString('en-IN')}</p></div>
           </div>
           <p class="text-sm mb-2"><strong>Student:</strong> ${s.name} (${s.grade})</p>
-          <p class="text-sm mb-2"><strong>Location:</strong> ${s.cluster}</p>
-          <p class="text-sm mb-4"><strong>Fee Status:</strong> <span class="text-emerald-700 font-bold">${s.feeStatus}</span></p>
+          <p class="text-sm mb-2"><strong>Location:</strong> ${s.cluster || 'Noida'}</p>
+          <p class="text-sm mb-4"><strong>Fee Status:</strong> <span class="text-emerald-700 font-bold">${s.feeStatus || 'Paid'}</span></p>
           <div class="flex justify-between items-end mt-8 pt-4 border-t text-xs text-zinc-600">
             <div>Sector 35, Noida • +91 96757 32501 • support@eliteclassesnoida.com</div>
             <div class="text-right"><strong class="text-base block text-zinc-900">Ravi Yadav</strong>Founder &amp; Academic Director</div>
           </div>
         `);
-      }
+      };
 
-      function openReportPdf(sid) {
-        const s = appState.students.find(x => x.id === sid) || loggedInUser;
+      window.openReportPdf = function (sid) {
+        const s = appState.students.find(x => x.id === sid) || loggedInUser || DEFAULT_STATE.students[0];
         const st = cbt.stats;
         openBrandedPdf(`
           <div class="flex justify-between items-center border-b-2 border-zinc-900 pb-4 mb-5">
@@ -2389,33 +2551,23 @@
             <div class="text-right"><strong class="text-base block text-zinc-900">Ravi Yadav</strong>Founder &amp; Academic Director</div>
           </div>
         `);
-      }
+      };
 
-      /* 12. EXPOSE HANDLERS & INITIALIZE */
-      Object.assign(window, {
-        toggleThemeMode, stepBanner, goToBanner, handleSmartFinder, filterEcosystem, selectPodTab,
-        bookTutorDemo, selectAreaCategory, pickLocation, toggleFaq, setCurrency, handleParentSubmit,
-        handleTutorSubmit, launchLiveVideoRoom, setLiveQuality, switchClassMode, closeVideoRoom,
-        setBoardColor, toggleBoardEraser, undoBoardStroke, saveBoardPng, toggleBoardGrid,
-        clearLiveBoard, toggleLivePollBox, voteLivePoll, openPortalModal, closePortalModal,
-        selectRole, quickDemoLogin, openAdminTabDirect, loginPortal, refreshCloudData, logoutPortal,
-        switchAdminTab, switchStudentTab, switchLab, editItem, deleteItem, deleteByIndex,
-        saveFbUrl, saveBannerForm, saveStudentForm, saveTutorForm, saveNoteForm, saveReelForm,
-        saveHwForm, saveCbtForm, startCbt, cbtPick, cbtNav, submitCbt, submitTutorLog,
-        openFeeReceiptPdf, openReportPdf, closeBrandedPdfModal
-      });
-
+      /* -------------------------------------------------------------------
+         12. INITIALIZE ON LOAD
+         ------------------------------------------------------------------- */
       if (safeStorage.get('elite_theme') === 'light') {
         document.documentElement.classList.add('light-pearl');
-        document.getElementById('theme-btn').textContent = '🌙';
+        const btn = document.getElementById('theme-btn');
+        if (btn) btn.textContent = '🌙';
       }
       renderAllPublicSections();
-      filterEcosystem('all');
-      selectPodTab('g6_8');
+      window.filterEcosystem('all');
+      window.selectPodTab('g6_8');
       renderAreaTabs();
       renderFaqs();
       syncFromCloud();
-      setInterval(() => stepBanner(1), 6500);
+      setInterval(() => window.stepBanner(1), 6500);
     })();
   </script>
 </body>
