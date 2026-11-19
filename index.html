@@ -3663,5 +3663,94 @@
   }, 2000);
 })();
 </script>
+<!-- ELITE CLASSES: Fix Deleted Student Login & Force Real Logout -->
+<script>
+(function() {
+  const LOGOUT_FLAG = 'ec_force_logged_out';
+
+  // 1. Logout dabate hi session lock kar do
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const txt = (btn.textContent || '').trim();
+    if (txt === 'Logout') {
+      localStorage.setItem(LOGOUT_FLAG, '1');
+      // Purane saved student session keys clear karo (App data safe rahega)
+      Object.keys(localStorage).forEach(k => {
+        if (/session|currentUser|loggedIn|activeStudent|authUser/i.test(k)) {
+          localStorage.removeItem(k);
+        }
+      });
+    }
+  }, true);
+
+  // 2. Agar Logout ke baad bhi Student Dashboard direct khule, toh turant Login screen par bhejo
+  setInterval(() => {
+    if (localStorage.getItem(LOGOUT_FLAG) === '1') {
+      const hasStudentDash = document.body.innerText.includes('PDF Fee Receipt') || document.body.innerText.includes('Join Live Class');
+      if (hasStudentDash) {
+        const logoutBtn = Array.from(document.querySelectorAll('button')).find(b => (b.textContent || '').trim() === 'Logout');
+        if (logoutBtn) logoutBtn.click();
+      }
+    }
+  }, 400);
+
+  // 3. Student Login par check karo ki student sach mein Enrolled hai ya Delete ho chuka hai
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn || !(btn.textContent || '').includes('Access Dashboard')) return;
+
+    // Sirf Student/Parent tab active hone par hi check karo
+    const btns = Array.from(document.querySelectorAll('button'));
+    const aBtn = btns.find(b => (b.textContent || '').trim() === 'Admin CMS');
+    const sBtn = btns.find(b => (b.textContent || '').trim() === 'Student/Parent');
+    const tBtn = btns.find(b => (b.textContent || '').trim() === 'Tutor');
+    if (!aBtn || !sBtn || !tBtn) return;
+
+    const sBg = getComputedStyle(sBtn).backgroundColor;
+    const isStudentTab = (sBg !== getComputedStyle(aBtn).backgroundColor && sBg !== getComputedStyle(tBtn).backgroundColor);
+    if (!isStudentTab) return;
+
+    const passInp = document.querySelector('input[type="password"]');
+    if (!passInp) return;
+    const form = passInp.closest('form') || passInp.parentElement.parentElement;
+    const userInp = form ? form.querySelector('input:not([type="password"])') : null;
+    if (!userInp) return;
+
+    const enteredId = userInp.value.trim().toLowerCase();
+    if (!enteredId) return;
+
+    // LocalStorage mein saved Enrolled Students list check karo
+    let enrolledList = null;
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const val = localStorage.getItem(localStorage.key(i)) || '';
+        if (val.includes('"students"') && val.startsWith('{')) {
+          const parsed = JSON.parse(val);
+          if (Array.isArray(parsed.students)) {
+            enrolledList = parsed.students;
+            break;
+          }
+        }
+      }
+    } catch (err) {}
+
+    if (enrolledList !== null) {
+      const exists = enrolledList.some(s =>
+        String(s.id || s.loginId || s.username || '').trim().toLowerCase() === enteredId
+      );
+      if (!exists) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        alert('❌ Yeh Student ID active nahi hai ya Admin ne delete kar di hai!');
+        return;
+      }
+    }
+
+    // Valid student login -> logout flag hata do
+    localStorage.removeItem(LOGOUT_FLAG);
+  }, true);
+})();
+</script>
 </body>
 </html>
