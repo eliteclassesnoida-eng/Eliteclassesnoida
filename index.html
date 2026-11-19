@@ -3244,5 +3244,424 @@
   }, 600);
 })();
 </script>
+<!-- ELITE CLASSES: Private Multi-Teacher Live Rooms & Access Gate -->
+<script>
+(function() {
+  let activeRoom = null;
+  let activePin = '';
+  let isHost = false;
+  let allowNativeLiveClick = false;
+  let lastStudentId = sessionStorage.getItem('ec_last_student_id') || '';
+
+  // Safely find Firebase URL from localStorage OR page scripts (works even in fresh Incognito)
+  function getFirebaseBase() {
+    const rx = /https:\/\/[a-zA-Z0-9-]+\.(?:firebasedatabase\.app|firebaseio\.com)/;
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const m = (localStorage.getItem(localStorage.key(i)) || '').match(rx);
+        if (m) return m[0];
+      }
+    } catch (e) {}
+    try {
+      for (const s of document.scripts) {
+        const m = (s.textContent || '').match(rx);
+        if (m) return m[0];
+      }
+    } catch (e) {}
+    return '';
+  }
+
+  // Passively remember Student ID on login (does NOT interfere with login at all)
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn || !(btn.textContent || '').includes('Access Dashboard')) return;
+    const passInp = document.querySelector('input[type="password"]');
+    if (!passInp) return;
+    const form = passInp.closest('form') || passInp.parentElement.parentElement;
+    const userInp = form ? form.querySelector('input:not([type="password"])') : null;
+    if (userInp && userInp.value.trim()) {
+      lastStudentId = userInp.value.trim().toLowerCase();
+      sessionStorage.setItem('ec_last_student_id', lastStudentId);
+    }
+  });
+
+  function cleanSlug(str) {
+    return (str || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 24);
+  }
+
+  // Rewrite Video / Shared Board iframes to the Private Room ID (runs once per iframe)
+  function isolateLiveIframes() {
+    if (!activeRoom) return;
+    const roomTag = 'elite_' + activeRoom;
+    document.querySelectorAll('iframe').forEach(iframe => {
+      const src = iframe.getAttribute('src') || '';
+      if (!src || iframe.dataset.ecRoom === roomTag) return;
+
+      let newSrc = src;
+      if (/vdo\.ninja/i.test(src)) {
+        newSrc = /([?&])room=[^&]*/i.test(src)
+          ? src.replace(/([?&])room=[^&]*/i, '$1room=' + roomTag)
+          : src + (src.includes('?') ? '&' : '?') + 'room=' + roomTag;
+      } else if (/meet\.jit\.si/i.test(src)) {
+        newSrc = 'https://meet.jit.si/' + roomTag;
+      } else if (/([?&])room=[^&]*/i.test(src)) {
+        newSrc = src.replace(/([?&])room=[^&]*/i, '$1room=' + roomTag);
+      } else if (/wbo\.ophir\.dev|whiteboard|excalidraw/i.test(src)) {
+        newSrc = src.replace(/\/boards\/[^?#]+/i, '/boards/' + roomTag);
+        if (newSrc === src && !src.includes(roomTag)) {
+          newSrc = src + (src.includes('#') ? '&' : '#') + 'room=' + roomTag;
+        }
+      }
+
+      iframe.dataset.ecRoom = roomTag;
+      if (newSrc !== src) iframe.src = newSrc;
+    });
+  }
+
+  function showRoomBadge() {
+    let b = document.getElementById('ec-room-badge');
+    if (b) b.remove();
+    if (!activeRoom) return;
+    b = document.createElement('div');
+    b.id = 'ec-room-badge';
+    b.style.cssText = 'position:fixed;bottom:14px;left:14px;z-index:99998;background:#111526;border:1px solid #38bdf8;color:#fff;padding:8px 12px;border-radius:12px;font-family:system-ui,sans-serif;font-size:12px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.45);';
+    b.innerHTML = `
+      <span>🔐 Room: <b style="color:#38bdf8;">${activeRoom}</b>${isHost ? ' • PIN: <b style="color:#fbbf24;">' + activePin + '</b>' : ''}</span>
+      ${isHost ? '<button id="ec-end-room-btn" style="background:#ef4444;color:#fff;border:none;border-radius:8px;padding:4px 8px;font-size:11px;font-weight:700;cursor:pointer;">End Room</button>' : ''}
+    `;
+    document.body.appendChild(b);
+    const endBtn = document.getElementById('ec-end-room-btn');
+    if (endBtn) {
+      endBtn.onclick = async () => {
+        const base = getFirebaseBase();
+        if (base && activeRoom) {
+          fetch(`${base}/elite_v4_live_rooms/${activeRoom}.json`, { method: 'DELETE' }).catch(() => {});
+        }
+        activeRoom = null;
+        b.remove();
+        alert('✅ Private Room band aur lock kar diya gaya hai.');
+      };
+    }
+  }
+
+  // TEACHER MODAL: Launch Private Room
+  function openHostModal(nativeBtn) {
+    let m = document.getElementById('ec-live-gate');
+    if (m) m.remove();
+    const defaultPin = String(Math.floor(1000 + Math.random() * 9000));
+    const defaultRoom = 'batch-' + String(Math.floor(100 + Math.random() * 900));
+
+    m = document.createElement('div');
+    m.id = 'ec-live-gate';
+    m.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(5,7,15,0.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:16px;font-family:system-ui,sans-serif;color:#fff;';
+    m.innerHTML = `
+      <div style="width:100%;max-width:410px;background:#111526;border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:18px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <h3 style="margin:0;font-size:17px;font-weight:700;">🎥 Launch Private Live Room</h3>
+          <button id="ec-lg-close" style="background:#232942;color:#fff;border:none;border-radius:10px;width:32px;height:32px;cursor:pointer;">✕</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <input id="ec-lg-teacher" placeholder="Teacher Name (e.g. Ravi Sir)" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
+          <div style="display:flex;gap:8px;">
+            <input id="ec-lg-room" value="${defaultRoom}" placeholder="Room Code (e.g. ravi-9th)" style="flex:1.4;padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
+            <input id="ec-lg-pin" value="${defaultPin}" placeholder="4-Digit PIN" style="flex:0.8;padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fbbf24;font-weight:700;font-size:14px;">
+          </div>
+          <input id="ec-lg-allowed" placeholder="Allowed Student IDs (optional, e.g. shivangi09, akshya10)" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:13px;">
+          <div style="font-size:11px;color:#94a3b8;">* Khali chhodne par sirf wahi students join kar payenge jinke paas Room Code + PIN hoga.</div>
+          <button id="ec-lg-copy" style="padding:9px;border-radius:10px;border:1px solid #38bdf8;background:transparent;color:#38bdf8;font-weight:700;cursor:pointer;">📋 Copy Invite (Code + PIN)</button>
+          <button id="ec-lg-go" style="padding:12px;border-radius:12px;border:none;background:linear-gradient(90deg,#f59e0b,#d97706);color:#000;font-weight:800;cursor:pointer;">🚀 Start Private Class</button>
+        </div>
+      </div>`;
+    document.body.appendChild(m);
+
+    document.getElementById('ec-lg-close').onclick = () => m.remove();
+    document.getElementById('ec-lg-copy').onclick = () => {
+      const r = cleanSlug(document.getElementById('ec-lg-room').value);
+      const p = document.getElementById('ec-lg-pin').value.trim();
+      const t = document.getElementById('ec-lg-teacher').value.trim() || 'ELITE Tutor';
+      const txt = `ELITE CLASSES Live Session (${t})\nPortal: https://eliteclassesnoida.in\nRoom Code: ${r}\nPIN: ${p}`;
+      navigator.clipboard.writeText(txt).then(() => alert('✅ Invite copied! Ab student ko WhatsApp par bhej dein.'));
+    };
+
+    document.getElementById('ec-lg-go').onclick = async () => {
+      const room = cleanSlug(document.getElementById('ec-lg-room').value);
+      const pin = document.getElementById('ec-lg-pin').value.trim();
+      const teacher = document.getElementById('ec-lg-teacher').value.trim() || 'Tutor';
+      const allowedRaw = document.getElementById('ec-lg-allowed').value.trim();
+      const allowed = allowedRaw ? allowedRaw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean) : [];
+
+      if (!room || pin.length < 4) return alert('Valid Room Code aur kam se kam 4-digit PIN daalein!');
+
+      const base = getFirebaseBase();
+      if (base) {
+        try {
+          await fetch(`${base}/elite_v4_live_rooms/${room}.json`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ room, pin, teacher, allowed, active: true, startedAt: Date.now() })
+          });
+        } catch (e) {}
+      }
+
+      activeRoom = room;
+      activePin = pin;
+      isHost = true;
+      m.remove();
+      showRoomBadge();
+      allowNativeLiveClick = true;
+      nativeBtn.click();
+    };
+  }
+
+  // STUDENT MODAL: Join Private Room
+  function openStudentJoinModal(nativeBtn) {
+    let m = document.getElementById('ec-live-gate');
+    if (m) m.remove();
+    m = document.createElement('div');
+    m.id = 'ec-live-gate';
+    m.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(5,7,15,0.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:16px;font-family:system-ui,sans-serif;color:#fff;';
+    m.innerHTML = `
+      <div style="width:100%;max-width:390px;background:#111526;border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:18px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <h3 style="margin:0;font-size:17px;font-weight:700;">🔐 Join Private Live Class</h3>
+          <button id="ec-lg-close" style="background:#232942;color:#fff;border:none;border-radius:10px;width:32px;height:32px;cursor:pointer;">✕</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <input id="ec-sj-room" placeholder="Enter Teacher's Room Code" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
+          <input id="ec-sj-pin" placeholder="Enter 4-Digit Room PIN" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
+          <button id="ec-sj-go" style="padding:12px;border-radius:12px;border:none;background:linear-gradient(90deg,#6366f1,#4f46e5);color:#fff;font-weight:700;cursor:pointer;">✓ Verify & Enter Class</button>
+        </div>
+      </div>`;
+    document.body.appendChild(m);
+    document.getElementById('ec-lg-close').onclick = () => m.remove();
+
+    document.getElementById('ec-sj-go').onclick = async () => {
+      const room = cleanSlug(document.getElementById('ec-sj-room').value);
+      const pin = document.getElementById('ec-sj-pin').value.trim();
+      if (!room || !pin) return alert('Room Code aur PIN dono daalein!');
+
+      const base = getFirebaseBase();
+      if (!base) return alert('Cloud sync unavailable. Page refresh karein.');
+
+      try {
+        const res = await fetch(`${base}/elite_v4_live_rooms/${room}.json`);
+        const data = await res.json();
+        if (!data || !data.active) return alert('❌ Yeh Live Room abhi active nahi hai ya teacher ne band kar diya hai.');
+        if (String(data.pin) !== pin) return alert('❌ Galat Room PIN! Apne teacher se sahi PIN lein.');
+        if (Array.isArray(data.allowed) && data.allowed.length > 0) {
+          const sid = (lastStudentId || prompt('Confirm your Student Login ID:') || '').trim().toLowerCase();
+          if (!data.allowed.includes(sid)) {
+            return alert('❌ Aap is private batch mein invited nahi hain.');
+          }
+        }
+        activeRoom = room;
+        activePin = pin;
+        isHost = false;
+        m.remove();
+        showRoomBadge();
+        allowNativeLiveClick = true;
+        nativeBtn.click();
+      } catch (e) {
+        alert('Connection error, dobara try karein.');
+      }
+    };
+  }
+
+  // Intercept Start Live Studio (Teacher) & Join Live Class (Student)
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    if (allowNativeLiveClick) {
+      allowNativeLiveClick = false;
+      return;
+    }
+    const txt = (btn.textContent || '').replace(/\s+/g, ' ').trim();
+
+    if (/^Leave\s*X?$/i.test(txt)) {
+      const b = document.getElementById('ec-room-badge');
+      if (b) b.remove();
+      return;
+    }
+    if (/Start Live Studio/i.test(txt)) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      openHostModal(btn);
+    } else if (/Join Live|Enter Live|Live Class/i.test(txt) && !btn.closest('#ec-live-gate')) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      openStudentJoinModal(btn);
+    }
+  }, true);
+
+  setInterval(isolateLiveIframes, 700);
+})();
+</script>
+<!-- ELITE CLASSES: Instant Live Document & Photo Share (Teacher -> Student Sync) -->
+<script>
+(function() {
+  let lastDocTs = 0;
+
+  function getFirebaseBase() {
+    const rx = /https:\/\/[a-zA-Z0-9-]+\.(?:firebasedatabase\.app|firebaseio\.com)/;
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const m = (localStorage.getItem(localStorage.key(i)) || '').match(rx);
+        if (m) return m[0];
+      }
+      for (const s of document.scripts) {
+        const m = (s.textContent || '').match(rx);
+        if (m) return m[0];
+      }
+    } catch (e) {}
+    return '';
+  }
+
+  function getActiveRoomInfo() {
+    const badge = document.getElementById('ec-room-badge');
+    if (!badge) return null;
+    const m = badge.textContent.match(/Room:\s*([a-z0-9-]+)/i);
+    if (!m) return null;
+    const isHost = !!document.getElementById('ec-end-room-btn');
+    return { room: m[1].trim(), isHost, badge };
+  }
+
+  // Compress image so it syncs instantly (<1 sec) on Firebase
+  function compressImage(file, cb) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const maxW = 1000;
+        const scale = img.width > maxW ? maxW / img.width : 1;
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        cb(canvas.toDataURL('image/jpeg', 0.72));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function showDocViewer(doc) {
+    let v = document.getElementById('ec-live-doc-viewer');
+    if (v) v.remove();
+    if (!doc || !doc.content) return;
+
+    v = document.createElement('div');
+    v.id = 'ec-live-doc-viewer';
+    v.style.cssText = 'position:fixed;inset:0;z-index:99997;background:rgba(5,7,15,0.94);display:flex;flex-direction:column;padding:12px;font-family:system-ui,sans-serif;color:#fff;';
+    const isImg = doc.type === 'image';
+    v.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:8px 12px;background:#111526;border-radius:12px;border:1px solid #2e3657;">
+        <span style="font-weight:700;font-size:14px;">📄 Live Shared: ${doc.title || 'Class Material'}</span>
+        <button id="ec-dv-close" style="background:#ef4444;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-weight:700;cursor:pointer;">Close ✕</button>
+      </div>
+      <div style="flex:1;overflow:auto;display:flex;align-items:center;justify-content:center;background:#0b0e1a;border-radius:14px;border:1px solid #1e243d;">
+        ${isImg
+          ? `<img src="${doc.content}" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;" />`
+          : `<iframe src="${doc.content}" style="width:100%;height:100%;border:none;border-radius:12px;background:#fff;"></iframe>`}
+      </div>`;
+    document.body.appendChild(v);
+    document.getElementById('ec-dv-close').onclick = () => v.remove();
+  }
+
+  function openTeacherDocModal(room) {
+    let m = document.getElementById('ec-doc-share-modal');
+    if (m) m.remove();
+    m = document.createElement('div');
+    m.id = 'ec-doc-share-modal';
+    m.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(5,7,15,0.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:16px;font-family:system-ui,sans-serif;color:#fff;';
+    m.innerHTML = `
+      <div style="width:100%;max-width:400px;background:#111526;border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:18px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <h3 style="margin:0;font-size:16px;font-weight:700;">📄 Share Document / Photo Live</h3>
+          <button id="ec-ds-close" style="background:#232942;color:#fff;border:none;border-radius:10px;width:30px;height:30px;cursor:pointer;">✕</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <input id="ec-ds-title" placeholder="Title (e.g. Chapter 4 Worksheet)" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:13px;">
+          <label style="font-size:12px;color:#94a3b8;">Option 1: Upload Photo / Notes Page (Instant)</label>
+          <input id="ec-ds-file" type="file" accept="image/*" style="padding:8px;border-radius:10px;border:1px dashed #38bdf8;background:#0d101d;color:#fff;font-size:12px;">
+          <label style="font-size:12px;color:#94a3b8;">Option 2: Paste PDF / Google Drive Link</label>
+          <input id="ec-ds-url" placeholder="https://..." style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:13px;">
+          <button id="ec-ds-push" style="padding:11px;border-radius:12px;border:none;background:linear-gradient(90deg,#10b981,#059669);color:#fff;font-weight:700;cursor:pointer;">🚀 Push Live to Students</button>
+          <button id="ec-ds-clear" style="padding:9px;border-radius:10px;border:1px solid #ef4444;background:transparent;color:#ef4444;font-weight:700;cursor:pointer;">🗑 Remove Shared Doc from Screens</button>
+        </div>
+      </div>`;
+    document.body.appendChild(m);
+    document.getElementById('ec-ds-close').onclick = () => m.remove();
+
+    const pushDoc = async (payload) => {
+      const base = getFirebaseBase();
+      if (!base) return alert('Cloud sync error.');
+      await fetch(`${base}/elite_v4_live_rooms/${room}/sharedDoc.json`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      m.remove();
+      if (payload) showDocViewer(payload);
+    };
+
+    document.getElementById('ec-ds-push').onclick = () => {
+      const title = document.getElementById('ec-ds-title').value.trim() || 'Live Class Material';
+      const file = document.getElementById('ec-ds-file').files[0];
+      let url = document.getElementById('ec-ds-url').value.trim();
+
+      if (file) {
+        compressImage(file, (base64) => pushDoc({ type: 'image', title, content: base64, ts: Date.now() }));
+      } else if (url) {
+        if (url.includes('drive.google.com') && url.includes('/view')) {
+          url = url.replace('/view', '/preview');
+        }
+        pushDoc({ type: 'iframe', title, content: url, ts: Date.now() });
+      } else {
+        alert('Koi Photo select karein ya PDF/Drive link paste karein!');
+      }
+    };
+
+    document.getElementById('ec-ds-clear').onclick = async () => {
+      const base = getFirebaseBase();
+      if (base) await fetch(`${base}/elite_v4_live_rooms/${room}/sharedDoc.json`, { method: 'DELETE' });
+      const v = document.getElementById('ec-live-doc-viewer');
+      if (v) v.remove();
+      m.remove();
+    };
+  }
+
+  // Attach Share button for Teacher & Auto-Sync viewer for Students
+  setInterval(async () => {
+    const info = getActiveRoomInfo();
+    if (!info) return;
+
+    if (info.isHost && !document.getElementById('ec-share-doc-btn')) {
+      const btn = document.createElement('button');
+      btn.id = 'ec-share-doc-btn';
+      btn.textContent = '📄 Share Doc';
+      btn.style.cssText = 'background:#10b981;color:#fff;border:none;border-radius:8px;padding:4px 8px;font-size:11px;font-weight:700;cursor:pointer;';
+      btn.onclick = () => openTeacherDocModal(info.room);
+      info.badge.insertBefore(btn, document.getElementById('ec-end-room-btn'));
+    }
+
+    if (!info.isHost) {
+      const base = getFirebaseBase();
+      if (!base) return;
+      try {
+        const res = await fetch(`${base}/elite_v4_live_rooms/${info.room}/sharedDoc.json`);
+        const doc = await res.json();
+        if (!doc) {
+          lastDocTs = 0;
+          const v = document.getElementById('ec-live-doc-viewer');
+          if (v) v.remove();
+        } else if (doc.ts && doc.ts !== lastDocTs) {
+          lastDocTs = doc.ts;
+          showDocViewer(doc);
+        }
+      } catch (e) {}
+    }
+  }, 2000);
+})();
+</script>
 </body>
 </html>
