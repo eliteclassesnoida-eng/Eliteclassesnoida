@@ -2971,5 +2971,192 @@
   setInterval(securePublicUI, 800);
 })();
 </script>
+<!-- ELITE CLASSES: Master Login Security & Custom Admin Password -->
+<script>
+(function() {
+  const AUTH_KEY = 'elite_v4_custom_admin_auth';
+  let customAuth = null;
+  let origAdminId = '';
+  let origAdminPass = '';
+
+  function getFirebaseBase() {
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const m = (localStorage.getItem(localStorage.key(i)) || '').match(/https:\/\/[^"'\s]+\.(?:firebasedatabase\.app|firebaseio\.com)/);
+        if (m) return m[0];
+      }
+    } catch (e) {}
+    return '';
+  }
+
+  function loadAuth() {
+    try { customAuth = JSON.parse(localStorage.getItem(AUTH_KEY)); } catch { customAuth = null; }
+  }
+
+  async function syncAuth() {
+    const base = getFirebaseBase();
+    if (!base) return;
+    try {
+      const res = await fetch(base + '/elite_v4_admin_auth.json');
+      const data = await res.json();
+      if (data && data.id && data.pass) {
+        customAuth = data;
+        localStorage.setItem(AUTH_KEY, JSON.stringify(customAuth));
+      }
+    } catch (e) {}
+  }
+
+  async function saveAuth(id, pass) {
+    customAuth = { id, pass };
+    localStorage.setItem(AUTH_KEY, JSON.stringify(customAuth));
+    const base = getFirebaseBase();
+    if (!base) return;
+    try {
+      await fetch(base + '/elite_v4_admin_auth.json', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(customAuth)
+      });
+    } catch (e) {}
+  }
+
+  function setNativeValue(el, val) {
+    const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+    setter.call(el, val);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  function cleanLoginScreen() {
+    // 1. Hide "1-Click Instant Demo Access" box completely
+    document.querySelectorAll('div, p, span').forEach(el => {
+      if (el.children.length <= 4 && (el.textContent || '').includes('1-Click Instant Demo Access')) {
+        const box = el.closest('div[class*="border"], div[class*="rounded"]') || el.parentElement;
+        if (box) box.style.setProperty('display', 'none', 'important');
+      }
+    });
+
+    // 2. Capture & clear pre-filled default login credentials once per open
+    const passInp = document.querySelector('input[type="password"]');
+    if (passInp && !passInp.dataset.ecCleared) {
+      const form = passInp.closest('form') || passInp.parentElement.parentElement;
+      const userInp = form ? form.querySelector('input:not([type="password"])') : null;
+      if (userInp && userInp.value && passInp.value) {
+        if (!origAdminId && userInp.value.toLowerCase().includes('admin')) {
+          origAdminId = userInp.value;
+          origAdminPass = passInp.value;
+        }
+        setNativeValue(userInp, '');
+        setNativeValue(passInp, '');
+        userInp.placeholder = 'Enter Login ID';
+        passInp.placeholder = 'Enter Password';
+        passInp.dataset.ecCleared = '1';
+      }
+    }
+  }
+
+  // Clear inputs again if user switches between Admin / Student / Tutor tabs
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const t = (btn.textContent || '').trim();
+    if (t === 'Admin CMS' || t === 'Student/Parent' || t === 'Tutor') {
+      setTimeout(() => {
+        const passInp = document.querySelector('input[type="password"]');
+        if (passInp) {
+          delete passInp.dataset.ecCleared;
+          cleanLoginScreen();
+        }
+      }, 60);
+    }
+  });
+
+  // 3. Intercept "Access Dashboard" to enforce Custom Founder ID & Password
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn || !(btn.textContent || '').includes('Access Dashboard')) return;
+
+    const passInp = document.querySelector('input[type="password"]');
+    if (!passInp) return;
+    const form = passInp.closest('form') || passInp.parentElement.parentElement;
+    const userInp = form ? form.querySelector('input:not([type="password"])') : null;
+    if (!userInp) return;
+
+    // Check if Admin CMS tab is active
+    const adminTab = Array.from(document.querySelectorAll('button')).find(b => (b.textContent || '').trim() === 'Admin CMS');
+    const isAdminTab = adminTab && (
+      adminTab.className.includes('bg-indigo') ||
+      adminTab.className.includes('bg-blue') ||
+      adminTab.className.includes('bg-purple') ||
+      getComputedStyle(adminTab).backgroundColor !== 'rgba(0, 0, 0, 0)' && getComputedStyle(adminTab).backgroundColor !== 'rgb(255, 255, 255)'
+    );
+
+    if (isAdminTab && customAuth && customAuth.id && customAuth.pass) {
+      const enteredId = userInp.value.trim();
+      const enteredPass = passInp.value.trim();
+      if (enteredId !== customAuth.id || enteredPass !== customAuth.pass) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        alert('❌ Galat Admin ID ya Password!');
+        return;
+      }
+      // Valid custom credentials -> temporarily pass original credentials to unlock dashboard
+      if (origAdminId && origAdminPass) {
+        setNativeValue(userInp, origAdminId);
+        setNativeValue(passInp, origAdminPass);
+      }
+    }
+  }, true);
+
+  // 4. Add "🔐 Security" button inside Admin CMS to change Founder ID/Password
+  function openSecurityModal() {
+    let m = document.getElementById('ec-sec-modal');
+    if (m) m.remove();
+    m = document.createElement('div');
+    m.id = 'ec-sec-modal';
+    m.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(5,7,15,0.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:16px;font-family:system-ui,sans-serif;color:#fff;';
+    m.innerHTML = `
+      <div style="width:100%;max-width:400px;background:#111526;border:1px solid rgba(255,255,255,0.14);border-radius:20px;padding:18px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <h3 style="margin:0;font-size:17px;font-weight:700;">🔐 Founder Login Security</h3>
+          <button id="ec-sec-close" style="background:#232942;color:#fff;border:none;border-radius:10px;width:32px;height:32px;cursor:pointer;">✕</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <input id="ec-sec-id" value="${customAuth ? customAuth.id : ''}" placeholder="New Founder Admin ID (e.g. ravi_founder)" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
+          <input id="ec-sec-pass" type="text" value="${customAuth ? customAuth.pass : ''}" placeholder="New Strong Password..." style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
+          <button id="ec-sec-save" style="padding:11px;border-radius:12px;border:none;background:linear-gradient(90deg,#ef4444,#dc2626);color:#fff;font-weight:700;cursor:pointer;">✓ Save New Admin ID & Password</button>
+        </div>
+      </div>`;
+    document.body.appendChild(m);
+    document.getElementById('ec-sec-close').onclick = () => m.remove();
+    document.getElementById('ec-sec-save').onclick = async () => {
+      const id = document.getElementById('ec-sec-id').value.trim();
+      const pass = document.getElementById('ec-sec-pass').value.trim();
+      if (!id || pass.length < 6) return alert('Admin ID aur kam se kam 6 characters ka strong password daalein!');
+      await saveAuth(id, pass);
+      alert('✅ Founder Admin ID & Password updated & synced to Cloud!');
+      m.remove();
+    };
+  }
+
+  loadAuth();
+  syncAuth();
+
+  setInterval(() => {
+    cleanLoginScreen();
+    document.querySelectorAll('button').forEach(b => {
+      if ((b.textContent || '').includes('Leads & Cloud') && !document.getElementById('ec-sec-admin-btn')) {
+        const btn = document.createElement('button');
+        btn.id = 'ec-sec-admin-btn';
+        btn.className = b.className;
+        btn.style.cssText = 'background:#1e243d;border:1px solid #f87171;color:#f87171;';
+        btn.innerHTML = '🔐 Security';
+        btn.onclick = (e) => { e.stopPropagation(); syncAuth().then(openSecurityModal); };
+        b.parentElement.appendChild(btn);
+      }
+    });
+  }, 600);
+})();
+</script>
 </body>
 </html>
