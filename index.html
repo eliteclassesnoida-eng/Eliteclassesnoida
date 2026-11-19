@@ -3752,97 +3752,208 @@
   }, true);
 })();
 </script>
-<!-- === ELITE CLASSES: QUICK PATCH (HIDE STUDENT BUTTONS + PREMIUM LOGO TAGLINE) === -->
+<!-- === ELITE CLASSES: FINAL HEADER + WHATSAPP + LOGIN FIX === -->
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@600;700&display=swap');
 
   .elite-brand-tagline {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-left: 10px;
+    margin-right: 8px;
     line-height: 1.25;
-    max-width: 230px;
+    min-width: 0;
+    flex: 1;
     text-align: left;
   }
 
   .elite-tagline-main {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.4px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.25px;
     color: #f8fafc;
+    display: block;
   }
 
   .elite-tagline-by {
     font-family: 'Cinzel', serif;
-    font-size: 10px;
+    font-size: 9.5px;
     font-weight: 700;
-    letter-spacing: 0.9px;
+    letter-spacing: 0.8px;
     color: #fbbf24;
     margin-top: 2px;
     text-transform: uppercase;
+    display: block;
+  }
+
+  .elite-wa-header-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    background: #25D366;
+    color: #ffffff !important;
+    box-shadow: 0 2px 10px rgba(37, 211, 102, 0.35);
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .elite-wa-header-btn:hover {
+    background: #1ebe5d;
+    transform: scale(1.06);
   }
 
   @media (min-width: 768px) {
     .elite-brand-tagline {
-      max-width: 360px;
       margin-left: 14px;
     }
     .elite-tagline-main {
-      font-size: 13px;
+      font-size: 13.5px;
     }
     .elite-tagline-by {
       font-size: 11.5px;
+    }
+    .elite-wa-header-btn {
+      width: 38px;
+      height: 38px;
     }
   }
 </style>
 
 <script>
   (function () {
-    function applyElitePatch() {
-      // 1. Dono "Student App" aur neeche wala "Student" button hide karo
-      // (Super-App Portal aur Login Modal ka "Student/Parent" tab safe rahega)
+    // 1. "Try shivangi09 / elite123" popup error ko automatically clean karo
+    function cleanLoginHint(root) {
+      if (!root) return;
+      var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+      var node;
+      while ((node = walker.nextNode())) {
+        if (/shivangi09|elite123/i.test(node.nodeValue)) {
+          node.nodeValue = 'Invalid Student ID or Password!';
+        }
+      }
+    }
+
+    var hintObserver = new MutationObserver(function (mutations) {
+      mutations.forEach(function (m) {
+        if (m.type === 'characterData') {
+          if (/shivangi09|elite123/i.test(m.target.nodeValue)) {
+            m.target.nodeValue = 'Invalid Student ID or Password!';
+          }
+        } else {
+          m.addedNodes.forEach(function (n) {
+            if (n.nodeType === 1) cleanLoginHint(n);
+            else if (n.nodeType === 3 && /shivangi09|elite123/i.test(n.nodeValue)) {
+              n.nodeValue = 'Invalid Student ID or Password!';
+            }
+          });
+        }
+      });
+    });
+
+    function applyEliteFixes() {
+      // A. Dono "Student App" aur neeche wala "Student" button hide karo
       document.querySelectorAll('button, a').forEach(function (el) {
         var cleanText = (el.textContent || '')
           .replace(/[^\w\s/-]/g, '')
           .trim()
           .toLowerCase();
-
         if (cleanText === 'student app' || cleanText === 'student') {
           el.style.setProperty('display', 'none', 'important');
         }
       });
 
-      // 2. Logo ke bagal me standard font me Tagline lagao
-      if (!document.querySelector('.elite-brand-tagline')) {
+      // B. Logo ko safe rakh kar uske BAHAR side me Tagline lagao
+      var nav = document.querySelector('header, nav');
+      if (nav && !nav.querySelector('.elite-brand-tagline')) {
         var logoImg =
-          document.querySelector('header img, nav img') ||
-          document.querySelector('img[alt*="Elite" i], img[src*="logo" i]');
+          nav.querySelector('img[alt*="Elite" i], img[src*="logo" i]') ||
+          nav.querySelector('img');
 
-        if (logoImg && logoImg.parentElement) {
-          var parent = logoImg.parentElement;
-          parent.style.display = 'flex';
-          parent.style.alignItems = 'center';
+        if (logoImg) {
+          // Logo image ko kabhi squish nahi hone dena
+          logoImg.style.setProperty('display', 'block', 'important');
+          logoImg.style.setProperty('flex-shrink', '0', 'important');
 
-          var tagBox = document.createElement('div');
-          tagBox.className = 'elite-brand-tagline';
-          tagBox.innerHTML =
-            '<span class="elite-tagline-main">An Exclusive Mission For Futuristic Education</span>' +
-            '<span class="elite-tagline-by">by Ravi Yadav</span>';
+          // White logo box ke BAHAR nikal kar sibling banao
+          var logoBox = logoImg.parentElement;
+          if (logoBox) {
+            logoBox.style.setProperty('flex-shrink', '0', 'important');
 
-          logoImg.insertAdjacentElement('afterend', tagBox);
+            // Purana chhota "ELITE CLASSES" text ho to duplicate na dikhe
+            var nextEl = logoBox.nextElementSibling;
+            if (nextEl && /elite classes|futuristic/i.test(nextEl.textContent || '')) {
+              nextEl.style.setProperty('display', 'none', 'important');
+            }
+
+            if (logoBox.parentElement) {
+              logoBox.parentElement.style.display = 'flex';
+              logoBox.parentElement.style.alignItems = 'center';
+              logoBox.parentElement.style.minWidth = '0';
+              logoBox.parentElement.style.flex = '1';
+            }
+
+            var tagBox = document.createElement('div');
+            tagBox.className = 'elite-brand-tagline';
+            tagBox.innerHTML =
+              '<span class="elite-tagline-main">An Exclusive Mission For Futuristic Education</span>' +
+              '<span class="elite-tagline-by">by Ravi Yadav</span>';
+
+            logoBox.insertAdjacentElement('afterend', tagBox);
+          }
         }
       }
+
+      // C. Dark mode button ke theek bagal me WhatsApp button lagao
+      if (nav && !nav.querySelector('.elite-wa-header-btn')) {
+        var buttons = Array.from(nav.querySelectorAll('button')).filter(function (b) {
+          return window.getComputedStyle(b).display !== 'none';
+        });
+        var darkBtn = buttons[buttons.length - 1];
+
+        if (darkBtn && darkBtn.parentElement) {
+          darkBtn.parentElement.style.display = 'flex';
+          darkBtn.parentElement.style.alignItems = 'center';
+          darkBtn.parentElement.style.gap = '8px';
+          darkBtn.parentElement.style.flexShrink = '0';
+
+          var waBtn = document.createElement('a');
+          waBtn.className = 'elite-wa-header-btn';
+          waBtn.href = 'https://wa.me/919675732501';
+          waBtn.target = '_blank';
+          waBtn.rel = 'noopener noreferrer';
+          waBtn.title = 'Chat on WhatsApp';
+          waBtn.setAttribute('aria-label', 'WhatsApp');
+          waBtn.innerHTML =
+            '<svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor">' +
+            '<path d="M12.031 2C6.508 2 2.016 6.492 2.016 12.016c0 1.766.461 3.49 1.338 5.012L2 22l5.102-1.338a9.97 9.97 0 0 0 4.929 1.295h.004c5.522 0 10.015-4.492 10.015-10.016C22.05 6.492 17.553 2 12.031 2zm5.825 14.15c-.246.693-1.434 1.324-1.977 1.404-.504.074-1.158.105-1.871-.121-.434-.137-.99-.322-1.703-.631-2.996-1.293-4.953-4.314-5.102-4.512-.148-.199-1.219-1.621-1.219-3.092 0-1.471.77-2.193 1.043-2.492.273-.299.596-.373.795-.373.199 0 .398.002.572.01.184.01.43-.07.672.512.248.596.844 2.066.918 2.215.074.149.123.324.025.523-.099.199-.149.324-.298.498-.149.174-.313.389-.447.523-.149.149-.304.311-.131.609.174.299.772 1.273 1.658 2.063 1.139 1.016 2.099 1.331 2.398 1.48.298.149.473.124.647-.075.174-.199.746-.871.945-1.17.199-.299.398-.249.672-.149.273.1 1.741.821 2.039.971.299.149.498.224.572.348.075.125.075.722-.171 1.415z"/>' +
+            '</svg>';
+
+          darkBtn.insertAdjacentElement('beforebegin', waBtn);
+        }
+      }
+
+      // D. Login error hint watcher start karo
+      cleanLoginHint(document.body);
+      hintObserver.observe(document.body, {
+        childList: true,
+        subtree: true,
+        characterData: true
+      });
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', applyElitePatch);
+      document.addEventListener('DOMContentLoaded', applyEliteFixes);
     } else {
-      applyElitePatch();
+      applyEliteFixes();
     }
   })();
 </script>
-<!-- === END QUICK PATCH === -->
+<!-- === END FINAL FIX === -->
 </body>
 </html>
