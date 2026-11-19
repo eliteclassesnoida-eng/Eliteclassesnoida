@@ -2971,13 +2971,16 @@
   setInterval(securePublicUI, 800);
 })();
 </script>
-<!-- ELITE CLASSES: Master Login Security (Safe Fixed Version) -->
+<!-- ELITE CLASSES: Master Auth v2 (Admin + Student Safe + Tutor Logins) -->
 <script>
 (function() {
-  const AUTH_KEY = 'elite_v4_custom_admin_auth';
+  const ADMIN_KEY = 'elite_v4_custom_admin_auth';
+  const TUTOR_KEY = 'elite_v4_tutor_auth_list';
   let customAuth = null;
-  let origAdminId = '';
-  let origAdminPass = '';
+  let tutorLogins = [];
+  let origTutorId = 'tutor';
+  let origTutorPass = 'elite123';
+  let isBypassing = false;
 
   function getFirebaseBase() {
     try {
@@ -2989,33 +2992,39 @@
     return '';
   }
 
-  function loadAuth() {
-    try { customAuth = JSON.parse(localStorage.getItem(AUTH_KEY)); } catch { customAuth = null; }
+  function loadLocal() {
+    try { customAuth = JSON.parse(localStorage.getItem(ADMIN_KEY)); } catch { customAuth = null; }
+    try { tutorLogins = JSON.parse(localStorage.getItem(TUTOR_KEY)) || []; } catch { tutorLogins = []; }
   }
 
-  async function syncAuth() {
+  async function syncAllAuth() {
     const base = getFirebaseBase();
     if (!base) return;
     try {
-      const res = await fetch(base + '/elite_v4_admin_auth.json');
-      const data = await res.json();
-      if (data && data.id && data.pass) {
-        customAuth = data;
-        localStorage.setItem(AUTH_KEY, JSON.stringify(customAuth));
+      const [r1, r2] = await Promise.all([
+        fetch(base + '/elite_v4_admin_auth.json').then(r => r.json()).catch(() => null),
+        fetch(base + '/elite_v4_tutor_auth.json').then(r => r.json()).catch(() => null)
+      ]);
+      if (r1 && r1.id && r1.pass) {
+        customAuth = r1;
+        localStorage.setItem(ADMIN_KEY, JSON.stringify(customAuth));
+      }
+      if (r2) {
+        tutorLogins = Array.isArray(r2) ? r2 : Object.values(r2);
+        localStorage.setItem(TUTOR_KEY, JSON.stringify(tutorLogins));
       }
     } catch (e) {}
   }
 
-  async function saveAuth(id, pass) {
-    customAuth = { id, pass };
-    localStorage.setItem(AUTH_KEY, JSON.stringify(customAuth));
+  async function saveCloud(node, data, lsKey) {
+    localStorage.setItem(lsKey, JSON.stringify(data));
     const base = getFirebaseBase();
     if (!base) return;
     try {
-      await fetch(base + '/elite_v4_admin_auth.json', {
+      await fetch(`${base}/${node}.json`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(customAuth)
+        body: JSON.stringify(data)
       });
     } catch (e) {}
   }
@@ -3027,8 +3036,26 @@
     el.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
+  // Exact active tab detection (works in both Dark & Light mode)
+  function getActiveTab() {
+    const btns = Array.from(document.querySelectorAll('button'));
+    const aBtn = btns.find(b => (b.textContent || '').trim() === 'Admin CMS');
+    const sBtn = btns.find(b => (b.textContent || '').trim() === 'Student/Parent');
+    const tBtn = btns.find(b => (b.textContent || '').trim() === 'Tutor');
+    if (!aBtn || !sBtn || !tBtn) return 'unknown';
+
+    const aBg = getComputedStyle(aBtn).backgroundColor;
+    const sBg = getComputedStyle(sBtn).backgroundColor;
+    const tBg = getComputedStyle(tBtn).backgroundColor;
+
+    if (aBg !== sBg && aBg !== tBg) return 'admin';
+    if (sBg !== aBg && sBg !== tBg) return 'student';
+    if (tBg !== aBg && tBg !== sBg) return 'tutor';
+    return 'unknown';
+  }
+
   function cleanLoginScreen() {
-    // 1. SAFE: Sirf chhote "1-Click Instant Demo Access" box ko hide karega, page ko nahi
+    // 1. Hide ONLY the small 1-Click Demo box
     document.querySelectorAll('div, p, span').forEach(el => {
       if (el.children.length === 0 && (el.textContent || '').includes('1-Click Instant Demo Access')) {
         const box = el.parentElement;
@@ -3036,17 +3063,22 @@
           box.style.setProperty('display', 'none', 'important');
         }
       }
+      // Hide any error text that leaks default password
+      if (el.children.length === 0 && (el.textContent || '').includes('Use admin / elite123')) {
+        el.textContent = '❌ Invalid Admin Login Credentials!';
+      }
     });
 
-    // 2. Default pre-filled ID/Password clear karega
+    // 2. Clear default pre-filled login values once per tab open
     const passInp = document.querySelector('input[type="password"]');
     if (passInp && !passInp.dataset.ecCleared) {
       const form = passInp.closest('form') || passInp.parentElement.parentElement;
       const userInp = form ? form.querySelector('input:not([type="password"])') : null;
       if (userInp && userInp.value && passInp.value) {
-        if (!origAdminId && userInp.value.toLowerCase().includes('admin')) {
-          origAdminId = userInp.value;
-          origAdminPass = passInp.value;
+        const tab = getActiveTab();
+        if (tab === 'tutor') {
+          origTutorId = userInp.value;
+          origTutorPass = passInp.value;
         }
         setNativeValue(userInp, '');
         setNativeValue(passInp, '');
@@ -3072,69 +3104,129 @@
     }
   });
 
+  // 3. Intercept Access Dashboard safely (async React state sync)
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('button');
     if (!btn || !(btn.textContent || '').includes('Access Dashboard')) return;
+
+    if (isBypassing) {
+      isBypassing = false;
+      return; // Let native React login proceed
+    }
+
+    const tab = getActiveTab();
+    if (tab === 'student' || tab === 'unknown') return; // Never touch Student login!
+
     const passInp = document.querySelector('input[type="password"]');
     if (!passInp) return;
     const form = passInp.closest('form') || passInp.parentElement.parentElement;
     const userInp = form ? form.querySelector('input:not([type="password"])') : null;
     if (!userInp) return;
 
-    const adminTab = Array.from(document.querySelectorAll('button')).find(b => (b.textContent || '').trim() === 'Admin CMS');
-    const isAdminTab = adminTab && (
-      adminTab.className.includes('bg-indigo') ||
-      adminTab.className.includes('bg-blue') ||
-      adminTab.className.includes('bg-purple') ||
-      (getComputedStyle(adminTab).backgroundColor !== 'rgba(0, 0, 0, 0)' && getComputedStyle(adminTab).backgroundColor !== 'rgb(255, 255, 255)')
-    );
+    const enteredId = userInp.value.trim();
+    const enteredPass = passInp.value.trim();
 
-    if (isAdminTab && customAuth && customAuth.id && customAuth.pass) {
-      if (userInp.value.trim() !== customAuth.id || passInp.value.trim() !== customAuth.pass) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
+    if (tab === 'admin' && customAuth && customAuth.id && customAuth.pass) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if (enteredId !== customAuth.id || enteredPass !== customAuth.pass) {
         alert('❌ Galat Admin ID ya Password!');
         return;
       }
-      if (origAdminId && origAdminPass) {
-        setNativeValue(userInp, origAdminId);
-        setNativeValue(passInp, origAdminPass);
+      // Valid custom Admin login -> sync native credentials then trigger React login
+      setNativeValue(userInp, 'admin');
+      setNativeValue(passInp, 'elite123');
+      setTimeout(() => { isBypassing = true; btn.click(); }, 80);
+    }
+
+    if (tab === 'tutor' && tutorLogins.length > 0) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      const validTutor = tutorLogins.find(x => x.id === enteredId && x.pass === enteredPass);
+      if (!validTutor) {
+        alert('❌ Galat Tutor ID ya Password!');
+        return;
       }
+      setNativeValue(userInp, origTutorId);
+      setNativeValue(passInp, origTutorPass);
+      setTimeout(() => { isBypassing = true; btn.click(); }, 80);
     }
   }, true);
 
+  // 4. Security Modal: Founder Password + Tutor Login Manager
   function openSecurityModal() {
     let m = document.getElementById('ec-sec-modal');
     if (m) m.remove();
     m = document.createElement('div');
     m.id = 'ec-sec-modal';
-    m.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(5,7,15,0.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:16px;font-family:system-ui,sans-serif;color:#fff;';
+    m.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(5,7,15,0.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:14px;font-family:system-ui,sans-serif;color:#fff;';
     m.innerHTML = `
-      <div style="width:100%;max-width:400px;background:#111526;border:1px solid rgba(255,255,255,0.14);border-radius:20px;padding:18px;">
+      <div style="width:100%;max-width:420px;max-height:90vh;overflow-y:auto;background:#111526;border:1px solid rgba(255,255,255,0.14);border-radius:20px;padding:18px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-          <h3 style="margin:0;font-size:17px;font-weight:700;">🔐 Founder Login Security</h3>
+          <h3 style="margin:0;font-size:17px;font-weight:700;">🔐 Founder & Tutor Security</h3>
           <button id="ec-sec-close" style="background:#232942;color:#fff;border:none;border-radius:10px;width:32px;height:32px;cursor:pointer;">✕</button>
         </div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <input id="ec-sec-id" value="${customAuth ? customAuth.id : ''}" placeholder="New Founder Admin ID" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
-          <input id="ec-sec-pass" type="text" value="${customAuth ? customAuth.pass : ''}" placeholder="New Strong Password..." style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
-          <button id="ec-sec-save" style="padding:11px;border-radius:12px;border:none;background:linear-gradient(90deg,#ef4444,#dc2626);color:#fff;font-weight:700;cursor:pointer;">✓ Save New Admin ID & Password</button>
+
+        <div style="background:#181d33;padding:12px;border-radius:14px;margin-bottom:14px;display:flex;flex-direction:column;gap:9px;">
+          <div style="font-size:12px;color:#f87171;font-weight:700;">👑 FOUNDER ADMIN LOGIN</div>
+          <input id="ec-sec-id" value="${customAuth ? customAuth.id : ''}" placeholder="Founder Admin ID" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
+          <input id="ec-sec-pass" type="text" value="${customAuth ? customAuth.pass : ''}" placeholder="Founder Password" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
+          <button id="ec-sec-save" style="padding:10px;border-radius:10px;border:none;background:linear-gradient(90deg,#ef4444,#dc2626);color:#fff;font-weight:700;cursor:pointer;">✓ Save Founder Login</button>
+        </div>
+
+        <div style="background:#181d33;padding:12px;border-radius:14px;display:flex;flex-direction:column;gap:9px;">
+          <div style="font-size:12px;color:#34d399;font-weight:700;">👨‍🏫 TUTOR LOGIN IDs (${tutorLogins.length})</div>
+          <input id="ec-t-name" placeholder="Tutor Name (e.g. Rahul Verma)" style="padding:9px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:13px;">
+          <div style="display:flex;gap:8px;">
+            <input id="ec-t-id" placeholder="Tutor Login ID" style="flex:1;padding:9px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:13px;">
+            <input id="ec-t-pass" placeholder="Password" style="flex:1;padding:9px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:13px;">
+          </div>
+          <button id="ec-t-add" style="padding:10px;border-radius:10px;border:none;background:linear-gradient(90deg,#10b981,#059669);color:#fff;font-weight:700;cursor:pointer;">+ Create Tutor Login</button>
+          <div id="ec-t-list" style="display:flex;flex-direction:column;gap:6px;margin-top:4px;"></div>
         </div>
       </div>`;
     document.body.appendChild(m);
     document.getElementById('ec-sec-close').onclick = () => m.remove();
+
     document.getElementById('ec-sec-save').onclick = async () => {
       const id = document.getElementById('ec-sec-id').value.trim();
       const pass = document.getElementById('ec-sec-pass').value.trim();
       if (!id || pass.length < 6) return alert('Admin ID aur kam se kam 6 characters ka password daalein!');
-      await saveAuth(id, pass);
+      customAuth = { id, pass };
+      await saveCloud('elite_v4_admin_auth', customAuth, ADMIN_KEY);
       alert('✅ Founder Admin ID & Password saved!');
-      m.remove();
     };
+
+    const renderTutors = () => {
+      document.getElementById('ec-t-list').innerHTML = tutorLogins.map((t, i) => `
+        <div style="background:#0d101d;border:1px solid #2e3657;border-radius:10px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;">
+          <div style="font-size:12px;"><b>${t.name}</b><br><span style="color:#94a3b8;">ID: ${t.id} • Pass: ${t.pass}</span></div>
+          <button onclick="window._ecDelTutor(${i})" style="background:#ef4444;color:#fff;border:none;border-radius:8px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;">Del</button>
+        </div>`).join('');
+    };
+
+    document.getElementById('ec-t-add').onclick = async () => {
+      const name = document.getElementById('ec-t-name').value.trim() || 'Tutor';
+      const id = document.getElementById('ec-t-id').value.trim();
+      const pass = document.getElementById('ec-t-pass').value.trim();
+      if (!id || !pass) return alert('Tutor ID aur Password dono daalein!');
+      tutorLogins.push({ name, id, pass });
+      document.getElementById('ec-t-name').value = document.getElementById('ec-t-id').value = document.getElementById('ec-t-pass').value = '';
+      renderTutors();
+      await saveCloud('elite_v4_tutor_auth', tutorLogins, TUTOR_KEY);
+    };
+
+    window._ecDelTutor = async (idx) => {
+      tutorLogins.splice(idx, 1);
+      renderTutors();
+      await saveCloud('elite_v4_tutor_auth', tutorLogins, TUTOR_KEY);
+    };
+
+    renderTutors();
   }
 
-  loadAuth();
-  syncAuth();
+  loadLocal();
+  syncAllAuth();
 
   setInterval(() => {
     cleanLoginScreen();
@@ -3145,7 +3237,7 @@
         btn.className = b.className;
         btn.style.cssText = 'background:#1e243d;border:1px solid #f87171;color:#f87171;';
         btn.innerHTML = '🔐 Security';
-        btn.onclick = (e) => { e.stopPropagation(); syncAuth().then(openSecurityModal); };
+        btn.onclick = (e) => { e.stopPropagation(); syncAllAuth().then(openSecurityModal); };
         b.parentElement.appendChild(btn);
       }
     });
