@@ -2570,5 +2570,314 @@
       setInterval(() => window.stepBanner(1), 6500);
     })();
   </script>
+<!-- ELITE CLASSES: All-in-One Drop-in Power Pack (Flashcards + 3D STEM Labs + Live Notice) -->
+<script>
+(function() {
+  const KEYS = {
+    fc: 'elite_v4_flashcards_custom',
+    labs: 'elite_v4_labs_custom',
+    notice: 'elite_v4_notice_custom'
+  };
+
+  const DEFAULTS = {
+    fc: [
+      { id: 'fc1', subject: 'Science', q: 'What is Newton’s Second Law of Motion?', a: 'F = m × a (Force equals Mass multiplied by Acceleration).' },
+      { id: 'fc2', subject: 'Maths', q: 'What is the quadratic formula?', a: 'x = (-b ± √(b² - 4ac)) / 2a' },
+      { id: 'fc3', subject: 'Sainik / GK', q: 'Who is known as the Missile Man of India?', a: 'Dr. A. P. J. Abdul Kalam' }
+    ],
+    labs: [
+      { id: 'lb1', subject: 'Physics 3D', title: 'Circuit Construction Kit (DC)', url: 'https://phet.colorado.edu/sims/html/circuit-construction-kit-dc/latest/circuit-construction-kit-dc_en.html' },
+      { id: 'lb2', subject: 'Chemistry 3D', title: 'Build an Atom Interactive 3D', url: 'https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_en.html' }
+    ],
+    notice: { active: false, text: '📢 Admissions Open for New Batch (Grades 1–12 & Sainik/JNVST/RIMC) • Call 9675732501' }
+  };
+
+  let state = { fc: [], labs: [], notice: { active: false, text: '' } };
+  let editFcId = null, editLabId = null, fcIdx = 0, fcFlipped = false;
+
+  const esc = s => String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+  function getFirebaseBase() {
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const val = localStorage.getItem(localStorage.key(i)) || '';
+        const m = val.match(/https:\/\/[^"'\s]+\.(?:firebasedatabase\.app|firebaseio\.com)/);
+        if (m) return m[0];
+      }
+      for (const inp of document.querySelectorAll('input')) {
+        const m = (inp.value || '').match(/https:\/\/[^"'\s]+\.(?:firebasedatabase\.app|firebaseio\.com)/);
+        if (m) return m[0];
+      }
+    } catch (e) {}
+    return '';
+  }
+
+  function loadLocal() {
+    try { state.fc = JSON.parse(localStorage.getItem(KEYS.fc)) || DEFAULTS.fc.slice(); } catch { state.fc = DEFAULTS.fc.slice(); }
+    try { state.labs = JSON.parse(localStorage.getItem(KEYS.labs)) || DEFAULTS.labs.slice(); } catch { state.labs = DEFAULTS.labs.slice(); }
+    try { state.notice = JSON.parse(localStorage.getItem(KEYS.notice)) || { ...DEFAULTS.notice }; } catch { state.notice = { ...DEFAULTS.notice }; }
+  }
+
+  async function syncAll() {
+    const base = getFirebaseBase();
+    if (!base) { renderNoticeBar(); return; }
+    try {
+      const [r1, r2, r3] = await Promise.all([
+        fetch(base + '/elite_v4_flashcards.json').then(r => r.json()).catch(() => null),
+        fetch(base + '/elite_v4_labs.json').then(r => r.json()).catch(() => null),
+        fetch(base + '/elite_v4_notice.json').then(r => r.json()).catch(() => null)
+      ]);
+      if (r1) { state.fc = Array.isArray(r1) ? r1 : Object.values(r1); localStorage.setItem(KEYS.fc, JSON.stringify(state.fc)); }
+      if (r2) { state.labs = Array.isArray(r2) ? r2 : Object.values(r2); localStorage.setItem(KEYS.labs, JSON.stringify(state.labs)); }
+      if (r3 && typeof r3 === 'object') { state.notice = r3; localStorage.setItem(KEYS.notice, JSON.stringify(state.notice)); }
+    } catch (e) {}
+    renderNoticeBar();
+  }
+
+  async function saveNode(node, data, lsKey) {
+    localStorage.setItem(lsKey, JSON.stringify(data));
+    const base = getFirebaseBase();
+    if (!base) return;
+    try {
+      await fetch(`${base}/${node}.json`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    } catch (e) {}
+  }
+
+  // --- 1. LIVE NOTICE BANNER ---
+  function renderNoticeBar() {
+    let bar = document.getElementById('ec-live-notice-bar');
+    if (!state.notice || !state.notice.active || !state.notice.text) {
+      if (bar) bar.remove();
+      return;
+    }
+    if (!bar) {
+      bar = document.createElement('div');
+      bar.id = 'ec-live-notice-bar';
+      bar.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(90deg,#f59e0b,#d97706);color:#000;font-weight:700;font-size:12px;padding:7px 34px 7px 12px;text-align:center;font-family:system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,0.35);';
+      document.body.prepend(bar);
+    }
+    bar.innerHTML = `<span>${esc(state.notice.text)}</span><button onclick="this.parentElement.remove()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.18);border:none;border-radius:6px;color:#000;font-weight:900;width:22px;height:22px;cursor:pointer;">✕</button>`;
+  }
+
+  function makeModal(id, title, bodyHtml) {
+    let m = document.getElementById(id);
+    if (m) m.remove();
+    m = document.createElement('div');
+    m.id = id;
+    m.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(5,7,15,0.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:14px;font-family:system-ui,sans-serif;color:#fff;';
+    m.innerHTML = `
+      <div style="width:100%;max-width:460px;max-height:90vh;overflow-y:auto;background:#111526;border:1px solid rgba(255,255,255,0.14);border-radius:20px;padding:18px;box-shadow:0 20px 50px rgba(0,0,0,0.6);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <h3 style="margin:0;font-size:17px;font-weight:700;">${title}</h3>
+          <button id="${id}-close" style="background:#232942;color:#fff;border:none;border-radius:10px;width:32px;height:32px;font-size:16px;cursor:pointer;">✕</button>
+        </div>
+        ${bodyHtml}
+      </div>`;
+    document.body.appendChild(m);
+    document.getElementById(`${id}-close`).onclick = () => m.remove();
+    return m;
+  }
+
+  // --- 2. ADMIN: FLASHCARDS ---
+  function openAdminFC() {
+    editFcId = null;
+    makeModal('ec-fc-admin', '🃏 Manage Flip Flashcards', `
+      <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:14px;background:#181d33;padding:12px;border-radius:14px;">
+        <input id="ec-fc-sub" placeholder="Subject (e.g. Science, Maths, Sainik)" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
+        <textarea id="ec-fc-q" rows="2" placeholder="Front: Question..." style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;"></textarea>
+        <textarea id="ec-fc-a" rows="2" placeholder="Back: Answer..." style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;"></textarea>
+        <button id="ec-fc-save" style="padding:11px;border-radius:12px;border:none;background:linear-gradient(90deg,#f59e0b,#d97706);color:#000;font-weight:700;cursor:pointer;">+ Save & Sync Flashcard</button>
+      </div>
+      <div id="ec-fc-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+    `);
+    const render = () => {
+      document.getElementById('ec-fc-list').innerHTML = state.fc.map(c => `
+        <div style="background:#181d33;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;">
+          <div style="font-size:11px;color:#fbbf24;font-weight:700;">${esc(c.subject)}</div>
+          <div style="font-size:13px;font-weight:600;margin:4px 0;">Q: ${esc(c.q)}</div>
+          <div style="font-size:12px;color:#cbd5e1;margin-bottom:8px;">A: ${esc(c.a)}</div>
+          <div style="display:flex;gap:8px;">
+            <button onclick="window._ecEditFC('${c.id}')" style="flex:1;padding:6px;border-radius:8px;border:none;background:#3b82f6;color:#fff;font-size:12px;font-weight:600;cursor:pointer;">Edit</button>
+            <button onclick="window._ecDelFC('${c.id}')" style="flex:1;padding:6px;border-radius:8px;border:none;background:#ef4444;color:#fff;font-size:12px;font-weight:600;cursor:pointer;">Delete</button>
+          </div>
+        </div>`).join('');
+    };
+    document.getElementById('ec-fc-save').onclick = async () => {
+      const sub = document.getElementById('ec-fc-sub').value.trim() || 'General';
+      const q = document.getElementById('ec-fc-q').value.trim();
+      const a = document.getElementById('ec-fc-a').value.trim();
+      if (!q || !a) return alert('Question aur Answer dono likhein!');
+      if (editFcId) {
+        const i = state.fc.findIndex(x => x.id === editFcId);
+        if (i > -1) state.fc[i] = { id: editFcId, subject: sub, q, a };
+        editFcId = null;
+      } else state.fc.unshift({ id: 'fc_' + Date.now(), subject: sub, q, a });
+      document.getElementById('ec-fc-sub').value = document.getElementById('ec-fc-q').value = document.getElementById('ec-fc-a').value = '';
+      document.getElementById('ec-fc-save').textContent = '+ Save & Sync Flashcard';
+      render();
+      await saveNode('elite_v4_flashcards', state.fc, KEYS.fc);
+    };
+    window._ecEditFC = id => {
+      const c = state.fc.find(x => x.id === id); if (!c) return;
+      editFcId = id;
+      document.getElementById('ec-fc-sub').value = c.subject;
+      document.getElementById('ec-fc-q').value = c.q;
+      document.getElementById('ec-fc-a').value = c.a;
+      document.getElementById('ec-fc-save').textContent = '✓ Update Flashcard';
+    };
+    window._ecDelFC = async id => { state.fc = state.fc.filter(x => x.id !== id); render(); await saveNode('elite_v4_flashcards', state.fc, KEYS.fc); };
+    render();
+  }
+
+  // --- 3. ADMIN: 3D STEM LABS ---
+  function openAdminLabs() {
+    editLabId = null;
+    makeModal('ec-lab-admin', '🧬 Manage 3D STEM Labs', `
+      <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:14px;background:#181d33;padding:12px;border-radius:14px;">
+        <input id="ec-lab-sub" placeholder="Subject (e.g. Physics 3D, Biology 3D)" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
+        <input id="ec-lab-title" placeholder="Lab / Model Title..." style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
+        <input id="ec-lab-url" placeholder="Link (PhET / Sketchfab / YouTube 3D URL)" style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">
+        <button id="ec-lab-save" style="padding:11px;border-radius:12px;border:none;background:linear-gradient(90deg,#10b981,#059669);color:#fff;font-weight:700;cursor:pointer;">+ Save & Sync 3D Lab</button>
+      </div>
+      <div id="ec-lab-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+    `);
+    const render = () => {
+      document.getElementById('ec-lab-list').innerHTML = state.labs.map(l => `
+        <div style="background:#181d33;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;">
+          <div style="font-size:11px;color:#34d399;font-weight:700;">${esc(l.subject)}</div>
+          <div style="font-size:13px;font-weight:600;margin:4px 0;">${esc(l.title)}</div>
+          <div style="font-size:11px;color:#94a3b8;word-break:break-all;margin-bottom:8px;">${esc(l.url)}</div>
+          <div style="display:flex;gap:8px;">
+            <button onclick="window._ecEditLab('${l.id}')" style="flex:1;padding:6px;border-radius:8px;border:none;background:#3b82f6;color:#fff;font-size:12px;font-weight:600;cursor:pointer;">Edit</button>
+            <button onclick="window._ecDelLab('${l.id}')" style="flex:1;padding:6px;border-radius:8px;border:none;background:#ef4444;color:#fff;font-size:12px;font-weight:600;cursor:pointer;">Delete</button>
+          </div>
+        </div>`).join('');
+    };
+    document.getElementById('ec-lab-save').onclick = async () => {
+      const sub = document.getElementById('ec-lab-sub').value.trim() || 'STEM 3D';
+      const title = document.getElementById('ec-lab-title').value.trim();
+      const url = document.getElementById('ec-lab-url').value.trim();
+      if (!title || !url) return alert('Title aur URL dono likhein!');
+      if (editLabId) {
+        const i = state.labs.findIndex(x => x.id === editLabId);
+        if (i > -1) state.labs[i] = { id: editLabId, subject: sub, title, url };
+        editLabId = null;
+      } else state.labs.unshift({ id: 'lb_' + Date.now(), subject: sub, title, url });
+      document.getElementById('ec-lab-sub').value = document.getElementById('ec-lab-title').value = document.getElementById('ec-lab-url').value = '';
+      document.getElementById('ec-lab-save').textContent = '+ Save & Sync 3D Lab';
+      render();
+      await saveNode('elite_v4_labs', state.labs, KEYS.labs);
+    };
+    window._ecEditLab = id => {
+      const l = state.labs.find(x => x.id === id); if (!l) return;
+      editLabId = id;
+      document.getElementById('ec-lab-sub').value = l.subject;
+      document.getElementById('ec-lab-title').value = l.title;
+      document.getElementById('ec-lab-url').value = l.url;
+      document.getElementById('ec-lab-save').textContent = '✓ Update 3D Lab';
+    };
+    window._ecDelLab = async id => { state.labs = state.labs.filter(x => x.id !== id); render(); await saveNode('elite_v4_labs', state.labs, KEYS.labs); };
+    render();
+  }
+
+  // --- 4. ADMIN: LIVE NOTICE ---
+  function openAdminNotice() {
+    makeModal('ec-notice-admin', '📢 Live Notice Banner', `
+      <div style="display:flex;flex-direction:column;gap:10px;background:#181d33;padding:12px;border-radius:14px;">
+        <label style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;">
+          <input type="checkbox" id="ec-n-active" ${state.notice.active ? 'checked' : ''} style="width:18px;height:18px;"> Show Notice Banner Live
+        </label>
+        <textarea id="ec-n-text" rows="3" placeholder="Notice text likhein..." style="padding:10px;border-radius:10px;border:1px solid #2e3657;background:#0d101d;color:#fff;font-size:14px;">${esc(state.notice.text)}</textarea>
+        <button id="ec-n-save" style="padding:11px;border-radius:12px;border:none;background:linear-gradient(90deg,#6366f1,#4f46e5);color:#fff;font-weight:700;cursor:pointer;">✓ Save & Publish Notice</button>
+      </div>
+    `);
+    document.getElementById('ec-n-save').onclick = async () => {
+      state.notice = { active: document.getElementById('ec-n-active').checked, text: document.getElementById('ec-n-text').value.trim() };
+      renderNoticeBar();
+      await saveNode('elite_v4_notice', state.notice, KEYS.notice);
+      document.getElementById('ec-notice-admin').remove();
+    };
+  }
+
+  // --- 5. STUDENT: FLASHCARDS & 3D LABS MODALS ---
+  function openStudentFC() {
+    if (!state.fc.length) loadLocal();
+    fcIdx = 0; fcFlipped = false;
+    makeModal('ec-fc-student', '🃏 Flip Flashcards', `
+      <div id="ec-fc-cnt" style="font-size:12px;color:#fbbf24;font-weight:700;margin-bottom:10px;text-align:center;"></div>
+      <div id="ec-fc-card" style="min-height:190px;background:linear-gradient(145deg,#1e2542,#14182b);border:1px solid rgba(251,191,36,0.35);border-radius:18px;padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:pointer;">
+        <div id="ec-fc-b" style="font-size:11px;color:#818cf8;font-weight:700;margin-bottom:10px;"></div>
+        <div id="ec-fc-t" style="font-size:16px;line-height:1.5;font-weight:600;"></div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:14px;">👆 Tap card to flip</div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:14px;">
+        <button id="ec-fc-p" style="flex:1;padding:11px;border-radius:12px;border:none;background:#232942;color:#fff;font-weight:700;cursor:pointer;">← Prev</button>
+        <button id="ec-fc-n" style="flex:1;padding:11px;border-radius:12px;border:none;background:linear-gradient(90deg,#6366f1,#4f46e5);color:#fff;font-weight:700;cursor:pointer;">Next →</button>
+      </div>
+    `);
+    const draw = () => {
+      const c = state.fc[fcIdx] || DEFAULTS.fc[0];
+      document.getElementById('ec-fc-cnt').textContent = `${c.subject} • Card ${fcIdx + 1} / ${state.fc.length}`;
+      document.getElementById('ec-fc-b').textContent = fcFlipped ? '✅ ANSWER' : '❓ QUESTION';
+      document.getElementById('ec-fc-t').textContent = fcFlipped ? c.a : c.q;
+    };
+    document.getElementById('ec-fc-card').onclick = () => { fcFlipped = !fcFlipped; draw(); };
+    document.getElementById('ec-fc-p').onclick = () => { fcIdx = (fcIdx - 1 + state.fc.length) % state.fc.length; fcFlipped = false; draw(); };
+    document.getElementById('ec-fc-n').onclick = () => { fcIdx = (fcIdx + 1) % state.fc.length; fcFlipped = false; draw(); };
+    draw();
+  }
+
+  function openStudentLabs() {
+    if (!state.labs.length) loadLocal();
+    makeModal('ec-lab-student', '🧬 Interactive 3D STEM Labs', `
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        ${state.labs.map(l => `
+          <div style="background:#181d33;border:1px solid rgba(52,211,153,0.25);border-radius:14px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;">
+            <div>
+              <div style="font-size:11px;color:#34d399;font-weight:700;">${esc(l.subject)}</div>
+              <div style="font-size:14px;font-weight:600;margin-top:2px;">${esc(l.title)}</div>
+            </div>
+            <a href="${esc(l.url)}" target="_blank" rel="noopener" style="padding:8px 14px;border-radius:10px;background:#10b981;color:#fff;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap;">Launch 3D →</a>
+          </div>`).join('')}
+      </div>
+    `);
+  }
+
+  // --- AUTO-INJECT BUTTONS ---
+  loadLocal();
+  syncAll();
+
+  setInterval(() => {
+    document.querySelectorAll('button').forEach(b => {
+      const t = (b.textContent || '').trim();
+      if (t.includes('Leads & Cloud') && !document.getElementById('ec-fc-admin-btn')) {
+        const addBtn = (id, label, color, fn) => {
+          const btn = document.createElement('button');
+          btn.id = id; btn.className = b.className;
+          btn.style.cssText = `background:#1e243d;border:1px solid ${color};color:${color};`;
+          btn.innerHTML = label;
+          btn.onclick = e => { e.stopPropagation(); syncAll().then(fn); };
+          b.parentElement.appendChild(btn);
+        };
+        addBtn('ec-fc-admin-btn', '🃏 Flashcards', '#fbbf24', openAdminFC);
+        addBtn('ec-lab-admin-btn', '🧬 3D Labs', '#34d399', openAdminLabs);
+        addBtn('ec-notice-admin-btn', '📢 Notice', '#818cf8', openAdminNotice);
+      }
+      if (t.includes('Flip Flashcards') && !b.dataset.ecBound) {
+        b.dataset.ecBound = '1';
+        b.addEventListener('click', () => syncAll().then(openStudentFC));
+      }
+      if (t.includes('3D STEM Labs') && !b.dataset.ecBound) {
+        b.dataset.ecBound = '1';
+        b.addEventListener('click', () => syncAll().then(openStudentLabs));
+      }
+    });
+  }, 700);
+})();
+</script>
 </body>
 </html>
