@@ -2897,5 +2897,79 @@
   setTimeout(replaceAll, 1500);
 })();
 </script>
+<!-- ELITE CLASSES: Final Master Security & Clean Public UI -->
+<script>
+(function() {
+  let hiddenAdminBtn = null;
+
+  function securePublicUI() {
+    document.querySelectorAll('button, a').forEach(el => {
+      // Kisi bhi open modal (Student/Admin) ke andar ke buttons ko mat chhedo
+      if (el.closest('[id*="modal"], [class*="modal"], .fixed.inset-0')) return;
+
+      const txt = (el.textContent || '').replace(/\s+/g, ' ').trim();
+
+      // 1. Admin buttons hide karo aur secret access ke liye save karo
+      if (/^[^\w]*Admin(\s*CMS)?$/i.test(txt)) {
+        if (!hiddenAdminBtn) hiddenAdminBtn = el;
+        el.style.setProperty('display', 'none', 'important');
+      }
+
+      // 2. Saare public Edit buttons hide karo
+      if (/Edit\s*Slides|Edit\s*Tutors/i.test(txt)) {
+        el.style.setProperty('display', 'none', 'important');
+      }
+
+      // 3. Public Live buttons hide karo (Student App ke andar wala safe rahega)
+      if (/^[^\w]*Live$/i.test(txt)) {
+        el.style.setProperty('display', 'none', 'important');
+      }
+    });
+  }
+
+  function openSecretAdmin() {
+    securePublicUI();
+    if (hiddenAdminBtn) {
+      hiddenAdminBtn.click();
+    } else {
+      alert('Admin portal load ho raha hai, 2 second baad dobara try karein.');
+    }
+  }
+
+  // Secret Access 1: Direct URL (eliteclassesnoida.in/#admin)
+  if (window.location.hash === '#admin') {
+    setTimeout(openSecretAdmin, 800);
+  }
+  window.addEventListener('hashchange', () => {
+    if (window.location.hash === '#admin') openSecretAdmin();
+  });
+
+  // Secret Access 2: Top-Left Logo par 5 baar tap
+  let logoTaps = 0, tapTimer = null;
+  document.addEventListener('click', (e) => {
+    const isTopLeft = e.clientY < 140 && e.clientX < 180;
+    if (isTopLeft) {
+      logoTaps++;
+      clearTimeout(tapTimer);
+      tapTimer = setTimeout(() => { logoTaps = 0; }, 1800);
+      if (logoTaps >= 5) {
+        logoTaps = 0;
+        openSecretAdmin();
+      }
+    }
+  });
+
+  // Secret Access 3: Laptop par Ctrl + Shift + A
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
+      e.preventDefault();
+      openSecretAdmin();
+    }
+  });
+
+  securePublicUI();
+  setInterval(securePublicUI, 800);
+})();
+</script>
 </body>
 </html>
