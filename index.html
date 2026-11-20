@@ -3955,5 +3955,327 @@
   })();
 </script>
 <!-- === END FINAL FIX === -->
+<!-- === ELITE CLASSES: FINAL ALL-IN-ONE END SCRIPT (PASTE AT VERY BOTTOM BEFORE </body>) === -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@600;700&display=swap');
+
+  .elite-brand-tagline {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 8px;
+    line-height: 1.25;
+    min-width: 0;
+    flex: 1;
+    text-align: left;
+  }
+
+  .elite-tagline-main {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.25px;
+    color: #f8fafc;
+    display: block;
+  }
+
+  .elite-tagline-by {
+    font-family: 'Cinzel', serif;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #fbbf24;
+    margin-top: 2px;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .elite-wa-header-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    background: #25D366;
+    color: #ffffff !important;
+    box-shadow: 0 2px 10px rgba(37, 211, 102, 0.35);
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .elite-wa-header-btn:hover {
+    background: #1ebe5d;
+    transform: scale(1.06);
+  }
+
+  @media (min-width: 768px) {
+    .elite-brand-tagline {
+      margin-left: 14px;
+    }
+    .elite-tagline-main {
+      font-size: 13.5px;
+    }
+    .elite-tagline-by {
+      font-size: 11.5px;
+    }
+    .elite-wa-header-btn {
+      width: 38px;
+      height: 38px;
+    }
+  }
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  const LOGOUT_FLAG = 'ec_force_logged_out';
+  const DEFAULT_DB = 'https://eliteclassesnoida-48000-default-rtdb.asia-southeast1.firebasedatabase.app';
+
+  function getDbBase() {
+    try {
+      const saved = localStorage.getItem('elite_firebase_url');
+      return (saved || DEFAULT_DB).replace(/\/+$/, '');
+    } catch (e) {
+      return DEFAULT_DB;
+    }
+  }
+
+  function clearSessionKeys() {
+    try {
+      Object.keys(localStorage).forEach(function (k) {
+        if (/session|currentUser|loggedIn|activeStudent|authUser/i.test(k)) {
+          localStorage.removeItem(k);
+        }
+      });
+    } catch (e) {}
+  }
+
+  function getLocalStudents() {
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        const val = localStorage.getItem(key) || '';
+        if (val.includes('"students"') && val.trim().startsWith('{')) {
+          const parsed = JSON.parse(val);
+          if (Array.isArray(parsed.students)) {
+            return parsed.students;
+          }
+        }
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  async function fetchCloudStudents() {
+    const base = getDbBase();
+    const paths = ['/students.json', '/elite_data/students.json', '/portal/students.json'];
+    for (let i = 0; i < paths.length; i++) {
+      try {
+        const res = await fetch(base + paths[i], { cache: 'no-store' });
+        if (!res.ok) continue;
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          return data.filter(Boolean);
+        }
+        if (data && typeof data === 'object') {
+          return Object.values(data).filter(Boolean);
+        }
+      } catch (e) {}
+    }
+    return null;
+  }
+
+  function isStudentInList(list, enteredId, enteredPass) {
+    if (!Array.isArray(list) || !list.length) return null;
+    const match = list.find(function (s) {
+      if (!s || typeof s !== 'object') return false;
+      const idVal = String(s.id || s.loginId || s.studentId || s.username || '').trim().toLowerCase();
+      return idVal === enteredId;
+    });
+    if (!match) return { valid: false, reason: 'inactive' };
+    if (match.active === false || match.deleted === true || String(match.status || '').toLowerCase() === 'deleted') {
+      return { valid: false, reason: 'inactive' };
+    }
+    const storedPass = String(match.password || match.passcode || match.pass || '').trim();
+    if (storedPass && enteredPass && storedPass !== enteredPass) {
+      return { valid: false, reason: 'password' };
+    }
+    return { valid: true };
+  }
+
+  // 1. Logout click handler
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const txt = (btn.textContent || '').trim();
+    if (txt === 'Logout') {
+      try { localStorage.setItem(LOGOUT_FLAG, '1'); } catch (err) {}
+      clearSessionKeys();
+    }
+  }, true);
+
+  // 2. Cross-device student login check (Firebase first, fallback localStorage)
+  let bypassValidationOnce = false;
+
+  document.addEventListener('click', async function (e) {
+    if (bypassValidationOnce) {
+      bypassValidationOnce = false;
+      return;
+    }
+
+    const btn = e.target.closest('button');
+    if (!btn || !(btn.textContent || '').includes('Access Dashboard')) return;
+
+    const btns = Array.from(document.querySelectorAll('button'));
+    const aBtn = btns.find(function (b) { return (b.textContent || '').trim() === 'Admin CMS'; });
+    const sBtn = btns.find(function (b) { return (b.textContent || '').trim() === 'Student/Parent'; });
+    const tBtn = btns.find(function (b) { return (b.textContent || '').trim() === 'Tutor'; });
+    if (!aBtn || !sBtn || !tBtn) return;
+
+    const sBg = getComputedStyle(sBtn).backgroundColor;
+    const isStudentTab = sBg !== getComputedStyle(aBtn).backgroundColor && sBg !== getComputedStyle(tBtn).backgroundColor;
+    if (!isStudentTab) return;
+
+    const passInp = document.querySelector('#portal-pass') || document.querySelector('input[type="password"]');
+    const userInp = document.querySelector('#portal-id') || (passInp && passInp.parentElement ? passInp.parentElement.querySelector('input:not([type="password"])') : null);
+    if (!userInp) return;
+
+    const enteredId = (userInp.value || '').trim().toLowerCase();
+    const enteredPass = (passInp ? passInp.value : '').trim();
+    if (!enteredId) return;
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    const cloudList = await fetchCloudStudents();
+    const sourceList = cloudList || getLocalStudents();
+    const check = isStudentInList(sourceList, enteredId, enteredPass);
+
+    if (check && check.valid === false) {
+      alert(
+        check.reason === 'password'
+          ? '❌ Galat Password! Kripya sahi passcode daalein.'
+          : '❌ Yeh Student ID active nahi hai ya Admin ne delete kar di hai!'
+      );
+      return;
+    }
+
+    try { localStorage.removeItem(LOGOUT_FLAG); } catch (err) {}
+    bypassValidationOnce = true;
+    btn.click();
+  }, true);
+
+  // 3. Clean old demo hint text
+  function cleanLoginHint(root) {
+    if (!root) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (/shivangi09|elite123/i.test(node.nodeValue)) {
+        node.nodeValue = 'Invalid Student ID or Password!';
+      }
+    }
+  }
+
+  const hintObserver = new MutationObserver(function (mutations) {
+    mutations.forEach(function (m) {
+      if (m.type === 'characterData') {
+        if (/shivangi09|elite123/i.test(m.target.nodeValue)) {
+          m.target.nodeValue = 'Invalid Student ID or Password!';
+        }
+      } else {
+        m.addedNodes.forEach(function (n) {
+          if (n.nodeType === 1) cleanLoginHint(n);
+          else if (n.nodeType === 3 && /shivangi09|elite123/i.test(n.nodeValue)) {
+            n.nodeValue = 'Invalid Student ID or Password!';
+          }
+        });
+      }
+    });
+  });
+
+  // 4. Header tagline & WhatsApp button
+  function applyHeaderAndUI() {
+    const nav = document.querySelector('header, nav');
+    if (nav && !nav.querySelector('.elite-brand-tagline')) {
+      const logoImg = nav.querySelector('img[alt*="Elite" i], img[src*="logo" i]') || nav.querySelector('img');
+      if (logoImg) {
+        logoImg.style.setProperty('display', 'block', 'important');
+        logoImg.style.setProperty('flex-shrink', '0', 'important');
+
+        const logoBox = logoImg.parentElement;
+        if (logoBox) {
+          logoBox.style.setProperty('flex-shrink', '0', 'important');
+
+          const nextEl = logoBox.nextElementSibling;
+          if (nextEl && /elite classes|futuristic/i.test(nextEl.textContent || '')) {
+            nextEl.style.setProperty('display', 'none', 'important');
+          }
+
+          if (logoBox.parentElement) {
+            logoBox.parentElement.style.display = 'flex';
+            logoBox.parentElement.style.alignItems = 'center';
+            logoBox.parentElement.style.minWidth = '0';
+            logoBox.parentElement.style.flex = '1';
+          }
+
+          const tagBox = document.createElement('div');
+          tagBox.className = 'elite-brand-tagline';
+          tagBox.innerHTML =
+            '<span class="elite-tagline-main">An Exclusive Mission For Futuristic Education</span>' +
+            '<span class="elite-tagline-by">by Ravi Yadav</span>';
+
+          logoBox.insertAdjacentElement('afterend', tagBox);
+        }
+      }
+    }
+
+    if (nav && !nav.querySelector('.elite-wa-header-btn')) {
+      const buttons = Array.from(nav.querySelectorAll('button')).filter(function (b) {
+        return window.getComputedStyle(b).display !== 'none';
+      });
+      const darkBtn = buttons[buttons.length - 1];
+
+      if (darkBtn && darkBtn.parentElement) {
+        darkBtn.parentElement.style.display = 'flex';
+        darkBtn.parentElement.style.alignItems = 'center';
+        darkBtn.parentElement.style.gap = '8px';
+        darkBtn.parentElement.style.flexShrink = '0';
+
+        const waBtn = document.createElement('a');
+        waBtn.className = 'elite-wa-header-btn';
+        waBtn.href = 'https://wa.me/919675732501';
+        waBtn.target = '_blank';
+        waBtn.rel = 'noopener noreferrer';
+        waBtn.title = 'Chat on WhatsApp';
+        waBtn.setAttribute('aria-label', 'WhatsApp');
+        waBtn.innerHTML =
+          '<svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="currentColor">' +
+          '<path d="M12.031 2C6.508 2 2.016 6.492 2.016 12.016c0 1.766.461 3.49 1.338 5.012L2 22l5.102-1.338a9.97 9.97 0 0 0 4.929 1.295h.004c5.522 0 10.015-4.492 10.015-10.016C22.05 6.492 17.553 2 12.031 2zm5.825 14.15c-.246.693-1.434 1.324-1.977 1.404-.504.074-1.158.105-1.871-.121-.434-.137-.99-.322-1.703-.631-2.996-1.293-4.953-4.314-5.102-4.512-.148-.199-1.219-1.621-1.219-3.092 0-1.471.77-2.193 1.043-2.492.273-.299.596-.373.795-.373.199 0 .398.002.572.01.184.01.43-.07.672.512.248.596.844 2.066.918 2.215.074.149.123.324.025.523-.099.199-.149.324-.298.498-.149.174-.313.389-.447.523-.149.149-.304.311-.131.609.174.299.772 1.273 1.658 2.063 1.139 1.016 2.099 1.331 2.398 1.48.298.149.473.124.647-.075.174-.199.746-.871.945-1.17.199-.299.398-.249.672-.149.273.1 1.741.821 2.039.971.299.149.498.224.572.348.075.125.075.722-.171 1.415z"/>' +
+          '</svg>';
+
+        darkBtn.insertAdjacentElement('beforebegin', waBtn);
+      }
+    }
+
+    cleanLoginHint(document.body);
+    hintObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyHeaderAndUI);
+  } else {
+    applyHeaderAndUI();
+  }
+})();
+</script>
 </body>
 </html>
