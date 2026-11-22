@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class-Wise Bilingual Diagnostic Test (Grades 1–12) | ELITE CLASSES</title>
+  <meta name="description" content="Free Class-Wise 10-Question Bilingual CBT Diagnostic Test (Grades 1–12) covering Math, Science, English, Hindi & Social Science by ELITE CLASSES Noida." />
+  <meta name="theme-color" content="#09090B" />
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+
+  <!-- Open Graph / WhatsApp Preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://eliteclassesnoida.in/test.html" />
+  <meta property="og:site_name" content="ELITE CLASSES" />
+  <meta property="og:title" content="Free Class-Wise Diagnostic Test (Grades 1–12) | ELITE CLASSES" />
+  <meta property="og:description" content="Bilingual (English/Hindi) CBT Test with Timer, Subject-Wise Analytics & Downloadable PDF Report Card by Ravi Yadav." />
+  <meta property="og:image" content="https://eliteclassesnoida.in/logo.jpg" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #09090B; color: #F4F4F5; font-family: system-ui, -apple-system, sans-serif; }
+    .opt-btn { transition: all 0.16s ease; }
+    @media print {
+      body * { visibility: hidden; }
+      #reportCardPrint, #reportCardPrint * { visibility: visible; }
+      #reportCardPrint {
+        position: fixed; inset: 0; background: #ffffff !important; color: #111827 !important;
+        padding: 28px; width: 100%; border: none !important;
+      }
+      .print-dark-text { color: #111827 !important; }
+      .print-muted-text { color: #4B5563 !important; }
+      .print-card { background: #F9FAFB !important; border: 1px solid #E5E7EB !important; }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="border-b border-zinc-800 bg-zinc-950/95 sticky top-0 z-40 backdrop-blur no-print">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5">
+        <img src="logo.jpg" alt="ELITE CLASSES" class="w-10 h-10 rounded-full object-cover border border-amber-500/60" onerror="this.style.display='none'" />
+        <div>
+          <h1 class="font-bold text-sm sm:text-base tracking-wide text-amber-400">ELITE CLASSES</h1>
+          <p class="text-[10px] sm:text-[11px] text-zinc-400">An Exclusive Mission For Futuristic Education</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="langToggleBtn" onclick="toggleLanguage()" class="px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 text-xs font-bold">
+          EN | हिंदी
+        </button>
+        <a href="index.html" class="text-xs px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700">Home</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl w-full mx-auto px-4 py-6 flex-1">
+
+    <!-- STEP 1: START SCREEN -->
+    <section id="startScreen" class="max-w-xl mx-auto space-y-6">
+      <div class="text-center space-y-2">
+        <span class="inline-block text-[11px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30">
+          Free Class-Wise CBT Assessment (Grades 1–12)
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Conceptual Diagnostic Test</h2>
+        <p class="text-xs sm:text-sm text-zinc-400">
+          10 Questions &bull; 10 Minutes &bull; Math, Science, English, Hindi &amp; Social Science
+        </p>
+      </div>
+
+      <form id="startForm" class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-5 sm:p-6 space-y-4">
+        <div>
+          <label class="block text-xs text-zinc-400 mb-1">Student Name *</label>
+          <input id="stuName" type="text" required placeholder="e.g. Aarav Sharma"
+            class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">Select Exact Class *</label>
+            <select id="stuClassSelect" required class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
+              <option value="1">Class 1</option>
+              <option value="2">Class 2</option>
+              <option value="3">Class 3</option>
+              <option value="4">Class 4</option>
+              <option value="5">Class 5</option>
+              <option value="6" selected>Class 6</option>
+              <option value="7">Class 7</option>
+              <option value="8">Class 8</option>
+              <option value="9">Class 9</option>
+              <option value="10">Class 10</option>
+              <option value="11">Class 11</option>
+              <option value="12">Class 12</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">Board / Goal *</label>
+            <select id="stuBoard" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
+              <option value="CBSE">CBSE</option>
+              <option value="ICSE">ICSE</option>
+              <option value="UP Board">UP Board</option>
+              <option value="Sainik / JNVST / RIMC">Sainik / JNVST / RIMC</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bg-zinc-950/70 border border-zinc-800 rounded-xl p-3.5 text-xs text-zinc-400 space-y-1">
+          <p class="text-zinc-200 font-semibold">Instructions:</p>
+          <p>&bull; 10 Conceptual MCQs (2 each: Math, Science, English, Hindi &amp; Social Science).</p>
+          <p>&bull; 10 Minutes Timer &bull; No Negative Marking &bull; Instant PDF Report Card.</p>
+          <p>&bull; Upar <strong class="text-amber-400">EN | हिंदी</strong> button se kabhi bhi language switch karein.</p>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-sm transition">
+          Start 10-Question CBT Test &rarr;
+        </button>
+      </form>
+    </section>
+
+    <!-- STEP 2: CBT QUIZ SCREEN -->
+    <section id="quizScreen" class="hidden space-y-4">
+      <div class="bg-zinc-900/90 border border-zinc-800 rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <span id="subjectBadge" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">Mathematics</span>
+          <span id="qCounter" class="text-xs font-semibold text-zinc-300">Q 1 / 10</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <div id="timerBox" class="px-3 py-1 rounded-lg bg-zinc-950 border border-zinc-700 font-mono font-bold text-sm text-emerald-400">⏱ 10:00</div>
+          <button onclick="confirmSubmit()" class="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs">Submit Test</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="lg:col-span-2 bg-zinc-900/80 border border-zinc-800 rounded-2xl p-5 space-y-5">
+          <h3 id="questionText" class="text-base sm:text-lg font-bold text-white leading-relaxed"></h3>
+          <div id="optionsContainer" class="space-y-2.5"></div>
+          <div class="pt-3 border-t border-zinc-800 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex gap-2">
+              <button onclick="clearResponse()" class="px-3 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold">Clear</button>
+              <button onclick="toggleMarkReview()" id="reviewBtn" class="px-3 py-2 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 text-xs font-semibold border border-purple-500/30">★ Mark Review</button>
+            </div>
+            <div class="flex gap-2">
+              <button id="prevBtn" onclick="prevQuestion()" class="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold">&larr; Prev</button>
+              <button id="nextBtn" onclick="nextQuestion()" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 text-xs font-bold">Next &rarr;</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-4 space-y-3 h-fit">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold text-zinc-300 uppercase tracking-wider">Question Palette</h4>
+            <span id="answeredCount" class="text-xs text-emerald-400 font-semibold">0/10 Answered</span>
+          </div>
+          <div id="paletteGrid" class="grid grid-cols-5 gap-2"></div>
+          <div class="pt-2 border-t border-zinc-800 flex flex-wrap gap-3 text-[10px] text-zinc-400">
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-500"></span> Answered</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-purple-500"></span> Review</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-zinc-800 border border-zinc-600"></span> Unanswered</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3: RESULT & PDF REPORT CARD -->
+    <section id="resultScreen" class="hidden space-y-6">
+      <div id="reportCardPrint" class="bg-zinc-900/90 border border-amber-500/40 rounded-2xl p-6 space-y-5 relative overflow-hidden">
+        <div class="pointer-events-none select-none absolute inset-0 flex items-center justify-center opacity-[0.04] text-4xl sm:text-6xl font-black tracking-widest -rotate-12">
+          eliteclassesnoida.in
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800 pb-4 relative">
+          <div class="flex items-center gap-3">
+            <img src="logo.jpg" alt="ELITE CLASSES" class="w-12 h-12 rounded-full object-cover border border-amber-500/60" onerror="this.style.display='none'" />
+            <div>
+              <h2 class="font-extrabold text-lg text-amber-400 print-dark-text">ELITE CLASSES</h2>
+              <p class="text-[11px] text-zinc-400 print-muted-text">An Exclusive Mission For Futuristic Education</p>
+              <p class="text-[10px] text-zinc-500 print-muted-text">by Ravi Yadav &bull; +91 96757 32501 &bull; eliteclassesnoida.in</p>
+            </div>
+          </div>
+          <div class="text-left sm:text-right">
+            <span class="text-[10px] uppercase tracking-widest text-amber-400 font-bold print-dark-text">Diagnostic Report Card</span>
+            <p id="resStudentTitle" class="text-sm font-bold text-white print-dark-text"></p>
+            <p id="resMeta" class="text-[11px] text-zinc-400 print-muted-text"></p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 relative">
+          <div class="bg-zinc-950/70 border border-zinc-800 rounded-xl p-4 text-center print-card">
+            <p class="text-xs text-zinc-400 print-muted-text">Total Score</p>
+            <p id="resScore" class="text-3xl font-extrabold text-emerald-400 mt-1 print-dark-text">0/10</p>
+          </div>
+          <div class="bg-zinc-950/70 border border-zinc-800 rounded-xl p-4 text-center print-card">
+            <p class="text-xs text-zinc-400 print-muted-text">Accuracy</p>
+            <p id="resPercent" class="text-3xl font-extrabold text-amber-400 mt-1 print-dark-text">0%</p>
+          </div>
+          <div class="bg-zinc-950/70 border border-zinc-800 rounded-xl p-4 text-center print-card">
+            <p class="text-xs text-zinc-400 print-muted-text">Time Taken</p>
+            <p id="resTimeTaken" class="text-3xl font-extrabold text-sky-400 mt-1 print-dark-text">0m 0s</p>
+          </div>
+        </div>
+
+        <div class="text-center space-y-2 relative">
+          <p id="resBadge" class="inline-block px-4 py-1 rounded-full text-xs font-bold"></p>
+          <p id="resAdvice" class="text-xs sm:text-sm text-zinc-300 max-w-2xl mx-auto print-muted-text"></p>
+        </div>
+
+        <div class="space-y-2.5 relative">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400 print-dark-text">Subject-Wise Conceptual Breakdown</h3>
+          <div id="subjectBreakdown" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2.5 justify-center no-print">
+        <button onclick="sendReportToWhatsApp()" class="px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-sm transition">
+          📲 Book Free Demo &amp; Send Report on WhatsApp
+        </button>
+        <button onclick="window.print()" class="px-5 py-3 rounded-xl bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/30 font-bold text-sm transition">
+          📄 Download / Print PDF Report
+        </button>
+        <button onclick="restartQuiz()" class="px-5 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-semibold text-sm transition">
+          ↻ Retake Test
+        </button>
+      </div>
+
+      <div class="space-y-3 no-print">
+        <h3 class="text-sm font-bold text-amber-400">Detailed Conceptual Answer Key</h3>
+        <div id="reviewContainer" class="space-y-3"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-zinc-800/80 py-4 text-center text-[11px] text-zinc-500 no-print">
+    <p><strong class="text-zinc-300">ELITE CLASSES</strong> by Ravi Yadav &bull; Noida &amp; Greater Noida &bull; +91 96757 32501</p>
+    <p class="mt-0.5">eliteclassesnoida.in</p>
+  </footer>
+
+  <script>
+    // Format per question: [subIndex, qEn, qHi, optsEn, optsHi(or null), ansIndex, expEn, expHi]
+    const SUBS = ['Mathematics', 'Science', 'English', 'Hindi', 'Social Science'];
+
+    const BANK = {
+      1: [
+        [0, 'What is 7 + 8?', '7 + 8 कितना होता है?', ['13','14','15','16'], null, 2, '7 + 8 = 15.', '7 में 8 जोड़ने पर 15 होता है।'],
+        [0, 'How many sides does a triangle have?', 'एक त्रिभुज (Triangle) की कितनी भुजाएँ होती हैं?', ['2','3','4','5'], null, 1, 'A triangle always has 3 sides.', 'त्रिभुज की हमेशा 3 भुजाएँ होती हैं।'],
+        [1, 'Which sense organ helps us to smell flowers?', 'फूलों की खुशबू सूँघने में कौन-सा अंग मदद करता है?', ['Eyes','Ears','Nose','Skin'], ['आँखें','कान','नाक','त्वचा'], 2, 'We smell with our nose.', 'हम नाक से सूँघते हैं।'],
+        [1, 'Which of these is a living thing?', 'इनमें से कौन-सी सजीव (Living) वस्तु है?', ['Chair','Stone','Plant','Book'], ['कुर्सी','पत्थर','पौधा','किताब'], 2, 'A plant grows and needs water and sunlight.', 'पौधा बढ़ता है और उसे पानी व धूप चाहिए।'],
+        [2, 'Choose the vowel from the letters below:', 'नीचे दिए गए अक्षरों में से Vowel चुनें:', ['B','E','K','M'], null, 1, 'A, E, I, O, U are the 5 vowels.', 'A, E, I, O, U पाँच vowels होते हैं।'],
+        [2, 'What is the plural of "Cat"?', '"Cat" का बहुवचन (Plural) क्या है?', ['Cat','Cates','Cats','Catss'], null, 2, 'We add "s" to make Cat plural: Cats.', 'Cat का बहुवचन Cats होता है।'],
+        [3, '"अ" के बाद कौन-सा स्वर आता है?', '', ['इ','आ','उ','ए'], null, 1, 'हिंदी वर्णमाला में "अ" के बाद "आ" आता है।', ''],
+        [3, '"दिन" शब्द का उल्टा (विलोम) क्या है?', '', ['सुबह','शाम','रात','दोपहर'], null, 2, '"दिन" का विलोम "रात" होता है।', ''],
+        [4, 'Who teaches us in school?', 'स्कूल में हमें कौन पढ़ाता है?', ['Doctor','Teacher','Driver','Tailor'], ['डॉक्टर','शिक्षक (Teacher)','ड्राइवर','दर्जी'], 1, 'A teacher teaches students in school.', 'शिक्षक हमें स्कूल में पढ़ाते हैं।'],
+        [4, 'What is the capital of India?', 'भारत की राजधानी क्या है?', ['Mumbai','New Delhi','Kolkata','Chennai'], ['मुंबई','नई दिल्ली','कोलकाता','चेन्नई'], 1, 'New Delhi is the capital of India.', 'नई दिल्ली भारत की राजधानी है।']
+      ],
+      2: [
+        [0, 'What is 5 × 6?', '5 × 6 कितना होता है?', ['25','30','35','36'], null, 1, '5 times 6 equals 30.', '5 का 6 से गुणा करने पर 30 मिलता है।'],
+        [0, 'Which number comes just before 100?', '100 से ठीक पहले कौन-सी संख्या आती है?', ['98','99','101','90'], null, 1, '100 − 1 = 99.', '100 में से 1 घटाने पर 99 आता है।'],
+        [1, 'Which part of a plant grows under the soil?', 'पौधे का कौन-सा भाग मिट्टी के नीचे उगता है?', ['Leaf','Flower','Root','Stem'], ['पत्ती','फूल','जड़ (Root)','तना'], 2, 'Roots grow underground and absorb water.', 'जड़ें मिट्टी के नीचे उगती हैं और पानी सोखती हैं।'],
+        [1, 'Which animal gives us wool?', 'हमें ऊन (Wool) किस जानवर से मिलती है?', ['Cow','Sheep','Dog','Horse'], ['गाय','भेड़ (Sheep)','कुत्ता','घोड़ा'], 1, 'Sheep give us wool to make warm clothes.', 'भेड़ से हमें ऊन मिलती है।'],
+        [2, 'Fill in the blank: "I saw ___ elephant."', 'रिक्त स्थान भरें: "I saw ___ elephant."', ['a','an','the','is'], null, 1, 'We use "an" before a vowel sound (elephant).', 'Vowel ध्वनि से पहले "an" का प्रयोग होता है।'],
+        [2, 'What is the opposite of "HOT"?', '"HOT" का विलोम क्या है?', ['Warm','Cold','Fast','Big'], null, 1, 'Cold is the opposite of Hot.', 'Hot का उल्टा Cold होता है।'],
+        [3, '"लड़का" शब्द का स्त्रीलिंग क्या होगा?', '', ['लड़के','लड़की','बच्चा','बहन'], null, 1, '"लड़का" का स्त्रीलिंग "लड़की" है।', ''],
+        [3, 'इनमें से कौन-सा शब्द संज्ञा (नाम) है?', '', ['दौड़ना','हँसना','दिल्ली','अच्छा'], null, 2, '"दिल्ली" एक स्थान का नाम है, इसलिए यह संज्ञा है।', ''],
+        [4, 'Which festival is called the "Festival of Lights"?', 'किस त्योहार को "रोशनी का त्योहार" कहा जाता है?', ['Holi','Diwali','Eid','Baisakhi'], ['होली','दिवाली','ईद','बैसाखी'], 1, 'Diwali is celebrated with diyas and lights.', 'दिवाली को दीपों और रोशनी का त्योहार कहते हैं।'],
+        [4, 'How many days are there in a week?', 'एक सप्ताह में कितने दिन होते हैं?', ['5','6','7','8'], null, 2, 'A week has 7 days (Monday to Sunday).', 'एक सप्ताह में 7 दिन होते हैं।']
+      ],
+      3: [
+        [0, 'If a box has 8 chocolates, how many chocolates are in 7 boxes?', 'एक डिब्बे में 8 चॉकलेट हैं, तो 7 डिब्बों में कितनी चॉकलेट होंगी?', ['48','54','56','64'], null, 2, '7 × 8 = 56 chocolates.', '7 × 8 = 56 चॉकलेट।'],
+        [0, 'How many minutes are there in 2 hours?', '2 घंटे में कितने मिनट होते हैं?', ['60','100','120','180'], null, 2, '1 hour = 60 min, so 2 hours = 120 min.', '1 घंटा = 60 मिनट, इसलिए 2 घंटे = 120 मिनट।'],
+        [1, 'Which gas do humans breathe in to stay alive?', 'मनुष्य जीवित रहने के लिए सांस में कौन-सी गैस लेते हैं?', ['Nitrogen','Oxygen','Carbon Dioxide','Helium'], ['नाइट्रोजन','ऑक्सीजन','कार्बन डाइऑक्साइड','हीलियम'], 1, 'Humans need Oxygen for respiration.', 'मनुष्यों को श्वसन के लिए ऑक्सीजन की आवश्यकता होती है।'],
+        [1, 'What are the three states of matter?', 'पदार्थ की तीन अवस्थाएँ कौन-सी हैं?', ['Hot, Cold, Warm','Solid, Liquid, Gas','Big, Small, Tiny','Air, Fire, Sky'], ['गर्म, ठंडा, गुनगुना','ठोस, द्रव, गैस','बड़ा, छोटा, मध्यम','हवा, आग, आकाश'], 1, 'Matter exists as Solid, Liquid, and Gas.', 'पदार्थ ठोस, द्रव और गैस तीन अवस्थाओं में होता है।'],
+        [2, 'Identify the NOUN: "The dog barked loudly."', 'वाक्य में संज्ञा (Noun) पहचानें: "The dog barked loudly."', ['The','dog','barked','loudly'], null, 1, '"Dog" is the name of an animal (Noun).', '"Dog" एक जानवर का नाम है (संज्ञा)।'],
+        [2, 'What is the past tense of "GO"?', '"GO" का Past Tense क्या है?', ['Goed','Went','Going','Gone'], null, 1, 'The past tense of Go is Went.', 'Go का भूतकाल Went होता है।'],
+        [3, '"पानी" शब्द का पर्यायवाची कौन-सा है?', '', ['अग्नि','जल','वायु','पर्वत'], null, 1, 'जल, नीर और वारि पानी के पर्यायवाची हैं।', ''],
+        [3, '"किताब" शब्द का बहुवचन क्या होगा?', '', ['किताबों','किताबें','किताबी','किताब'], null, 1, '"किताब" का बहुवचन "किताबें" होता है।', ''],
+        [4, 'Which planet do we live on?', 'हम किस ग्रह पर रहते हैं?', ['Mars','Venus','Earth','Jupiter'], ['मंगल','शुक्र','पृथ्वी (Earth)','बृहस्पति'], 2, 'We live on planet Earth.', 'हम पृथ्वी ग्रह पर रहते हैं।'],
+        [4, 'In which direction does the Sun rise?', 'सूर्य किस दिशा से उगता है?', ['West','North','East','South'], ['पश्चिम','उत्तर','पूर्व (East)','दक्षिण'], 2, 'The Sun rises in the East.', 'सूर्य पूर्व दिशा से उगता है।']
+      ],
+      4: [
+        [0, 'Find the perimeter of a square whose side is 9 cm.', '9 सेमी भुजा वाले वर्ग (square) का परिमाप क्या होगा?', ['18 cm','27 cm','36 cm','81 cm'], ['18 सेमी','27 सेमी','36 सेमी','81 सेमी'], 2, 'Perimeter = 4 × side = 4 × 9 = 36 cm.', 'परिमाप = 4 × भुजा = 4 × 9 = 36 सेमी।'],
+        [0, 'What is 144 ÷ 12?', '144 ÷ 12 का मान क्या होगा?', ['10','11','12','14'], null, 2, '12 × 12 = 144, so 144 ÷ 12 = 12.', '12 × 12 = 144 होता है।'],
+        [1, 'Which organ pumps blood to all parts of the body?', 'शरीर के सभी भागों में रक्त कौन-सा अंग पंप करता है?', ['Lungs','Heart','Brain','Stomach'], ['फेफड़े','हृदय (Heart)','मस्तिष्क','पेट'], 1, 'The heart pumps blood throughout the body.', 'हृदय पूरे शरीर में रक्त पंप करता है।'],
+        [1, 'Why does ice float on water?', 'बर्फ पानी पर क्यों तैरती है?', ['It is heavier','It is less dense than water','It has glue','Water is solid'], ['यह भारी है','बर्फ का घनत्व पानी से कम होता है','इसमें गोंद है','पानी ठोस है'], 1, 'Ice is less dense than liquid water.', 'बर्फ का घनत्व पानी से कम होने के कारण वह तैरती है।'],
+        [2, 'Identify the ADJECTIVE: "Riya wore a beautiful dress."', 'विशेषण (Adjective) पहचानें: "Riya wore a beautiful dress."', ['Riya','wore','beautiful','dress'], null, 2, '"Beautiful" describes the noun "dress".', '"Beautiful" शब्द dress की विशेषता बता रहा है।'],
+        [2, 'Choose the correct sentence:', 'सही वाक्य चुनें:', ['He play cricket.','He plays cricket.','He playing cricket.','He are playing.'], null, 1, 'Singular subject "He" takes verb + s ("plays").', 'एकवचन "He" के साथ "plays" का प्रयोग होता है।'],
+        [3, '"सूर्य" का सही पर्यायवाची कौन-सा है?', '', ['शशि','दिनकर','पवन','नीर'], null, 1, 'दिनकर और भास्कर सूर्य के पर्यायवाची हैं।', ''],
+        [3, '"आँख का तारा होना" मुहावरे का अर्थ है:', '', ['गुस्सा होना','बहुत प्यारा होना','सो जाना','डर जाना'], null, 1, 'इसका अर्थ बहुत प्यारा होना है।', ''],
+        [4, 'Which is the longest river in India?', 'भारत की सबसे लंबी नदी कौन-सी है?', ['Yamuna','Ganga','Kaveri','Narmada'], ['यमुना','गंगा','कावेरी','नर्मदा'], 1, 'The Ganga (2,525 km) is India\'s longest river.', 'गंगा भारत की सबसे लंबी नदी है।'],
+        [4, 'Why do we have day and night on Earth?', 'पृथ्वी पर दिन और रात क्यों होते हैं?', ['Earth rotates on its axis','Moon blocks Sun','Clouds move','Sun rotates'], ['पृथ्वी अपनी धुरी पर घूमती है','चंद्रमा सूरज को ढकता है','बादल चलते हैं','सूरज घूमता है'], 0, 'Earth\'s 24-hour rotation causes day and night.', 'पृथ्वी के अपनी धुरी पर घूर्णन के कारण दिन-रात होते हैं।']
+      ],
+      5: [
+        [0, 'Which fraction is equivalent to 3/4?', 'कौन-सा भिन्न 3/4 के समतुल्य (equivalent) है?', ['6/10','9/12','8/12','10/16'], null, 1, 'Multiplying 3/4 by 3/3 gives 9/12.', '3/4 के अंश और हर में 3 से गुणा करने पर 9/12 मिलता है।'],
+        [0, 'What is the LCM of 12 and 18?', '12 और 18 का ल.स. (LCM) क्या होगा?', ['6','24','36','72'], null, 2, 'Multiples of 12: 12,24,36; Multiples of 18: 18,36. LCM = 36.', '12 और 18 का लघुत्तम समापवर्त्य 36 है।'],
+        [1, 'Which vitamin is produced in our body with sunlight?', 'सूरज की धूप से शरीर में कौन-सा विटामिन बनता है?', ['Vitamin A','Vitamin B','Vitamin C','Vitamin D'], ['विटामिन A','विटामिन B','विटामिन C','विटामिन D'], 3, 'Morning sunlight helps skin make Vitamin D.', 'धूप से त्वचा विटामिन D बनाती है।'],
+        [1, 'Which of these is a reversible change?', 'इनमें से कौन-सा उत्क्रमणीय (Reversible) परिवर्तन है?', ['Burning paper','Melting butter','Cooking rice','Rusting iron'], ['कागज जलना','मक्खन पिघलना','चावल पकना','लोहे में जंग लगना'], 1, 'Melted butter can be cooled back into solid.', 'पिघले मक्खन को ठंडा करके फिर से ठोस बनाया जा सकता है।'],
+        [2, 'What is the antonym of "ANCIENT"?', '"ANCIENT" का विलोम क्या है?', ['Old','Modern','Broken','Past'], null, 1, 'Ancient means very old; Modern is its opposite.', 'Ancient (प्राचीन) का उल्टा Modern (आधुनिक) है।'],
+        [2, 'Fill in the blank: "The cat jumped ___ the table."', 'रिक्त स्थान भरें: "The cat jumped ___ the table."', ['in','onto','between','among'], null, 1, '"Onto" shows movement onto a surface.', 'सतह के ऊपर कूदने के लिए "onto" लगता है।'],
+        [3, 'शुद्ध वर्तनी वाला शब्द चुनें:', '', ['आशीर्वाद','आशिर्वाद','अशीर्वाद','आर्शीवाद'], null, 0, 'शुद्ध वर्तनी "आशीर्वाद" है।', ''],
+        [3, '"ईमानदारी" किस प्रकार की संज्ञा है?', '', ['व्यक्तिवाचक','जातिवाचक','भाववाचक','द्रव्यवाचक'], null, 2, 'ईमानदारी एक गुण/भाव है, अतः भाववाचक संज्ञा है।', ''],
+        [4, 'Who is known as the Father of the Indian Constitution?', '"भारतीय संविधान के जनक" किसे कहा जाता है?', ['Mahatma Gandhi','Dr. B. R. Ambedkar','Sardar Patel','Nehru'], ['महात्मा गांधी','डॉ. बी. आर. अंबेडकर','सरदार पटेल','नेहरू'], 1, 'Dr. B. R. Ambedkar chaired the Drafting Committee.', 'डॉ. अंबेडकर प्रारूप समिति के अध्यक्ष थे।'],
+        [4, 'Which is the largest continent in the world?', 'विश्व का सबसे बड़ा महाद्वीप कौन-सा है?', ['Africa','Europe','Asia','Australia'], ['अफ्रीका','यूरोप','एशिया','ऑस्ट्रेलिया'], 2, 'Asia is the largest continent by area and population.', 'एशिया क्षेत्रफल और जनसंख्या दोनों में सबसे बड़ा महाद्वीप है।']
+      ],
+      6: [
+        [0, 'What is the smallest prime number?', 'सबसे छोटी अभाज्य संख्या (Prime Number) कौन-सी है?', ['0','1','2','3'], null, 2, '2 is the smallest and only even prime number.', '2 सबसे छोटी और एकमात्र सम अभाज्य संख्या है।'],
+        [0, 'Simplify the ratio 24 : 36 to its lowest form.', 'अनुपात 24 : 36 को सरलतम रूप में लिखें।', ['3 : 4','2 : 3','4 : 6','1 : 2'], null, 1, 'Dividing both by HCF 12 gives 2 : 3.', 'दोनों को 12 से भाग देने पर 2 : 3 मिलता है।'],
+        [1, 'Deficiency of Vitamin C causes which disease?', 'विटामिन C की कमी से कौन-सा रोग होता है?', ['Rickets','Scurvy','Goitre','Beriberi'], ['रिकेट्स','स्कर्वी','घेंघा','बेरीबेरी'], 1, 'Vitamin C deficiency causes Scurvy (bleeding gums).', 'विटामिन C की कमी से स्कर्वी रोग होता है।'],
+        [1, 'Which method separates salt dissolved in water?', 'पानी में घुले नमक को अलग करने की विधि कौन-सी है?', ['Filtration','Evaporation','Winnowing','Sieving'], ['छानना','वाष्पीकरण (Evaporation)','ओसाई','चालना'], 1, 'Water evaporates on heating, leaving salt behind.', 'गर्म करने पर पानी भाप बन जाता है और नमक बच जाता है।'],
+        [2, 'Identify the PRONOUN: "Rohan forgot his umbrella."', 'सर्वनाम (Pronoun) पहचानें: "Rohan forgot his umbrella."', ['Rohan','forgot','his','umbrella'], null, 2, '"His" replaces Rohan\'s, so it is a pronoun.', '"His" संज्ञा के स्थान पर प्रयुक्त सर्वनाम है।'],
+        [2, 'What is the past tense of "TEACH"?', '"TEACH" का Past Tense क्या है?', ['Teached','Taught','Teaching','Teachs'], null, 1, 'Teach is irregular; its past tense is Taught.', 'Teach का भूतकाल Taught होता है।'],
+        [3, '"कमल" का सही पर्यायवाची कौन-सा है?', '', ['पंकज','गगन','अनल','समीर'], null, 0, 'पंकज, जलज और सरोज कमल के पर्यायवाची हैं।', ''],
+        [3, '"अनुकूल" शब्द का विलोम क्या होगा?', '', ['प्रतिकूल','सुकूल','विपरीत','असमान'], null, 0, 'अनुकूल का विलोम प्रतिकूल होता है।', ''],
+        [4, 'Which 0° latitude line divides Earth into two equal halves?', '0° अक्षांश रेखा जो पृथ्वी को दो बराबर भागों में बाँटती है:', ['Prime Meridian','Equator','Tropic of Cancer','Arctic Circle'], ['प्रमुख याम्योत्तर','विषुवत वृत्त (Equator)','कर्क रेखा','आर्कटिक वृत्त'], 1, 'The Equator (0°) divides Northern & Southern Hemispheres.', 'विषुवत वृत्त पृथ्वी को उत्तरी व दक्षिणी गोलार्ध में बाँटती है।'],
+        [4, 'The Great Bath was discovered at which Harappan site?', 'महान स्नानागार (Great Bath) किस हड़प्पा स्थल पर मिला?', ['Kalibangan','Mohenjo-daro','Lothal','Dholavira'], ['कालीबंगा','मोहनजोदड़ो','लोथल','धोलावीरा'], 1, 'The Great Bath was excavated at Mohenjo-daro.', 'महान स्नानागार मोहनजोदड़ो में मिला था।']
+      ],
+      7: [
+        [0, 'If 3x − 7 = 14, what is the value of x?', 'यदि 3x − 7 = 14 है, तो x का मान क्या होगा?', ['5','6','7','9'], null, 2, '3x = 21 → x = 7.', '3x = 21, अतः x = 7।'],
+        [0, 'A shopkeeper buys a pen for ₹40 and sells it for ₹50. Find profit %.', '₹40 में खरीदकर ₹50 में बेचने पर लाभ प्रतिशत क्या होगा?', ['10%','20%','25%','30%'], null, 2, 'Profit = ₹10. Profit % = (10/40)×100 = 25%.', 'लाभ = ₹10। लाभ % = (10/40)×100 = 25%।'],
+        [1, 'Which acid is present in curd?', 'दही (Curd) में कौन-सा अम्ल पाया जाता है?', ['Citric acid','Lactic acid','Acetic acid','Tartaric acid'], ['सिट्रिक अम्ल','लैक्टिक अम्ल','एसिटिक अम्ल','टार्टरिक अम्ल'], 1, 'Lactobacillus bacteria produce Lactic acid in curd.', 'दही में लैक्टिक अम्ल पाया जाता है।'],
+        [1, 'Which mode of heat transfer needs NO medium?', 'ऊष्मा संचरण की किस विधि में किसी माध्यम की आवश्यकता नहीं होती?', ['Conduction','Convection','Radiation','Evaporation'], ['चालन','संवहन','विकिरण (Radiation)','वाष्पीकरण'], 2, 'Sun\'s heat reaches Earth through space by Radiation.', 'सूर्य की ऊष्मा विकिरण द्वारा पृथ्वी तक पहुँचती है।'],
+        [2, 'Choose the correct verb: "Neither Ram nor his friends ___ here."', 'सही क्रिया चुनें: "Neither Ram nor his friends ___ here."', ['is','was','are','has'], null, 2, 'Verb agrees with nearer subject ("friends" → plural → are).', 'पास वाले कर्ता "friends" के अनुसार "are" लगेगा।'],
+        [2, 'Find the synonym of "ENORMOUS":', '"ENORMOUS" का समानार्थी शब्द चुनें:', ['Tiny','Huge','Weak','Slow'], null, 1, 'Enormous means very large or huge.', 'Enormous का अर्थ बहुत बड़ा (Huge) होता है।'],
+        [3, '"विद्यालय" शब्द में कौन-सी संधि है?', '', ['गुण संधि','दीर्घ स्वर संधि','यण संधि','व्यंजन संधि'], null, 1, 'विद्या + आलय = विद्यालय (दीर्घ स्वर संधि)।', ''],
+        [3, '"जो सब कुछ जानता हो" के लिए एक शब्द है:', '', ['अल्पज्ञ','सर्वज्ञ','विद्वान','जिज्ञासु'], null, 1, 'सब कुछ जानने वाले को सर्वज्ञ कहते हैं।', ''],
+        [4, 'Who was the founder of the Mughal Empire in India?', 'भारत में मुगल साम्राज्य का संस्थापक कौन था?', ['Akbar','Babur','Humayun','Shah Jahan'], ['अकबर','बाबर','हुमायूँ','शाहजहाँ'], 1, 'Babur founded the Mughal Empire in 1526.', 'बाबर ने 1526 में मुगल साम्राज्य की नींव रखी।'],
+        [4, 'Which layer of the atmosphere contains the Ozone layer?', 'वायुमंडल की किस परत में ओज़ोन परत स्थित है?', ['Troposphere','Stratosphere','Mesosphere','Exosphere'], ['क्षोभमंडल','समतापमंडल (Stratosphere)','मध्यमंडल','बाह्यमंडल'], 1, 'The Ozone layer lies in the Stratosphere.', 'ओज़ोन परत समतापमंडल में पाई जाती है।']
+      ],
+      8: [
+        [0, 'If both length and breadth of a rectangle are doubled, its area becomes:', 'यदि आयत की लंबाई और चौड़ाई दोगुनी कर दें, तो क्षेत्रफल कितना होगा?', ['2 times','3 times','4 times','8 times'], ['2 गुना','3 गुना','4 गुना','8 गुना'], 2, 'New Area = (2L)(2B) = 4LB (4 times).', 'नया क्षेत्रफल = 4LB (4 गुना)।'],
+        [0, 'What is the cube root of 512?', '512 का घनमूल (Cube root) क्या है?', ['6','7','8','9'], null, 2, '8 × 8 × 8 = 512, so cube root is 8.', '8 × 8 × 8 = 512 होता है।'],
+        [1, 'Which organelle is called the "powerhouse of the cell"?', 'कोशिका का "पावरहाउस" किसे कहा जाता है?', ['Nucleus','Mitochondria','Ribosome','Vacuole'], ['केंद्रक','माइटोकॉन्ड्रिया','राइबोसोम','रिक्तिका'], 1, 'Mitochondria produce energy (ATP) for the cell.', 'माइटोकॉन्ड्रिया कोशिका के लिए ऊर्जा (ATP) बनाता है।'],
+        [1, 'Why do we see lightning before we hear thunder?', 'बिजली की चमक पहले दिखती है और गरज बाद में सुनाई देती है, क्यों?', ['Light is much faster than sound','Thunder happens later','Clouds block light','Sound is faster'], ['प्रकाश की गति ध्वनि से बहुत अधिक है','गरज बाद में होती है','बादल प्रकाश रोकते हैं','ध्वनि तेज़ है'], 0, 'Light travels at ~3×10⁸ m/s vs sound at ~343 m/s.', 'प्रकाश की गति ध्वनि से लाखों गुना अधिक होती है।'],
+        [2, 'Convert to Passive: "The chef cooked a meal."', 'Passive Voice चुनें: "The chef cooked a meal."', ['A meal is cooked by the chef.','A meal was cooked by the chef.','A meal has cooked.','The chef was cooked.'], null, 1, 'Simple Past Active → "was/were + V3".', 'Simple Past का Passive "was cooked" होता है।'],
+        [2, 'What does "Burn the midnight oil" mean?', '"Burn the midnight oil" मुहावरे का अर्थ है:', ['Waste oil','Study or work late at night','Cook late','Start a fire'], null, 1, 'It means working or studying hard late into the night.', 'इसका अर्थ देर रात तक कड़ी मेहनत/पढ़ाई करना है।'],
+        [3, '"नीलकमल" शब्द में कौन-सा समास है?', '', ['द्वंद्व','कर्मधारय','द्विगु','अव्ययीभाव'], null, 1, 'नीला है जो कमल — विशेषण-विशेष्य संबंध (कर्मधारय समास)।', ''],
+        [3, '"उत्थान" शब्द का विलोम क्या है?', '', ['प्रगति','पतन','उदय','विकास'], null, 1, 'उत्थान का विलोम पतन होता है।', ''],
+        [4, 'In which year did the Revolt of 1857 begin from Meerut?', '1857 की क्रांति मेरठ से किस तिथि को शुरू हुई थी?', ['10 May 1857','15 Aug 1857','26 Jan 1857','2 Oct 1857'], ['10 मई 1857','15 अगस्त 1857','26 जनवरी 1857','2 अक्टूबर 1857'], 0, 'The Revolt of 1857 broke out in Meerut on 10 May 1857.', '1857 का विद्रोह 10 मई 1857 को मेरठ से शुरू हुआ।'],
+        [4, 'Which Fundamental Right abolishes "Untouchability"?', 'संविधान का कौन-सा अनुच्छेद अस्पृश्यता (छुआछूत) समाप्त करता है?', ['Article 14','Article 17','Article 19','Article 21'], ['अनुच्छेद 14','अनुच्छेद 17','अनुच्छेद 19','अनुच्छेद 21'], 1, 'Article 17 abolishes untouchability in all forms.', 'अनुच्छेद 17 अस्पृश्यता को समाप्त करता है।']
+      ],
+      9: [
+        [0, 'In a right triangle with legs 6 cm and 8 cm, the hypotenuse is:', '6 सेमी और 8 सेमी भुजा वाले समकोण त्रिभुज का कर्ण क्या होगा?', ['9 cm','10 cm','12 cm','14 cm'], ['9 सेमी','10 सेमी','12 सेमी','14 सेमी'], 1, '√(6² + 8²) = √100 = 10 cm.', 'पाइथागोरस प्रमेय से: √(36+64) = 10 सेमी।'],
+        [0, 'Which of the following is an irrational number?', 'निम्न में से कौन-सी अपरिमेय संख्या (Irrational Number) है?', ['√4','√9','√2','0.5'], null, 2, '√2 is non-terminating and non-repeating, hence irrational.', '√2 का दशमलव प्रसार अनवसानी अनावर्ती है, अतः यह अपरिमेय है।'],
+        [1, 'Why does a passenger lean forward when a bus brakes suddenly?', 'बस में अचानक ब्रेक लगने पर यात्री आगे क्यों झुक जाता है?', ['Gravity','Inertia of motion','Magnetism','Friction'], ['गुरुत्वाकर्षण','गति का जड़त्व','चुंबकत्व','घर्षण'], 1, 'Upper body tends to continue moving due to inertia of motion.', 'गति के जड़त्व के कारण ऊपरी शरीर आगे बढ़ता रहना चाहता है।'],
+        [1, 'What is the SI unit of Force?', 'बल (Force) का SI मात्रक क्या है?', ['Joule','Watt','Newton','Pascal'], ['जूल','वाट','न्यूटन','पास्कल'], 2, 'Force = mass × acceleration; its SI unit is Newton (N).', 'बल का SI मात्रक न्यूटन (N) होता है।'],
+        [2, 'Choose the correct reported speech: He said, "I am busy."', 'Indirect Speech चुनें: He said, "I am busy."', ['He said that he is busy.','He said that he was busy.','He says he was busy.','He said I am busy.'], null, 1, 'Present tense "am" changes to past "was" in indirect speech.', 'Indirect speech में "am" बदलकर "was" हो जाता है।'],
+        [2, 'Find the synonym of "RESILIENT":', '"RESILIENT" का समानार्थी चुनें:', ['Fragile','Adaptable & Strong','Lazy','Rigid'], null, 1, 'Resilient means able to recover quickly from setbacks.', 'Resilient का अर्थ कठिनाइयों से जल्दी उबरने वाला मजबूत व्यक्ति।'],
+        [3, '"कबीर" किस काव्यधारा के प्रमुख कवि थे?', '', ['सगुण भक्ति','निर्गुण ज्ञानमार्गी','रीतिकाल','छायावाद'], null, 1, 'कबीरदास निर्गुण भक्ति की ज्ञानमार्गी शाखा के प्रमुख कवि थे।', ''],
+        [3, '"तीन बेर खाती थी वे तीन बेर खाती हैं" में कौन-सा अलंकार है?', '', ['उपमा','यमक','रूपक','अतिशयोक्ति'], null, 1, '"तीन बेर" शब्द दो बार अलग-अलग अर्थों में आया है, अतः यमक अलंकार है।', ''],
+        [4, 'The Tropic of Cancer passes through how many Indian states?', 'कर्क रेखा भारत के कितने राज्यों से होकर गुजरती है?', ['6','7','8','9'], null, 2, 'It passes through 8 states (Gujarat to Mizoram).', 'कर्क रेखा भारत के 8 राज्यों से होकर गुजरती है।'],
+        [4, 'The French Revolution began in which year?', 'फ्रांसीसी क्रांति किस वर्ष शुरू हुई थी?', ['1776','1789','1815','1917'], null, 1, 'The French Revolution started in 1789 with the fall of Bastille.', 'फ्रांसीसी क्रांति 1789 में शुरू हुई थी।']
+      ],
+      10: [
+        [0, 'If the discriminant b² − 4ac of a quadratic equation is 0, its roots are:', 'यदि द्विघात समीकरण का विविक्तकर (b² − 4ac) = 0 हो, तो मूल होंगे:', ['Imaginary','Real and equal','Real and distinct','Zero'], ['काल्पनिक','वास्तविक और बराबर','वास्तविक और भिन्न','शून्य'], 1, 'When D = 0, both roots are real and equal (−b/2a).', 'जब D = 0 होता है, तो दोनों मूल वास्तविक और समान होते हैं।'],
+        [0, 'What is the value of sin²30° + cos²30°?', 'sin²30° + cos²30° का मान क्या होता है?', ['0','1/2','1','√3/2'], null, 2, 'By trigonometric identity, sin²θ + cos²θ = 1 for any angle θ.', 'त्रिकोणमितीय सर्वसमिका से sin²θ + cos²θ = 1 होता है।'],
+        [1, 'If the pH of a solution changes from 7 to 3, it has become:', 'यदि किसी विलयन का pH 7 से 3 हो जाए, तो वह हो गया है:', ['More basic','More acidic','Neutral','Salty'], ['अधिक क्षारीय','अधिक अम्लीय','उदासीन','लवणीय'], 1, 'Lower pH below 7 indicates stronger acidity.', '7 से कम pH होने पर अम्लीयता बढ़ती है।'],
+        [1, 'Which mirror is used as a rear-view mirror in vehicles?', 'वाहनों में पीछे का दृश्य देखने के लिए किस दर्पण का उपयोग होता है?', ['Concave mirror','Convex mirror','Plane mirror','None'], ['अवतल दर्पण','उत्तल दर्पण (Convex)','समतल दर्पण','कोई नहीं'], 1, 'Convex mirrors always form erect, diminished images with a wider field of view.', 'उत्तल दर्पण सीधा, छोटा प्रतिबिंब और बड़ा दृष्टि-क्षेत्र देता है।'],
+        [2, 'Identify the figure of speech: "The wind whispered through the trees."', 'Figure of speech पहचानें: "The wind whispered through the trees."', ['Simile','Personification','Metaphor','Hyperbole'], null, 1, 'Giving human quality ("whispered") to wind is Personification.', 'हवा को मानवीय गुण (फुसफुसाना) देना Personification है।'],
+        [2, 'Choose the correct modal: "You ___ wear a seatbelt while driving."', 'सही Modal चुनें: "You ___ wear a seatbelt while driving."', ['might','must','could','would'], null, 1, '"Must" expresses strong obligation or rule.', 'अनिवार्य नियम बताने के लिए "must" का प्रयोग होता है।'],
+        [3, '"रसराज" किस रस को कहा जाता है?', '', ['वीर रस','करुण रस','शृंगार रस','हास्य रस'], null, 2, 'शृंगार रस को रसों का राजा (रसराज) कहा जाता है।', ''],
+        [3, '"अथ" शब्द का सही विलोम क्या है?', '', ['इति','अंत','समाप्त','पूर्ण'], null, 0, '"अथ" (प्रारंभ) का शुद्ध विलोम "इति" (समाप्ति) होता है।', ''],
+        [4, 'In which year did Mahatma Gandhi launch the Non-Cooperation Movement?', 'महात्मा गांधी ने असहयोग आंदोलन किस वर्ष शुरू किया?', ['1915','1920','1930','1942'], null, 1, 'It was launched in August 1920.', 'असहयोग आंदोलन अगस्त 1920 में शुरू हुआ था।'],
+        [4, 'Banking, teaching, and IT belong to which economic sector?', 'बैंकिंग, शिक्षण और आईटी अर्थव्यवस्था के किस क्षेत्र में आते हैं?', ['Primary','Secondary','Tertiary','Agriculture'], ['प्राथमिक','द्वितीयक','तृतीयक (सेवा)','कृषि'], 2, 'Tertiary sector is the service sector.', 'तृतीयक क्षेत्र को सेवा क्षेत्र कहा जाता है।']
+      ],
+      11: [
+        [0, 'If A = {1, 2, 3}, how many subsets does set A have?', 'यदि समुच्चय A = {1, 2, 3} है, तो A के कुल कितने उपसमुच्चय (subsets) होंगे?', ['3','6','8','9'], null, 2, 'Number of subsets = 2ⁿ = 2³ = 8.', 'उपसमुच्चयों की संख्या = 2ⁿ = 2³ = 8।'],
+        [0, 'What is the derivative of x³ with respect to x?', 'x के सापेक्ष x³ का अवकलज (derivative) क्या है?', ['x²','2x²','3x²','3x'], null, 2, 'd/dx(xⁿ) = n·xⁿ⁻¹ → 3x².', 'सूत्र n·xⁿ⁻¹ से x³ का अवकलज 3x² होगा।'],
+        [1, 'What is the dimensional formula of Velocity?', 'वेग (Velocity) का विमीय सूत्र क्या है?', ['[M⁰L¹T⁻¹]','[M¹L¹T⁻²]','[M⁰L¹T⁻²]','[M⁰L²T⁻¹]'], null, 0, 'Velocity = Distance / Time = [L¹T⁻¹].', 'वेग = दूरी / समय = [M⁰L¹T⁻¹]।'],
+        [1, 'Avogadro\'s number (Nₐ) is approximately equal to:', 'एवोगैड्रो संख्या (Nₐ) का मान लगभग कितना होता है?', ['6.022 × 10²³','6.022 × 10²⁰','3.0 × 10⁸','9.8 × 10²³'], null, 0, '1 mole contains 6.022 × 10²³ particles.', '1 मोल में 6.022 × 10²³ कण होते हैं।'],
+        [2, 'What does the word "UBIQUITOUS" mean?', '"UBIQUITOUS" शब्द का अर्थ क्या है?', ['Rare','Present everywhere','Dangerous','Ancient'], null, 1, 'Ubiquitous means found or present everywhere.', 'Ubiquitous का अर्थ सर्वव्यापी होता है।'],
+        [2, 'Choose the grammatically correct sentence:', 'व्याकरण की दृष्टि से सही वाक्य चुनें:', ['Scarcely had he left than it rained.','Scarcely had he left when it rained.','Scarcely he left when it rained.','Scarcely had he left then it rained.'], null, 1, '"Scarcely/Hardly" is always paired with "when".', '"Scarcely" के साथ हमेशा "when" का प्रयोग होता है।'],
+        [3, '"कामायनी" महाकाव्य के रचनाकार कौन हैं?', '', ['सूर्यकांत त्रिपाठी निराला','जयशंकर प्रसाद','सुमित्रानंदन पंत','महादेवी वर्मा'], null, 1, 'कामायनी छायावाद के प्रमुख कवि जयशंकर प्रसाद की अमर रचना है।', ''],
+        [3, '"वागीश" शब्द का सही संधि-विच्छेद है:', '', ['वाग + ईश','वाक् + ईश','वागी + श','वाक + इश'], null, 1, 'वाक् + ईश = वागीश (व्यंजन संधि)।', ''],
+        [4, 'Which Article of the Indian Constitution deals with "Right to Constitutional Remedies"?', 'संविधान का कौन-सा अनुच्छेद "संवैधानिक उपचारों का अधिकार" देता है?', ['Article 19','Article 21','Article 32','Article 44'], ['अनुच्छेद 19','अनुच्छेद 21','अनुच्छेद 32','अनुच्छेद 44'], 2, 'Dr. Ambedkar called Article 32 the "heart and soul" of the Constitution.', 'डॉ. अंबेडकर ने अनुच्छेद 32 को संविधान की आत्मा कहा है।'],
+        [4, 'What does GDP stand for in Economics?', 'अर्थशास्त्र में GDP का पूर्ण रूप क्या है?', ['Gross Domestic Product','Global Development Plan','General Domestic Price','Gross Demand Product'], null, 0, 'GDP measures the total value of goods & services produced within a country.', 'GDP किसी देश में उत्पादित सभी वस्तुओं और सेवाओं का कुल मूल्य है।']
+      ],
+      12: [
+        [0, 'What is the integral of 1/x with respect to x?', 'x के सापेक्ष 1/x का समाकलन (integral) क्या होगा?', ['x²/2 + C','log|x| + C','eˣ + C','−1/x² + C'], null, 1, '∫(1/x) dx = ln|x| + C.', '1/x का समाकलन log|x| + C होता है।'],
+        [0, 'If a matrix A is singular, then its determinant |A| is equal to:', 'यदि कोई आव्यूह (Matrix) A अव्युत्क्रमणीय (Singular) है, तो |A| का मान होगा:', ['1','−1','0','∞'], null, 2, 'A square matrix is singular if and only if |A| = 0.', 'अव्युत्क्रमणीय आव्यूह का सारणिक हमेशा 0 होता है।'],
+        [1, 'What is the SI unit of Electric Charge?', 'विद्युत आवेश (Electric Charge) का SI मात्रक क्या है?', ['Ampere','Volt','Coulomb','Ohm'], ['एम्पियर','वोल्ट','कूलॉम (Coulomb)','ओम'], 2, 'Electric charge is measured in Coulombs (C).', 'विद्युत आवेश का SI मात्रक कूलॉम है।'],
+        [1, 'Which law states that the induced EMF opposes the cause producing it?', 'कौन-सा नियम कहता है कि प्रेरित विद्युत वाहक बल अपने उत्पन्न होने के कारण का विरोध करता है?', ['Ohm\'s Law','Lenz\'s Law','Boyle\'s Law','Coulomb\'s Law'], ['ओम का नियम','लेंज़ का नियम','बॉयल का नियम','कूलॉम का नियम'], 1, 'Lenz\'s law follows conservation of energy.', 'लेंज़ का नियम ऊर्जा संरक्षण पर आधारित है।'],
+        [2, 'Choose the antonym of "EPHEMERAL":', '"EPHEMERAL" का विलोम चुनें:', ['Short-lived','Permanent','Brief','Fading'], null, 1, 'Ephemeral means lasting a very short time; opposite is Permanent.', 'Ephemeral (क्षणभंगुर) का विलोम Permanent (स्थायी) है।'],
+        [2, 'Identify the error: "Each of the students have submitted their assignment."', 'वाक्य में त्रुटि पहचानें: "Each of the students have submitted..."', ['Each of','the students','have submitted','No error'], null, 2, '"Each" is singular, so it requires "has submitted".', '"Each" एकवचन है, इसलिए "have" की जगह "has" होना चाहिए।'],
+        [3, '"हिंदी साहित्य का स्वर्ण युग" किस काल को कहा जाता है?', '', ['आदिकाल','भक्तिकाल','रीतिकाल','आधुनिक काल'], null, 1, 'भक्तिकाल को हिंदी साहित्य का स्वर्ण युग कहा जाता है।', ''],
+        [3, '"चतुर्भुज" में कौन-सा समास है (यदि अर्थ विष्णु हो)?', '', ['द्विगु','बहुव्रीहि','द्वंद्व','तत्पुरुष'], null, 1, 'चार भुजाएँ हैं जिनकी अर्थात् विष्णु — बहुव्रीहि समास।', ''],
+        [4, 'Who is the ex-officio Chairman of NITI Aayog in India?', 'भारत में नीति आयोग (NITI Aayog) का पदेन अध्यक्ष कौन होता है?', ['President','Prime Minister','Finance Minister','RBI Governor'], ['राष्ट्रपति','प्रधानमंत्री','वित्त मंत्री','आरबीआई गवर्नर'], 1, 'The Prime Minister of India is the ex-officio Chairperson of NITI Aayog.', 'भारत के प्रधानमंत्री नीति आयोग के पदेन अध्यक्ष होते हैं।'],
+        [4, 'Which central bank controls monetary policy in India?', 'भारत में मौद्रिक नीति (Monetary Policy) कौन-सा बैंक नियंत्रित करता है?', ['SBI','RBI','NABARD','SEBI'], null, 1, 'The Reserve Bank of India (RBI) regulates India\'s monetary policy.', 'भारतीय रिज़र्व बैंक (RBI) देश की मौद्रिक नीति नियंत्रित करता है।']
+      ]
+    };
+
+    const TOTAL_SECONDS = 10 * 60; // 10 Minutes
+    let activeQuestions = [];
+    let state = {
+      name: '', clsNum: '6', board: 'CBSE', lang: 'en',
+      index: 0, answers: [], marked: [],
+      timeLeft: TOTAL_SECONDS, timerId: null
+    };
+
+    function toggleLanguage() {
+      state.lang = state.lang === 'en' ? 'hi' : 'en';
+      document.getElementById('langToggleBtn').textContent = state.lang === 'en' ? 'EN | हिंदी' : 'हिंदी | EN';
+      if (!document.getElementById('quizScreen').classList.contains('hidden')) renderQuestion();
+      if (!document.getElementById('resultScreen').classList.contains('hidden')) renderReviewKey();
+    }
+
+    document.getElementById('startForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      state.name = document.getElementById('stuName').value.trim();
+      state.clsNum = document.getElementById('stuClassSelect').value;
+      state.board = document.getElementById('stuBoard').value;
+
+      activeQuestions = (BANK[state.clsNum] || BANK[6]).map(q => ({
+        sub: SUBS[q[0]],
+        qEn: q[1],
+        qHi: q[2] || q[1],
+        optsEn: q[3],
+        optsHi: q[4] || q[3],
+        ans: q[5],
+        expEn: q[6],
+        expHi: q[7] || q[6]
+      }));
+
+      state.index = 0;
+      state.answers = new Array(activeQuestions.length).fill(null);
+      state.marked = new Array(activeQuestions.length).fill(false);
+      state.timeLeft = TOTAL_SECONDS;
+
+      document.getElementById('startScreen').classList.add('hidden');
+      document.getElementById('resultScreen').classList.add('hidden');
+      document.getElementById('quizScreen').classList.remove('hidden');
+
+      startTimer();
+      renderQuestion();
+      renderPalette();
+    });
+
+    function startTimer() {
+      clearInterval(state.timerId);
+      updateTimerDisplay();
+      state.timerId = setInterval(() => {
+        state.timeLeft--;
+        updateTimerDisplay();
+        if (state.timeLeft <= 0) {
+          clearInterval(state.timerId);
+          alert('Time Up! Test automatically submit ho raha hai.');
+          finishTest();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const m = Math.floor(state.timeLeft / 60);
+      const s = state.timeLeft % 60;
+      const box = document.getElementById('timerBox');
+      box.textContent = `⏱ ${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      box.className = state.timeLeft <= 120
+        ? 'px-3 py-1 rounded-lg bg-zinc-950 border border-rose-500/50 font-mono font-bold text-sm text-rose-400'
+        : 'px-3 py-1 rounded-lg bg-zinc-950 border border-zinc-700 font-mono font-bold text-sm text-emerald-400';
+    }
+
+    function renderQuestion() {
+      const item = activeQuestions[state.index];
+      const isHi = state.lang === 'hi';
+      document.getElementById('subjectBadge').textContent = item.sub;
+      document.getElementById('qCounter').textContent = `Q ${state.index + 1} / ${activeQuestions.length}`;
+      document.getElementById('questionText').textContent = `Q${state.index + 1}. ${isHi ? item.qHi : item.qEn}`;
+
+      const opts = isHi ? item.optsHi : item.optsEn;
+      const selected = state.answers[state.index];
+      document.getElementById('optionsContainer').innerHTML = opts.map((opt, idx) => {
+        const isSel = selected === idx;
+        return `
+          <button type="button" onclick="selectOption(${idx})"
+            class="opt-btn w-full text-left px-4 py-3 rounded-xl border text-sm flex items-center gap-3 ${
+              isSel ? 'border-amber-400 bg-amber-500/15 text-white font-semibold' : 'border-zinc-700 bg-zinc-950 hover:border-amber-400/50 text-zinc-200'
+            }">
+            <span class="w-6 h-6 rounded-full border flex items-center justify-center text-xs font-bold shrink-0 ${
+              isSel ? 'border-amber-400 bg-amber-400 text-zinc-950' : 'border-zinc-600 text-zinc-400'
+            }">${String.fromCharCode(65 + idx)}</span>
+            <span>${opt}</span>
+          </button>`;
+      }).join('');
+
+      document.getElementById('prevBtn').disabled = state.index === 0;
+      document.getElementById('nextBtn').textContent = state.index === activeQuestions.length - 1 ? 'Finish & Submit' : 'Next →';
+      document.getElementById('reviewBtn').textContent = state.marked[state.index] ? '★ Marked' : '★ Mark Review';
+      renderPalette();
+    }
+
+    function selectOption(idx) { state.answers[state.index] = idx; renderQuestion(); }
+    function clearResponse() { state.answers[state.index] = null; renderQuestion(); }
+    function toggleMarkReview() { state.marked[state.index] = !state.marked[state.index]; renderQuestion(); }
+    function prevQuestion() { if (state.index > 0) { state.index--; renderQuestion(); } }
+    function nextQuestion() { if (state.index < activeQuestions.length - 1) { state.index++; renderQuestion(); } else confirmSubmit(); }
+    function jumpTo(i) { state.index = i; renderQuestion(); }
+
+    function renderPalette() {
+      const ansCount = state.answers.filter(a => a !== null).length;
+      document.getElementById('answeredCount').textContent = `${ansCount}/${activeQuestions.length} Answered`;
+      document.getElementById('paletteGrid').innerHTML = activeQuestions.map((_, i) => {
+        let cls = 'bg-zinc-950 border-zinc-700 text-zinc-400';
+        if (state.marked[i]) cls = 'bg-purple-500/30 border-purple-400 text-purple-200';
+        else if (state.answers[i] !== null) cls = 'bg-emerald-500/25 border-emerald-400 text-emerald-200';
+        if (i === state.index) cls += ' ring-2 ring-amber-400';
+        return `<button onclick="jumpTo(${i})" class="h-9 rounded-lg border text-xs font-bold transition ${cls}">${i + 1}</button>`;
+      }).join('');
+    }
+
+    function confirmSubmit() {
+      const unanswered = state.answers.filter(a => a === null).length;
+      if (confirm(unanswered > 0 ? `${unanswered} questions unanswered hain. Submit karein?` : 'Final submit karein?')) finishTest();
+    }
+
+    function finishTest() {
+      clearInterval(state.timerId);
+      let totalScore = 0;
+      const subStats = {};
+      activeQuestions.forEach((item, i) => {
+        if (!subStats[item.sub]) subStats[item.sub] = { correct: 0, total: 0 };
+        subStats[item.sub].total++;
+        if (state.answers[i] === item.ans) { totalScore++; subStats[item.sub].correct++; }
+      });
+
+      const pct = Math.round((totalScore / activeQuestions.length) * 100);
+      const elapsedSec = TOTAL_SECONDS - state.timeLeft;
+
+      document.getElementById('quizScreen').classList.add('hidden');
+      document.getElementById('resultScreen').classList.remove('hidden');
+
+      document.getElementById('resStudentTitle').textContent = `${state.name} • Class ${state.clsNum} (${state.board})`;
+      document.getElementById('resMeta').textContent = `Class ${state.clsNum} All-Subject Diagnostic • ${new Date().toLocaleDateString('en-IN')}`;
+      document.getElementById('resScore').textContent = `${totalScore}/${activeQuestions.length}`;
+      document.getElementById('resPercent').textContent = `${pct}%`;
+      document.getElementById('resTimeTaken').textContent = `${Math.floor(elapsedSec / 60)}m ${elapsedSec % 60}s`;
+
+      const badge = document.getElementById('resBadge');
+      const advice = document.getElementById('resAdvice');
+      if (pct >= 80) {
+        badge.textContent = '🌟 Scholar Level — Outstanding Conceptual Clarity';
+        badge.className = 'inline-block px-4 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300';
+        advice.textContent = 'Bahut shandaar performance! Core concepts strong hain. Right 1-on-1 mentorship se top rank pakki hai.';
+      } else if (pct >= 50) {
+        badge.textContent = '👍 Strong Potential — Needs Targeted Polishing';
+        badge.className = 'inline-block px-4 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300';
+        advice.textContent = 'Achha foundation hai, lekin kuch subjects mein conceptual gaps hain. 3D visual explanations aur weekly diagnostics se 95%+ score aa sakta hai.';
+      } else {
+        badge.textContent = '🎯 Needs Focused 1-on-1 Conceptual Mentorship';
+        badge.className = 'inline-block px-4 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300';
+        advice.textContent = 'Personal 1-on-1 conceptual guidance se student ke basics aur confidence dono tezi se improve honge.';
+      }
+
+      document.getElementById('subjectBreakdown').innerHTML = Object.entries(subStats).map(([sub, st]) => {
+        const spct = Math.round((st.correct / st.total) * 100);
+        const barColor = spct >= 75 ? 'bg-emerald-400' : spct >= 50 ? 'bg-amber-400' : 'bg-rose-400';
+        return `
+          <div class="bg-zinc-950/70 border border-zinc-800 rounded-xl p-3 space-y-1.5 print-card">
+            <div class="flex justify-between text-xs font-semibold">
+              <span class="text-zinc-200 print-dark-text">${sub}</span>
+              <span class="text-zinc-400 print-muted-text">${st.correct}/${st.total} (${spct}%)</span>
+            </div>
+            <div class="w-full h-2 bg-zinc-800 rounded-full overflow-hidden"><div class="h-full ${barColor}" style="width: ${spct}%"></div></div>
+          </div>`;
+      }).join('');
+
+      state.lastSubStats = subStats;
+      state.lastTotalScore = totalScore;
+      state.lastPct = pct;
+      renderReviewKey();
+    }
+
+    function renderReviewKey() {
+      const isHi = state.lang === 'hi';
+      document.getElementById('reviewContainer').innerHTML = activeQuestions.map((item, i) => {
+        const userAns = state.answers[i];
+        const isCorrect = userAns === item.ans;
+        const opts = isHi ? item.optsHi : item.optsEn;
+        return `
+          <div class="bg-zinc-900/70 border ${isCorrect ? 'border-emerald-500/30' : 'border-rose-500/30'} rounded-xl p-4 space-y-1.5">
+            <div class="flex items-start justify-between gap-2">
+              <p class="text-sm font-semibold text-white"><span class="text-amber-400">[${item.sub}]</span> Q${i + 1}. ${isHi ? item.qHi : item.qEn}</p>
+              <span class="text-[11px] font-bold shrink-0 ${isCorrect ? 'text-emerald-400' : 'text-rose-400'}">${isCorrect ? '✓ Correct' : userAns === null ? '○ Skipped' : '✕ Wrong'}</span>
+            </div>
+            <p class="text-xs text-zinc-400">Your Answer: <span class="${isCorrect ? 'text-emerald-300' : 'text-rose-300'} font-medium">${userAns !== null ? opts[userAns] : 'Not Attempted'}</span></p>
+            ${!isCorrect ? `<p class="text-xs text-emerald-300">Correct Answer: <span class="font-semibold">${opts[item.ans]}</span></p>` : ''}
+            <p class="text-xs text-zinc-300 bg-zinc-950/70 rounded-lg p-2.5 mt-1 border border-zinc-800"><strong class="text-amber-400">Concept:</strong> ${isHi ? item.expHi : item.expEn}</p>
+          </div>`;
+      }).join('');
+    }
+
+    function sendReportToWhatsApp() {
+      const subLines = Object.entries(state.lastSubStats || {}).map(([sub, st]) => `• ${sub}: ${st.correct}/${st.total}`).join('\n');
+      const msg =
+`Namaste Ravi Sir! 🙏
+Maine *ELITE CLASSES* ka Class ${state.clsNum} Diagnostic Test complete kiya hai:
+
+• Student: *${state.name}* (Class ${state.clsNum} - ${state.board})
+• Overall Score: *${state.lastTotalScore}/${activeQuestions.length} (${state.lastPct}%)*
+
+*Subject-Wise Score:*
+${subLines}
+
+Please share detailed feedback & book a *Free 1-on-1 Demo Class*.`;
+      window.open(`https://wa.me/919675732501?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function restartQuiz() {
+      clearInterval(state.timerId);
+      document.getElementById('resultScreen').classList.add('hidden');
+      document.getElementById('startScreen').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
