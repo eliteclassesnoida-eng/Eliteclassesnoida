@@ -124,13 +124,13 @@
         <form id="feeForm" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <input id="studentName" type="text" required placeholder="Student Name"
             class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
-          <input id="studentClass" type="text" required placeholder="Class / Batch (e.g. Class 8 CBSE)"
+          <input id="studentClass" type="text" required placeholder="Class / Batch (e.g. Grade 8 CBSE)"
             class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
           <input id="parentPhone" type="tel" required placeholder="Parent WhatsApp (10 digits)"
             class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
           <input id="feeAmount" type="number" required min="1" placeholder="Fee Amount (₹)"
             class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
-          <input id="feeMonth" type="text" required placeholder="Month (e.g. Nov 2026)"
+          <input id="feeMonth" type="text" required placeholder="Month (e.g. November 2026)"
             class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
           <input id="dueDate" type="date" required
             class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
@@ -168,9 +168,14 @@
         <img id="qrImage" src="" alt="UPI QR Code" class="w-52 h-52 mx-auto" />
       </div>
       <p id="qrUpiText" class="text-xs text-zinc-400 font-mono"></p>
-      <div class="flex gap-2">
-        <a id="upiDeepLink" href="#" class="flex-1 py-2 rounded-xl bg-emerald-500 text-zinc-950 font-bold text-xs">Open UPI App</a>
-        <button onclick="closeQrModal()" class="flex-1 py-2 rounded-xl bg-zinc-800 text-zinc-200 text-xs">Close</button>
+      <div class="flex flex-col gap-2">
+        <button id="shareQrBtn" onclick="shareQrImage()" class="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs transition">
+          📤 Direct Share QR (WhatsApp)
+        </button>
+        <div class="flex gap-2">
+          <a id="upiDeepLink" href="#" class="flex-1 py-2 rounded-xl bg-amber-500/20 text-amber-300 font-semibold text-xs">Open UPI App</a>
+          <button onclick="closeQrModal()" class="flex-1 py-2 rounded-xl bg-zinc-800 text-zinc-200 text-xs">Close</button>
+        </div>
       </div>
     </div>
   </div>
@@ -215,6 +220,8 @@
 
     let records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     let config = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{"upiId":"9675732501@upi","pin":"2026"}');
+    let activeQrRecord = null;
+    let activeQrUrl = '';
 
     document.getElementById('upiIdInput').value = config.upiId;
     document.getElementById('newPinInput').value = config.pin;
@@ -320,6 +327,42 @@
       this.reset();
     });
 
+    // + Next Month 1-Click Generator
+    function createNextMonth(id) {
+      const rec = records.find(r => r.id === id);
+      if (!rec) return;
+
+      const baseDate = rec.dueDate ? new Date(rec.dueDate + 'T00:00:00') : new Date();
+      baseDate.setMonth(baseDate.getMonth() + 1);
+
+      const nextDueDate = baseDate.toISOString().slice(0, 10);
+      const nextMonthName = baseDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+      const alreadyExists = records.some(r =>
+        r.name.toLowerCase() === rec.name.toLowerCase() &&
+        r.month.toLowerCase() === nextMonthName.toLowerCase()
+      );
+      if (alreadyExists) {
+        alert(`${rec.name} ki ${nextMonthName} ki entry pehle se bani hui hai!`);
+        return;
+      }
+
+      const newRec = {
+        id: 'EC-' + Date.now().toString().slice(-6),
+        name: rec.name,
+        cls: rec.cls,
+        phone: rec.phone,
+        amount: rec.amount,
+        month: nextMonthName,
+        dueDate: nextDueDate,
+        status: 'Pending',
+        paidDate: ''
+      };
+      records.unshift(newRec);
+      saveRecords();
+      alert(`${rec.name} ke liye ${nextMonthName} ki entry add ho gayi!`);
+    }
+
     function toggleStatus(id) {
       const rec = records.find(r => r.id === id);
       if (!rec) return;
@@ -339,18 +382,61 @@
       if (!rec) return;
       if (!config.upiId) { alert('Pehle upar apni UPI ID save karein.'); return; }
 
+      activeQrRecord = rec;
       const note = encodeURIComponent(`Fee ${rec.month} - ${rec.name}`);
       const upiUri = `upi://pay?pa=${encodeURIComponent(config.upiId)}&pn=${encodeURIComponent('ELITE CLASSES')}&am=${rec.amount}&cu=INR&tn=${note}`;
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(upiUri)}`;
+      activeQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=12&data=${encodeURIComponent(upiUri)}`;
 
       document.getElementById('qrDetails').textContent = `${rec.name} (${rec.cls}) • ${rec.month} • ₹${rec.amount}`;
-      document.getElementById('qrImage').src = qrUrl;
+      document.getElementById('qrImage').src = activeQrUrl;
       document.getElementById('qrUpiText').textContent = `UPI ID: ${config.upiId}`;
       document.getElementById('upiDeepLink').href = upiUri;
 
       const modal = document.getElementById('qrModal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
+    }
+
+    // Direct Share QR Image (No Screenshot Needed)
+    async function shareQrImage() {
+      if (!activeQrRecord || !activeQrUrl) return;
+      const btn = document.getElementById('shareQrBtn');
+      const oldText = btn.textContent;
+      btn.textContent = 'Preparing QR...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(activeQrUrl);
+        const blob = await res.blob();
+        const fileName = `ELITE-CLASSES-QR-${activeQrRecord.name.replace(/\s+/g, '-')}.png`;
+        const file = new File([blob], fileName, { type: 'image/png' });
+
+        const shareText = `Namaste! 🙏\n*ELITE CLASSES* Fee QR for *${activeQrRecord.name}* (${activeQrRecord.month})\nAmount: *₹${activeQrRecord.amount}*\nUPI ID: ${config.upiId}\n— Ravi Yadav | eliteclassesnoida.in`;
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: 'ELITE CLASSES UPI QR',
+            text: shareText
+          });
+        } else {
+          // Fallback: direct download if browser doesn't support file sharing
+          const dlUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = dlUrl;
+          a.download = fileName;
+          a.click();
+          URL.revokeObjectURL(dlUrl);
+          alert('QR image download ho gayi hai, ab WhatsApp par bhej sakte hain.');
+        }
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          alert('Share karne mein issue aaya. Dobara try karein.');
+        }
+      } finally {
+        btn.textContent = oldText;
+        btn.disabled = false;
+      }
     }
 
     function closeQrModal() {
@@ -445,6 +531,7 @@ https://eliteclassesnoida.in`;
             <button onclick="toggleStatus('${r.id}')" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold">
               ${r.status === 'Paid' ? 'Mark Pending' : 'Mark Paid'}
             </button>
+            <button onclick="createNextMonth('${r.id}')" class="px-3 py-1.5 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 text-xs font-semibold">+ Next Month</button>
             ${r.status === 'Paid' ? `<button onclick="openReceipt('${r.id}')" class="px-3 py-1.5 rounded-lg bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 text-xs font-semibold">Receipt</button>` : ''}
             <button onclick="deleteRecord('${r.id}')" class="px-2.5 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs">✕</button>
           </div>
