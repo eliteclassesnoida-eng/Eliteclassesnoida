@@ -570,59 +570,87 @@
     }
 
     async function downloadReportPDF() {
-      const btn = document.getElementById('pdfBtn');
-      const card = document.getElementById('reportCardPrint');
-      if (!card) return;
+  const btn = document.getElementById('pdfBtn');
+  const card = document.getElementById('reportCardPrint');
+  if (!card) return;
 
-      const originalText = btn ? btn.textContent : '';
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = '⏳ Generating PDF...';
-      }
+  const originalText = btn ? btn.textContent : '📄 Download PDF Report';
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = '⏳ Generating PDF...';
+  }
 
-      try {
-        if (window.html2canvas && window.jspdf) {
-          const canvas = await window.html2canvas(card, {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: '#09090B'
-          });
-          const imgData = canvas.toDataURL('image/png');
-          const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF('p', 'mm', 'a4');
-          const pageWidth = pdf.internal.pageSize.getWidth();
-          const pageHeight = pdf.internal.pageSize.getHeight();
-          const margin = 10;
-          const usableWidth = pageWidth - margin * 2;
-          const imgHeight = (canvas.height * usableWidth) / canvas.width;
+  const fallbackToPrintWithHint = () => {
+    window.print();
+    setTimeout(() => {
+      alert(
+        'Agar Facebook/Instagram browser mein PDF download na ho, toh upar ⋮ (3 dots) dabakar "Open in Chrome" chunein aur wahan se Download PDF / Save as PDF karein.'
+      );
+    }, 400);
+  };
 
-          let heightLeft = imgHeight;
-          let position = margin;
-
-          pdf.addImage(imgData, 'PNG', margin, position, usableWidth, imgHeight);
-          heightLeft -= (pageHeight - margin * 2);
-
-          while (heightLeft > 0) {
-            position = heightLeft - imgHeight + margin;
-            pdf.addPage();
-            pdf.addImage(imgData, 'PNG', margin, position, usableWidth, imgHeight);
-            heightLeft -= (pageHeight - margin * 2);
-          }
-
-          const safeName = (state.name || 'Student').replace(/[^a-zA-Z0-9_-]/g, '_');
-          pdf.save(`ELITE-CLASSES-${safeName}-Class${state.clsNum}.pdf`);
-        } else {
-          window.print();
-        }
-      } catch (err) {
-        window.print();
-      } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = originalText || '📄 Download PDF Report';
-        }
-      }
+  try {
+    if (!window.html2canvas || !window.jspdf) {
+      fallbackToPrintWithHint();
+      return;
     }
+
+    const canvas = await window.html2canvas(card, {
+      scale: 1.5,
+      useCORS: true,
+      allowTaint: true,
+      logging: false,
+      backgroundColor: '#09090B'
+    });
+
+    const imgData = canvas.toDataURL('image/jpeg', 0.92);
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const margin = 10;
+    const usableWidth = pageWidth - margin * 2;
+    const imgHeight = (canvas.height * usableWidth) / canvas.width;
+
+    let heightLeft = imgHeight;
+    let position = margin;
+
+    pdf.addImage(imgData, 'JPEG', margin, position, usableWidth, imgHeight);
+    heightLeft -= (pageHeight - margin * 2);
+
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight + margin;
+      pdf.addPage();
+      pdf.addImage(imgData, 'JPEG', margin, position, usableWidth, imgHeight);
+      heightLeft -= (pageHeight - margin * 2);
+    }
+
+    const safeName = (state.name || 'Student').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const fileName = `ELITE-CLASSES-${safeName}-Class${state.clsNum}.pdf`;
+
+    const isInAppBrowser = /FBAN|FBAV|Instagram|FB_IAB/i.test(navigator.userAgent || '');
+
+    if (isInAppBrowser) {
+      const pdfBlob = pdf.output('blob');
+      const blobUrl = URL.createObjectURL(pdfBlob);
+      const opened = window.open(blobUrl, '_blank');
+      if (!opened) {
+        fallbackToPrintWithHint();
+      }
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
+    } else {
+      pdf.save(fileName);
+    }
+  } catch (err) {
+    fallbackToPrintWithHint();
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
+  }
+}
+
 
     function renderReviewKey() {
       const isHi = state.lang === 'hi';
