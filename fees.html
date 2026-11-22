@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fee Management | ELITE CLASSES</title>
+  <meta name="theme-color" content="#09090B" />
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #09090B; color: #F4F4F5; font-family: system-ui, -apple-system, sans-serif; }
+    @media print {
+      body * { visibility: hidden; }
+      #receiptPrintArea, #receiptPrintArea * { visibility: visible; }
+      #receiptPrintArea {
+        position: fixed; inset: 0; background: #ffffff !important; color: #111827 !important;
+        padding: 32px; width: 100%; border: none !important;
+      }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-16">
+
+  <!-- PIN Lock Screen -->
+  <div id="pinOverlay" class="fixed inset-0 z-50 bg-zinc-950 flex items-center justify-center p-4">
+    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl max-w-xs w-full p-6 text-center space-y-4 shadow-2xl">
+      <img src="logo.jpg" alt="ELITE CLASSES" class="w-16 h-16 rounded-full mx-auto object-cover border-2 border-amber-500/60" onerror="this.style.display='none'" />
+      <div>
+        <h2 class="font-bold text-lg text-amber-400">ELITE CLASSES</h2>
+        <p class="text-xs text-zinc-400">Admin Fee Desk &bull; Enter 4-Digit PIN</p>
+      </div>
+      <input id="pinInput" type="password" inputmode="numeric" maxlength="4" placeholder="••••"
+        class="w-full text-center tracking-[0.6em] text-2xl font-bold bg-zinc-950 border border-zinc-700 rounded-xl py-3 text-white focus:outline-none focus:border-amber-400" />
+      <p id="pinError" class="text-xs text-rose-400 hidden">Galat PIN! Dobara try karein.</p>
+      <button onclick="unlockApp()" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-sm transition">
+        Unlock Fee Desk
+      </button>
+      <a href="index.html" class="block text-xs text-zinc-500 hover:text-zinc-300 pt-1">&larr; Back to Website</a>
+    </div>
+  </div>
+
+  <!-- Main App Container -->
+  <div id="appContent" class="hidden">
+    <!-- Header -->
+    <header class="border-b border-zinc-800 bg-zinc-950/90 sticky top-0 z-30 backdrop-blur">
+      <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+        <div class="flex items-center gap-3">
+          <img src="logo.jpg" alt="ELITE CLASSES" class="w-10 h-10 rounded-full object-cover border border-amber-500/50" onerror="this.style.display='none'" />
+          <div>
+            <h1 class="font-bold text-base sm:text-lg tracking-wide text-amber-400">ELITE CLASSES</h1>
+            <p class="text-[11px] text-zinc-400">Fee Management &bull; UPI &bull; WhatsApp</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="lockApp()" class="text-xs px-3 py-1.5 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/30 font-medium">
+            🔒 Lock
+          </button>
+          <a href="index.html" class="text-xs px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700">
+            Home
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 pt-6 space-y-6">
+
+      <!-- UPI, PIN & Backup Settings -->
+      <section class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-4 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
+          <div class="sm:col-span-2">
+            <label class="block text-xs text-zinc-400 mb-1">Your UPI ID (QR &amp; Reminder ke liye)</label>
+            <input id="upiIdInput" type="text" placeholder="e.g. 9675732501@ybl"
+              class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
+          </div>
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">Admin PIN (4 digits)</label>
+            <input id="newPinInput" type="password" inputmode="numeric" maxlength="4" placeholder="2026"
+              class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
+          </div>
+          <button onclick="saveSettings()" class="w-full py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-semibold text-sm transition">
+            Save Settings
+          </button>
+        </div>
+
+        <!-- Backup & Restore Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-zinc-800">
+          <p class="text-xs text-zinc-400">Data Safety: Backup file ko Google Drive ya WhatsApp par save rakhein.</p>
+          <div class="flex gap-2">
+            <button onclick="exportBackup()" class="px-3 py-1.5 rounded-lg bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 text-xs font-semibold border border-sky-500/30">
+              ⬇ Backup Data
+            </button>
+            <label class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold border border-zinc-700 cursor-pointer">
+              ⬆ Restore Data
+              <input type="file" accept=".json" onchange="importBackup(event)" class="hidden" />
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Summary Cards -->
+      <section class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-4">
+          <p class="text-xs text-zinc-400">Total Collected</p>
+          <p id="statCollected" class="text-xl font-bold text-emerald-400 mt-1">₹0</p>
+        </div>
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-4">
+          <p class="text-xs text-zinc-400">Total Pending</p>
+          <p id="statPending" class="text-xl font-bold text-rose-400 mt-1">₹0</p>
+        </div>
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-4">
+          <p class="text-xs text-zinc-400">Paid Students</p>
+          <p id="statPaidCount" class="text-xl font-bold text-white mt-1">0</p>
+        </div>
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-4">
+          <p class="text-xs text-zinc-400">Pending Students</p>
+          <p id="statPendingCount" class="text-xl font-bold text-amber-400 mt-1">0</p>
+        </div>
+      </section>
+
+      <!-- Add Fee Record Form -->
+      <section class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-5">
+        <h2 class="text-sm font-semibold text-amber-400 mb-3">+ Add Student Fee Entry</h2>
+        <form id="feeForm" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <input id="studentName" type="text" required placeholder="Student Name"
+            class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
+          <input id="studentClass" type="text" required placeholder="Class / Batch (e.g. Class 8 CBSE)"
+            class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
+          <input id="parentPhone" type="tel" required placeholder="Parent WhatsApp (10 digits)"
+            class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
+          <input id="feeAmount" type="number" required min="1" placeholder="Fee Amount (₹)"
+            class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
+          <input id="feeMonth" type="text" required placeholder="Month (e.g. Nov 2026)"
+            class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
+          <input id="dueDate" type="date" required
+            class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400" />
+          <button type="submit" class="sm:col-span-3 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-sm transition">
+            Add Fee Record
+          </button>
+        </form>
+      </section>
+
+      <!-- Student Records List -->
+      <section class="space-y-3">
+        <div class="flex items-center justify-between gap-2">
+          <h2 class="text-sm font-semibold text-zinc-200">Fee Records</h2>
+          <div class="flex gap-2">
+            <input id="searchBox" type="text" oninput="renderList()" placeholder="Search student..."
+              class="bg-zinc-900 border border-zinc-700 rounded-lg px-2.5 py-1 text-xs text-zinc-200 w-36 sm:w-48 focus:outline-none focus:border-amber-400" />
+            <select id="filterStatus" onchange="renderList()" class="bg-zinc-900 border border-zinc-700 rounded-lg px-2.5 py-1 text-xs text-zinc-200">
+              <option value="all">All</option>
+              <option value="Pending">Pending</option>
+              <option value="Paid">Paid</option>
+            </select>
+          </div>
+        </div>
+        <div id="feeList" class="space-y-3"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- UPI QR Modal -->
+  <div id="qrModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
+    <div class="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-sm w-full p-5 text-center space-y-4">
+      <h3 class="font-bold text-amber-400 text-lg">Scan &amp; Pay via UPI</h3>
+      <p id="qrDetails" class="text-xs text-zinc-300"></p>
+      <div class="bg-white p-3 rounded-xl inline-block">
+        <img id="qrImage" src="" alt="UPI QR Code" class="w-52 h-52 mx-auto" />
+      </div>
+      <p id="qrUpiText" class="text-xs text-zinc-400 font-mono"></p>
+      <div class="flex gap-2">
+        <a id="upiDeepLink" href="#" class="flex-1 py-2 rounded-xl bg-emerald-500 text-zinc-950 font-bold text-xs">Open UPI App</a>
+        <button onclick="closeQrModal()" class="flex-1 py-2 rounded-xl bg-zinc-800 text-zinc-200 text-xs">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Printable Receipt Modal -->
+  <div id="receiptModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
+    <div class="bg-white text-zinc-900 rounded-2xl max-w-md w-full p-6 space-y-4 relative overflow-hidden">
+      <div id="receiptPrintArea" class="relative space-y-4">
+        <div class="flex items-center justify-between border-b border-zinc-200 pb-3">
+          <div class="flex items-center gap-2.5">
+            <img src="logo.jpg" alt="Logo" class="w-10 h-10 rounded-full object-cover" onerror="this.style.display='none'" />
+            <div>
+              <h3 class="font-extrabold text-base text-zinc-900">ELITE CLASSES</h3>
+              <p class="text-[10px] text-zinc-500">An Exclusive Mission For Futuristic Education</p>
+            </div>
+          </div>
+          <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800">PAID</span>
+        </div>
+
+        <div id="receiptBody" class="text-sm space-y-2 py-2"></div>
+
+        <div class="border-t border-zinc-200 pt-3 flex items-end justify-between text-[11px] text-zinc-500">
+          <div>
+            <p class="font-semibold text-zinc-800">by Ravi Yadav</p>
+            <p>Mob: +91 96757 32501</p>
+            <p>eliteclassesnoida.in</p>
+          </div>
+          <p class="italic text-zinc-400">Computer Generated Receipt</p>
+        </div>
+      </div>
+
+      <div class="flex gap-2 pt-2 no-print">
+        <button onclick="window.print()" class="flex-1 py-2 rounded-xl bg-zinc-900 text-white font-semibold text-xs">Print / Save PDF</button>
+        <button onclick="closeReceiptModal()" class="flex-1 py-2 rounded-xl bg-zinc-200 text-zinc-800 font-semibold text-xs">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'elite_classes_fees_v1';
+    const CONFIG_KEY = 'elite_classes_fee_config_v1';
+
+    let records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    let config = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{"upiId":"9675732501@upi","pin":"2026"}');
+
+    document.getElementById('upiIdInput').value = config.upiId;
+    document.getElementById('newPinInput').value = config.pin;
+
+    // PIN Lock Logic
+    document.getElementById('pinInput').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') unlockApp();
+    });
+
+    function unlockApp() {
+      const entered = document.getElementById('pinInput').value.trim();
+      const errEl = document.getElementById('pinError');
+      if (entered === config.pin) {
+        errEl.classList.add('hidden');
+        document.getElementById('pinOverlay').classList.add('hidden');
+        document.getElementById('appContent').classList.remove('hidden');
+        document.getElementById('pinInput').value = '';
+        renderList();
+      } else {
+        errEl.classList.remove('hidden');
+      }
+    }
+
+    function lockApp() {
+      document.getElementById('appContent').classList.add('hidden');
+      document.getElementById('pinOverlay').classList.remove('hidden');
+      document.getElementById('pinInput').focus();
+    }
+
+    function saveSettings() {
+      const upi = document.getElementById('upiIdInput').value.trim();
+      const pin = document.getElementById('newPinInput').value.trim();
+      if (pin.length !== 4 || !/^\d{4}$/.test(pin)) {
+        alert('PIN exact 4 digits ka hona chahiye (e.g. 2026).');
+        return;
+      }
+      config.upiId = upi;
+      config.pin = pin;
+      localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
+      alert('UPI aur PIN Settings save ho gayi!');
+    }
+
+    function saveRecords() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+      renderList();
+    }
+
+    // Backup & Restore
+    function exportBackup() {
+      const data = { config, records, exportedAt: new Date().toISOString() };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `elite-classes-fees-backup-${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (Array.isArray(parsed.records)) {
+            records = parsed.records;
+            if (parsed.config) {
+              config = parsed.config;
+              localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
+              document.getElementById('upiIdInput').value = config.upiId || '';
+              document.getElementById('newPinInput').value = config.pin || '2026';
+            }
+            saveRecords();
+            alert('Backup successfully restore ho gaya!');
+          } else {
+            alert('Invalid backup file.');
+          }
+        } catch {
+          alert('File read karne mein error aaya.');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    document.getElementById('feeForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const rec = {
+        id: 'EC-' + Date.now().toString().slice(-6),
+        name: document.getElementById('studentName').value.trim(),
+        cls: document.getElementById('studentClass').value.trim(),
+        phone: document.getElementById('parentPhone').value.replace(/\D/g, '').slice(-10),
+        amount: Number(document.getElementById('feeAmount').value),
+        month: document.getElementById('feeMonth').value.trim(),
+        dueDate: document.getElementById('dueDate').value,
+        status: 'Pending',
+        paidDate: ''
+      };
+      records.unshift(rec);
+      saveRecords();
+      this.reset();
+    });
+
+    function toggleStatus(id) {
+      const rec = records.find(r => r.id === id);
+      if (!rec) return;
+      rec.status = rec.status === 'Paid' ? 'Pending' : 'Paid';
+      rec.paidDate = rec.status === 'Paid' ? new Date().toLocaleDateString('en-IN') : '';
+      saveRecords();
+    }
+
+    function deleteRecord(id) {
+      if (!confirm('Is fee record ko delete karein?')) return;
+      records = records.filter(r => r.id !== id);
+      saveRecords();
+    }
+
+    function openQrModal(id) {
+      const rec = records.find(r => r.id === id);
+      if (!rec) return;
+      if (!config.upiId) { alert('Pehle upar apni UPI ID save karein.'); return; }
+
+      const note = encodeURIComponent(`Fee ${rec.month} - ${rec.name}`);
+      const upiUri = `upi://pay?pa=${encodeURIComponent(config.upiId)}&pn=${encodeURIComponent('ELITE CLASSES')}&am=${rec.amount}&cu=INR&tn=${note}`;
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(upiUri)}`;
+
+      document.getElementById('qrDetails').textContent = `${rec.name} (${rec.cls}) • ${rec.month} • ₹${rec.amount}`;
+      document.getElementById('qrImage').src = qrUrl;
+      document.getElementById('qrUpiText').textContent = `UPI ID: ${config.upiId}`;
+      document.getElementById('upiDeepLink').href = upiUri;
+
+      const modal = document.getElementById('qrModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeQrModal() {
+      const modal = document.getElementById('qrModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function sendWhatsApp(id) {
+      const rec = records.find(r => r.id === id);
+      if (!rec) return;
+      const msg =
+`Namaste! 🙏
+*ELITE CLASSES* (An Exclusive Mission For Futuristic Education)
+
+Gentle Fee Reminder for *${rec.name}* (${rec.cls}):
+• Month: ${rec.month}
+• Amount: *₹${rec.amount}*
+• Due Date: ${rec.dueDate}
+• UPI ID: *${config.upiId}*
+
+Payment ke baad screenshot share kar dein.
+Thank you!
+— Ravi Yadav | +91 96757 32501
+https://eliteclassesnoida.in`;
+
+      window.open(`https://wa.me/91${rec.phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function openReceipt(id) {
+      const rec = records.find(r => r.id === id);
+      if (!rec) return;
+      document.getElementById('receiptBody').innerHTML = `
+        <div class="flex justify-between"><span class="text-zinc-500">Receipt No:</span><span class="font-semibold">${rec.id}</span></div>
+        <div class="flex justify-between"><span class="text-zinc-500">Student Name:</span><span class="font-semibold">${rec.name}</span></div>
+        <div class="flex justify-between"><span class="text-zinc-500">Class / Batch:</span><span class="font-semibold">${rec.cls}</span></div>
+        <div class="flex justify-between"><span class="text-zinc-500">Fee Month:</span><span class="font-semibold">${rec.month}</span></div>
+        <div class="flex justify-between"><span class="text-zinc-500">Paid Date:</span><span class="font-semibold">${rec.paidDate || new Date().toLocaleDateString('en-IN')}</span></div>
+        <div class="flex justify-between text-base pt-2 border-t border-zinc-200"><span class="font-bold">Amount Paid:</span><span class="font-extrabold text-emerald-700">₹${rec.amount}</span></div>
+      `;
+      const modal = document.getElementById('receiptModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeReceiptModal() {
+      const modal = document.getElementById('receiptModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function renderList() {
+      const filter = document.getElementById('filterStatus').value;
+      const query = (document.getElementById('searchBox').value || '').toLowerCase();
+      const listEl = document.getElementById('feeList');
+
+      let collected = 0, pending = 0, paidCount = 0, pendingCount = 0;
+      records.forEach(r => {
+        if (r.status === 'Paid') { collected += r.amount; paidCount++; }
+        else { pending += r.amount; pendingCount++; }
+      });
+
+      document.getElementById('statCollected').textContent = `₹${collected.toLocaleString('en-IN')}`;
+      document.getElementById('statPending').textContent = `₹${pending.toLocaleString('en-IN')}`;
+      document.getElementById('statPaidCount').textContent = paidCount;
+      document.getElementById('statPendingCount').textContent = pendingCount;
+
+      const filtered = records.filter(r => {
+        const matchStatus = filter === 'all' || r.status === filter;
+        const matchQuery = !query || r.name.toLowerCase().includes(query) || r.cls.toLowerCase().includes(query) || r.month.toLowerCase().includes(query);
+        return matchStatus && matchQuery;
+      });
+
+      if (!filtered.length) {
+        listEl.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500 bg-zinc-900/40 rounded-2xl border border-zinc-800">Abhi koi fee record nahi hai.</div>`;
+        return;
+      }
+
+      listEl.innerHTML = filtered.map(r => `
+        <div class="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-bold text-white">${r.name}</h3>
+              <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold ${r.status === 'Paid' ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">${r.status}</span>
+            </div>
+            <p class="text-xs text-zinc-400 mt-0.5">${r.cls} &bull; ${r.month} &bull; Due: ${r.dueDate}</p>
+            <p class="text-sm font-bold text-amber-400 mt-1">₹${r.amount.toLocaleString('en-IN')}</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="openQrModal('${r.id}')" class="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-semibold">UPI QR</button>
+            <button onclick="sendWhatsApp('${r.id}')" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-xs font-semibold">WhatsApp</button>
+            <button onclick="toggleStatus('${r.id}')" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold">
+              ${r.status === 'Paid' ? 'Mark Pending' : 'Mark Paid'}
+            </button>
+            ${r.status === 'Paid' ? `<button onclick="openReceipt('${r.id}')" class="px-3 py-1.5 rounded-lg bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 text-xs font-semibold">Receipt</button>` : ''}
+            <button onclick="deleteRecord('${r.id}')" class="px-2.5 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs">✕</button>
+          </div>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>
