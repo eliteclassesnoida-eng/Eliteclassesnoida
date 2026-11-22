@@ -17,6 +17,8 @@
   <meta property="og:image" content="https://eliteclassesnoida.in/logo.jpg" />
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <style>
     body { background-color: #09090B; color: #F4F4F5; font-family: system-ui, -apple-system, sans-serif; }
     .opt-btn { transition: all 0.16s ease; }
@@ -215,8 +217,8 @@
         <button onclick="sendReportToWhatsApp()" class="px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-sm transition">
           📲 Book Free Demo &amp; Send Report on WhatsApp
         </button>
-        <button onclick="window.print()" class="px-5 py-3 rounded-xl bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/30 font-bold text-sm transition">
-          📄 Download / Print PDF Report
+        <button id="pdfBtn" onclick="downloadReportPDF()" class="px-5 py-3 rounded-xl bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/30 font-bold text-sm transition">
+          📄 Download PDF Report
         </button>
         <button onclick="restartQuiz()" class="px-5 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-semibold text-sm transition">
           ↻ Retake Test
@@ -565,6 +567,61 @@
       state.lastTotalScore = totalScore;
       state.lastPct = pct;
       renderReviewKey();
+    }
+
+    async function downloadReportPDF() {
+      const btn = document.getElementById('pdfBtn');
+      const card = document.getElementById('reportCardPrint');
+      if (!card) return;
+
+      const originalText = btn ? btn.textContent : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = '⏳ Generating PDF...';
+      }
+
+      try {
+        if (window.html2canvas && window.jspdf) {
+          const canvas = await window.html2canvas(card, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#09090B'
+          });
+          const imgData = canvas.toDataURL('image/png');
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF('p', 'mm', 'a4');
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const pageHeight = pdf.internal.pageSize.getHeight();
+          const margin = 10;
+          const usableWidth = pageWidth - margin * 2;
+          const imgHeight = (canvas.height * usableWidth) / canvas.width;
+
+          let heightLeft = imgHeight;
+          let position = margin;
+
+          pdf.addImage(imgData, 'PNG', margin, position, usableWidth, imgHeight);
+          heightLeft -= (pageHeight - margin * 2);
+
+          while (heightLeft > 0) {
+            position = heightLeft - imgHeight + margin;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', margin, position, usableWidth, imgHeight);
+            heightLeft -= (pageHeight - margin * 2);
+          }
+
+          const safeName = (state.name || 'Student').replace(/[^a-zA-Z0-9_-]/g, '_');
+          pdf.save(`ELITE-CLASSES-${safeName}-Class${state.clsNum}.pdf`);
+        } else {
+          window.print();
+        }
+      } catch (err) {
+        window.print();
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = originalText || '📄 Download PDF Report';
+        }
+      }
     }
 
     function renderReviewKey() {
