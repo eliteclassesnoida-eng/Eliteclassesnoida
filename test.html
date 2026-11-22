@@ -123,13 +123,13 @@
               Humanities
             </button>
           </div>
-          <p id="streamHint" class="text-[11px] text-amber-200/80">Physics, Chemistry, Mathematics &amp; Biology application concepts.</p>
+          <p id="streamHint" class="text-[11px] text-amber-200/80">Physics, Chemistry, Mathematics &amp; Biology conceptual application.</p>
         </div>
 
         <div class="bg-zinc-950/70 border border-zinc-800 rounded-xl p-3.5 text-xs text-zinc-400 space-y-1">
           <p class="text-zinc-200 font-semibold">Assessment Highlights:</p>
           <p>&bull; 10 Conceptual &amp; Real-Life Application MCQs &bull; 10-Minute Timer &bull; No Negative Marking.</p>
-          <p>&bull; Instant Subject-Wise Analytics + Clean White PDF Report Card.</p>
+          <p>&bull; Instant Subject-Wise Analytics + Branded 1-Page White PDF Report Card.</p>
           <p>&bull; Switch language anytime using <strong class="text-amber-400">EN | हिंदी</strong> in the top bar.</p>
         </div>
 
@@ -186,11 +186,12 @@
     <!-- STEP 3: RESULT & PDF REPORT CARD -->
     <section id="resultScreen" class="hidden space-y-6">
       <div id="reportCardPrint" class="bg-zinc-900/90 border border-amber-500/40 rounded-2xl p-6 space-y-5 relative overflow-hidden">
-        <div class="pointer-events-none select-none absolute inset-0 flex items-center justify-center opacity-[0.04] text-4xl sm:text-6xl font-black tracking-widest -rotate-12">
-          eliteclassesnoida.in
+        <!-- Official Logo Watermark -->
+        <div class="pointer-events-none select-none absolute inset-0 flex items-center justify-center z-0">
+          <img src="logo.jpg" alt="" class="w-60 h-60 sm:w-72 sm:h-72 object-contain opacity-[0.07]" onerror="this.style.display='none'" />
         </div>
 
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800 pb-4 relative">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800 pb-4 relative z-10">
           <div class="flex items-center gap-3">
             <img src="logo.jpg" alt="ELITE CLASSES" class="w-12 h-12 rounded-full object-cover border border-amber-500/60" onerror="this.style.display='none'" />
             <div>
@@ -206,7 +207,7 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 relative">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 relative z-10">
           <div class="bg-zinc-950/70 border border-zinc-800 rounded-xl p-4 text-center">
             <p class="text-xs text-zinc-400">Total Score</p>
             <p id="resScore" class="text-3xl font-extrabold text-emerald-400 mt-1">0/10</p>
@@ -221,12 +222,12 @@
           </div>
         </div>
 
-        <div class="text-center space-y-2 relative">
+        <div class="text-center space-y-2 relative z-10">
           <p id="resBadge" class="inline-block px-4 py-1 rounded-full text-xs font-bold"></p>
           <p id="resAdvice" class="text-xs sm:text-sm text-zinc-300 max-w-2xl mx-auto"></p>
         </div>
 
-        <div class="space-y-2.5 relative">
+        <div class="space-y-2.5 relative z-10">
           <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400">Subject-Wise Conceptual Breakdown</h3>
           <div id="subjectBreakdown" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
         </div>
@@ -404,7 +405,7 @@
           ['Business Studies', 'Why is insurance considered a risk-transfer mechanism rather than a profit-making investment?', 'बीमा को लाभ कमाने के निवेश के बजाय जोखिम-स्थानांतरण (Risk Transfer) माध्यम क्यों माना जाता है?', ['It guarantees double money','It spreads potential loss across a pool of policyholders','It eliminates accidents','It is tax-free profit'], ['यह पैसा दोगुना करता है','यह संभावित नुकसान को अनेक पॉलिसीधारकों में बाँट देता है','यह दुर्घटनाएँ रोकता है','यह कर-मुक्त लाभ है'], 1, 'Insurance shifts uncertain financial risk to the insurer in exchange for a regular premium.', 'बीमा प्रीमियम के बदले अनिश्चित आर्थिक जोखिम को बीमा कंपनी पर स्थानांतरित करता है।'],
           ['Economics', 'Why does the Production Possibility Curve (PPC) typically appear concave to the origin?', 'उत्पादन संभावना वक्र (PPC) सामान्यतः मूल बिंदु (Origin) की ओर अवतल (Concave) क्यों दिखता है?', ['Increasing Marginal Opportunity Cost (MRT)','Constant opportunity cost','Zero scarcity','Unlimited resources'], ['बढ़ती सीमांत अवसर लागत के कारण','स्थिर अवसर लागत के कारण','दुर्लभता न होने के कारण','असीमित संसाधनों के कारण'], 0, 'Shifting resources to produce more of one good increases the sacrifice of the other good (concave shape).', 'एक वस्तु का उत्पादन बढ़ाने पर दूसरी वस्तु का त्याग बढ़ती दर से होता है, जिससे वक्र अवतल बनता है।'],
           ['Economics', 'If the price of tea rises sharply, what is the most likely impact on the demand curve of coffee (a substitute)?', 'यदि चाय की कीमत तेज़ी से बढ़े, तो कॉफी (स्थानापन्न वस्तु) की माँग पर क्या असर पड़ेगा?', ['Demand for coffee shifts rightward (increases)','Demand for coffee shifts leftward','No change','Coffee price becomes zero'], ['कॉफी की माँग दाईं ओर खिसकेगी (बढ़ेगी)','कॉफी की माँग बाईं ओर खिसकेगी','कोई बदलाव नहीं','कॉफी शून्य हो जाएगी'], 0, 'Higher tea price makes coffee relatively cheaper for consumers, increasing coffee demand.', 'चाय महँगी होने पर उपभोक्ता कॉफी की ओर रुख करते हैं, जिससे कॉफी की माँग बढ़ती है।'],
-          ['Mathematics / Applied Math', 'A trader marks up goods by 25% and offers a 10% trade discount. What is the net profit % on cost?', 'एक व्यापारी लागत पर 25% अधिक अंकित करता है और 10% छूट देता है। लागत पर शुद्ध लाभ % क्या होगा?', ['12.5%','15%','10%','13.5%'], null, 0, 'If Cost = 100, MP = 125. After 10% discount (12.5), SP = 112.5 → Profit = 12.5%.', 'लागत ₹100 मानें तो अंकित मूल्य ₹125; 10% छूट (₹12.5) के बाद विक्रय मूल्य ₹112.5 → 12.5% लाभ।'],
+          ['Applied Math', 'A trader marks up goods by 25% and offers a 10% trade discount. What is the net profit % on cost?', 'एक व्यापारी लागत पर 25% अधिक अंकित करता है और 10% छूट देता है। लागत पर शुद्ध लाभ % क्या होगा?', ['12.5%','15%','10%','13.5%'], null, 0, 'If Cost = 100, MP = 125. After 10% discount (12.5), SP = 112.5 → Profit = 12.5%.', 'लागत ₹100 मानें तो अंकित मूल्य ₹125; 10% छूट (₹12.5) के बाद विक्रय मूल्य ₹112.5 → 12.5% लाभ।'],
           ['Statistics', 'Why is Median often preferred over Mean when analyzing household income in a city?', 'किसी शहर की पारिवारिक आय का विश्लेषण करते समय Mean की जगह Median अधिक उपयुक्त क्यों होता है?', ['Median is unaffected by extreme high/low outliers','Mean cannot be calculated','Median is always larger','No difference'], ['Median अत्यधिक बड़े या छोटे आँकड़ों (outliers) से प्रभावित नहीं होता','Mean निकाला नहीं जा सकता','Median हमेशा बड़ा होता है','कोई अंतर नहीं'], 0, 'A few ultra-rich households pull the Mean up, whereas Median shows the true middle level.', 'कुछ अति-धनी परिवार Mean को ऊपर खींच देते हैं, जबकि Median वास्तविक मध्य स्थिति दिखाता है।'],
           ['English Core', 'Choose the correct word: "The company faced a severe ____ after the product recall."', 'सही शब्द चुनें: "The company faced a severe ____ after the product recall."', ['setback','setup','settle','setting'], null, 0, 'A "setback" is a reversal or check in progress.', '"Setback" का अर्थ प्रगति या कार्य में रुकावट या झटका है।'],
           ['English Core', 'Identify the tense: "By next June, she will have completed her foundation course."', 'Tense पहचानें: "By next June, she will have completed her foundation course."', ['Future Continuous','Future Perfect','Present Perfect','Simple Future'], null, 1, '"Will have + past participle (completed)" indicates Future Perfect tense.', '"Will have + V3" Future Perfect Tense को दर्शाता है।']
@@ -445,7 +446,7 @@
           ['Financial Markets', 'Why does a Stock Exchange provide liquidity and continuous marketability to securities?', 'स्टॉक एक्सचेंज प्रतिभूतियों को तरलता (Liquidity) और निरंतर क्रय-विक्रय की सुविधा क्यों देता है?', ['Investors can convert shares into cash easily when needed','Share prices never fluctuate','Companies do not need SEBI','Dividends are guaranteed by exchange'], ['निवेशक आवश्यकता पड़ने पर शेयरों को आसानी से नकद में बदल सकें','शेयर मूल्य कभी नहीं बदलते','कंपनियों को SEBI की आवश्यकता नहीं','लाभांश की गारंटी एक्सचेंज देता है'], 0, 'Secondary markets allow investors to enter and exit positions smoothly.', 'द्वितीयक बाज़ार निवेशकों को ज़रूरत पड़ने पर निवेश को नकद में बदलने की सुविधा देता है।'],
           ['Consumer Protection', 'Under consumer protection principles, why is "Right to be Informed" essential before buying a product?', 'उपभोक्ता संरक्षण के अंतर्गत किसी उत्पाद को खरीदने से पहले "सूचना का अधिकार" क्यों आवश्यक है?', ['Helps consumers make informed choices about quality, quantity, and price','Increases packaging waste','Allows misleading labels','Prevents bills'], ['उपभोक्ता गुणवत्ता, मात्रा और मूल्य के आधार पर सही निर्णय ले सकें','पैकेजिंग कचरा बढ़ाता है','भ्रामक लेबल की अनुमति देता है','बिल बनने से रोकता है'], 0, 'Complete and accurate product information protects buyers from deceptive claims.', 'सही व पूर्ण जानकारी मिलने से उपभोक्ता धोखाधड़ी से बचकर सही चुनाव कर पाते हैं।'],
           ['English Core', 'Choose the correct word: "The committee reached a ____ decision after hours of debate."', 'सही शब्द चुनें: "The committee reached a ____ decision after hours of debate."', ['unanimous','unaware','unfair','unfit'], null, 0, '"Unanimous" means everyone agreed without opposition.', '"Unanimous" का अर्थ सर्वसम्मति से लिया गया निर्णय है।'],
-          ['English Core', 'Identify the error: "No sooner had he arrived than the meeting begun."', 'वाक्य में त्रुटि पहचानें: "No sooner had he arrived than the meeting begun."', ['No sooner','had he arrived','than','the meeting begun'], null, 3, 'After "had", past participle "begun" or "started" is used—here "begun" is V3 of begin, wait: "No sooner had he arrived than the meeting began" (simple past for second clause).', 'दूसरे उपवाक्य में सामान्य भूतकाल "began" आता है, जबकि "begun" भूत कृदंत (V3) है।']
+          ['English Core', 'Identify the error: "No sooner had he arrived than the meeting begun."', 'वाक्य में त्रुटि पहचानें: "No sooner had he arrived than the meeting begun."', ['No sooner','had he arrived','than','the meeting begun'], null, 3, 'The second clause requires simple past "began", not past participle "begun".', 'दूसरे उपवाक्य में सामान्य भूतकाल "began" आता है, जबकि "begun" भूत कृदंत (V3) है।']
         ],
         Humanities: [
           ['Political Science', 'Why is the Cold War described as an ideological and geopolitical rivalry rather than a direct hot war between US and USSR?', 'शीत युद्ध को अमेरिका और सोवियत संघ के बीच सीधे गर्म युद्ध के बजाय वैचारिक व भू-राजनीतिक प्रतिद्वंद्विता क्यों कहा जाता है?', ['Mutual nuclear deterrence (MAD) prevented direct military clash','They had identical economies','No proxy conflicts happened','UN banned all armies'], ['परमाणु प्रतिरोध (MAD) ने सीधे सैन्य टकराव को रोका','दोनों की अर्थव्यवस्थाएँ समान थीं','कोई छद्म संघर्ष नहीं हुआ','UN ने सभी सेनाओं पर रोक लगाई'], 0, 'Fear of mutual destruction kept superpower confrontation indirect via alliances, arms race, and proxy wars.', 'परस्पर विनाश के भय (MAD) के कारण दोनों महाशक्तियाँ सीधे युद्ध से बचीं।'],
@@ -538,6 +539,7 @@
       document.getElementById('resultScreen').classList.add('hidden');
       document.getElementById('quizScreen').classList.remove('hidden');
 
+      window.scrollTo(0, 0);
       startTimer();
       renderQuestion();
       renderPalette();
@@ -642,6 +644,7 @@
 
       document.getElementById('quizScreen').classList.add('hidden');
       document.getElementById('resultScreen').classList.remove('hidden');
+      window.scrollTo(0, 0);
 
       const classStreamStr = getClassStreamLabel();
       document.getElementById('resStudentTitle').textContent = `${state.name} • ${classStreamStr} (${state.board})`;
@@ -696,10 +699,6 @@
         btn.textContent = '⏳ Generating PDF...';
       }
 
-      const prevCardStyle = card.getAttribute('style') || '';
-      const allEls = [card, ...card.querySelectorAll('*')];
-      const savedStyles = allEls.map(el => el.getAttribute('style') || '');
-
       const fallbackToPrintWithHint = () => {
         window.print();
         setTimeout(() => {
@@ -709,53 +708,80 @@
         }, 400);
       };
 
+      let wrapper = null;
+
       try {
         if (!window.html2canvas || !window.jspdf) {
           fallbackToPrintWithHint();
           return;
         }
 
-        // Convert card into clean light print-friendly sheet during capture
-        card.style.backgroundColor = '#FFFFFF';
-        card.style.color = '#111827';
-        card.style.borderColor = '#CBD5E1';
+        // Clone report card into a clean off-screen 760px white A4 sheet (prevents mobile scroll clipping & UI flicker)
+        wrapper = document.createElement('div');
+        wrapper.style.position = 'fixed';
+        wrapper.style.left = '-9999px';
+        wrapper.style.top = '0';
+        wrapper.style.width = '760px';
+        wrapper.style.background = '#FFFFFF';
+        wrapper.style.padding = '16px';
+        wrapper.style.zIndex = '-1';
 
-        card.querySelectorAll('*').forEach(el => {
+        const clone = card.cloneNode(true);
+        clone.id = 'reportCardClone';
+        clone.style.backgroundColor = '#FFFFFF';
+        clone.style.color = '#0F172A';
+        clone.style.borderColor = '#CBD5E1';
+        clone.style.borderRadius = '16px';
+        clone.style.padding = '28px';
+
+        // Apply crisp light theme to cloned elements
+        clone.querySelectorAll('*').forEach(el => {
           if (el.classList.contains('bg-zinc-950/70')) {
             el.style.backgroundColor = '#F8FAFC';
             el.style.borderColor = '#E2E8F0';
           } else if (el.classList.contains('bg-zinc-800')) {
             el.style.backgroundColor = '#E2E8F0';
           }
+          if (el.classList.contains('border-zinc-800')) {
+            el.style.borderColor = '#E2E8F0';
+          }
 
           if (el.classList.contains('text-white') || el.classList.contains('text-zinc-200')) {
             el.style.color = '#0F172A';
           } else if (el.classList.contains('text-zinc-300') || el.classList.contains('text-zinc-400') || el.classList.contains('text-zinc-500')) {
             el.style.color = '#475569';
-          } else if (el.classList.contains('text-amber-400')) {
+          } else if (el.classList.contains('text-amber-400') || el.classList.contains('text-amber-300')) {
             el.style.color = '#B45309';
-          } else if (el.classList.contains('text-emerald-400')) {
+          } else if (el.classList.contains('text-emerald-400') || el.classList.contains('text-emerald-300')) {
             el.style.color = '#047857';
           } else if (el.classList.contains('text-sky-400')) {
             el.style.color = '#0369A1';
-          } else if (el.classList.contains('text-rose-400')) {
+          } else if (el.classList.contains('text-rose-400') || el.classList.contains('text-rose-300')) {
             el.style.color = '#BE123C';
           }
         });
 
-        const canvas = await window.html2canvas(card, {
-          scale: 1.6,
+        wrapper.appendChild(clone);
+        document.body.appendChild(wrapper);
+
+        // Wait a tick for images & layout to settle
+        await new Promise(r => setTimeout(r, 120));
+
+        const canvas = await window.html2canvas(clone, {
+          scale: 2,
           useCORS: true,
           allowTaint: true,
           logging: false,
-          backgroundColor: '#FFFFFF'
+          backgroundColor: '#FFFFFF',
+          scrollX: 0,
+          scrollY: 0,
+          windowWidth: 800
         });
 
-        // Restore dark UI immediately
-        allEls.forEach((el, idx) => el.setAttribute('style', savedStyles[idx]));
-        card.setAttribute('style', prevCardStyle);
+        document.body.removeChild(wrapper);
+        wrapper = null;
 
-        const imgData = canvas.toDataURL('image/jpeg', 0.94);
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF('p', 'mm', 'a4');
 
@@ -794,8 +820,7 @@
           pdf.save(fileName);
         }
       } catch (err) {
-        allEls.forEach((el, idx) => el.setAttribute('style', savedStyles[idx]));
-        card.setAttribute('style', prevCardStyle);
+        if (wrapper && wrapper.parentNode) wrapper.parentNode.removeChild(wrapper);
         fallbackToPrintWithHint();
       } finally {
         if (btn) {
@@ -845,6 +870,7 @@ Please share detailed feedback & book a *Free 1-on-1 Demo Class*.`;
       clearInterval(state.timerId);
       document.getElementById('resultScreen').classList.add('hidden');
       document.getElementById('startScreen').classList.remove('hidden');
+      window.scrollTo(0, 0);
     }
   </script>
 </body>
