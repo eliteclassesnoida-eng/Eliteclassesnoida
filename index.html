@@ -966,70 +966,1069 @@
     </div>
   </section>
 
-  <!-- =====================================================================
-       SECTION 8: TRANSPARENT MONTHLY PACKAGES (INR / USD TOGGLE)
-       ===================================================================== -->
-  <section id="pricing" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center max-w-2xl mx-auto mb-9">
-        <span class="text-xs font-bold uppercase tracking-widest text-goldBright">Transparent Monthly Packages</span>
-        <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">Choose Your Location &amp; Mode</h2>
-        <div class="inline-flex p-1 rounded-2xl surface-panel mt-5">
-          <button type="button" id="btn-inr" onclick="window.setCurrency('INR')" class="px-4 py-2 rounded-xl text-xs font-bold btn-primary">🇮🇳 India (Noida Home / Hybrid)</button>
-          <button type="button" id="btn-usd" onclick="window.setCurrency('USD')" class="px-4 py-2 rounded-xl text-xs font-bold text-zinc-400 hover:text-white">🌍 Global (Live Online USD)</button>
+  <!-- =========================================================
+     SECTION 8: INTERACTIVE FEE STUDIO & PACKAGES (INR / USD)
+========================================================= -->
+<section id="pricing" aria-label="Transparent Monthly Fee Estimator">
+  <style>
+    #pricing {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      position: relative;
+      padding: 56px 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      color: #f4f4f5;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    #pricing * { box-sizing: border-box; }
+    .ecp-glow-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(600px 320px at 15% 15%, rgba(245, 158, 11, 0.11), transparent 70%),
+        radial-gradient(620px 340px at 88% 78%, rgba(99, 102, 241, 0.14), transparent 70%);
+    }
+    .ecp-wrap {
+      position: relative;
+      max-width: 1140px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+    .ecp-head {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 28px;
+    }
+    .ecp-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.38);
+      color: #fbbf24;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .ecp-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e;
+    }
+    .ecp-title {
+      margin: 0 0 10px;
+      font-size: 28px;
+      line-height: 1.18;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+    }
+    @media (min-width: 640px) { .ecp-title { font-size: 38px; } }
+    .ecp-title span {
+      background: linear-gradient(90deg, #fde68a 0%, #f59e0b 55%, #fbbf24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .ecp-sub {
+      margin: 0 auto;
+      font-size: 14px;
+      line-height: 1.55;
+      color: #a1a1aa;
+    }
+
+    /* Currency Switcher */
+    .ecp-curr-bar {
+      display: inline-flex;
+      padding: 5px;
+      margin-top: 20px;
+      border-radius: 16px;
+      background: rgba(24, 24, 31, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      gap: 5px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .ecp-curr-btn {
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      color: #a1a1aa;
+      background: transparent;
+      transition: all 0.22s ease;
+    }
+    .ecp-curr-btn.active {
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+      color: #ffffff;
+      box-shadow: 0 6px 18px rgba(99, 102, 241, 0.38);
+    }
+
+    /* Main 2-Column Studio */
+    .ecp-studio {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    @media (min-width: 960px) {
+      .ecp-studio {
+        grid-template-columns: 1.18fr 0.82fr;
+        gap: 24px;
+      }
+    }
+    .ecp-panel {
+      background: linear-gradient(180deg, rgba(22, 22, 29, 0.94) 0%, rgba(12, 12, 16, 0.98) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 24px;
+      padding: 20px 16px;
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.52);
+    }
+    @media (min-width: 640px) { .ecp-panel { padding: 26px; } }
+
+    .ecp-step {
+      margin-bottom: 20px;
+    }
+    .ecp-step:last-child { margin-bottom: 0; }
+    .ecp-step-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .ecp-step-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #e4e4e7;
+    }
+    .ecp-step-num {
+      width: 21px;
+      height: 21px;
+      border-radius: 7px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(245, 158, 11, 0.16);
+      border: 1px solid rgba(245, 158, 11, 0.42);
+      color: #fbbf24;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .ecp-step-hint {
+      font-size: 11px;
+      font-weight: 600;
+      color: #71717a;
+    }
+
+    /* Interactive Option Grids */
+    .ecp-grade-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+    }
+    @media (min-width: 640px) {
+      .ecp-grade-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .ecp-seg-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+    }
+    .ecp-btn-opt {
+      position: relative;
+      width: 100%;
+      text-align: left;
+      background: #16161e;
+      border: 1px solid #2b2b36;
+      border-radius: 14px;
+      padding: 12px 12px;
+      color: #e4e4e7;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .ecp-btn-opt:hover {
+      border-color: rgba(251, 191, 36, 0.48);
+      background: #1b1b24;
+    }
+    .ecp-btn-opt.active {
+      background: linear-gradient(145deg, rgba(245, 158, 11, 0.16) 0%, rgba(99, 102, 241, 0.14) 100%);
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.35), 0 10px 24px rgba(245, 158, 11, 0.12);
+    }
+    .ecp-opt-title {
+      display: block;
+      font-size: 13px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+    .ecp-btn-opt.active .ecp-opt-title { color: #fde68a; }
+    .ecp-opt-sub {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: #9ca3af;
+      margin-top: 3px;
+      line-height: 1.25;
+    }
+    .ecp-btn-opt.active .ecp-opt-sub { color: #d4d4d8; }
+    .ecp-opt-center { text-align: center; padding: 11px 8px; }
+    .ecp-mini-tag {
+      position: absolute;
+      top: -8px;
+      right: 10px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #09090b;
+    }
+    .ecp-mini-tag-green {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #052e16;
+    }
+    .ecp-global-note {
+      display: none;
+      margin-top: 8px;
+      padding: 9px 12px;
+      border-radius: 11px;
+      background: rgba(99, 102, 241, 0.14);
+      border: 1px solid rgba(99, 102, 241, 0.38);
+      color: #c7d2fe;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    /* Comparison Mini Strip */
+    .ecp-compare {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .ecp-cmp-box {
+      border-radius: 14px;
+      padding: 11px 12px;
+      font-size: 11.5px;
+      line-height: 1.45;
+    }
+    .ecp-cmp-old {
+      background: rgba(239, 68, 68, 0.07);
+      border: 1px solid rgba(239, 68, 68, 0.22);
+      color: #a1a1aa;
+    }
+    .ecp-cmp-new {
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #e4e4e7;
+    }
+    .ecp-cmp-head {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .ecp-cmp-old .ecp-cmp-head { color: #fca5a5; }
+    .ecp-cmp-new .ecp-cmp-head { color: #4ade80; }
+
+    /* Right Panel: Live Investment Summary Card */
+    .ecp-summary {
+      position: relative;
+      background: linear-gradient(165deg, #1b1814 0%, #12121a 55%, #0d0d14 100%);
+      border: 1.5px solid rgba(245, 158, 11, 0.55);
+      border-radius: 24px;
+      padding: 22px 18px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.62), 0 0 36px rgba(245, 158, 11, 0.1);
+    }
+    @media (min-width: 960px) {
+      .ecp-summary { position: sticky; top: 20px; padding: 26px 24px; }
+    }
+    .ecp-plan-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(99, 102, 241, 0.18);
+      border: 1px solid rgba(129, 140, 248, 0.42);
+      color: #c7d2fe;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .ecp-plan-name {
+      margin: 0 0 14px;
+      font-size: 18px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+    .ecp-price-stage {
+      background: rgba(9, 9, 13, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .ecp-strike {
+      display: none;
+      font-size: 13px;
+      font-weight: 700;
+      color: #71717a;
+      text-decoration: line-through;
+      margin-bottom: 3px;
+    }
+    .ecp-price-row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .ecp-price-val {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+      line-height: 1.1;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    @media (min-width: 640px) { .ecp-price-val { font-size: 34px; } }
+    .ecp-price-val.ecp-pop {
+      transform: scale(1.03);
+      color: #fde68a;
+    }
+    .ecp-price-unit {
+      font-size: 13px;
+      font-weight: 700;
+      color: #a1a1aa;
+    }
+    .ecp-per-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.14);
+      border: 1px solid rgba(34, 197, 94, 0.36);
+      color: #4ade80;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .ecp-save-box {
+      display: none;
+      margin-top: 10px;
+      padding: 8px 11px;
+      border-radius: 11px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px dashed rgba(251, 191, 36, 0.6);
+      color: #fde68a;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+    .ecp-inc-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #a1a1aa;
+      margin-bottom: 8px;
+    }
+    .ecp-inc-list {
+      list-style: none;
+      margin: 0 0 16px;
+      padding: 0;
+      display: grid;
+      gap: 7px;
+      font-size: 12.5px;
+      color: #e4e4e7;
+    }
+    .ecp-inc-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.35;
+    }
+    .ecp-inc-list li::before {
+      content: "✓";
+      flex-shrink: 0;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: rgba(34, 197, 94, 0.16);
+      color: #4ade80;
+      font-size: 11px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    /* Inline Lead Form */
+    .ecp-form-box {
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .ecp-form-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .ecp-inputs {
+      display: grid;
+      gap: 9px;
+    }
+    .ecp-input {
+      width: 100%;
+      background: #14141c;
+      border: 1px solid #2e2e3a;
+      border-radius: 12px;
+      padding: 11px 13px;
+      color: #ffffff;
+      font-size: 13.5px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .ecp-input::placeholder { color: #71717a; }
+    .ecp-input:focus { border-color: #f59e0b; }
+    .ecp-cta {
+      width: 100%;
+      margin-top: 11px;
+      padding: 13px 16px;
+      border: none;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 55%, #d97706 100%);
+      color: #09090b;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(245, 158, 11, 0.34);
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .ecp-cta:active { transform: scale(0.99); }
+    .ecp-cta:disabled { opacity: 0.65; cursor: not-allowed; }
+    .ecp-cta-wa {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      color: #ffffff;
+      box-shadow: 0 10px 24px rgba(22, 163, 74, 0.34);
+    }
+    .ecp-cta-ghost {
+      margin-top: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(251, 191, 36, 0.42);
+      color: #fde68a;
+      box-shadow: none;
+      font-size: 13px;
+      padding: 11px 14px;
+    }
+    .ecp-err {
+      display: none;
+      margin-top: 9px;
+      padding: 9px 11px;
+      border-radius: 10px;
+      background: rgba(239, 68, 68, 0.14);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .ecp-done {
+      display: none;
+      padding: 14px;
+      border-radius: 15px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.38);
+    }
+    .ecp-done-head {
+      font-size: 14px;
+      font-weight: 900;
+      color: #4ade80;
+      margin-bottom: 5px;
+    }
+    .ecp-done-msg {
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: #e4e4e7;
+      margin-bottom: 11px;
+    }
+    .ecp-reset-link {
+      background: none;
+      border: none;
+      color: #a1a1aa;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-decoration: underline;
+      cursor: pointer;
+      display: block;
+      margin: 10px auto 0;
+    }
+    .ecp-micro-note {
+      margin-top: 10px;
+      font-size: 11px;
+      color: #71717a;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* Bottom Trust Bar */
+    .ecp-trust-bar {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    @media (min-width: 768px) {
+      .ecp-trust-bar { grid-template-columns: repeat(4, 1fr); }
+    }
+    .ecp-trust-item {
+      background: rgba(20, 20, 27, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 14px;
+      padding: 12px 13px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #e4e4e7;
+      text-align: center;
+    }
+    .ecp-trust-item span {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+  </style>
+
+  <div class="ecp-glow-bg"></div>
+
+  <div class="ecp-wrap">
+    <!-- HEADER -->
+    <div class="ecp-head">
+      <div class="ecp-eyebrow">
+        <span class="ecp-pulse"></span>
+        <span>Transparent Monthly Packages &amp; Fee Studio</span>
+      </div>
+      <h2 class="ecp-title">Apne Plan Ki <span>Exact Monthly Fee</span> Calculate Karein</h2>
+      <p class="ecp-sub">Class, Board, Mode aur Society Study-Pod select karein—turant per-class cost, monthly investment aur savings dekhein. Zero hidden charges.</p>
+
+      <div class="ecp-curr-bar" role="group" aria-label="Currency Toggle">
+        <button type="button" id="btn-inr" class="ecp-curr-btn active" onclick="window.setCurrency('INR')">🇮🇳 India (Noida Home / Hybrid)</button>
+        <button type="button" id="btn-usd" class="ecp-curr-btn" onclick="window.setCurrency('USD')">🌍 Global (Live 1-on-1 USD)</button>
+      </div>
+    </div>
+
+    <!-- 2-COLUMN INTERACTIVE STUDIO -->
+    <div class="ecp-studio">
+      <!-- LEFT: CUSTOMIZER CONTROLS -->
+      <div class="ecp-panel">
+        <!-- STEP 1: CLASS -->
+        <div class="ecp-step">
+          <div class="ecp-step-head">
+            <span class="ecp-step-label"><span class="ecp-step-num">1</span> Select Grade / Target Exam</span>
+            <span class="ecp-step-hint">1-on-1 Personalised</span>
+          </div>
+          <div class="ecp-grade-grid" id="ecpClassGrid">
+            <button type="button" class="ecp-btn-opt" data-val="g1_5">
+              <span class="ecp-opt-title">Grades 1 – 5</span>
+              <span class="ecp-opt-sub">Foundation Pod</span>
+            </button>
+            <button type="button" class="ecp-btn-opt active" data-val="g6_8">
+              <span class="ecp-mini-tag">Popular</span>
+              <span class="ecp-opt-title">Grades 6 – 8</span>
+              <span class="ecp-opt-sub">Rotational Specialists</span>
+            </button>
+            <button type="button" class="ecp-btn-opt" data-val="g9_10">
+              <span class="ecp-mini-tag">Boards</span>
+              <span class="ecp-opt-title">Grades 9 – 10</span>
+              <span class="ecp-opt-sub">Board Mastery</span>
+            </button>
+            <button type="button" class="ecp-btn-opt" data-val="g11_12">
+              <span class="ecp-opt-title">Grades 11 – 12</span>
+              <span class="ecp-opt-sub">Science / Commerce</span>
+            </button>
+            <button type="button" class="ecp-btn-opt" data-val="entrance">
+              <span class="ecp-opt-title">Sainik / JNVST</span>
+              <span class="ecp-opt-sub">RIMC &amp; Entrance Prep</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: BOARD -->
+        <div class="ecp-step">
+          <div class="ecp-step-head">
+            <span class="ecp-step-label"><span class="ecp-step-num">2</span> Board / Curriculum</span>
+            <span class="ecp-step-hint">Board-Aligned Material</span>
+          </div>
+          <div class="ecp-seg-3" id="ecpBoardSeg">
+            <button type="button" class="ecp-btn-opt ecp-opt-center active" data-val="CBSE">
+              <span class="ecp-opt-title">CBSE</span>
+              <span class="ecp-opt-sub">NCERT + Exemplar</span>
+            </button>
+            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="ICSE">
+              <span class="ecp-opt-title">ICSE / ISC</span>
+              <span class="ecp-opt-sub">In-Depth Concept</span>
+            </button>
+            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="IB_IGCSE">
+              <span class="ecp-opt-title">IB / IGCSE</span>
+              <span class="ecp-opt-sub">International</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: LEARNING MODE -->
+        <div class="ecp-step" id="ecpModeWrap">
+          <div class="ecp-step-head">
+            <span class="ecp-step-label"><span class="ecp-step-num">3</span> Learning Mode</span>
+            <span class="ecp-step-hint">Flexible Switch Anytime</span>
+          </div>
+          <div class="ecp-seg-3" id="ecpModeSeg">
+            <button type="button" class="ecp-btn-opt ecp-opt-center active" data-val="home">
+              <span class="ecp-opt-title">Home Tuition</span>
+              <span class="ecp-opt-sub">Noida / Gr. Noida</span>
+            </button>
+            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="hybrid">
+              <span class="ecp-mini-tag ecp-mini-tag-green">-10%</span>
+              <span class="ecp-opt-title">Hybrid Mode</span>
+              <span class="ecp-opt-sub">Home + Live HD</span>
+            </button>
+            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="online">
+              <span class="ecp-mini-tag ecp-mini-tag-green">-25%</span>
+              <span class="ecp-opt-title">1-on-1 Online</span>
+              <span class="ecp-opt-sub">Live Studio + Board</span>
+            </button>
+          </div>
+          <div class="ecp-global-note" id="ecpGlobalNote">
+            🌍 Global USD mode automatically selects <strong>1-on-1 Live HD Online Studio</strong> (flexible timezone slots for UAE, UK, USA, Singapore &amp; Europe).
+          </div>
+        </div>
+
+        <!-- STEP 4: FREQUENCY -->
+        <div class="ecp-step">
+          <div class="ecp-step-head">
+            <span class="ecp-step-label"><span class="ecp-step-num">4</span> Monthly Classes</span>
+            <span class="ecp-step-hint">60-Min Focused Sessions</span>
+          </div>
+          <div class="ecp-seg-3" id="ecpFreqSeg">
+            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="12">
+              <span class="ecp-opt-title">3 Days / Wk</span>
+              <span class="ecp-opt-sub">12 Classes / Mo</span>
+            </button>
+            <button type="button" class="ecp-btn-opt ecp-opt-center active" data-val="20">
+              <span class="ecp-mini-tag">Best</span>
+              <span class="ecp-opt-title">5 Days / Wk</span>
+              <span class="ecp-opt-sub">20 Classes / Mo</span>
+            </button>
+            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="24">
+              <span class="ecp-opt-title">6 Days / Wk</span>
+              <span class="ecp-opt-sub">24 Classes / Mo</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 5: SOCIETY STUDY-POD -->
+        <div class="ecp-step">
+          <div class="ecp-step-head">
+            <span class="ecp-step-label"><span class="ecp-step-num">5</span> Society Study-Pod (Save Up To 30%)</span>
+            <span class="ecp-step-hint">Same Tower / Friends</span>
+          </div>
+          <div class="ecp-seg-3" id="ecpPodSeg">
+            <button type="button" class="ecp-btn-opt ecp-opt-center active" data-val="1">
+              <span class="ecp-opt-title">Solo 1-on-1</span>
+              <span class="ecp-opt-sub">100% Personal</span>
+            </button>
+            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="2">
+              <span class="ecp-mini-tag ecp-mini-tag-green">Save 20%</span>
+              <span class="ecp-opt-title">2-Student Pod</span>
+              <span class="ecp-opt-sub">Per Student Fee</span>
+            </button>
+            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="3">
+              <span class="ecp-mini-tag ecp-mini-tag-green">Save 30%</span>
+              <span class="ecp-opt-title">3-Student Pod</span>
+              <span class="ecp-opt-sub">Per Student Fee</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- VALUE COMPARISON STRIP -->
+        <div class="ecp-compare">
+          <div class="ecp-cmp-box ecp-cmp-old">
+            <div class="ecp-cmp-head">✗ Normal Local Tutor</div>
+            1 hi teacher sab subjects padhata hai • No weekly CBT tests • Teacher chhutti par toh class cancel.
+          </div>
+          <div class="ecp-cmp-box ecp-cmp-new">
+            <div class="ecp-cmp-head">✓ ELITE Rotational Pod</div>
+            Maths, Science &amp; Languages ke alag Subject Specialists • Weekly PDF X-Ray Report • 24-Hr Backup Tutor.
+          </div>
         </div>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bento-card rounded-3xl p-7 flex flex-col justify-between">
-          <div>
-            <span class="text-xs font-bold uppercase text-emerald-400">Grades 1 to 5</span>
-            <h3 class="font-display font-bold text-2xl text-white mt-1">Foundation Pod</h3>
-            <p class="font-display font-black text-4xl text-white mt-4" data-inr="₹7,500" data-usd="$220">₹7,500<span class="text-xs font-normal text-zinc-400"> / month</span></p>
-            <ul class="mt-5 space-y-2.5 text-xs sm:text-sm text-zinc-300">
-              <li>✓ 20 Sessions/Month (Home or Live HD)</li>
-              <li>✓ Dedicated 1-on-1 Foundation Mentor</li>
-              <li>✓ Digital Notes, Flashcards &amp; Attendance App</li>
-              <li>✓ Weekly Skill Check &amp; PDF Report Card</li>
-            </ul>
+      <!-- RIGHT: LIVE INVESTMENT CARD + INSTANT LOCK -->
+      <div class="ecp-summary">
+        <div class="ecp-plan-badge" id="ecpPlanBadge">Specialist Rotational Pod • CBSE</div>
+        <h3 class="ecp-plan-name" id="ecpPlanName">Grades 6 – 8 • Home Tuition (20 Classes/Mo)</h3>
+
+        <div class="ecp-price-stage">
+          <div class="ecp-strike" id="ecpStrike">Solo Fee: ₹8,500 – ₹10,000 / month</div>
+          <div class="ecp-price-row">
+            <div class="ecp-price-val" id="ecpPriceVal">₹8,500 – ₹10,000</div>
+            <span class="ecp-price-unit">/ month</span>
           </div>
-          <a href="#book-now" class="mt-7 block w-full py-3 rounded-xl surface-panel hover:border-indigoGlow text-center text-xs font-bold text-white transition">Book Free Diagnostic</a>
+          <div class="ecp-per-pill" id="ecpPerClass">~₹425 – ₹500 per 1-on-1 class</div>
+          <div class="ecp-save-box" id="ecpSaveBox"></div>
         </div>
 
-        <div class="bento-card rounded-3xl p-7 border-2 border-indigoGlow relative flex flex-col justify-between shadow-2xl">
-          <span class="absolute -top-3 right-6 px-3 py-1 rounded-full btn-gold text-[10px] font-black uppercase">Most Popular</span>
-          <div>
-            <span class="text-xs font-bold uppercase text-goldBright">Grades 6–8 &amp; Sainik / JNVST / RIMC</span>
-            <h3 class="font-display font-bold text-2xl text-white mt-1">Specialist Rotational Pod</h3>
-            <p class="font-display font-black text-4xl text-white mt-4" data-inr="₹9,500" data-usd="$280">₹9,500<span class="text-xs font-normal text-zinc-400"> / month</span></p>
-            <ul class="mt-5 space-y-2.5 text-xs sm:text-sm text-zinc-200">
-              <li>✓ 20 Sessions/Month (STEM + Humanities Experts)</li>
-              <li>✓ Built-In Live HD Video &amp; Smart Whiteboard</li>
-              <li>✓ CBT Mock Exams + X-Ray PDF Analytics</li>
-              <li>✓ 3D Interactive STEM Labs &amp; Notes Vault</li>
-              <li>✓ 24-Hr Backup Tutor Guarantee</li>
-            </ul>
-          </div>
-          <a href="#book-now" class="mt-7 block w-full py-3.5 rounded-xl btn-primary text-center text-xs font-extrabold">Start Free Assessment →</a>
-        </div>
+        <div class="ecp-inc-title">Included Free With Your Plan</div>
+        <ul class="ecp-inc-list" id="ecpIncludedList">
+          <li>Subject-Specialized Rotational Faculty (STEM + Humanities)</li>
+          <li>Weekly CBT Diagnostic Tests + Branded X-Ray PDF Reports</li>
+          <li>3D Interactive STEM Labs, Digital Notes &amp; Attendance App</li>
+          <li>24-Hr Backup Tutor Guarantee + Direct Monitoring by Ravi Sir</li>
+        </ul>
 
-        <div class="bento-card rounded-3xl p-7 flex flex-col justify-between">
-          <div>
-            <span class="text-xs font-bold uppercase text-indigoGlow">Grades 9–12 / JEE / NEET / CUET / Govt</span>
-            <h3 class="font-display font-bold text-2xl text-white mt-1">Board &amp; Competitive Mastery</h3>
-            <p class="font-display font-black text-4xl text-white mt-4" data-inr="₹11,500" data-usd="$350">₹11,500<span class="text-xs font-normal text-zinc-400"> / month</span></p>
-            <ul class="mt-5 space-y-2.5 text-xs sm:text-sm text-zinc-300">
-              <li>✓ 24 Sessions/Month (Senior Subject Experts)</li>
-              <li>✓ Boards / JEE / NEET / CUET / SSC / Banking</li>
-              <li>✓ Full-Length CBT Series &amp; Live Doubt Rooms</li>
-              <li>✓ Monthly 1-on-1 Strategy Call with Ravi Sir</li>
-            </ul>
+        <!-- LEAD CAPTURE TO LOCK EXACT QUOTE & FREE TRIAL -->
+        <div class="ecp-form-box">
+          <div id="ecpFormWrap">
+            <div class="ecp-form-title">🎁 Exact Quote &amp; 1st Free Trial Class Unlock Karein:</div>
+            <div class="ecp-inputs">
+              <input id="ecpName" class="ecp-input" type="text" placeholder="Parent / Student Name *" autocomplete="name">
+              <input id="ecpPhone" class="ecp-input" type="tel" inputmode="numeric" placeholder="10-Digit WhatsApp Number *" autocomplete="tel">
+              <input id="ecpArea" class="ecp-input" type="text" placeholder="Sector / Society (e.g. Sector 75, JM Florence) *">
+            </div>
+            <div id="ecpErr" class="ecp-err"></div>
+            <button type="button" id="ecpSubmitBtn" class="ecp-cta">Lock Exact Quote &amp; Book Free 1st Trial →</button>
           </div>
-          <a href="#book-now" class="mt-7 block w-full py-3 rounded-xl surface-panel hover:border-indigoGlow text-center text-xs font-bold text-white transition">Book Free Diagnostic</a>
+
+          <div id="ecpDoneBox" class="ecp-done">
+            <div class="ecp-done-head">🎉 Plan Request Saved Successfully!</div>
+            <div class="ecp-done-msg" id="ecpDoneMsg"></div>
+            <a id="ecpWaBtn" href="#" target="_blank" rel="noopener" class="ecp-cta ecp-cta-wa" style="margin-top:0;">💬 Get Instant Confirmation on WhatsApp →</a>
+            <a href="test.html" class="ecp-cta ecp-cta-ghost">📝 Tab Tak 10-Min Free Diagnostic Test Dein →</a>
+            <button type="button" id="ecpEditQuoteBtn" class="ecp-reset-link">Edit plan or check for another child</button>
+          </div>
+
+          <div class="ecp-micro-note">*Final exact fee aapke sector distance aur exact subject count ke saath WhatsApp par confirm hogi.</div>
         </div>
       </div>
     </div>
-  </section>
+
+    <!-- TRUST & RISK-REVERSAL BAR -->
+    <div class="ecp-trust-bar">
+      <div class="ecp-trust-item">1st Trial Class Free<span>Pehle padhai dekhein, phir decide karein</span></div>
+      <div class="ecp-trust-item">Zero Advance Fee<span>Satisfaction ke baad hi enrollment</span></div>
+      <div class="ecp-trust-item">24-Hr Backup Tutor<span>Exams ke time zero class loss</span></div>
+      <div class="ecp-trust-item">Founder Monitored<span>Monthly 1-on-1 review with Ravi Sir</span></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // ===== SIRF YAHAN APNA APPS SCRIPT WEBHOOK URL PASTE KAREIN =====
+      var ECP_CONFIG = {
+        crmUrl: 'PASTE_YOUR_CRM_WEBHOOK_URL_HERE',
+        whatsappNumber: '919675732501',
+
+        // Exact Approved India Home Tuition Per-Class Base Rates (INR)
+        INR_BASE: {
+          g1_5:     { label: 'Grades 1 – 5',            podName: 'Foundation Pod',            min: 350, max: 425 },
+          g6_8:     { label: 'Grades 6 – 8',            podName: 'Specialist Rotational Pod', min: 425, max: 500 },
+          g9_10:    { label: 'Grades 9 – 10 (Boards)',  podName: 'Board Mastery Pod',         min: 500, max: 600 },
+          g11_12:   { label: 'Grades 11 – 12 (Sci/Com)',podName: 'Senior Specialist Pod',     min: 650, max: 800 },
+          entrance: { label: 'Sainik / JNVST / RIMC',   podName: 'Entrance Ranker Pod',       min: 450, max: 550 }
+        },
+
+        // Global Live 1-on-1 Per-Class Base Rates (USD)
+        USD_BASE: {
+          g1_5:     { label: 'Grades 1 – 5',            podName: 'Global Foundation 1-on-1',  min: 11, max: 13 },
+          g6_8:     { label: 'Grades 6 – 8',            podName: 'Global Rotational 1-on-1',  min: 13, max: 16 },
+          g9_10:    { label: 'Grades 9 – 10 (Boards)',  podName: 'Global Board Mastery',      min: 15, max: 18 },
+          g11_12:   { label: 'Grades 11 – 12 (Sci/Com)',podName: 'Global Senior Specialist',  min: 18, max: 22 },
+          entrance: { label: 'Sainik / JNVST / RIMC',   podName: 'Global Entrance Mastery',   min: 14, max: 17 }
+        },
+
+        MODES: {
+          home:   { label: 'Home Tuition',      factor: 1.00 },
+          hybrid: { label: 'Hybrid (Home+HD)',  factor: 0.90 },
+          online: { label: '1-on-1 Live Online',factor: 0.75 }
+        },
+
+        BOARDS: {
+          CBSE:     { label: 'CBSE',       factor: 1.00 },
+          ICSE:     { label: 'ICSE / ISC', factor: 1.05 },
+          IB_IGCSE: { label: 'IB / IGCSE', factor: 1.20 }
+        },
+
+        PODS: {
+          '1': { label: 'Solo 1-on-1',         factor: 1.00, pct: 0 },
+          '2': { label: '2-Student Study-Pod', factor: 0.80, pct: 20 },
+          '3': { label: '3-Student Study-Pod', factor: 0.70, pct: 30 }
+        }
+      };
+
+      var state = {
+        currency: 'INR',
+        cls: 'g6_8',
+        board: 'CBSE',
+        mode: 'home',
+        classesPerMo: 20,
+        pod: '1'
+      };
+
+      var btnInr = document.getElementById('btn-inr');
+      var btnUsd = document.getElementById('btn-usd');
+      var modeSeg = document.getElementById('ecpModeSeg');
+      var globalNote = document.getElementById('ecpGlobalNote');
+
+      var badgeEl = document.getElementById('ecpPlanBadge');
+      var namePlanEl = document.getElementById('ecpPlanName');
+      var strikeEl = document.getElementById('ecpStrike');
+      var priceValEl = document.getElementById('ecpPriceVal');
+      var perEl = document.getElementById('ecpPerClass');
+      var saveBoxEl = document.getElementById('ecpSaveBox');
+
+      var nameEl = document.getElementById('ecpName');
+      var phoneEl = document.getElementById('ecpPhone');
+      var areaEl = document.getElementById('ecpArea');
+      var errEl = document.getElementById('ecpErr');
+      var submitBtn = document.getElementById('ecpSubmitBtn');
+      var formWrap = document.getElementById('ecpFormWrap');
+      var doneBox = document.getElementById('ecpDoneBox');
+      var doneMsg = document.getElementById('ecpDoneMsg');
+      var waBtn = document.getElementById('ecpWaBtn');
+      var editQuoteBtn = document.getElementById('ecpEditQuoteBtn');
+
+      var lastEstimateText = '';
+
+      function fmtMoney(n, curr) {
+        if (curr === 'USD') return '$' + Math.round(n).toLocaleString('en-US');
+        return '₹' + Math.round(n).toLocaleString('en-IN');
+      }
+
+      function roundStep(n, curr) {
+        var step = curr === 'USD' ? 10 : 100;
+        return Math.round(n / step) * step;
+      }
+
+      function setActiveInGroup(containerId, val) {
+        var wrap = document.getElementById(containerId);
+        if (!wrap) return;
+        var btns = wrap.querySelectorAll('.ecp-btn-opt');
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].classList.toggle('active', btns[i].getAttribute('data-val') === String(val));
+        }
+      }
+
+      function renderPrice(animate) {
+        var isUSD = state.currency === 'USD';
+        var base = isUSD ? ECP_CONFIG.USD_BASE[state.cls] : ECP_CONFIG.INR_BASE[state.cls];
+        var boardObj = ECP_CONFIG.BOARDS[state.board];
+        var modeObj = ECP_CONFIG.MODES[state.mode];
+        var podObj = ECP_CONFIG.PODS[state.pod];
+
+        var modeFactor = isUSD ? 1.00 : modeObj.factor;
+        var soloMinMo = roundStep(base.min * modeFactor * boardObj.factor * state.classesPerMo, state.currency);
+        var soloMaxMo = roundStep(base.max * modeFactor * boardObj.factor * state.classesPerMo, state.currency);
+
+        var finalMinMo = roundStep(soloMinMo * podObj.factor, state.currency);
+        var finalMaxMo = roundStep(soloMaxMo * podObj.factor, state.currency);
+
+        var perMin = Math.round(finalMinMo / state.classesPerMo);
+        var perMax = Math.round(finalMaxMo / state.classesPerMo);
+
+        lastEstimateText = fmtMoney(finalMinMo, state.currency) + ' – ' + fmtMoney(finalMaxMo, state.currency) + '/mo';
+
+        badgeEl.textContent = base.podName + ' • ' + boardObj.label;
+        namePlanEl.textContent = base.label + ' • ' + (isUSD ? 'Global Live 1-on-1' : modeObj.label) + ' (' + state.classesPerMo + ' Classes/Mo)';
+        priceValEl.textContent = fmtMoney(finalMinMo, state.currency) + ' – ' + fmtMoney(finalMaxMo, state.currency);
+        perEl.textContent = '~' + fmtMoney(perMin, state.currency) + ' – ' + fmtMoney(perMax, state.currency) + ' per class' + (podObj.pct > 0 ? ' / student' : '');
+
+        if (podObj.pct > 0) {
+          var savedMin = soloMinMo - finalMinMo;
+          strikeEl.style.display = 'block';
+          strikeEl.textContent = 'Solo 1-on-1 Fee: ' + fmtMoney(soloMinMo, state.currency) + ' – ' + fmtMoney(soloMaxMo, state.currency) + ' / mo';
+          saveBoxEl.style.display = 'block';
+          saveBoxEl.textContent = '🎉 ' + podObj.label + ': Save ' + fmtMoney(savedMin, state.currency) + '+ every month per student (' + podObj.pct + '% OFF)!';
+        } else {
+          strikeEl.style.display = 'none';
+          saveBoxEl.style.display = 'none';
+        }
+
+        if (animate) {
+          priceValEl.classList.add('ecp-pop');
+          setTimeout(function () { priceValEl.classList.remove('ecp-pop'); }, 180);
+        }
+
+        var isIntl = isUSD || state.mode === 'online';
+        phoneEl.placeholder = isIntl ? 'WhatsApp Number (with country code) *' : '10-Digit WhatsApp Number *';
+        areaEl.placeholder = isIntl ? 'City / Country (e.g. Dubai, London, Delhi) *' : 'Sector / Society (e.g. Sector 75, JM Florence) *';
+      }
+
+      window.setCurrency = function (curr) {
+        state.currency = curr === 'USD' ? 'USD' : 'INR';
+        if (btnInr) btnInr.classList.toggle('active', state.currency === 'INR');
+        if (btnUsd) btnUsd.classList.toggle('active', state.currency === 'USD');
+
+        if (state.currency === 'USD') {
+          state.mode = 'online';
+          setActiveInGroup('ecpModeSeg', 'online');
+          if (globalNote) globalNote.style.display = 'block';
+        } else {
+          if (globalNote) globalNote.style.display = 'none';
+        }
+        renderPrice(true);
+      };
+
+      function bindGroup(id, key, isNum) {
+        var wrap = document.getElementById(id);
+        if (!wrap) return;
+        wrap.addEventListener('click', function (e) {
+          var btn = e.target.closest('.ecp-btn-opt');
+          if (!btn) return;
+          var val = btn.getAttribute('data-val');
+          if (key === 'mode' && state.currency === 'USD' && val !== 'online') {
+            state.currency = 'INR';
+            if (btnInr) btnInr.classList.add('active');
+            if (btnUsd) btnUsd.classList.remove('active');
+            if (globalNote) globalNote.style.display = 'none';
+          }
+          state[key] = isNum ? parseInt(val, 10) : val;
+          setActiveInGroup(id, val);
+          renderPrice(true);
+        });
+      }
+
+      bindGroup('ecpClassGrid', 'cls', false);
+      bindGroup('ecpBoardSeg', 'board', false);
+      bindGroup('ecpModeSeg', 'mode', false);
+      bindGroup('ecpFreqSeg', 'classesPerMo', true);
+      bindGroup('ecpPodSeg', 'pod', false);
+
+      renderPrice(false);
+
+      submitBtn.addEventListener('click', function () {
+        var name = nameEl.value.trim();
+        var rawPhone = phoneEl.value.replace(/\D/g, '');
+        var area = areaEl.value.trim();
+        var isIntl = state.currency === 'USD' || state.mode === 'online';
+
+        if (name.length < 2) {
+          errEl.textContent = 'Kripya apna poora naam likhein.';
+          errEl.style.display = 'block';
+          return;
+        }
+        if (!isIntl) {
+          if (rawPhone.length === 12 && rawPhone.indexOf('91') === 0) rawPhone = rawPhone.slice(2);
+          if (rawPhone.length === 11 && rawPhone.indexOf('0') === 0) rawPhone = rawPhone.slice(1);
+          if (!/^[6-9]\d{9}$/.test(rawPhone)) {
+            errEl.textContent = 'Kripya sahi 10-digit Indian WhatsApp number daalein.';
+            errEl.style.display = 'block';
+            return;
+          }
+        } else if (rawPhone.length < 8 || rawPhone.length > 15) {
+          errEl.textContent = 'Kripya valid WhatsApp number (country code ke saath) daalein.';
+          errEl.style.display = 'block';
+          return;
+        }
+        if (area.length < 2) {
+          errEl.textContent = isIntl ? 'Kripya apna City / Country likhein.' : 'Kripya apna Sector / Society likhein.';
+          errEl.style.display = 'block';
+          return;
+        }
+        errEl.style.display = 'none';
+
+        var isUSD = state.currency === 'USD';
+        var base = isUSD ? ECP_CONFIG.USD_BASE[state.cls] : ECP_CONFIG.INR_BASE[state.cls];
+        var boardObj = ECP_CONFIG.BOARDS[state.board];
+        var modeObj = ECP_CONFIG.MODES[state.mode];
+        var podObj = ECP_CONFIG.PODS[state.pod];
+
+        var refTag = '';
+        try { refTag = localStorage.getItem('ec_ref_source') || ''; } catch (e) {}
+
+        var payload = {
+          type: 'STUDY_PLAN',
+          name: name,
+          phone: rawPhone,
+          area: isUSD ? 'Global Online (USD)' : (state.mode === 'online' ? 'India Online' : 'Noida / Greater Noida'),
+          society: area,
+          classLabel: base.label,
+          board: boardObj.label,
+          mode: (isUSD ? 'Global Live 1-on-1' : modeObj.label) + ' | ' + podObj.label,
+          subjects: 'Estimate: ' + lastEstimateText,
+          frequency: state.classesPerMo + ' Classes/Mo | Fee Studio' + (refTag ? ' | Ref: ' + refTag : '')
+        };
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Locking Exact Quote...';
+
+        if (ECP_CONFIG.crmUrl && ECP_CONFIG.crmUrl.indexOf('http') === 0) {
+          try {
+            fetch(ECP_CONFIG.crmUrl, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'text/plain' },
+              body: JSON.stringify(payload)
+            });
+          } catch (e) {}
+        }
+
+        var waMsg =
+          'Namaste Ravi Sir (ELITE CLASSES),\n' +
+          'Maine website par Fee Studio se apna plan banaya hai:\n\n' +
+          '• Name: ' + name + '\n' +
+          '• WhatsApp: ' + rawPhone + '\n' +
+          '• Class & Board: ' + base.label + ' (' + boardObj.label + ')\n' +
+          '• Mode & Format: ' + (isUSD ? 'Global Live 1-on-1' : modeObj.label) + ' — ' + podObj.label + '\n' +
+          '• Frequency: ' + state.classesPerMo + ' Classes/Month\n' +
+          '• Area / City: ' + area + '\n' +
+          '• Estimated Plan: ' + lastEstimateText +
+          (refTag ? '\n• Source: ' + refTag : '') +
+          '\n\nPlease confirm exact monthly fee & book my Free 1st Trial Class.';
+
+        waBtn.href = 'https://wa.me/' + ECP_CONFIG.whatsappNumber + '?text=' + encodeURIComponent(waMsg);
+        doneMsg.textContent = name + ' ji, aapka plan (' + base.label + ' • ' + lastEstimateText + ') save ho gaya hai. Turant confirmation ke liye neeche WhatsApp button dabayein.';
+
+        setTimeout(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Lock Exact Quote & Book Free 1st Trial →';
+          formWrap.style.display = 'none';
+          doneBox.style.display = 'block';
+        }, 320);
+      });
+
+      editQuoteBtn.addEventListener('click', function () {
+        doneBox.style.display = 'none';
+        formWrap.style.display = 'block';
+      });
+    })();
+  </script>
+</section>
+
 
   <!-- =====================================================================
        SECTION 9: 3D CONCEPT REELS & QUICK LESSONS
