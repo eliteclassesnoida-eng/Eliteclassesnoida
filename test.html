@@ -685,6 +685,22 @@
       state.lastSubStats = subStats;
       state.lastTotalScore = totalScore;
       state.lastPct = pct;
+      fetch('https://script.google.com/macros/s/AKfycbyS3Mnl7qPniy8vNe_cFc2hy55coUUbKdLLcWtVA95dFmarYr0Za67JQuz41Y9c6Q1f/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({
+          type: 'STUDENT_TEST',
+          name: state.name,
+          classLabel: classStreamStr,
+          board: state.board,
+          score: `${totalScore}/${activeQuestions.length}`,
+          accuracy: `${pct}%`,
+          timeTaken: `${Math.floor(elapsedSec / 60)}m ${elapsedSec % 60}s`,
+          breakdown: Object.entries(subStats).map(([s, st]) => `${s}: ${st.correct}/${st.total}`).join(' | ')
+        })
+      }).catch(() => {});
+
       renderReviewKey();
     }
 
