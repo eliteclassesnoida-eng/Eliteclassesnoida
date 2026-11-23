@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noida Sector Checker &amp; Rotational Pod Planner | ELITE CLASSES</title>
+  <meta name="description" content="Check Subject-Specialist Home Tutor availability in your Noida / Greater Noida sector and build a custom 1-on-1 Rotational Pod weekly study plan." />
+  <meta name="theme-color" content="#09090B" />
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://eliteclassesnoida.in/planner.html" />
+  <meta property="og:title" content="Build Your Child's 1-on-1 Rotational Pod Plan | ELITE CLASSES Noida" />
+  <meta property="og:description" content="Check tutor availability in your Noida sector and generate a personalized weekly subject-specialist schedule in 30 seconds." />
+  <meta property="og:image" content="https://eliteclassesnoida.in/logo.jpg" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #09090B; color: #F4F4F5; font-family: system-ui, -apple-system, sans-serif; }
+    .pill-btn { transition: all 0.16s ease; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="border-b border-zinc-800 bg-zinc-950/95 sticky top-0 z-40 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5">
+        <img src="logo.jpg" alt="ELITE CLASSES" class="w-10 h-10 rounded-full object-cover border border-amber-500/60" onerror="this.style.display='none'" />
+        <div>
+          <h1 class="font-bold text-sm sm:text-base tracking-wide text-amber-400">ELITE CLASSES</h1>
+          <p class="text-[10px] sm:text-[11px] text-zinc-400">Noida Sector Checker &amp; Rotational Pod Planner</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="test.html" class="text-xs px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 font-semibold">Free Test</a>
+        <a href="index.html" class="text-xs px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700">Home</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl w-full mx-auto px-4 py-6 space-y-6 flex-1">
+
+    <!-- Top Heading -->
+    <div class="text-center space-y-2 max-w-2xl mx-auto">
+      <span class="inline-block text-[11px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30">
+        Smart 1-on-1 Rotational Pod Configurator
+      </span>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Check Your Sector &amp; Build a Study Plan</h2>
+      <p class="text-xs sm:text-sm text-zinc-400">
+        Instead of one generalist tutor teaching every subject, our <strong class="text-zinc-200">Rotational Pod</strong> assigns dedicated subject specialists for your child's weak &amp; core areas.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- LEFT: INTERACTIVE CONFIGURATOR -->
+      <section class="lg:col-span-6 bg-zinc-900/80 border border-zinc-800 rounded-2xl p-5 sm:p-6 space-y-5">
+
+        <!-- 1. Sector Availability Checker -->
+        <div class="space-y-2.5">
+          <label class="block text-xs font-bold uppercase tracking-wider text-amber-400">1. Select Your Noida / Greater Noida Area</label>
+          <select id="sectorSelect" onchange="updatePlan()"
+            class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
+            <option value="sec7x">Noida 7X (Sectors 74, 75, 76, 77, 78, 79)</option>
+            <option value="central">Central Noida (Sectors 34, 35, 50, 51, 52, 61, 62)</option>
+            <option value="expressway">Noida Expressway (Sectors 128, 134, 137, 142, 143)</option>
+            <option value="gnw">Greater Noida West (Noida Extension / Gaur City)</option>
+            <option value="gn">Greater Noida (Alpha, Beta, Gamma, Pari Chowk)</option>
+            <option value="other_noida">Other Noida / Ghaziabad / Indirapuram Sector</option>
+            <option value="online_anywhere">Outside Noida (1-on-1 Online Live Classes)</option>
+          </select>
+
+          <div id="availabilityBanner" class="rounded-xl p-3 text-xs border flex items-start gap-2.5"></div>
+        </div>
+
+        <!-- 2. Class & Board -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">2. Student's Class</label>
+            <select id="classSelect" onchange="handleClassChange()"
+              class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
+              <option value="1-5">Grades 1–5 (Foundation)</option>
+              <option value="6-8" selected>Grades 6–8 (Middle School)</option>
+              <option value="9-10">Grades 9–10 (Board Prep)</option>
+              <option value="11-12">Grades 11–12 (Senior Secondary)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">Board / Exam Goal</label>
+            <select id="boardSelect" onchange="updatePlan()"
+              class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
+              <option value="CBSE">CBSE</option>
+              <option value="ICSE">ICSE</option>
+              <option value="UP Board">UP Board</option>
+              <option value="Foundation / Olympiad / CUET">Foundation / Olympiad / CUET</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Stream Selector (Class 11–12 Only) -->
+        <div id="streamWrap" class="hidden space-y-2">
+          <label class="block text-xs font-bold text-amber-300">Select Stream (Class 11–12)</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" data-stream="Science" onclick="setStream('Science')" class="stream-btn py-2 rounded-xl text-xs font-bold border border-amber-400 bg-amber-400 text-zinc-950">Science</button>
+            <button type="button" data-stream="Commerce" onclick="setStream('Commerce')" class="stream-btn py-2 rounded-xl text-xs font-bold border border-zinc-700 bg-zinc-950 text-zinc-300">Commerce</button>
+            <button type="button" data-stream="Humanities" onclick="setStream('Humanities')" class="stream-btn py-2 rounded-xl text-xs font-bold border border-zinc-700 bg-zinc-950 text-zinc-300">Humanities</button>
+          </div>
+        </div>
+
+        <!-- 3. Teaching Mode -->
+        <div class="space-y-2">
+          <label class="block text-xs text-zinc-400">3. Preferred Learning Mode</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" data-mode="Home Tuition (1-on-1)" onclick="setMode('Home Tuition (1-on-1)')" class="mode-btn py-2.5 px-2 rounded-xl text-xs font-bold border border-amber-400 bg-amber-500/15 text-amber-300">🏠 Home 1-on-1</button>
+            <button type="button" data-mode="Online Live (1-on-1)" onclick="setMode('Online Live (1-on-1)')" class="mode-btn py-2.5 px-2 rounded-xl text-xs font-bold border border-zinc-700 bg-zinc-950 text-zinc-300">💻 Online 1-on-1</button>
+            <button type="button" data-mode="Hybrid (Home + Online)" onclick="setMode('Hybrid (Home + Online)')" class="mode-btn py-2.5 px-2 rounded-xl text-xs font-bold border border-zinc-700 bg-zinc-950 text-zinc-300">⚡ Hybrid</button>
+          </div>
+        </div>
+
+        <!-- 4. Subjects Picker -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="text-xs text-zinc-400">4. Select Subjects Needed</label>
+            <span id="subCountText" class="text-[11px] text-amber-400 font-semibold">3 Selected</span>
+          </div>
+          <div id="subjectsGrid" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- 5. Weekly Frequency -->
+        <div class="space-y-2">
+          <label class="block text-xs text-zinc-400">5. Classes Per Week</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" data-days="3" onclick="setDays(3)" class="days-btn py-2 rounded-xl text-xs font-bold border border-zinc-700 bg-zinc-950 text-zinc-300">3 Days / Wk</button>
+            <button type="button" data-days="5" onclick="setDays(5)" class="days-btn py-2 rounded-xl text-xs font-bold border border-amber-400 bg-amber-500/15 text-amber-300">5 Days / Wk</button>
+            <button type="button" data-days="6" onclick="setDays(6)" class="days-btn py-2 rounded-xl text-xs font-bold border border-zinc-700 bg-zinc-950 text-zinc-300">6 Days / Wk</button>
+          </div>
+        </div>
+
+        <!-- Optional Society / Parent Name -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">Parent / Student Name (Optional)</label>
+            <input id="pName" type="text" placeholder="e.g. Mrs. Sharma"
+              class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-amber-400" />
+          </div>
+          <div>
+            <label class="block text-xs text-zinc-400 mb-1">Exact Society / Sector (Optional)</label>
+            <input id="pSociety" type="text" placeholder="e.g. Mahagun Moderne, Sec 78"
+              class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-amber-400" />
+          </div>
+        </div>
+
+      </section>
+
+      <!-- RIGHT: LIVE GENERATED ROTATIONAL POD PLAN -->
+      <section class="lg:col-span-6 bg-zinc-900/90 border border-amber-500/40 rounded-2xl p-5 sm:p-6 space-y-5 shadow-xl">
+        <div class="flex items-start justify-between gap-2 border-b border-zinc-800 pb-4">
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-amber-400 font-bold">Recommended Study Blueprint</span>
+            <h3 id="planTitle" class="text-lg font-extrabold text-white mt-0.5">Grades 6–8 • Rotational Pod</h3>
+            <p id="planSubtitle" class="text-xs text-zinc-400 mt-0.5"></p>
+          </div>
+          <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold shrink-0">
+            Free Demo Available
+          </span>
+        </div>
+
+        <!-- 3 Metrics -->
+        <div class="grid grid-cols-3 gap-2.5">
+          <div class="bg-zinc-950/80 border border-zinc-800 rounded-xl p-3 text-center">
+            <p class="text-[10px] text-zinc-400">Sessions / Month</p>
+            <p id="outSessions" class="text-xl font-extrabold text-amber-400 mt-0.5">20</p>
+            <p class="text-[10px] text-zinc-500">60-Min Focused</p>
+          </div>
+          <div class="bg-zinc-950/80 border border-zinc-800 rounded-xl p-3 text-center">
+            <p class="text-[10px] text-zinc-400">Specialist Tutors</p>
+            <p id="outSpecialists" class="text-xl font-extrabold text-emerald-400 mt-0.5">2–3</p>
+            <p class="text-[10px] text-zinc-500">Rotational Pod</p>
+          </div>
+          <div class="bg-zinc-950/80 border border-zinc-800 rounded-xl p-3 text-center">
+            <p class="text-[10px] text-zinc-400">Demo Readiness</p>
+            <p id="outTurnaround" class="text-xl font-extrabold text-sky-400 mt-0.5">24 hrs</p>
+            <p class="text-[10px] text-zinc-500">Verified Faculty</p>
+          </div>
+        </div>
+
+        <!-- Sample Weekly Rotational Timetable -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-amber-400">Sample Weekly Rotational Schedule</h4>
+            <span class="text-[10px] text-zinc-400">Customizable to school timings</span>
+          </div>
+          <div id="timetableList" class="space-y-2"></div>
+        </div>
+
+        <!-- Included Free Value-Adds -->
+        <div class="bg-zinc-950/80 border border-zinc-800 rounded-xl p-4 space-y-1.5 text-xs text-zinc-300">
+          <p class="font-bold text-white text-xs mb-1">Included at ₹0 Extra Cost:</p>
+          <p>✅ 10-Min Conceptual Diagnostic Assessment before starting</p>
+          <p>✅ Branded Monthly Parent Progress PDF Report Card</p>
+          <p>✅ 100% Background-Verified Subject-Specialist Faculty</p>
+          <p>✅ Free Tutor Replacement Guarantee if comfort isn't 100%</p>
+        </div>
+
+        <!-- CTAs -->
+        <div class="space-y-2.5 pt-1">
+          <button onclick="sendPlanToWhatsApp()" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-extrabold text-sm transition">
+            📲 Get Exact Fee Quote &amp; Book Free Demo on WhatsApp
+          </button>
+          <a href="test.html" class="block w-full text-center py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-semibold text-xs border border-zinc-700 transition">
+            Or Take Free 10-Min Diagnostic Test First &rarr;
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="border-t border-zinc-800/80 py-4 text-center text-[11px] text-zinc-500">
+    <p><strong class="text-zinc-300">ELITE CLASSES</strong> by Ravi Yadav &bull; Noida &amp; Greater Noida &bull; +91 96757 32501</p>
+    <p class="mt-0.5">eliteclassesnoida.in</p>
+  </footer>
+
+  <script>
+    const SECTOR_INFO = {
+      sec7x: {
+        label: 'Noida 7X (Sectors 74–79)',
+        turnaround: '24 hrs',
+        tone: 'emerald',
+        title: 'Priority Rotational Pod Zone — Active!',
+        desc: 'Dedicated Maths, Science, English & Commerce specialists are currently active across Sectors 74–79.'
+      },
+      central: {
+        label: 'Central Noida (Sectors 34, 50–52, 61–62)',
+        turnaround: '24 hrs',
+        tone: 'emerald',
+        title: 'Priority Rotational Pod Zone — Active!',
+        desc: 'Fastest demo allocation available with verified local subject specialists within 4 km.'
+      },
+      expressway: {
+        label: 'Noida Expressway (Sectors 128, 134, 137, 142–143)',
+        turnaround: '24–48 hrs',
+        tone: 'emerald',
+        title: 'Active Rotational Pod Zone!',
+        desc: 'Home 1-on-1 & Hybrid specialist tutors available for high-rise societies along the Expressway.'
+      },
+      gnw: {
+        label: 'Greater Noida West (Noida Extension)',
+        turnaround: '24–48 hrs',
+        tone: 'emerald',
+        title: 'Active Rotational Pod Zone!',
+        desc: 'Subject specialists available across Gaur City, Techzone 4 & Noida Extension societies.'
+      },
+      gn: {
+        label: 'Greater Noida (Alpha, Beta, Gamma, Pari Chowk)',
+        turnaround: '48 hrs',
+        tone: 'amber',
+        title: 'Available — Specialist Allocation in 48 Hours',
+        desc: 'Both Home 1-on-1 and Hybrid specialist pods are available in Greater Noida sectors.'
+      },
+      other_noida: {
+        label: 'Other Noida / Ghaziabad / Indirapuram Sector',
+        turnaround: '48 hrs',
+        tone: 'amber',
+        title: 'On-Demand Sector Verification',
+        desc: 'Share your exact sector on WhatsApp — we will confirm nearest specialist availability within 2 hours.'
+      },
+      online_anywhere: {
+        label: 'Online Live (Pan-India / NRI)',
+        turnaround: 'Same Day',
+        tone: 'sky',
+        title: 'Instant 1-on-1 Online Pod Available!',
+        desc: 'Interactive digital whiteboard + conceptual assessments with senior subject specialists.'
+      }
+    };
+
+    const SUBJECT_SETS = {
+      '1-5': ['Mathematics', 'EVS / Science', 'English', 'Hindi', 'Logical Reasoning'],
+      '6-8': ['Mathematics', 'Science', 'English', 'Social Science', 'Hindi'],
+      '9-10': ['Mathematics', 'Science (Phy/Chem/Bio)', 'English', 'Social Science', 'Hindi'],
+      '11-12-Science': ['Physics', 'Chemistry', 'Mathematics', 'Biology', 'English Core'],
+      '11-12-Commerce': ['Accountancy', 'Economics', 'Business Studies', 'Applied / Core Math', 'English Core'],
+      '11-12-Humanities': ['Political Science', 'History', 'Geography', 'Economics', 'English Core']
+    };
+
+    let cfg = {
+      cls: '6-8',
+      stream: 'Science',
+      mode: 'Home Tuition (1-on-1)',
+      days: 5,
+      selectedSubjects: ['Mathematics', 'Science', 'English']
+    };
+
+    function getAvailableSubjects() {
+      if (cfg.cls === '11-12') return SUBJECT_SETS[`11-12-${cfg.stream}`] || SUBJECT_SETS['11-12-Science'];
+      return SUBJECT_SETS[cfg.cls] || SUBJECT_SETS['6-8'];
+    }
+
+    function handleClassChange() {
+      cfg.cls = document.getElementById('classSelect').value;
+      const streamWrap = document.getElementById('streamWrap');
+      if (cfg.cls === '11-12') streamWrap.classList.remove('hidden');
+      else streamWrap.classList.add('hidden');
+
+      const avail = getAvailableSubjects();
+      cfg.selectedSubjects = avail.slice(0, 3);
+      renderSubjects();
+      updatePlan();
+    }
+
+    function setStream(st) {
+      cfg.stream = st;
+      document.querySelectorAll('.stream-btn').forEach(btn => {
+        const active = btn.dataset.stream === st;
+        btn.className = active
+          ? 'stream-btn py-2 rounded-xl text-xs font-bold border border-amber-400 bg-amber-400 text-zinc-950'
+          : 'stream-btn py-2 rounded-xl text-xs font-bold border border-zinc-700 bg-zinc-950 text-zinc-300 hover:border-amber-400/50';
+      });
+      cfg.selectedSubjects = getAvailableSubjects().slice(0, 3);
+      renderSubjects();
+      updatePlan();
+    }
+
+    function setMode(mode) {
+      cfg.mode = mode;
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        const active = btn.dataset.mode === mode;
+        btn.className = active
+          ? 'mode-btn py-2.5 px-2 rounded-xl text-xs font-bold border border-amber-400 bg-amber-500/15 text-amber-300'
+          : 'mode-btn py-2.5 px-2 rounded-xl text-xs font-bold border border-zinc-700 bg-zinc-950 text-zinc-300 hover:border-amber-400/50';
+      });
+      updatePlan();
+    }
+
+    function setDays(d) {
+      cfg.days = d;
+      document.querySelectorAll('.days-btn').forEach(btn => {
+        const active = Number(btn.dataset.days) === d;
+        btn.className = active
+          ? 'days-btn py-2 rounded-xl text-xs font-bold border border-amber-400 bg-amber-500/15 text-amber-300'
+          : 'days-btn py-2 rounded-xl text-xs font-bold border border-zinc-700 bg-zinc-950 text-zinc-300 hover:border-amber-400/50';
+      });
+      updatePlan();
+    }
+
+    function toggleSubject(sub) {
+      if (cfg.selectedSubjects.includes(sub)) {
+        if (cfg.selectedSubjects.length === 1) return; // keep at least 1
+        cfg.selectedSubjects = cfg.selectedSubjects.filter(s => s !== sub);
+      } else {
+        cfg.selectedSubjects.push(sub);
+      }
+      renderSubjects();
+      updatePlan();
+    }
+
+    function renderSubjects() {
+      const avail = getAvailableSubjects();
+      document.getElementById('subCountText').textContent = `${cfg.selectedSubjects.length} Selected`;
+      document.getElementById('subjectsGrid').innerHTML = avail.map(sub => {
+        const active = cfg.selectedSubjects.includes(sub);
+        return `
+          <button type="button" onclick="toggleSubject('${sub.replace(/'/g, "\\'")}')"
+            class="pill-btn px-3 py-1.5 rounded-xl text-xs font-semibold border ${
+              active
+                ? 'border-amber-400 bg-amber-500/20 text-amber-200'
+                : 'border-zinc-700 bg-zinc-950 text-zinc-400 hover:border-zinc-500'
+            }">
+            ${active ? '✓ ' : '+ '}${sub}
+          </button>`;
+      }).join('');
+    }
+
+    function updatePlan() {
+      const secKey = document.getElementById('sectorSelect').value;
+      const sec = SECTOR_INFO[secKey] || SECTOR_INFO.sec7x;
+      const board = document.getElementById('boardSelect').value;
+
+      // Update Availability Banner
+      const banner = document.getElementById('availabilityBanner');
+      const toneClasses = {
+        emerald: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-200',
+        amber: 'bg-amber-500/10 border-amber-500/30 text-amber-200',
+        sky: 'bg-sky-500/10 border-sky-500/30 text-sky-200'
+      };
+      banner.className = `rounded-xl p-3 text-xs border flex items-start gap-2.5 ${toneClasses[sec.tone]}`;
+      banner.innerHTML = `
+        <span class="text-base leading-none mt-0.5">${sec.tone === 'emerald' ? '🟢' : sec.tone === 'sky' ? '💻' : '🟡'}</span>
+        <div>
+          <p class="font-bold">${sec.title}</p>
+          <p class="opacity-85 mt-0.5 text-[11px]">${sec.desc}</p>
+        </div>
+      `;
+
+      // Auto-suggest Online mode if Outside Noida selected
+      if (secKey === 'online_anywhere' && cfg.mode !== 'Online Live (1-on-1)') {
+        cfg.mode = 'Online Live (1-on-1)';
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+          const active = btn.dataset.mode === cfg.mode;
+          btn.className = active
+            ? 'mode-btn py-2.5 px-2 rounded-xl text-xs font-bold border border-amber-400 bg-amber-500/15 text-amber-300'
+            : 'mode-btn py-2.5 px-2 rounded-xl text-xs font-bold border border-zinc-700 bg-zinc-950 text-zinc-300';
+        });
+      }
+
+      const clsLabel = cfg.cls === '11-12' ? `Grades 11–12 (${cfg.stream})` : `Grades ${cfg.cls}`;
+      document.getElementById('planTitle').textContent = `${clsLabel} • ${cfg.mode}`;
+      document.getElementById('planSubtitle').textContent = `${board} • ${sec.label}`;
+
+      document.getElementById('outSessions').textContent = cfg.days * 4;
+      const specCount = cfg.selectedSubjects.length === 1 ? '1' : cfg.selectedSubjects.length === 2 ? '2' : '2–3';
+      document.getElementById('outSpecialists').textContent = specCount;
+      document.getElementById('outTurnaround').textContent = sec.turnaround;
+
+      // Build Dynamic Rotational Weekly Timetable
+      const dayNames = cfg.days === 3
+        ? ['Mon', 'Wed', 'Fri']
+        : cfg.days === 5
+          ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+          : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+      const subs = cfg.selectedSubjects;
+      const rows = dayNames.map((day, idx) => {
+        if (idx === dayNames.length - 1 && cfg.days >= 5) {
+          return {
+            day,
+            subject: subs.length > 1 ? `${subs[idx % subs.length]} + Weekly Concept Quiz` : `${subs[0]} Weekly Test & Doubts`,
+            role: 'Assessment & Revision Specialist'
+          };
+        }
+        const sub = subs[idx % subs.length];
+        return {
+          day,
+          subject: sub,
+          role: `${sub.split(' ')[0]} Specialist Mentor`
+        };
+      });
+
+      document.getElementById('timetableList').innerHTML = rows.map(r => `
+        <div class="bg-zinc-950/80 border border-zinc-800 rounded-xl px-3.5 py-2.5 flex items-center justify-between gap-2 text-xs">
+          <div class="flex items-center gap-2.5">
+            <span class="w-10 text-center py-0.5 rounded-md bg-amber-500/15 text-amber-300 font-bold text-[11px]">${r.day}</span>
+            <span class="font-semibold text-white">${r.subject}</span>
+          </div>
+          <span class="text-[11px] text-zinc-400 text-right">${r.role}</span>
+        </div>
+      `).join('');
+    }
+
+    function sendPlanToWhatsApp() {
+      const secKey = document.getElementById('sectorSelect').value;
+      const sec = SECTOR_INFO[secKey] || SECTOR_INFO.sec7x;
+      const board = document.getElementById('boardSelect').value;
+      const pName = document.getElementById('pName').value.trim();
+      const pSoc = document.getElementById('pSociety').value.trim();
+      const clsLabel = cfg.cls === '11-12' ? `Class 11–12 (${cfg.stream})` : `Grades ${cfg.cls}`;
+
+      const msg =
+`Namaste Ravi Sir! 🙏
+I configured a *Rotational Pod Study Plan* on *ELITE CLASSES* (eliteclassesnoida.in/planner.html):
+
+${pName ? `• *Name:* ${pName}\n` : ''}• *Area:* ${sec.label}${pSoc ? ` (${pSoc})` : ''}
+• *Class & Board:* ${clsLabel} — ${board}
+• *Mode:* ${cfg.mode}
+• *Subjects:* ${cfg.selectedSubjects.join(', ')}
+• *Frequency:* ${cfg.days} Days/Week (${cfg.days * 4} Sessions/Month)
+
+Please share the exact monthly fee plan and book our *Free 1-on-1 Demo Class*.`;
+
+      window.open(`https://wa.me/919675732501?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    renderSubjects();
+    updatePlan();
+  </script>
+</body>
+</html>
