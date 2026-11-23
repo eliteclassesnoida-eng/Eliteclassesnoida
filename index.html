@@ -307,26 +307,552 @@
        ===================================================================== -->
   <section class="pb-10 px-3 sm:px-6">
     <div class="max-w-7xl mx-auto space-y-6">
-      <form onsubmit="window.handleSmartFinder(event)" class="bento-card rounded-3xl p-4 sm:p-5 grid sm:grid-cols-2 lg:grid-cols-5 gap-3 items-center shadow-xl">
-        <select id="find-class" required class="w-full px-3.5 py-3 rounded-xl input-clean text-xs font-semibold">
-          <option value="Grades 1–5 (Foundation)">Class: Grades 1–5</option>
-          <option value="Grades 6–8 (Middle Specialist)" selected>Class: Grades 6–8</option>
-          <option value="Grades 9–10 (Board Mastery)">Class: Grades 9–10 (Boards)</option>
-          <option value="Grades 11–12 (Science/Comm/Hum)">Class: Grades 11–12</option>
-          <option value="Sainik School / JNVST / RIMC">Exam: Sainik / JNVST / RIMC</option>
-          <option value="IIT-JEE / NEET / CUET">Exam: IIT-JEE / NEET / CUET</option>
-          <option value="SSC / Banking / UGC NET">Exam: SSC / Banking / NET</option>
+      <!-- ================= ELITE CLASSES: SMART TUTOR AVAILABILITY WIDGET ================= -->
+<section id="ecAvailSection" aria-label="Check Tutor Availability">
+  <style>
+    #ecAvailSection {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 820px;
+      margin: 28px auto;
+      padding: 0 14px;
+      color: #f4f4f5;
+      box-sizing: border-box;
+    }
+    #ecAvailSection * { box-sizing: border-box; }
+    .ec-av-card {
+      background: linear-gradient(180deg, #141418 0%, #0c0c0f 100%);
+      border: 1px solid rgba(245, 158, 11, 0.32);
+      border-radius: 20px;
+      padding: 20px 16px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+    }
+    @media (min-width: 640px) { .ec-av-card { padding: 26px 28px; } }
+    .ec-av-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 158, 11, 0.14);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fbbf24;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 5px 11px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .ec-av-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #22c55e; box-shadow: 0 0 8px #22c55e;
+    }
+    .ec-av-title {
+      margin: 0 0 6px;
+      font-size: 21px;
+      line-height: 1.25;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .ec-av-title span { color: #fbbf24; }
+    .ec-av-sub {
+      margin: 0 0 16px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #a1a1aa;
+    }
+    .ec-av-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 640px) {
+      .ec-av-grid-2 { grid-template-columns: 1fr 1fr; }
+    }
+    .ec-av-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #d4d4d8;
+      margin-bottom: 6px;
+    }
+    .ec-av-input, .ec-av-select {
+      width: 100%;
+      background: #18181d;
+      color: #ffffff;
+      border: 1px solid #2e2e36;
+      border-radius: 12px;
+      padding: 11px 12px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .ec-av-input:focus, .ec-av-select:focus { border-color: #f59e0b; }
+    .ec-av-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .ec-av-pill {
+      background: #18181d;
+      color: #d4d4d8;
+      border: 1px solid #2e2e36;
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.18s;
+    }
+    .ec-av-pill.active {
+      background: #f59e0b;
+      color: #09090b;
+      border-color: #f59e0b;
+      font-weight: 800;
+    }
+    .ec-av-btn {
+      width: 100%;
+      margin-top: 16px;
+      padding: 13px 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #09090b;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+      transition: transform 0.15s, opacity 0.15s;
+    }
+    .ec-av-btn:active { transform: scale(0.99); }
+    .ec-av-btn:disabled { opacity: 0.65; cursor: not-allowed; }
+    .ec-av-btn-wa {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      background: #16a34a;
+      color: #ffffff;
+      box-shadow: 0 8px 22px rgba(22, 163, 74, 0.3);
+    }
+    .ec-av-btn-ghost {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      background: #1c1c22;
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      box-shadow: none;
+      margin-top: 10px;
+    }
+    .ec-av-err {
+      display: none;
+      margin-top: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      background: rgba(239, 68, 68, 0.14);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .ec-av-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #24242b;
+      font-size: 11.5px;
+      color: #a1a1aa;
+    }
+    .ec-av-trust a { color: #fbbf24; text-decoration: none; font-weight: 700; }
+    .ec-av-result-box {
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+    .ec-av-result-head {
+      font-size: 14px;
+      font-weight: 800;
+      color: #4ade80;
+      margin-bottom: 4px;
+    }
+    .ec-av-schedule {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    @media (min-width: 640px) { .ec-av-schedule { grid-template-columns: 1fr 1fr; } }
+    .ec-av-schedule li {
+      background: #141418;
+      border: 1px solid #27272f;
+      border-radius: 9px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: #e4e4e7;
+    }
+    .ec-av-schedule li strong { color: #fbbf24; }
+    .ec-av-back {
+      background: none;
+      border: none;
+      color: #a1a1aa;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 10px;
+      text-decoration: underline;
+    }
+    .ec-av-hidden { display: none !important; }
+  </style>
+
+  <div class="ec-av-card">
+    <div class="ec-av-badge">
+      <span class="ec-av-dot"></span>
+      <span>Live Specialist Availability • Noida &amp; Global 1-on-1</span>
+    </div>
+
+    <h2 class="ec-av-title">Apne Area Mein <span>Subject-Specialized Tutor</span> Check Karein</h2>
+    <p class="ec-av-sub">10 second mein dekhein ki aapke sector/society mein rotational subject experts aur free trial slot available hai ya nahi.</p>
+
+    <!-- STEP 1: NO-HESITATION AVAILABILITY CHECK -->
+    <div id="ecAvStep1">
+      <div class="ec-av-grid ec-av-grid-2">
+        <div>
+          <label class="ec-av-label" for="ecAvArea">Location / Mode</label>
+          <select id="ecAvArea" class="ec-av-select">
+            <option value="Noida Sectors">Home Tuition — Noida (All Sectors)</option>
+            <option value="Greater Noida West">Home Tuition — Greater Noida West</option>
+            <option value="Greater Noida">Home Tuition — Greater Noida</option>
+            <option value="Global Live 1-on-1 Online">Online — Global Live 1-on-1 Studio</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="ec-av-label" for="ecAvSociety" id="ecAvSocietyLabel">Sector / Society Name</label>
+          <input id="ecAvSociety" class="ec-av-input" list="ecAvSocietyList" placeholder="e.g. Sector 75, JM Florence, Gaur City" autocomplete="off">
+          <datalist id="ecAvSocietyList">
+            <option value="Sector 35, Noida">
+            <option value="Sector 50, Noida">
+            <option value="Sector 62, Noida">
+            <option value="Sector 75 / 76 / 78, Noida">
+            <option value="Sector 137, Noida">
+            <option value="JM Florence, Greater Noida West">
+            <option value="Gaur City 1 & 2, Greater Noida West">
+            <option value="ATS / Mahagun / Cherry County">
+            <option value="Alpha / Beta / Gamma, Greater Noida">
+            <option value="Jaypee Greens / Pari Chowk">
+          </datalist>
+        </div>
+
+        <div>
+          <label class="ec-av-label" for="ecAvClass">Student Class / Target</label>
+          <select id="ecAvClass" class="ec-av-select">
+            <option value="">Select Class / Goal...</option>
+            <option value="Grades 1-3">Grades 1 – 3 (Foundation)</option>
+            <option value="Grades 4-5">Grades 4 – 5 (Primary Strong Base)</option>
+            <option value="Grades 6-8">Grades 6 – 8 (Middle School)</option>
+            <option value="Grades 9-10">Grades 9 – 10 (Boards Focus)</option>
+            <option value="Grades 11-12 Science">Grades 11 – 12 (Science: PCM / PCB)</option>
+            <option value="Grades 11-12 Commerce/Humanities">Grades 11 – 12 (Commerce / Humanities)</option>
+            <option value="Entrance (Sainik/Navodaya/RIMC)">Entrance Prep (Sainik / Navodaya / RIMC)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="ec-av-label" for="ecAvBoard">Board / Curriculum</label>
+          <select id="ecAvBoard" class="ec-av-select">
+            <option value="CBSE">CBSE</option>
+            <option value="ICSE">ICSE / ISC</option>
+            <option value="IB / IGCSE">IB / IGCSE (International)</option>
+            <option value="Entrance Exam">Entrance Exam Syllabus</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top: 12px;">
+        <span class="ec-av-label">Subjects Select Karein (1 ya Zyada)</span>
+        <div class="ec-av-pills" id="ecAvSubjectPills">
+          <button type="button" class="ec-av-pill active" data-sub="Mathematics">Mathematics</button>
+          <button type="button" class="ec-av-pill active" data-sub="Science">Science</button>
+          <button type="button" class="ec-av-pill" data-sub="English">English</button>
+          <button type="button" class="ec-av-pill" data-sub="Social Science">Social Science</button>
+          <button type="button" class="ec-av-pill" data-sub="Hindi">Hindi</button>
+          <button type="button" class="ec-av-pill" data-sub="Sanskrit">Sanskrit</button>
+          <button type="button" class="ec-av-pill" data-sub="Computer / AI">Computer / AI</button>
+          <button type="button" class="ec-av-pill" data-sub="Physics / Chem / Bio">Physics / Chem / Bio</button>
+          <button type="button" class="ec-av-pill" data-sub="Accounts / Eco">Accounts / Eco</button>
+        </div>
+      </div>
+
+      <div id="ecAvErr1" class="ec-av-err"></div>
+      <button type="button" id="ecAvCheckBtn" class="ec-av-btn">Check Specialist Availability &amp; Sample Schedule →</button>
+    </div>
+
+    <!-- STEP 2: LIVE ROTATIONAL PREVIEW + WHATSAPP UNLOCK -->
+    <div id="ecAvStep2" class="ec-av-hidden">
+      <button type="button" id="ecAvBackBtn" class="ec-av-back">← Change Area or Subjects</button>
+
+      <div class="ec-av-result-box">
+        <div class="ec-av-result-head" id="ecAvMatchTitle">✅ Subject Specialists Available!</div>
+        <div style="font-size: 12px; color: #d4d4d8;" id="ecAvMatchSub"></div>
+        <ul class="ec-av-schedule" id="ecAvScheduleList"></ul>
+      </div>
+
+      <div class="ec-av-grid ec-av-grid-2">
+        <div>
+          <label class="ec-av-label" for="ecAvName">Parent / Student Name *</label>
+          <input id="ecAvName" class="ec-av-input" type="text" placeholder="Apna naam likhein">
+        </div>
+        <div>
+          <label class="ec-av-label" for="ecAvPhone">WhatsApp Number *</label>
+          <input id="ecAvPhone" class="ec-av-input" type="tel" inputmode="numeric" placeholder="10-digit WhatsApp number">
+        </div>
+      </div>
+
+      <div style="margin-top: 12px;">
+        <label class="ec-av-label" for="ecAvSlot">Preferred Demo Time Slot</label>
+        <select id="ecAvSlot" class="ec-av-select">
+          <option value="Evening (4:00 PM - 6:00 PM)">Evening (4:00 PM – 6:00 PM)</option>
+          <option value="Evening (6:00 PM - 8:00 PM)">Evening (6:00 PM – 8:00 PM)</option>
+          <option value="Afternoon (2:30 PM - 4:30 PM)">Afternoon (2:30 PM – 4:30 PM)</option>
+          <option value="Weekend / Flexible">Weekend / Flexible Slot</option>
         </select>
-        <input id="find-subject" type="text" placeholder="Subject (e.g. Maths, Science, All)" class="w-full px-3.5 py-3 rounded-xl input-clean text-xs font-semibold" />
-        <select id="find-mode" class="w-full px-3.5 py-3 rounded-xl input-clean text-xs font-semibold">
-          <option value="Noida Home Tuition">Mode: Noida Home Tuition</option>
-          <option value="Greater Noida / Noida Ext Home">Mode: Greater Noida Home</option>
-          <option value="Hybrid (Home + Live HD)">Mode: Hybrid (Home + Live)</option>
-          <option value="Global 100% Live Online">Mode: Global Live Online</option>
-        </select>
-        <input id="find-location" type="text" required placeholder="Sector / Society / City *" class="w-full px-3.5 py-3 rounded-xl input-clean text-xs font-semibold" />
-        <button type="submit" class="w-full py-3 rounded-xl btn-gold font-display font-extrabold text-xs">Find Specialist Tutor →</button>
-      </form>
+      </div>
+
+      <div id="ecAvErr2" class="ec-av-err"></div>
+      <button type="button" id="ecAvSubmitBtn" class="ec-av-btn">Unlock Free 1st Trial Class &amp; Fee Quote →</button>
+    </div>
+
+    <!-- STEP 3: CONFIRMED + INSTANT WHATSAPP & FREE TEST -->
+    <div id="ecAvStep3" class="ec-av-hidden">
+      <div class="ec-av-result-box">
+        <div class="ec-av-result-head">🎉 Trial Slot Request Saved Successfully!</div>
+        <div style="font-size: 13px; color: #e4e4e7; line-height: 1.5; margin-top: 4px;" id="ecAvDoneText"></div>
+      </div>
+      <a id="ecAvWaLink" href="#" target="_blank" rel="noopener" class="ec-av-btn ec-av-btn-wa">💬 Instant Confirm on WhatsApp (Fastest) →</a>
+      <a href="test.html" class="ec-av-btn ec-av-btn-ghost">📝 Tab Tak 10-Min Free Diagnostic Test Dein →</a>
+      <div style="text-align: center; margin-top: 12px;">
+        <button type="button" id="ecAvResetBtn" class="ec-av-back" style="margin:0;">Check for another student</button>
+      </div>
+    </div>
+
+    <div class="ec-av-trust">
+      <span>✓ 1st Trial Class Free</span>
+      <span>✓ Zero Advance Fee</span>
+      <span>✓ Direct Monitoring by Ravi Yadav</span>
+      <a href="https://g.page/r/CcQT_l9wCpWfEAE/review" target="_blank" rel="noopener">★ View Google Reviews</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // ===== SIRF YAHAN APNA APPS SCRIPT WEBHOOK URL PASTE KAREIN =====
+      var EC_AVAIL_CONFIG = {
+        crmUrl: 'https://script.google.com/macros/s/.../exec',
+        whatsappNumber: '919675732501'
+      };
+
+      var areaEl = document.getElementById('ecAvArea');
+      var socEl = document.getElementById('ecAvSociety');
+      var socLbl = document.getElementById('ecAvSocietyLabel');
+      var clsEl = document.getElementById('ecAvClass');
+      var brdEl = document.getElementById('ecAvBoard');
+      var pillsWrap = document.getElementById('ecAvSubjectPills');
+      var err1 = document.getElementById('ecAvErr1');
+      var err2 = document.getElementById('ecAvErr2');
+      var step1 = document.getElementById('ecAvStep1');
+      var step2 = document.getElementById('ecAvStep2');
+      var step3 = document.getElementById('ecAvStep3');
+      var checkBtn = document.getElementById('ecAvCheckBtn');
+      var backBtn = document.getElementById('ecAvBackBtn');
+      var submitBtn = document.getElementById('ecAvSubmitBtn');
+      var resetBtn = document.getElementById('ecAvResetBtn');
+      var matchTitle = document.getElementById('ecAvMatchTitle');
+      var matchSub = document.getElementById('ecAvMatchSub');
+      var schedList = document.getElementById('ecAvScheduleList');
+      var nameEl = document.getElementById('ecAvName');
+      var phoneEl = document.getElementById('ecAvPhone');
+      var slotEl = document.getElementById('ecAvSlot');
+      var doneText = document.getElementById('ecAvDoneText');
+      var waLink = document.getElementById('ecAvWaLink');
+
+      // URL se ?ref= ya ?source= auto-capture karein (Society / Reel tracking)
+      var params = new URLSearchParams(window.location.search);
+      var refTag = params.get('ref') || params.get('source') || params.get('utm_source') || '';
+      if (refTag) { try { localStorage.setItem('ec_ref_source', refTag); } catch (e) {} }
+      else { try { refTag = localStorage.getItem('ec_ref_source') || ''; } catch (e) {} }
+
+      areaEl.addEventListener('change', function () {
+        var isOnline = areaEl.value.indexOf('Online') !== -1;
+        socLbl.textContent = isOnline ? 'City / Country' : 'Sector / Society Name';
+        socEl.placeholder = isOnline ? 'e.g. Delhi, Mumbai, Dubai, London' : 'e.g. Sector 75, JM Florence, Gaur City';
+        phoneEl.placeholder = isOnline ? 'WhatsApp Number (with country code)' : '10-digit WhatsApp number';
+      });
+
+      pillsWrap.addEventListener('click', function (e) {
+        if (e.target.classList.contains('ec-av-pill')) {
+          e.target.classList.toggle('active');
+        }
+      });
+
+      function getSelectedSubjects() {
+        var nodes = pillsWrap.querySelectorAll('.ec-av-pill.active');
+        var list = [];
+        for (var i = 0; i < nodes.length; i++) list.push(nodes[i].getAttribute('data-sub'));
+        return list;
+      }
+
+      function showErr(el, msg) {
+        el.textContent = msg;
+        el.style.display = msg ? 'block' : 'none';
+      }
+
+      function buildSchedule(subs) {
+        var items = [];
+        if (subs.length === 1) {
+          items.push(['Mon / Wed / Fri', subs[0] + ' Specialist (1-on-1)']);
+          items.push(['Saturday', 'Concept Diagnostic Test & PDF Report']);
+        } else if (subs.length === 2) {
+          items.push(['Mon & Thu', subs[0] + ' Specialist']);
+          items.push(['Tue & Fri', subs[1] + ' Specialist']);
+          items.push(['Wednesday', 'Doubt Clearing & Practice Sheet']);
+          items.push(['Saturday', 'Weekly CBT Test & Parent Update']);
+        } else {
+          var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+          for (var i = 0; i < days.length; i++) {
+            items.push([days[i], subs[i % subs.length] + ' Specialist']);
+          }
+          items.push(['Saturday', 'Weekly Assessment & PDF Report']);
+        }
+        return items;
+      }
+
+      checkBtn.addEventListener('click', function () {
+        var soc = socEl.value.trim();
+        var cls = clsEl.value;
+        var subs = getSelectedSubjects();
+        if (!soc) return showErr(err1, 'Kripya apna Sector / Society (ya City) likhein.');
+        if (!cls) return showErr(err1, 'Kripya Student Class ya Target select karein.');
+        if (!subs.length) return showErr(err1, 'Kam se kam 1 subject select karein.');
+        showErr(err1, '');
+
+        checkBtn.disabled = true;
+        checkBtn.textContent = 'Checking Specialist Pod...';
+
+        setTimeout(function () {
+          checkBtn.disabled = false;
+          checkBtn.textContent = 'Check Specialist Availability & Sample Schedule →';
+
+          var isOnline = areaEl.value.indexOf('Online') !== -1;
+          matchTitle.textContent = isOnline
+            ? '✅ Live 1-on-1 Subject Specialists Available (' + soc + ')'
+            : '✅ Rotational Specialists Available in ' + soc;
+          matchSub.textContent = cls + ' (' + brdEl.value + ') • Sample Weekly Rotational Plan:';
+
+          var plan = buildSchedule(subs);
+          schedList.innerHTML = plan.map(function (row) {
+            return '<li><strong>' + row[0] + ':</strong> ' + row[1] + '</li>';
+          }).join('');
+
+          step1.classList.add('ec-av-hidden');
+          step2.classList.remove('ec-av-hidden');
+        }, 450);
+      });
+
+      backBtn.addEventListener('click', function () {
+        step2.classList.add('ec-av-hidden');
+        step1.classList.remove('ec-av-hidden');
+      });
+
+      submitBtn.addEventListener('click', function () {
+        var name = nameEl.value.trim();
+        var rawPhone = phoneEl.value.replace(/\D/g, '');
+        var isOnline = areaEl.value.indexOf('Online') !== -1;
+
+        if (name.length < 2) return showErr(err2, 'Kripya apna poora naam likhein.');
+        if (!isOnline) {
+          if (rawPhone.length === 12 && rawPhone.indexOf('91') === 0) rawPhone = rawPhone.slice(2);
+          if (rawPhone.length === 11 && rawPhone.indexOf('0') === 0) rawPhone = rawPhone.slice(1);
+          if (!/^[6-9]\d{9}$/.test(rawPhone)) {
+            return showErr(err2, 'Kripya sahi 10-digit Indian WhatsApp number daalein.');
+          }
+        } else if (rawPhone.length < 8 || rawPhone.length > 15) {
+          return showErr(err2, 'Kripya valid WhatsApp number (country code ke saath) daalein.');
+        }
+        showErr(err2, '');
+
+        var subs = getSelectedSubjects().join(', ');
+        var modeText = isOnline ? 'Global Live 1-on-1 Online' : '1-on-1 Rotational Home Tuition';
+        var freqText = slotEl.value + ' | Availability Widget' + (refTag ? ' | Ref: ' + refTag : '');
+
+        var payload = {
+          type: 'STUDY_PLAN',
+          name: name,
+          phone: rawPhone,
+          area: areaEl.value,
+          society: socEl.value.trim(),
+          classLabel: clsEl.value,
+          board: brdEl.value,
+          mode: modeText,
+          subjects: subs,
+          frequency: freqText
+        };
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Locking Your Free Trial Slot...';
+
+        if (EC_AVAIL_CONFIG.crmUrl && EC_AVAIL_CONFIG.crmUrl.indexOf('http') === 0) {
+          try {
+            fetch(EC_AVAIL_CONFIG.crmUrl, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'text/plain' },
+              body: JSON.stringify(payload)
+            });
+          } catch (e) {}
+        }
+
+        var waMsg =
+          'Namaste Ravi Sir (ELITE CLASSES),\n' +
+          'Maine website par Tutor Availability check ki hai:\n\n' +
+          '• Name: ' + name + '\n' +
+          '• WhatsApp: ' + rawPhone + '\n' +
+          '• Class & Board: ' + clsEl.value + ' (' + brdEl.value + ')\n' +
+          '• Mode: ' + modeText + '\n' +
+          '• Area / Society: ' + socEl.value.trim() + ' (' + areaEl.value + ')\n' +
+          '• Subjects: ' + subs + '\n' +
+          '• Preferred Slot: ' + slotEl.value +
+          (refTag ? '\n• Source: ' + refTag : '') +
+          '\n\nPlease share Free 1st Trial Class details & monthly plan.';
+
+        waLink.href = 'https://wa.me/' + EC_AVAIL_CONFIG.whatsappNumber + '?text=' + encodeURIComponent(waMsg);
+        doneText.textContent = name + ' ji, aapki request (' + clsEl.value + ' • ' + socEl.value.trim() + ') record ho gayi hai. Turant response ke liye neeche WhatsApp button dabayein.';
+
+        setTimeout(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Unlock Free 1st Trial Class & Fee Quote →';
+          step2.classList.add('ec-av-hidden');
+          step3.classList.remove('ec-av-hidden');
+        }, 400);
+      });
+
+      resetBtn.addEventListener('click', function () {
+        step3.classList.add('ec-av-hidden');
+        step1.classList.remove('ec-av-hidden');
+      });
+    })();
+  </script>
+</section>
+<!-- ================= END SMART TUTOR AVAILABILITY WIDGET ================= -->
+
 
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
         <div class="bento-card rounded-2xl p-5 text-center">
