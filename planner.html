@@ -467,7 +467,22 @@ ${pName ? `• *Name:* ${pName}\n` : ''}• *Area:* ${sec.label}${pSoc ? ` (${pS
 • *Frequency:* ${cfg.days} Days/Week (${cfg.days * 4} Sessions/Month)
 
 Please share the exact monthly fee plan and book our *Free 1-on-1 Demo Class*.`;
-
+      fetch('https://script.google.com/macros/s/AKfycbyS3Mnl7qPniy8vNe_cFc2hy55coUUbKdLLcWtVA95dFmarYr0Za67JQuz41Y9c6Q1f/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({
+          type: 'STUDY_PLAN',
+          name: pName || 'Not Provided',
+          area: sec.label,
+          society: pSoc || '-',
+          classLabel: clsLabel,
+          board: board,
+          mode: cfg.mode,
+          subjects: cfg.selectedSubjects.join(', '),
+          frequency: `${cfg.days} Days/Week (${cfg.days * 4} Sessions/Month)`
+        })
+      }).catch(() => {});
       window.open(`https://wa.me/919675732501?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
