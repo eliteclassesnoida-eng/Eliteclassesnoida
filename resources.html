@@ -4,45 +4,49 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Free Concept Vault &amp; Formula Sheets | ELITE CLASSES</title>
-  <meta name="description" content="Concept-first study vault and formula sheets for Grades 1 to 12 (Science, Humanities, Commerce) across Maths, Science, Social Science, English, Hindi &amp; AI by ELITE CLASSES." />
+  <meta name="description" content="Concept-first study vault for Grades 1-12 (Science, Humanities, Commerce) across Mathematics, Science, Social Science, English, Hindi &amp; AI by ELITE CLASSES Noida." />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      darkMode: 'class',
+      darkMode: "class",
       theme: {
         extend: {
           colors: {
-            obsidian: '#09090b',
-            gold: '#f59e0b'
+            obsidian: "#09090b",
+            gold: "#f59e0b"
           }
         }
       }
     };
   </script>
   <style>
+    * { box-sizing: border-box; }
     body {
       background-color: #09090b;
       color: #f4f4f5;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
     }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
 <body class="min-h-screen bg-zinc-950 text-zinc-100 selection:bg-amber-500/30 selection:text-amber-200">
 
-  <!-- Top Header -->
-  <header class="sticky top-0 z-40 border-b border-zinc-800/90 bg-zinc-950/90 backdrop-blur">
+  <!-- Sticky Header -->
+  <header class="sticky top-0 z-40 border-b border-zinc-800/90 bg-zinc-950/95 backdrop-blur">
     <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
       <a href="/index.html" class="flex items-center gap-3">
-        <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-amber-400/50 bg-amber-500/10 font-bold text-amber-400">
+        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-amber-400/50 bg-amber-500/10 font-extrabold text-amber-400">
           EC
         </div>
         <div>
-          <div class="text-sm font-bold tracking-wide text-white">ELITE CLASSES</div>
-          <div class="text-[11px] text-zinc-400">An Exclusive Mission For Futuristic Education by Ravi Yadav</div>
+          <div class="text-sm font-extrabold tracking-wide text-white">ELITE CLASSES</div>
+          <div class="text-[11px] leading-tight text-zinc-400">An Exclusive Mission For Futuristic Education by Ravi Yadav</div>
         </div>
       </a>
 
-      <div class="flex items-center gap-2 text-xs font-semibold">
+      <div class="flex shrink-0 items-center gap-2 text-xs font-bold">
         <a href="/planner.html" class="hidden sm:inline-flex rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-zinc-200 hover:border-amber-400/60">
           Study Planner
         </a>
@@ -56,38 +60,49 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="border-b border-zinc-800/80 bg-gradient-to-b from-amber-500/10 via-zinc-950 to-zinc-950 px-4 py-10">
+  <!-- Hero & Filters -->
+  <section class="border-b border-zinc-800/80 bg-gradient-to-b from-amber-500/10 via-zinc-950 to-zinc-950 px-4 py-8 sm:py-10">
     <div class="mx-auto max-w-6xl">
-      <div class="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-300">
+      <div class="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-500/10 px-3 py-1 text-[11px] font-bold tracking-wide text-amber-300">
         <span>🧠 CONCEPT-FIRST LEARNING • ZERO ROTE MEMORIZATION</span>
       </div>
+
       <h1 class="mt-4 text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
         Free Concept Vault &amp; <span class="text-amber-400">Formula Sheets</span>
       </h1>
-      <p class="mt-3 max-w-3xl text-sm sm:text-base text-zinc-300 leading-relaxed">
-        Formula ya definition ratne se pehle samjhein <strong class="text-white">kyun aur kaise</strong> kaam karti hai. Har card mein core intuition, key formula/rule, aur common exam trap diya gaya hai—Grades 1–3 se Class 11–12 (Science, Humanities, Commerce) tak.
+      <p class="mt-2.5 max-w-3xl text-sm sm:text-base text-zinc-300 leading-relaxed">
+        Formula ya definition ratne se pehle samjhein <strong class="text-white">kyun aur kaise</strong> kaam karti hai. Har concept mein core logic, formula/framework, real-life example aur exam trap diya gaya hai—Grades 1–3 se Class 11–12 (Science, Humanities, Commerce) tak.
       </p>
 
-      <!-- Class Group Filter Pills -->
+      <!-- Live Search Bar -->
+      <div class="mt-5 max-w-xl">
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Search any topic, formula, or keyword (e.g. Trigonometry, AI, Fractions, Ohm)..."
+          class="w-full rounded-xl border border-zinc-700 bg-zinc-900/90 px-4 py-3 text-sm text-white placeholder-zinc-400 focus:border-amber-400 focus:outline-none"
+        />
+      </div>
+
+      <!-- 1. Class Group Filter -->
       <div class="mt-6">
-        <div class="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-400">1. Select Class Group</div>
+        <div class="mb-2 text-[11px] font-bold uppercase tracking-wider text-zinc-400">1. Select Class Group</div>
         <div id="classFilters" class="flex flex-wrap gap-2"></div>
       </div>
 
-      <!-- Subject Filter Pills -->
+      <!-- 2. Subject Filter -->
       <div class="mt-5">
-        <div class="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-400">2. Select Subject</div>
+        <div class="mb-2 text-[11px] font-bold uppercase tracking-wider text-zinc-400">2. Select Subject</div>
         <div id="subjectFilters" class="flex flex-wrap gap-2"></div>
       </div>
     </div>
   </section>
 
-  <!-- Concept Vault Cards Grid -->
+  <!-- Main Vault Grid -->
   <main class="mx-auto max-w-6xl px-4 py-8">
     <div class="mb-5 flex flex-wrap items-center justify-between gap-2">
-      <div id="resultCount" class="text-sm font-medium text-zinc-300"></div>
-      <div class="text-xs text-zinc-400">Noida &amp; Greater Noida Home Tuition + Global Live 1-on-1</div>
+      <div id="resultCount" class="text-sm font-semibold text-zinc-200"></div>
+      <div class="text-xs text-zinc-400">Noida &amp; Greater Noida Home Tuition • Global Live 1-on-1</div>
     </div>
 
     <div id="vaultGrid" class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3"></div>
@@ -95,577 +110,677 @@
 
   <!-- Footer -->
   <footer class="mt-10 border-t border-zinc-800/90 bg-zinc-950 px-4 py-6 text-center text-xs text-zinc-400">
-    <p class="font-semibold text-zinc-200">ELITE CLASSES • An Exclusive Mission For Futuristic Education by Ravi Yadav</p>
+    <p class="font-bold text-zinc-200">ELITE CLASSES • An Exclusive Mission For Futuristic Education by Ravi Yadav</p>
     <p class="mt-1">eliteclassesnoida.in • +91 96757 32501</p>
   </footer>
 
   <script>
-    const CRM_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyS3Mnl7qPniy8vNe_cFc2hy55coUUbKdLLcWtVA95dFmarYr0Za67JQuz41Y9c6Q1f/exec';
-    const WHATSAPP_NUMBER = '919675732501';
+    (function () {
+      "use strict";
 
-    const CLASS_GROUPS = [
-      'ALL',
-      'Grades 1-3',
-      'Grades 4-5',
-      'Grades 6-8',
-      'Grades 9-10',
-      '11-12 Science',
-      '11-12 Humanities',
-      '11-12 Commerce'
-    ];
+      const CRM_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyS3Mnl7qPniy8vNe_cFc2hy55coUUbKdLLcWtVA95dFmarYr0Za67JQuz41Y9c6Q1f/exec";
+      const WHATSAPP_NUMBER = "919675732501";
 
-    const SUBJECTS = [
-      'ALL',
-      'Mathematics',
-      'Science',
-      'Social Science',
-      'English',
-      'Hindi',
-      'AI'
-    ];
+      const CLASS_GROUPS = [
+        "ALL",
+        "Grades 1-3",
+        "Grades 4-5",
+        "Grades 6-8",
+        "Grades 9-10",
+        "11-12 Science",
+        "11-12 Humanities",
+        "11-12 Commerce"
+      ];
 
-    const CONCEPTS = [
-      // GRADES 1-3
-      {
-        id: 'g13-math-1',
-        classGroup: 'Grades 1-3',
-        subject: 'Mathematics',
-        topic: 'Place Value & Tens-Ones Grouping',
-        intuition: '34 ka matlab 34 alag chizen nahi balki 10-10 ke 3 bundles aur 4 khule items hain—jaise 10-10 ke notes aur chhutte sikke.',
-        formula: 'Number = (Tens × 10) + (Ones × 1)  |  34 = 30 + 4',
-        antiRote: 'Bacche ko sirf "3 tens 4 ones" na ratwayein; 10-10 ke group banakar ginwayein.'
-      },
-      {
-        id: 'g13-sci-1',
-        classGroup: 'Grades 1-3',
-        subject: 'Science',
-        topic: 'Living vs Non-Living Things',
-        intuition: 'Jo khud badhta hai, saans/bhojan ki zaroorat samajhta hai aur response deta hai woh living hai; khilona ya patthar apne aap bada nahi hota.',
-        formula: 'Living Check: Grow + Need Food/Air + Feel/Move',
-        antiRote: 'Car ya fan chalta hai par khud bada nahi hota—isliye non-living machine hai.'
-      },
-      {
-        id: 'g13-sst-1',
-        classGroup: 'Grades 1-3',
-        subject: 'Social Science',
-        topic: 'Family Roles & Neighborhood Helpers',
-        intuition: 'Har insaan ka kaam samaj ke ek pehie jaisa hai—ghar mein parivaar madad karta hai aur bahar doctor, teacher, postman seva dete hain.',
-        formula: 'Family Care + Community Helpers = Smooth Daily Life',
-        antiRote: 'Sirf helper ka naam yaad karne ke bajay sochein ki unke bina din kaise chalega.'
-      },
-      {
-        id: 'g13-eng-1',
-        classGroup: 'Grades 1-3',
-        subject: 'English',
-        topic: 'Action Words (Verbs) & Complete Thoughts',
-        intuition: 'Sentence tabhi poora hota hai jab pata chale "kaun" (subject) aur "kya kar raha hai" (action). "Riya jumps" clear hai, "Riya" adhoora hai.',
-        formula: 'Clear Sentence = Naming Word (Who/What) + Action Word (Does)',
-        antiRote: 'Verb ki definition ratne ke bajay rozmarra ke 5 kaam bolkar verb pehchanein.'
-      },
-      {
-        id: 'g13-hin-1',
-        classGroup: 'Grades 1-3',
-        subject: 'Hindi',
-        topic: 'मात्राओं की ध्वनि और सही उच्चारण',
-        intuition: 'मात्रा कोई सजावट नहीं है—यह स्वर की आवाज़ है। "क" में 'ा' जुड़ते ही मुँह खुलता है और "का" बनता है।',
-        formula: 'व्यंजन + स्वर की मात्रा = नई स्पष्ट ध्वनि (क + ि = कि)',
-        antiRote: 'बिना आवाज़ मिलाए मात्राएँ न रटें; बोलकर अंतर सुनें कि शब्द का अर्थ कैसे बदलता है।'
-      },
-      {
-        id: 'g13-ai-1',
-        classGroup: 'Grades 1-3',
-        subject: 'AI',
-        topic: 'Smart Machines vs Human Feelings',
-        intuition: 'Voice assistant aapki baat sun kar jawab de sakta hai, par uske paas dil, pyaar ya dard mehsoos karne ki taqat nahi hoti.',
-        formula: 'AI = Fast Pattern & Command Helper  |  Human = Emotion + Judgement',
-        antiRote: 'AI ko "jaadui insaan" samajhne ke bajay use ek smart tool ki tarah samjhein.'
-      },
+      const SUBJECTS = [
+        "ALL",
+        "Mathematics",
+        "Science",
+        "Social Science",
+        "English",
+        "Hindi",
+        "AI"
+      ];
 
-      // GRADES 4-5
-      {
-        id: 'g45-math-1',
-        classGroup: 'Grades 4-5',
-        subject: 'Mathematics',
-        topic: 'Fractions as Equal Parts of a Whole',
-        intuition: '3/4 ka matlab 1 pizza ke 4 barabar hisson mein se 3 hisse—agar hisse barabar nahi hain toh woh fraction nahi hai.',
-        formula: 'Fraction = Selected Equal Parts / Total Equal Parts',
-        antiRote: 'Numerator/Denominator ki spelling ratne se pehle paper fold karke half aur quarter banayein.'
-      },
-      {
-        id: 'g45-sci-1',
-        classGroup: 'Grades 4-5',
-        subject: 'Science',
-        topic: 'States of Matter & Heat Change',
-        intuition: 'Paani badalta nahi, uske particles ki energy badalti hai—garam karne par door jaate hain (gas), thanda karne par paas aate hain (solid).',
-        formula: 'Heat Added → Solid → Liquid → Gas  |  Cooling → Reverse',
-        antiRote: 'Evaporation/Condensation shabd ratne ke bajay garami aur thandak ka asar samjhein.'
-      },
-      {
-        id: 'g45-sst-1',
-        classGroup: 'Grades 4-5',
-        subject: 'Social Science',
-        topic: 'Directions, Maps & Landforms',
-        intuition: 'Map upar se dekha gaya naksha hai; North hamesha direction set karta hai aur pahad/maidan/nadi wahan ke logon ka khan-paan aur ghar tay karte hain.',
-        formula: '4 Cardinal Directions (N, S, E, W) + Symbols/Scale = Map Reading',
-        antiRote: 'Map ke symbols sirf yaad na karein; apne ghar se school ke raaste ka simple sketch banayein.'
-      },
-      {
-        id: 'g45-eng-1',
-        classGroup: 'Grades 4-5',
-        subject: 'English',
-        topic: 'Tenses as Time Markers',
-        intuition: 'Tense badalne se main kaam nahi badalta, bas "kab hua" (kal, aaj, ya aage) woh badal jaata hai.',
-        formula: 'Past (Happened)  •  Present (Happening/Habit)  •  Future (Will Happen)',
-        antiRote: '12 tense charts ratne ke bajay ek hi line ko kal, aaj aur kal (future) mein bolkar dekhein.'
-      },
-      {
-        id: 'g45-hin-1',
-        classGroup: 'Grades 4-5',
-        subject: 'Hindi',
-        topic: 'संज्ञा, सर्वनाम और विशेषण का संबंध',
-        intuition: 'नाम बार-बार दोहराने से वाक्य बोझिल लगता है, इसलिए सर्वनाम आता है; और विशेषता बताने से तस्वीर साफ होती है।',
-        formula: 'संज्ञा (नाम) → सर्वनाम (उसके बदले) → विशेषण (कैसा/कितना)',
-        antiRote: 'परिभाषा रटने के बजाय किसी भी कहानी के 3 वाक्यों में नाम और गुण अलग-अलग छाँटें।'
-      },
-      {
-        id: 'g45-ai-1',
-        classGroup: 'Grades 4-5',
-        subject: 'AI',
-        topic: 'How Computers Learn from Examples',
-        intuition: 'Jaise baccha 10 alag-alag kutte dekh kar naya kutta pehchan leta hai, waise hi AI examples dekh kar pattern seekhta hai.',
-        formula: 'Examples (Training Data) → Pattern Rules → Prediction on New Input',
-        antiRote: 'AI ko "sab kuch jaanne wala" manane ke bajay dekhein ki galat examples dene par woh galat kyun seekhta hai.'
-      },
+      const CONCEPTS = [
+        // ==================== GRADES 1-3 ====================
+        {
+          id: "g13-math",
+          classGroup: "Grades 1-3",
+          subject: "Mathematics",
+          topic: "Place Value & Grouping in Tens",
+          intuition: "Number sirf digits ki line nahi hai—har digit ki value uski jagah (place) se banti hai. 10 chhoti cheezein milkar 1 bundle (Ten) banati hain.",
+          formula: "2-Digit Number = (Tens × 10) + (Ones × 1)",
+          example: "47 = 4 notes of ₹10 (40) + 7 coins of ₹1 (7). Agar 4 aur 7 ki jagah badal dein toh 74 ban jaata hai!",
+          antiRote: "Bacche ko sirf '4 tens 7 ones' bolna na ratwayein; ₹10 ke notes aur ₹1 ke sikkon se number banwayein."
+        },
+        {
+          id: "g13-sci",
+          classGroup: "Grades 1-3",
+          subject: "Science",
+          topic: "Living vs Non-Living Things",
+          intuition: "Living cheezein andar se khud badhti hain, bhojan/hawa leti hain aur aas-paas ke badlav par react karti hain. Non-living ko bahar se chalana padta hai.",
+          formula: "Living = Grows + Breathes/Needs Food + Responds + Reproduces",
+          example: "Ek chhota paudha dhoop aur paani se bada ped ban jaata hai (Living), par toy car battery khatam hote hi ruk jaati hai (Non-living).",
+          antiRote: "Sirf 'jo chalta hai woh living hai' mat ratwayein—baadal aur car bhi chalte hain par living nahi hain."
+        },
+        {
+          id: "g13-sst",
+          classGroup: "Grades 1-3",
+          subject: "Social Science",
+          topic: "Interdependence: Family & Community Helpers",
+          intuition: "Koi bhi akela apni saari zarooratein poori nahi kar sakta. Jaise ghar mein sab milkar kaam baant-te hain, waise hi shehar mein alag-alag helpers system chalate hain.",
+          formula: "Individual Effort + Community Helpers = Safe & Smooth Society",
+          example: "Kisan anaj ugata hai, dukandar hum tak pahunchata hai, aur safai karamchari mohalla swachh rakhte hain.",
+          antiRote: "Sirf 5 helpers ke naam ratne ke bajay poochein: 'Agar 2 din safai ya bijli wale na aayein toh kya hoga?'"
+        },
+        {
+          id: "g13-eng",
+          classGroup: "Grades 1-3",
+          subject: "English",
+          topic: "Complete Sentence: Subject + Action (Verb)",
+          intuition: "Kisi baat ka poora matlab tabhi banta hai jab pata chale 'kaun' (Naming Word) aur 'kya kar raha hai' (Action Word).",
+          formula: "Complete Sentence = Who/What (Subject) + Action (Verb)",
+          example: "'The puppy' adhoora hai. 'The puppy runs fast.' poora sentence hai kyunki isme action clear hai.",
+          antiRote: "Verb ki definition ratne ke bajay bacche se uske subah se shaam tak ke 5 actions (brush, eat, play, read, sleep) bulwayein."
+        },
+        {
+          id: "g13-hin",
+          classGroup: "Grades 1-3",
+          subject: "Hindi",
+          topic: "मात्राओं की ध्वनि और अर्थ में बदलाव",
+          intuition: "मात्रा कोई निशान या सजावट नहीं, बल्कि स्वर (vowel) की आवाज़ है। मात्रा बदलते ही बोलने का समय और शब्द का अर्थ दोनों बदल जाते हैं।",
+          formula: "व्यंजन + स्वर की मात्रा = नया सार्थक शब्द",
+          example: "'दिन' (छोटी इ - समय) और 'दीन' (बड़ी ई - गरीब); 'किला' (दुर्ग) और 'कीला' (लोहे की कील)।",
+          antiRote: "बिना आवाज़ के मात्राएँ न रटवाएँ; बोलकर दोनों शब्दों के उच्चारण और अर्थ का अंतर सुनवाएँ।"
+        },
+        {
+          id: "g13-ai",
+          classGroup: "Grades 1-3",
+          subject: "AI",
+          topic: "Smart Machines vs Human Brain",
+          intuition: "Smart machines instructions aur patterns par bahut tezi se kaam karti hain, par unme insaan jaisi feelings, daya ya khud ki samajh nahi hoti.",
+          formula: "AI = Fast Pattern & Command Tool | Human = Feelings + Creativity + Care",
+          example: "Alexa ya Google Assistant aapka favourite gaana chala sakta hai, par aapke udaas hone par gale nahi laga sakta.",
+          antiRote: "Bacchon ko AI ko 'jaadui insaan' na samjhayein; unhe batayein ki ise insaan ne hi banaya aur sikhaya hai."
+        },
 
-      // GRADES 6-8
-      {
-        id: 'g68-math-1',
-        classGroup: 'Grades 6-8',
-        subject: 'Mathematics',
-        topic: 'Integers & Algebraic Balance',
-        intuition: 'Equation ek tarazu (balance scale) hai: dono taraf jo bhi operation karoge, barabari banani padegi. Negative sign direction ulta karta hai.',
-        formula: 'x + a = b ⇒ x = b - a  |  (-a) × (-b) = +ab',
-        antiRote: '"Minus minus plus hota hai" ko toota rule na samjhein; number line aur balance scale se prove karein.'
-      },
-      {
-        id: 'g68-sci-1',
-        classGroup: 'Grades 6-8',
-        subject: 'Science',
-        topic: 'Force, Pressure & Cell Structure',
-        intuition: 'Wahi force chhote area (jaise keel ki nok) par lage toh pressure zyada hota hai. Waise hi cell sharir ki sabse chhoti kaam karne wali unit hai.',
-        formula: 'Pressure (P) = Force (F) / Area (A)  (Smaller Area ⇒ Higher Pressure)',
-        antiRote: 'Formula ratne ke bajay sochein ki chauda school bag kyun kam chubhta hai patle strap ke muqable.'
-      },
-      {
-        id: 'g68-sst-1',
-        classGroup: 'Grades 6-8',
-        subject: 'Social Science',
-        topic: 'Cause-Effect in History & Democracy',
-        intuition: 'Har historical event ya qanoon ke peeche ek "kyun" (economic/social reason) aur ek "kya badla" (impact) hota hai.',
-        formula: 'Cause (Trigger/Need) → Event/Policy → Long-Term Impact',
-        antiRote: 'Saal (years) aur articles sirf ratne ke bajay "pehle kya tha aur baad mein kya badla" ka link banayein.'
-      },
-      {
-        id: 'g68-eng-1',
-        classGroup: 'Grades 6-8',
-        subject: 'English',
-        topic: 'Active vs Passive Voice & Inference',
-        intuition: 'Active mein "karne wala" spotlight mein hota hai; Passive mein "kaam/cheez" par focus hota hai jab karne wala kam zaroori ho.',
-        formula: 'Active: Subject + Verb + Object  |  Passive: Object + be-form + V3 (+ by Subject)',
-        antiRote: 'Rules ratne ke bajay news headlines dekhein—wahan aksar result/object pehle aata hai.'
-      },
-      {
-        id: 'g68-hin-1',
-        classGroup: 'Grades 6-8',
-        subject: 'Hindi',
-        topic: 'उपसर्ग, प्रत्यय और समास का अर्थ-बोध',
-        intuition: 'शब्द के आगे जुड़ने वाला उपसर्ग दिशा/अर्थ बदलता है और पीछे जुड़ने वाला प्रत्यय अक्सर रूप या भाव बदलता है।',
-        formula: 'मूल शब्द + प्रत्यय (अंत में)  |  उपसर्ग (आगे) + मूल शब्द',
-        antiRote: 'बिना मूल शब्द तोड़े उपसर्ग-प्रत्यय रटने से गलती होती है; पहले जड़ (root word) पहचानें।'
-      },
-      {
-        id: 'g68-ai-1',
-        classGroup: 'Grades 6-8',
-        subject: 'AI',
-        topic: 'Data Quality & Bias in AI',
-        intuition: 'Agar AI ko sirf ek hi tarah ka data diya jaye, toh woh doosre logon ya cases ke liye unfair (biased) jawab de sakta hai.',
-        formula: 'Biased/Incomplete Data → Skewed Output  |  Diverse Data → Fairer Result',
-        antiRote: 'AI ke har answer ko sach manane ke bajay cross-check karein ki uska data kahan se aaya hoga.'
-      },
+        // ==================== GRADES 4-5 ====================
+        {
+          id: "g45-math",
+          classGroup: "Grades 4-5",
+          subject: "Mathematics",
+          topic: "Fractions as Equal Shares of a Whole",
+          intuition: "Fraction tabhi banta hai jab poori cheez ko bilkul BARABAR hisson mein baanta jaye. Neeche wala number batata hai total tukde, upar wala batata hai kitne liye.",
+          formula: "Fraction = Selected Equal Parts / Total Equal Parts",
+          example: "1/2 bada hota hai 1/4 se—kyunki ek hi roti ke 2 hisse karne par tukda bada milega, 4 hisse karne par chhota!",
+          antiRote: "Bacche aksar 4 ko 2 se bada dekhkar 1/4 ko 1/2 se bada maan lete hain—paper fold karke dikhayein."
+        },
+        {
+          id: "g45-sci",
+          classGroup: "Grades 4-5",
+          subject: "Science",
+          topic: "States of Matter & Effect of Heat",
+          intuition: "Barf, paani aur bhaap alag cheezein nahi hain—bas unke chhote particles ki energy aur doori badal jaati hai.",
+          formula: "Add Heat: Solid → Liquid → Gas | Remove Heat: Gas → Liquid → Solid",
+          example: "Thande glass ke bahar paani ki boondein hawa ki bhaap (gas) ke thanda hokar paani (liquid) banne (Condensation) se aati hain.",
+          antiRote: "Evaporation aur Condensation ki spelling ratne ke bajay kitchen mein chai ubalte aur dhakkan par boondein bante dikhayein."
+        },
+        {
+          id: "g45-sst",
+          classGroup: "Grades 4-5",
+          subject: "Social Science",
+          topic: "Maps, Scale & Why Landforms Shape Life",
+          intuition: "Map upar (bird's-eye view) se dekha gaya naksha hai. Jahan pahad, maidan ya registan hota hai, wahan ka khan-paan, kapde aur ghar usi hisaab se bante hain.",
+          formula: "Map = Top View + Directions (N,S,E,W) + Scale + Symbols",
+          example: "Pahadon mein dhalan wali chhat (sloping roof) hoti hai taaki barf fisal jaye, jabki Noida ke maidano mein flat roofs hoti hain.",
+          antiRote: "Landforms ki list ratne ke bajay har jagah ke mausam ko wahan ke logon ke lifestyle se jodein."
+        },
+        {
+          id: "g45-eng",
+          classGroup: "Grades 4-5",
+          subject: "English",
+          topic: "Tenses as a Time Machine",
+          intuition: "Tense ka matlab sirf 'time of action' hai. Kaam wahi rehta hai, bas verb ka roop badal kar hum batate hain ki woh pehle hua, abhi ho raha hai, ya aage hoga.",
+          formula: "Past (Yesterday) • Present (Today/Habit) • Future (Tomorrow)",
+          example: "I played cricket (Past) | I play cricket daily (Present) | I will play cricket (Future).",
+          antiRote: "12 tense rules ka chart ratne se pehle ek hi sentence ko teenon time mein bolne ki practice karwayein."
+        },
+        {
+          id: "g45-hin",
+          classGroup: "Grades 4-5",
+          subject: "Hindi",
+          topic: "संज्ञा, सर्वनाम और विशेषण का तालमेल",
+          intuition: "वाक्य को सुंदर और स्पष्ट बनाने के लिए बार-बार नाम (संज्ञा) की जगह सर्वनाम आता है, और उसकी खासियत बताने के लिए विशेषण जुड़ता है।",
+          formula: "संज्ञा (नाम) → सर्वनाम (नाम के बदले) → विशेषण (गुण/संख्या)",
+          example: "'रोहन अच्छा लड़का है। वह रोज़ पढ़ता है।' यहाँ रोहन (संज्ञा), अच्छा (विशेषण) और वह (सर्वनाम) है।",
+          antiRote: "किताबी परिभाषा रटने के बजाय किसी भी कहानी के 3 वाक्यों में तीनों को अलग-अलग रेखांकित (underline) करें।"
+        },
+        {
+          id: "g45-ai",
+          classGroup: "Grades 4-5",
+          subject: "AI",
+          topic: "How AI Learns from Examples (Training Data)",
+          intuition: "Insaan ki tarah AI ko har rule alag se nahi likhna padta—use hazaron examples (data) dikhaye jaate hain jisse woh khud pattern pakad leta hai.",
+          formula: "Clean Examples (Data) → Pattern Learning → Smart Prediction",
+          example: "Agar AI ko 1000 aam aur 1000 seb ki photos dikhayein, toh woh rang aur aakar ka pattern seekh kar nayi photo pehchan lega.",
+          antiRote: "Agar galat ya adhoori photos se sikhayenge toh AI galat jawab dega—ise 'Garbage In, Garbage Out' kehte hain."
+        },
 
-      // GRADES 9-10
-      {
-        id: 'g910-math-1',
-        classGroup: 'Grades 9-10',
-        subject: 'Mathematics',
-        topic: 'Linear/Quadratic Equations & Trigonometry Ratios',
-        intuition: 'Trigonometry right triangle mein angle aur sides ka rishta hai—jo side angle ke saamne hai woh Opposite, aur 90° ke saamne wali Hypotenuse.',
-        formula: 'sinθ = Opp/Hyp, cosθ = Adj/Hyp, tanθ = Opp/Adj  |  sin²θ + cos²θ = 1',
-        antiRote: 'Table values ratne ke saath-saath triangle draw karke dekhein ki angle badhne se ratio kaise badalta hai.'
-      },
-      {
-        id: 'g910-sci-1',
-        classGroup: 'Grades 9-10',
-        subject: 'Science',
-        topic: 'Chemical Reactions, Ohm’s Law & Heredity',
-        intuition: 'Chemical reaction mein atoms gayab nahi hote, bas naye bonds bante hain; current flow voltage aur resistance ke talmel se chalta hai.',
-        formula: 'V = I × R (Ohm’s Law)  |  Conservation of Mass: Atoms In = Atoms Out',
-        antiRote: 'Equation ya formula ratne ke bajay physical meaning samjhein: resistance badhega toh current ghat-ta hai.'
-      },
-      {
-        id: 'g910-sst-1',
-        classGroup: 'Grades 9-10',
-        subject: 'Social Science',
-        topic: 'Resources, Power Sharing & Development',
-        intuition: 'Sirf GDP ya paisa kaafi nahi—health, education aur equal representation mil kar asli development aur stability banate hain.',
-        formula: 'Sustainable Growth = Economic Need + Social Equity + Ecological Limit',
-        antiRote: 'Answer likhte waqt points ka sequence yaad karne ke bajay Cause → Mechanism → Example ka structure rakhein.'
-      },
-      {
-        id: 'g910-eng-1',
-        classGroup: 'Grades 9-10',
-        subject: 'English',
-        topic: 'Clauses, Reported Speech & Tone Analysis',
-        intuition: 'Reported speech mein baat ka waqt aur speaker badalta hai; kisi passage mein writer ka tone (ironic, hopeful, critical) shabdon se pakda jaata hai.',
-        formula: 'Direct → Shift Tense/Pronoun/Time Word + Reporting Context',
-        antiRote: 'Grammar rules alag se ratne ke bajay comprehension ke real sentences mein clause aur tone pehchanein.'
-      },
-      {
-        id: 'g910-hin-1',
-        classGroup: 'Grades 9-10',
-        subject: 'Hindi',
-        topic: 'वाक्य रचना, रस और अलंकार का भाव-पक्ष',
-        intuition: 'अलंकार या रस सजावट के लिए नहीं बल्कि भाव को गहरा बनाने के लिए आते हैं—उपमा तुलना करती है, रूपक एकरूप कर देता है।',
-        formula: 'भाव + परिस्थिति (विभाव/अनुभाव) = रस  |  अर्थ/शब्द चमत्कार = अलंकार',
-        antiRote: 'उदाहरण रटने के बजाय पंक्ति का अर्थ समझें कि कवि किस भावना को उभारना चाहता है।'
-      },
-      {
-        id: 'g910-ai-1',
-        classGroup: 'Grades 9-10',
-        subject: 'AI',
-        topic: 'Computer Vision, NLP & Model Evaluation',
-        intuition: 'AI image ko pixels ke pattern se dekhta hai aur bhasha ko probability/context se samajhta hai; accuracy ke saath false alarms bhi check karne padte hain.',
-        formula: 'Input → Feature/Token Representation → Model → Accuracy & Error Check',
-        antiRote: 'Jargons ratne ke bajay dekhein ki spam filter ya face unlock real life mein kya galti kar sakta hai.'
-      },
+        // ==================== GRADES 6-8 ====================
+        {
+          id: "g68-math",
+          classGroup: "Grades 6-8",
+          subject: "Mathematics",
+          topic: "Linear Equations & The Balance Scale Principle",
+          intuition: "Equation (=) ek tarazu hai. Dono palde barabar rakhne ke liye jo kaam Left side par karoge (add, subtract, multiply, divide), wahi Right side par karna hoga.",
+          formula: "If ax + b = c  ⇒  ax = c - b  ⇒  x = (c - b) / a",
+          example: "3x + 5 = 20 ⇒ dono taraf 5 ghataya: 3x = 15 ⇒ dono taraf 3 se divide kiya: x = 5.",
+          antiRote: "'Udhhar jaakar plus ka minus ho jaata hai' ko jaadu mat samjhein; woh dono taraf same number ghatane ka shortcut hai."
+        },
+        {
+          id: "g68-sci",
+          classGroup: "Grades 6-8",
+          subject: "Science",
+          topic: "Force vs Pressure: Why Area Matters",
+          intuition: "Force sirf dhakka ya khinchav hai, par Pressure batata hai ki woh force kitne chhote ya bade area par faila hai. Area kam hoga toh asar (pressure) tezi se badhega.",
+          formula: "Pressure (P) = Force (F) / Area (A)   [Unit: Pascal (N/m²)]",
+          example: "Chaqu ki dhaar patli (kam area) hoti hai isliye sabzi aasani se kat-ti hai; school bag ke patte chaude (zyada area) hote hain taaki kandhe par kam dard ho.",
+          antiRote: "Sirf P = F/A mat ratein; hamesha check karein ki Area badhne se Pressure ghat-ta hai (Inverse relation)."
+        },
+        {
+          id: "g68-sst",
+          classGroup: "Grades 6-8",
+          subject: "Social Science",
+          topic: "Cause-Effect Chain in History & Civics",
+          intuition: "History dates ki list nahi hai, balki insaani faislon aur unke natijon ki kahani hai. Har qanoon ya kranti ke peeche ek aarthik ya samajik wajah hoti hai.",
+          formula: "Trigger / Need (Cause) → Action / Event → Long-Term Impact",
+          example: "1857 ki kranti sirf kartoos ki wajah se nahi hui—saalon se chal rahe bhari tax, zameen chheenne aur bhedbhav ne chingari ko aag banaya.",
+          antiRote: "Paragraphs ratne ke bajay har chapter ko 3 columns mein samjhein: Kyun hua? Kya hua? Aage kya badla?"
+        },
+        {
+          id: "g68-eng",
+          classGroup: "Grades 6-8",
+          subject: "English",
+          topic: "Active vs Passive Voice: Shifting the Spotlight",
+          intuition: "Active voice mein spotlight 'kaam karne wale' (Doer) par hoti hai. Passive voice mein spotlight 'kaam ya result' par chali jaati hai jab doer zaroori na ho.",
+          formula: "Active: Subject + Verb + Object | Passive: Object + be-form + V3 (+ by Subject)",
+          example: "'The police caught the thief' (Active) vs 'The thief was caught' (Passive—yahan pakda jaana zyada important news hai).",
+          antiRote: "Voice change karte waqt tense kabhi mat badlein—sirf verb ka form 'be + V3' mein badalta hai."
+        },
+        {
+          id: "g68-hin",
+          classGroup: "Grades 6-8",
+          subject: "Hindi",
+          topic: "उपसर्ग, प्रत्यय और मूल शब्द (Root Word)",
+          intuition: "शब्द एक पेड़ की तरह है—मूल शब्द उसकी जड़ है। आगे जुड़ने वाला उपसर्ग दिशा या अर्थ बदलता है, और पीछे जुड़ने वाला प्रत्यय नया रूप बनाता है।",
+          formula: "उपसर्ग (आगे) + मूल शब्द + प्रत्यय (पीछे) = नया शब्द",
+          example: "'अ + सुरक्षित + ता = असुरक्षितता' — यहाँ 'सुरक्षित' मूल शब्द, 'अ' उपसर्ग और 'ता' प्रत्यय है।",
+          antiRote: "बिना सार्थक मूल शब्द (root word) निकाले उपसर्ग-प्रत्यय अलग न करें, वरना 'सुंदर' में से 'सु' अलग करने जैसी गलती होगी।"
+        },
+        {
+          id: "g68-ai",
+          classGroup: "Grades 6-8",
+          subject: "AI",
+          topic: "Algorithmic Bias & Data Quality",
+          intuition: "AI khud se bhedbhav nahi karta, par agar use diya gaya training data adhoora ya ek-tarfa (biased) ho, toh woh galat aur unfair faisle dene lagta hai.",
+          formula: "Diverse & Balanced Data → Fair AI | Skewed Data → Biased AI",
+          example: "Agar kisi face-unlock AI ko sirf ujaale mein li gayi photos se train kiya jaye, toh woh kam roshni mein fail ho jayega.",
+          antiRote: "AI ke output ko aankh moond kar sach na maanein; hamesha sochein ki uske peeche ka data kaisa raha hoga."
+        },
 
-      // 11-12 SCIENCE
-      {
-        id: 's1112-math-1',
-        classGroup: '11-12 Science',
-        subject: 'Mathematics',
-        topic: 'Limits, Derivatives & Integration as Accumulation',
-        intuition: 'Derivative instant rate of change (slope/velocity) batata hai, jabki Integration chhote-chhote hisson ko jod kar total area/quantity nikaalta hai.',
-        formula: 'd/dx(xⁿ) = n·xⁿ⁻¹  |  ∫ xⁿ dx = xⁿ⁺¹/(n+1) + C  (n ≠ -1)',
-        antiRote: 'Formula sheet ratne se pehle graph par tangent (slope) aur strips ka area visualize karein.'
-      },
-      {
-        id: 's1112-sci-1',
-        classGroup: '11-12 Science',
-        subject: 'Science',
-        topic: 'Electromagnetism, Thermodynamics & Reaction Mechanisms',
-        intuition: 'Badalta hua magnetic flux current paida karta hai; chemical bond tootne aur banne mein energy ka exchange electron movement se tay hota hai.',
-        formula: 'ε = -dΦ_B/dt (Faraday)  |  ΔU = q + w (1st Law of Thermodynamics)',
-        antiRote: 'Sign conventions mein confusion se bachne ke liye system aur surrounding ko clearly define karein.'
-      },
-      {
-        id: 's1112-sst-1',
-        classGroup: '11-12 Science',
-        subject: 'Social Science',
-        topic: 'Science Policy, Ethics & Global Geopolitics',
-        intuition: 'Technology aur research lab mein banti hai, par uska asar society, environment aur international relations par padta hai.',
-        formula: 'Scientific Innovation + Ethical Governance = Responsible Progress',
-        antiRote: 'Case studies ko isolated facts na maanein; policy aur public impact se jor kar samjhein.'
-      },
-      {
-        id: 's1112-eng-1',
-        classGroup: '11-12 Science',
-        subject: 'English',
-        topic: 'Analytical Writing, Synthesis & Rhetorical Devices',
-        intuition: 'Strong writing mein claim ke baad evidence aur reasoning aati hai—sirf heavy words bharne se argument mazboot nahi hota.',
-        formula: 'Claim (Thesis) → Evidence/Data → Reasoning/Link → Counter-view/Conclusion',
-        antiRote: 'Readymade essays ratne ke bajay har paragraph ka main idea aur logical transition banayein.'
-      },
-      {
-        id: 's1112-hin-1',
-        classGroup: '11-12 Science',
-        subject: 'Hindi',
-        topic: 'काव्य-बोध, गद्य विश्लेषण और अभिव्यक्ति कौशल',
-        intuition: 'किसी भी गद्य या कविता की ताकत उसके प्रतीकों (symbols) और संदर्भ में छिपी होती है—शब्दार्थ से आगे भावार्थ पकड़ना ज़रूरी है।',
-        formula: 'संदर्भ + शब्द-प्रतीक + भाव/संदेश = समग्र विश्लेषण',
-        antiRote: 'Summary ratne ke bajay har stanza ya paragraph ka mukhya sandesh apne shabdon mein likhein.'
-      },
-      {
-        id: 's1112-ai-1',
-        classGroup: '11-12 Science',
-        subject: 'AI',
-        topic: 'Neural Networks, Loss & Overfitting',
-        intuition: 'Agar model training data ko har detail ke saath rat le (overfitting), toh naye sawalon par fail ho sakta hai—generalization zaroori hai.',
-        formula: 'Prediction Error (Loss) → Weight Update → Validation Check (Generalization)',
-        antiRote: 'Sirf high training score dekh kar khush na hon; unseen test cases par performance dekhein.'
-      },
+        // ==================== GRADES 9-10 ====================
+        {
+          id: "g910-math",
+          classGroup: "Grades 9-10",
+          subject: "Mathematics",
+          topic: "Trigonometry: Ratios of a Right Triangle",
+          intuition: "Trigonometry koi alag duniya nahi—yeh bas Right-Angled Triangle ke angle aur sides ka pakka ratio hai. Angle fix ho toh triangle chhota ho ya bada, ratio same rehta hai.",
+          formula: "sinθ = P/H, cosθ = B/H, tanθ = P/B  |  sin²θ + cos²θ = 1",
+          example: "Agar building ki doori (Base) aur upar dekhne ka angle (θ) pata ho, toh bina chadhhe tanθ = Height/Base se height nikal aati hai.",
+          antiRote: "Perpendicular hamesha 'khadi line' nahi hoti—jo side angle θ ke bilkul saamne ho, wahi Perpendicular (Opposite) hoti hai!"
+        },
+        {
+          id: "g910-sci",
+          classGroup: "Grades 9-10",
+          subject: "Science",
+          topic: "Ohm's Law & Balancing Chemical Equations",
+          intuition: "Electricity mein Voltage (V) dhakka hai, Current (I) bahav hai, aur Resistance (R) rukawat hai. Chemistry mein atoms kabhi gayab nahi hote, bas partners badalte hain.",
+          formula: "V = I × R  (Ohm's Law)  |  Mass of Reactants = Mass of Products",
+          example: "Wire patli aur lambi hogi toh Resistance badhega aur Current kam hoga. Waise hi 2H₂ + O₂ → 2H₂O mein dono taraf 4 H aur 2 O atoms hain.",
+          antiRote: "Equation balance karte waqt formulas ke neeche ke numbers (subscripts) kabhi mat badlein—sirf aage coefficients lagayein."
+        },
+        {
+          id: "g910-sst",
+          classGroup: "Grades 9-10",
+          subject: "Social Science",
+          topic: "Power Sharing & Sustainable Development",
+          intuition: "Power ko ek haath mein rakhne se takrav badhta hai; baantne (Legislature, Executive, Judiciary) se democracy mazboot hoti hai. Asli vikas woh hai jo aane wali peedhi ke resources na khatam kare.",
+          formula: "True Development = Income + Health + Education + Sustainability",
+          example: "Sirf Per Capita Income zyada hone se rajya viksit nahi hota—agar wahan literacy aur healthcare kam hai toh growth adhoori hai.",
+          antiRote: "Board answers mein lambi kahani mat likhein; har point ko 'Heading + Core Logic + Real Example' format mein likhein."
+        },
+        {
+          id: "g910-eng",
+          classGroup: "Grades 9-10",
+          subject: "English",
+          topic: "Reported Speech & Reading Comprehension Tone",
+          intuition: "Jab hum kisi ki baat baad mein kisi teesre ko batate hain, toh waqt (tense), pronoun aur time-words (today → that day) naturally shift ho jaate hain.",
+          formula: "Direct (Exact Words) → Indirect (Backshift Tense + Adjust Pronoun/Time)",
+          example: "Riya said, 'I am studying now.' → Riya said that she was studying then. (Agar universal truth ho toh tense nahi badalta!)",
+          antiRote: "Comprehension mein direct lines copy-paste mat karein; writer ka mood (critical, hopeful, ironic) pakad kar apne shabdon mein likhein."
+        },
+        {
+          id: "g910-hin",
+          classGroup: "Grades 9-10",
+          subject: "Hindi",
+          topic: "रस और अलंकार: काव्य का भाव-सौंदर्य",
+          intuition: "अलंकार कविता के गहने हैं जो बात को असरदार बनाते हैं, और रस वह भावना (खुशी, शोक, वीरता) है जो पाठक के मन में पैदा होती है।",
+          formula: "स्थायी भाव + विभाव + अनुभाव = रस | उपमा (तुलना) vs रूपक (एकरूपता)",
+          example: "'चरण कमल बंदौ हरिराई' में चरण को ही कमल कह दिया गया (रूपक अलंकार), 'कमल जैसा' नहीं कहा।",
+          antiRote: "सिर्फ उदाहरण रटने के बजाय पंक्ति में तुलनावाचक शब्द (सा, सी, सम) और मुख्य भाव पहचानना सीखें।"
+        },
+        {
+          id: "g910-ai",
+          classGroup: "Grades 9-10",
+          subject: "AI",
+          topic: "AI Project Cycle & Confusion Matrix",
+          intuition: "Sirf Accuracy dekhna kaafi nahi—medical ya security AI mein yeh dekhna zaroori hai ki kitne galat alerts (False Positive) ya chhoote hue khatre (False Negative) aaye.",
+          formula: "Problem Scoping → Data Acquisition → Exploration → Modelling → Evaluation",
+          example: "Agar cancer test AI 99% accurate hai par 1 asli mareez ko 'healthy' bata de (False Negative), toh woh khatarnak galti hai.",
+          antiRote: "Precision aur Recall ke formulas ratne se pehle False Positive vs False Negative ka real-life nuksan samjhein."
+        },
 
-      // 11-12 HUMANITIES
-      {
-        id: 'h1112-math-1',
-        classGroup: '11-12 Humanities',
-        subject: 'Mathematics',
-        topic: 'Statistics, Mean-Variance & Probability',
-        intuition: 'Average (mean) sirf center dikhata hai, jabki dispersion (range/variance) batata hai ki data kitna faila hua hai.',
-        formula: 'Mean (x̄) = Σxᵢ / n  |  P(E) = Favorable Outcomes / Total Outcomes',
-        antiRote: 'Formula yaad karne ke saath samjhein ki outliers (bahut bade/chhote numbers) mean ko kaise kheench lete hain.'
-      },
-      {
-        id: 'h1112-sci-1',
-        classGroup: '11-12 Humanities',
-        subject: 'Science',
-        topic: 'Human Geography, Climate Systems & Ecology',
-        intuition: 'Mausam, mitti, paani aur insani bastiyan ek ecosystem hain—ek jagah badlav aaye toh doosri jagah chain reaction hota hai.',
-        formula: 'Climate + Topography + Resource Access → Settlement & Livelihood Pattern',
-        antiRote: 'List ratne ke bajay "kyun yahan population zyada ya kam hai?" ka geographical reason samjhein.'
-      },
-      {
-        id: 'h1112-sst-1',
-        classGroup: '11-12 Humanities',
-        subject: 'Social Science',
-        topic: 'Constitutionalism, Sovereignty & Historical Continuity',
-        intuition: 'Sanvidhan aur institutions isliye banaye jaate hain taaki power ka misuse ruke aur nagrik ke adhikar surakshit rahein.',
-        formula: 'Power + Checks & Balances + Fundamental Rights = Constitutional Democracy',
-        antiRote: 'Articles ya dates sirf ratne ke bajay unke peeche ka historical context aur purpose samjhein.'
-      },
-      {
-        id: 'h1112-eng-1',
-        classGroup: '11-12 Humanities',
-        subject: 'English',
-        topic: 'Critical Reading, Irony & Narrative Perspective',
-        intuition: 'First-person narrator ka view personal ho sakta hai aur irony mein kaha kuch aur jaata hai, matlab kuch aur nikalta hai.',
-        formula: 'Perspective (Who Speaks) + Context + Irony/Symbol = Deeper Meaning',
-        antiRote: 'Character traits ratne ke bajay unke decisions aur conflicts ke peeche ka motive samjhein.'
-      },
-      {
-        id: 'h1112-hin-1',
-        classGroup: '11-12 Humanities',
-        subject: 'Hindi',
-        topic: 'साहित्यिक प्रवृत्तियाँ, विचारधारा और आलोचना',
-        intuition: 'साहित्य अपने युग की धड़कन होता है—समाज की समस्याएँ और उम्मीदें ही कविता, कहानी या निबंध की दिशा तय करती हैं।',
-        formula: 'युगीन परिस्थितियाँ + लेखक की दृष्टि = साहित्यिक रचना',
-        antiRote: 'काल या प्रवृत्ति के नाम रटने के बजाय उसकी मुख्य चेतना और उदाहरण को आपस में जोड़ें।'
-      },
-      {
-        id: 'h1112-ai-1',
-        classGroup: '11-12 Humanities',
-        subject: 'AI',
-        topic: 'AI Ethics, Privacy, Misinformation & Society',
-        intuition: 'AI tezi se content aur decisions bana sakta hai, par privacy, copyright, deepfakes aur accountability ke sawal samaj aur qanoon se judte hain.',
-        formula: 'Capability vs Consent + Transparency + Accountability',
-        antiRote: 'Bhashan ya points ratne ke bajay real cases (news, privacy, exams) mein ethical trade-offs sochein.'
-      },
+        // ==================== 11-12 SCIENCE ====================
+        {
+          id: "s1112-math",
+          classGroup: "11-12 Science",
+          subject: "Mathematics",
+          topic: "Calculus: Derivative (Rate) vs Integral (Accumulation)",
+          intuition: "Derivative batata hai ki kisi exact pal (instant) par koi cheez kitni tezi se badal rahi hai (slope). Integration uska ulta hai—chhote-chhote tukdon ko jodkar total area ya distance nikalna.",
+          formula: "d/dx (xⁿ) = n·xⁿ⁻¹  |  ∫ xⁿ dx = xⁿ⁺¹/(n+1) + C  (n ≠ -1)",
+          example: "Car ke speedometer ki reading Derivative (instant velocity) hai, aur odometer par dikhne wala total km Integration (area under v-t graph) hai.",
+          antiRote: "Integration mein '+ C' (constant) lagana kyun zaroori hai? Kyunki derivative lete waqt koi bhi constant 0 ban kar gayab ho jaata hai."
+        },
+        {
+          id: "s1112-sci",
+          classGroup: "11-12 Science",
+          subject: "Science",
+          topic: "Thermodynamics & Electromagnetic Induction",
+          intuition: "Energy na banti hai na mit-ti hai—heat dene par ya toh internal energy badhegi ya system kaam (work) karega. Waise hi badalta hua magnetic flux current paida karta hai.",
+          formula: "ΔU = q + w (1st Law)  |  ε = -dΦ_B / dt (Faraday-Lenz Law)",
+          example: "Lenz's Law ka minus (-) sign batata hai ki induced current hamesha usi badlav ka virodh karta hai jisne use paida kiya (Conservation of Energy).",
+          antiRote: "Physics aur Chemistry mein Work (w) ka sign convention alag hota hai—numerical solve karne se pehle system par focus karein."
+        },
+        {
+          id: "s1112-sst",
+          classGroup: "11-12 Science",
+          subject: "Social Science",
+          topic: "Tech Governance, Climate Policy & Geopolitics",
+          intuition: "Scientific breakthroughs (semiconductors, green energy, space) sirf lab tak nahi rehte—yeh deshon ki economy, suraksha aur global diplomacy tay karte hain.",
+          formula: "R&D Innovation + Ethical Regulation = Strategic National Strength",
+          example: "Solar aur EV transition sirf environment ka mudda nahi, balki oil import kam karke desh ki energy security badhane ki strategy hai.",
+          antiRote: "Current affairs ko isolated news ki tarah mat padhein; unhe science, economy aur policy ke triangle mein dekhein."
+        },
+        {
+          id: "s1112-eng",
+          classGroup: "11-12 Science",
+          subject: "English",
+          topic: "Analytical Writing & Claim-Evidence-Reasoning",
+          intuition: "High-scoring writing mein bhaari vocabulary se zyada zaroori hai logical flow. Har claim ke peeche data ya text ka saboot (evidence) aur uska reasoning hona chahiye.",
+          formula: "Thesis (Claim) → Evidence (Fact/Quote) → Analysis (Why it matters)",
+          example: "Article writing mein 'Pollution is bad' likhne ke bajay AQI data, health impact aur actionable solution ka link banayein.",
+          antiRote: "Rat-te hue generic intro-conclusion har essay mein fit mat karein; topic ke specific angle par seedha baat karein."
+        },
+        {
+          id: "s1112-hin",
+          classGroup: "11-12 Science",
+          subject: "Hindi",
+          topic: "काव्य-सौंदर्य, प्रतीकार्थ और सटीक अभिव्यक्ति",
+          intuition: "उच्च स्तर की हिंदी में शब्दों के सीधे अर्थ (अभिधा) से आगे बढ़कर उसके छिपे हुए व्यंग्य या गहरे भाव (लक्षणा/व्यंजना) को समझना मुख्य कौशल है।",
+          formula: "प्रसंग + मुख्य भाव (भाव-पक्ष) + भाषा-शैली (कला-पक्ष) = पूर्ण उत्तर",
+          example: "'अँधेरा' कविता में केवल रात नहीं, बल्कि अज्ञान या निराशा का प्रतीक (symbol) भी हो सकता है।",
+          antiRote: "कविता का केवल सारांश रटने के बजाय कवि द्वारा चुने गए प्रतीकों और बिंबों का अर्थ समझें।"
+        },
+        {
+          id: "s1112-ai",
+          classGroup: "11-12 Science",
+          subject: "AI",
+          topic: "Neural Networks, Loss Function & Overfitting",
+          intuition: "Neural network apni galti (Loss) ko naap kar apne weights ko baar-baar adjust karta hai. Agar woh training data ko rat le, toh naye test data par fail ho jaata hai (Overfitting).",
+          formula: "Forward Pass → Compute Loss → Backpropagation (Update Weights)",
+          example: "Jaise koi student sirf sample paper ke answers rat le par naya question aate hi atak jaye—wahi AI mein Overfitting hai.",
+          antiRote: "100% training accuracy dekh kar khush mat hon; asli test hamesha unseen Validation/Test data par hota hai."
+        },
 
-      // 11-12 COMMERCE
-      {
-        id: 'c1112-math-1',
-        classGroup: '11-12 Commerce',
-        subject: 'Mathematics',
-        topic: 'Percentages, Compounding & Time Value of Money',
-        intuition: 'Compound interest mein har saal pichle baar ke byaaj par bhi byaaj milta hai—isi liye waqt badhne se growth tezi se badhti hai.',
-        formula: 'Amount (A) = P(1 + r/100)ⁿ  |  CI = A - P',
-        antiRote: 'Simple vs Compound formula ratne ke saath dekhein ki shuruati saalon mein farq kam aur baad mein bada kyun hota hai.'
-      },
-      {
-        id: 'c1112-sci-1',
-        classGroup: '11-12 Commerce',
-        subject: 'Science',
-        topic: 'Industrial Technology, Supply Chain & Green Cost',
-        intuition: 'Aaj ke business mein production sirf machine tak seemit nahi—logistics, energy efficiency aur sustainability cost ko direct affect karte hain.',
-        formula: 'Unit Cost = (Fixed + Variable + Operational/Compliance Costs) / Output',
-        antiRote: 'Case studies mein sirf theory na likhein; real supply chain aur cost factors se jor kar samjhein.'
-      },
-      {
-        id: 'c1112-sst-1',
-        classGroup: '11-12 Commerce',
-        subject: 'Social Science',
-        topic: 'Opportunity Cost, Demand-Supply & Fiscal Policy',
-        intuition: 'Har decision ki ek "opportunity cost" hoti hai—jo best option aapne chhod diya. Market mein price demand aur supply ke santulan se banta hai.',
-        formula: 'Opportunity Cost = Value of Next Best Alternative Foregone',
-        antiRote: 'Graphs ke curves bina samjhe ratne ke bajay price badhne/ghatne par buyer aur seller ka behavior sochein.'
-      },
-      {
-        id: 'c1112-eng-1',
-        classGroup: '11-12 Commerce',
-        subject: 'English',
-        topic: 'Business Communication, Clarity & Persuasion',
-        intuition: 'Professional communication mein clarity aur brevity sabse zaroori hoti hai—reader ko turant samajh aana chahiye ki kya action chahiye.',
-        formula: 'Clear Purpose + Key Facts + Actionable Next Step',
-        antiRote: 'Fixed formats ratne ke bajay audience aur message ke goal ke hisaab se tone adjust karna seekhein.'
-      },
-      {
-        id: 'c1112-hin-1',
-        classGroup: '11-12 Commerce',
-        subject: 'Hindi',
-        topic: 'व्यावहारिक हिंदी, प्रारूपण और सार-लेखन',
-        intuition: 'प्रभावी लेखन वह है जिसमें अनावश्यक विस्तार न हो, भाषा शुद्ध हो और मूल तथ्य कम शब्दों में स्पष्ट रूप से सामने आ जाएँ।',
-        formula: 'मुख्य तथ्य + स्पष्ट संरचना + संक्षिप्त भाषा = प्रभावी लेखन',
-        antiRote: 'रटे-रटाए वाक्यों के बजाय किसी बड़े अनुच्छेद का सार अपने शब्दों में कम शब्दों में लिखने का अभ्यास करें।'
-      },
-      {
-        id: 'c1112-ai-1',
-        classGroup: '11-12 Commerce',
-        subject: 'AI',
-        topic: 'AI in Forecasting, Automation & Risk Control',
-        intuition: 'Business mein AI demand forecasting, customer support automation aur fraud detection mein madad karta hai, par final decision human oversight se hota hai.',
-        formula: 'Historical Trends + Live Signals → Forecast → Human Risk Review',
-        antiRote: 'AI ko "automatic profit button" samajhne ke bajay dekhein ki galat forecast se inventory ya cash flow par kya asar pad sakta hai.'
-      }
-    ];
+        // ==================== 11-12 HUMANITIES ====================
+        {
+          id: "h1112-math",
+          classGroup: "11-12 Humanities",
+          subject: "Mathematics",
+          topic: "Descriptive Statistics: Mean vs Median vs Variance",
+          intuition: "Average (Mean) tab dhokha de sakta hai jab data mein ek bahut bada ya chhota number (outlier) ho. Median middle value batata hai aur Variance data ka failav.",
+          formula: "Mean = Σxᵢ / n  |  Variance (σ²) = Σ(xᵢ - x̄)² / n",
+          example: "Agar 4 logon ki salary ₹20k hai aur 1 ki ₹10 Lakh, toh Mean ₹2.16 Lakh aayega (misleading), par Median ₹20k asli picture dikhayega.",
+          antiRote: "Sirf formula apply mat karein; hamesha check karein ki data mein outliers hain ya nahi."
+        },
+        {
+          id: "h1112-sci",
+          classGroup: "11-12 Humanities",
+          subject: "Science",
+          topic: "Climate Systems, Monsoon & Human Ecology",
+          intuition: "Prithvi ka mausam, hawaon ka dabav (pressure belts) aur insani bastiyan ek doosre se judi hain. Land aur water ke alag-alag garam hone se monsoon banta hai.",
+          formula: "Differential Heating → Pressure Gradient → Wind & Monsoon Flow",
+          example: "Garmiyon mein Bharat ki zameen samudra se zyada garam hokar Low Pressure banati hai, jo samudra ki nami wali hawaon ko kheench laati hai.",
+          antiRote: "Monsoon ke naam aur dates ratne ke bajay High Pressure se Low Pressure ki taraf hawa ke bahav ka logic samjhein."
+        },
+        {
+          id: "h1112-sst",
+          classGroup: "11-12 Humanities",
+          subject: "Social Science",
+          topic: "Constitutionalism & Checks and Balances",
+          intuition: "Sanvidhan sirf qanoon ki kitab nahi, balki sarkar ki taqat par lagam (limits) lagane aur nagrikon ke Fundamental Rights bachane ka zinda dastavez hai.",
+          formula: "Sovereignty + Separation of Powers + Judicial Review = Constitutional Democracy",
+          example: "Agar koi qanoon Fundamental Rights ka ullanghan kare, toh Supreme Court (Judicial Review) use radd kar sakta hai.",
+          antiRote: "Articles ke number ratne ke saath unka 'Basic Structure' aur real-world case study (jaise Kesavananda Bharati) zaroor jodein."
+        },
+        {
+          id: "h1112-eng",
+          classGroup: "11-12 Humanities",
+          subject: "English",
+          topic: "Narrative Perspective, Subtext & Irony",
+          intuition: "Literature mein jo likha hai usse zyada zaroori hota hai jo 'unsaid' (subtext) hai. Unreliable narrator aur irony kahani ko gehrai dete hain.",
+          formula: "Literal Text + Historical/Social Context + Literary Devices = Critical Interpretation",
+          example: "Irony mein kirdar jo ummeed karta hai uska theek ulta hota hai—jisse samaj ki kamzoriyan ujaagar hoti hain.",
+          antiRote: "Character sketch ki readymade lines mat ratein; har trait ko story ke kisi specific event se prove karein."
+        },
+        {
+          id: "h1112-hin",
+          classGroup: "11-12 Humanities",
+          subject: "Hindi",
+          topic: "साहित्यिक काल-विभाजन और युगीन चेतना",
+          intuition: "साहित्य समाज का दर्पण है—भक्तिकाल, छायावाद या प्रगतिवाद केवल नाम नहीं, बल्कि उस समय की सामाजिक, राजनीतिक और मानसिक परिस्थितियों की उपज हैं।",
+          formula: "युगीन परिवेश + रचनाकार की संवेदना = साहित्यिक धारा",
+          example: "स्वाधीनता संग्राम के समय की कविताओं में राष्ट्रीय चेतना और विद्रोह का स्वर स्वाभाविक रूप से प्रमुख था।",
+          antiRote: "कवियों और रचनाओं की सूचियाँ रटने के बजाय हर युग की मुख्य विचारधारा को उसकी प्रमुख रचना से जोड़कर याद रखें।"
+        },
+        {
+          id: "h1112-ai",
+          classGroup: "11-12 Humanities",
+          subject: "AI",
+          topic: "AI Ethics, Deepfakes, Copyright & Governance",
+          intuition: "Generative AI tezi se text, audio aur video bana sakta hai, par iske saath privacy, misinformation, deepfakes aur human accountability ke bade samajik sawal khade hote hain.",
+          formula: "Responsible AI = Transparency + Consent + Fairness + Accountability",
+          example: "Agar AI kisi artist ke style ko bina permission copy kare ya fake news video banaye, toh iska kanooni aur naitik zimmedar kaun hoga?",
+          antiRote: "AI ke sirf 'advantages/disadvantages' ratne ke bajay real policy challenges aur human-in-the-loop ka mahatva samjhein."
+        },
 
-    let activeClass = 'ALL';
-    let activeSubject = 'ALL';
+        // ==================== 11-12 COMMERCE ====================
+        {
+          id: "c1112-math",
+          classGroup: "11-12 Commerce",
+          subject: "Mathematics",
+          topic: "Time Value of Money, Compounding & Annuities",
+          intuition: "Aaj ke ₹1,000 ki keemat 5 saal baad ke ₹1,000 se zyada hai—kyunki aaj ka paisa invest hokar byaaj (compound interest) kama sakta hai aur mehangai (inflation) keemat ghatati hai.",
+          formula: "A = P(1 + r/n)^(nt)  |  Rule of 72: Doubling Time ≈ 72 / Interest Rate",
+          example: "12% annual compounding par aapka paisa lagbhag 72/12 = 6 saal mein double ho jaata hai.",
+          antiRote: "Simple vs Compound interest mein sirf formula mat dekhein; compounding frequency (monthly vs yearly) ka bada asar samjhein."
+        },
+        {
+          id: "c1112-sci",
+          classGroup: "11-12 Commerce",
+          subject: "Science",
+          topic: "Operations, Supply Chain & Unit Economics",
+          intuition: "Koi bhi business sirf achhe product se nahi chalta—uske peeche logistics, inventory speed, aur har ek unit ko banane-bechne ka kharch (Unit Economics) munafa tay karta hai.",
+          formula: "Contribution Margin = Selling Price per Unit - Variable Cost per Unit",
+          example: "Agar ek product ₹500 mein bikta hai par delivery, packaging aur ads par ₹550 lag rahe hain, toh zyada sale hone par bhi nuksan badhega!",
+          antiRote: "Revenue (Total Sales) aur Profit (Munafa) ko ek mat samjhein; Fixed vs Variable cost ka farq clear rakhein."
+        },
+        {
+          id: "c1112-sst",
+          classGroup: "11-12 Commerce",
+          subject: "Social Science",
+          topic: "Opportunity Cost, Demand-Supply & Elasticity",
+          intuition: "Resources limited hain, isliye har choice ki ek 'Opportunity Cost' hoti hai—woh next best option jo aapne chhod diya. Price wahan rukta hai jahan buyer aur seller raazi hon.",
+          formula: "Opportunity Cost = Value of Next Best Alternative Foregone",
+          example: "Agar petrol mehanga ho jaye tab bhi log use kharidte hain (Inelastic Demand), par agar ek cold drink mehangi ho toh log doosra brand le lete hain (Elastic).",
+          antiRote: "Demand curve ka 'Movement along curve' (price change) aur 'Shift in curve' (income/taste change) aapas mein mix mat karein."
+        },
+        {
+          id: "c1112-eng",
+          classGroup: "11-12 Commerce",
+          subject: "English",
+          topic: "Executive Communication: Clarity & Action",
+          intuition: "Corporate aur business writing mein lambe-chaude ghumavdar sentences ki jagah seedhi, crisp aur polite baat (Pyramid Principle) sabse zyada effective hoti hai.",
+          formula: "Key Conclusion First → Supporting Facts/Numbers → Clear Next Step",
+          example: "Email ya Business Report mein subject line aur pehli 2 lines mein hi main purpose aur deadline clear kar dein.",
+          antiRote: "Purane archaic phrases ('I beg to state that...') use karne ke bajay modern, crisp aur respectful professional tone apnayein."
+        },
+        {
+          id: "c1112-hin",
+          classGroup: "11-12 Commerce",
+          subject: "Hindi",
+          topic: "प्रयोजनमूलक हिंदी, प्रारूपण और सार-लेखन",
+          intuition: "कार्यालयी और व्यावसायिक लेखन में अलंकार या भावुकता नहीं, बल्कि तथ्यों की सटीकता, स्पष्ट संरचना और कम से कम शब्दों में पूरी बात कहना आवश्यक है।",
+          formula: "मूल तथ्य + क्रमबद्ध प्रस्तुति + संक्षिप्तता (लगभग 1/3 भाग) = श्रेष्ठ सार-लेखन",
+          example: "किसी बड़े व्यावसायिक प्रतिवेदन (report) के मुख्य निर्णय और आंकड़ों को बिना नया विचार जोड़े संक्षेप में प्रस्तुत करना।",
+          antiRote: "सार-लेखन में मूल अनुच्छेद की पंक्तियाँ ज्यों की त्यों उतारने के बजाय मुख्य विचार को अपनी सरल भाषा में लिखें।"
+        },
+        {
+          id: "c1112-ai",
+          classGroup: "11-12 Commerce",
+          subject: "AI",
+          topic: "AI in Finance, Demand Forecasting & Fraud Detection",
+          intuition: "Commerce mein AI hazaron transactions ko seconds mein scan karke fraud pakadta hai aur pichle sales trends dekh kar inventory/demand ka andaza lagata hai.",
+          formula: "Historical Data + Real-Time Signals → Predictive Model → Human Decision",
+          example: "Agar aapke UPI/Card se achanak kisi anjaan desh mein badi payment ho, toh AI anomaly pakad kar turant alert bhej deta hai.",
+          antiRote: "AI ko '100% guaranteed profit machine' mat samjhein—market crashes ya achanak badlav mein human judgement zaroori hota hai."
+        }
+      ];
 
-    function renderFilters() {
-      const classBox = document.getElementById('classFilters');
-      const subBox = document.getElementById('subjectFilters');
+      let activeClass = "ALL";
+      let activeSubject = "ALL";
+      let searchQuery = "";
 
-      classBox.innerHTML = CLASS_GROUPS.map(grp => {
-        const active = grp === activeClass;
-        return `
-          <button
-            type="button"
-            onclick="selectClass('${grp}')"
-            class="rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
-              active
-                ? 'bg-amber-500 text-zinc-950 shadow'
-                : 'border border-zinc-700 bg-zinc-900 text-zinc-300 hover:border-amber-400/50'
-            }"
-          >${grp === 'ALL' ? 'All Classes' : grp}</button>
-        `;
-      }).join('');
-
-      subBox.innerHTML = SUBJECTS.map(sub => {
-        const active = sub === activeSubject;
-        return `
-          <button
-            type="button"
-            onclick="selectSubject('${sub}')"
-            class="rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
-              active
-                ? 'bg-amber-400 text-zinc-950 shadow'
-                : 'border border-zinc-700 bg-zinc-900 text-zinc-300 hover:border-amber-400/50'
-            }"
-          >${sub === 'ALL' ? 'All Subjects' : sub}</button>
-        `;
-      }).join('');
-    }
-
-    function selectClass(grp) {
-      activeClass = grp;
-      renderFilters();
-      renderCards();
-    }
-
-    function selectSubject(sub) {
-      activeSubject = sub;
-      renderFilters();
-      renderCards();
-    }
-
-    function bookConceptDemo(id) {
-      const item = CONCEPTS.find(c => c.id === id);
-      if (!item) return;
-
-      const payload = {
-        type: 'STUDY_PLAN',
-        name: 'Concept Vault Lead',
-        area: 'Concept Vault (resources.html)',
-        society: '-',
-        classLabel: item.classGroup,
-        board: 'CBSE / ICSE / Concept Vault',
-        mode: '1-on-1 Concept Demo',
-        subjects: `${item.subject} — ${item.topic}`,
-        frequency: 'Free Concept Demo Request'
-      };
-
-      if (CRM_WEBHOOK_URL) {
-        fetch(CRM_WEBHOOK_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify(payload)
-        }).catch(() => {});
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
       }
 
-      const msg =
-        `Namaste Ravi Sir! 🙏\n` +
-        `I explored the *Free Concept Vault* on *ELITE CLASSES* (eliteclassesnoida.in/resources.html):\n` +
-        `• *Class Group:* ${item.classGroup}\n` +
-        `• *Subject:* ${item.subject}\n` +
-        `• *Concept:* ${item.topic}\n\n` +
-        `Please help me book a *Free 1-on-1 Concept Demo* for this topic.`;
+      function renderFilters() {
+        const classBox = document.getElementById("classFilters");
+        const subBox = document.getElementById("subjectFilters");
+        if (!classBox || !subBox) return;
 
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
-    }
+        classBox.innerHTML = CLASS_GROUPS.map(function (grp) {
+          const isActive = grp === activeClass;
+          const label = grp === "ALL" ? "All Classes" : grp;
+          return (
+            '<button type="button" data-class="' + escapeHtml(grp) + '" class="class-btn rounded-full px-3.5 py-1.5 text-xs font-bold transition ' +
+            (isActive
+              ? "bg-amber-500 text-zinc-950 shadow-md shadow-amber-500/20"
+              : "border border-zinc-700 bg-zinc-900 text-zinc-300 hover:border-amber-400/60 hover:text-white") +
+            '">' + escapeHtml(label) + "</button>"
+          );
+        }).join("");
 
-    function renderCards() {
-      const filtered = CONCEPTS.filter(c => {
-        const matchClass = activeClass === 'ALL' || c.classGroup === activeClass;
-        const matchSub = activeSubject === 'ALL' || c.subject === activeSubject;
-        return matchClass && matchSub;
-      });
+        subBox.innerHTML = SUBJECTS.map(function (sub) {
+          const isActive = sub === activeSubject;
+          const label = sub === "ALL" ? "All Subjects" : sub;
+          return (
+            '<button type="button" data-subject="' + escapeHtml(sub) + '" class="subject-btn rounded-full px-3.5 py-1.5 text-xs font-bold transition ' +
+            (isActive
+              ? "bg-amber-400 text-zinc-950 shadow-md shadow-amber-400/20"
+              : "border border-zinc-700 bg-zinc-900 text-zinc-300 hover:border-amber-400/60 hover:text-white") +
+            '">' + escapeHtml(label) + "</button>"
+          );
+        }).join("");
 
-      const grid = document.getElementById('vaultGrid');
-      const countEl = document.getElementById('resultCount');
-      countEl.textContent = `Showing ${filtered.length} Concept${filtered.length === 1 ? '' : 's'} • ${activeClass === 'ALL' ? 'All Classes' : activeClass} • ${activeSubject === 'ALL' ? 'All Subjects' : activeSubject}`;
+        classBox.querySelectorAll(".class-btn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            activeClass = btn.getAttribute("data-class");
+            renderFilters();
+            renderCards();
+          });
+        });
 
-      if (!filtered.length) {
-        grid.innerHTML = `
-          <div class="col-span-full rounded-2xl border border-zinc-800 bg-zinc-900/70 p-8 text-center">
-            <p class="text-sm text-zinc-300">Is class aur subject combination ke liye filter reset karke dekhein.</p>
-            <button type="button" onclick="selectClass('ALL'); selectSubject('ALL');" class="mt-4 rounded-lg bg-amber-500 px-4 py-2 text-xs font-bold text-zinc-950">
-              Show All Concepts
-            </button>
-          </div>
-        `;
-        return;
+        subBox.querySelectorAll(".subject-btn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            activeSubject = btn.getAttribute("data-subject");
+            renderFilters();
+            renderCards();
+          });
+        });
       }
 
-      grid.innerHTML = filtered.map(item => `
-        <article class="flex flex-col justify-between rounded-2xl border border-zinc-800 bg-zinc-900/80 p-5 shadow-md transition hover:border-amber-400/50">
-          <div>
-            <div class="flex flex-wrap items-center gap-2 text-[11px] font-semibold">
-              <span class="rounded-md bg-amber-500/15 px-2.5 py-1 text-amber-300 border border-amber-400/30">${item.classGroup}</span>
-              <span class="rounded-md bg-zinc-800 px-2.5 py-1 text-zinc-200">${item.subject}</span>
-            </div>
+      function bookConceptDemo(id) {
+        const item = CONCEPTS.find(function (c) { return c.id === id; });
+        if (!item) return;
 
-            <h2 class="mt-3 text-lg font-bold text-white">${item.topic}</h2>
+        const payload = {
+          type: "STUDY_PLAN",
+          name: "Concept Vault Lead",
+          area: "Concept Vault (resources.html)",
+          society: "-",
+          classLabel: item.classGroup,
+          board: "CBSE / ICSE / Concept Vault",
+          mode: "1-on-1 Concept Demo",
+          subjects: item.subject + " — " + item.topic,
+          frequency: "Free Concept Demo Request"
+        };
 
-            <div class="mt-3">
-              <div class="text-[11px] font-semibold uppercase tracking-wider text-amber-400">Concept Intuition (Kyun &amp; Kaise)</div>
-              <p class="mt-1 text-xs sm:text-sm leading-relaxed text-zinc-300">${item.intuition}</p>
-            </div>
+        try {
+          fetch(CRM_WEBHOOK_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify(payload)
+          }).catch(function () {});
+        } catch (e) {}
 
-            <div class="mt-3 rounded-xl border border-zinc-800 bg-zinc-950/90 p-3">
-              <div class="text-[11px] font-semibold uppercase tracking-wider text-zinc-400">Core Formula / Rule / Framework</div>
-              <div class="mt-1 text-xs sm:text-sm font-semibold text-amber-200">${item.formula}</div>
-            </div>
+        const msg =
+          "Namaste Ravi Sir! 🙏\n" +
+          "I explored the *Free Concept Vault* on *ELITE CLASSES* (eliteclassesnoida.in/resources.html):\n" +
+          "• *Class Group:* " + item.classGroup + "\n" +
+          "• *Subject:* " + item.subject + "\n" +
+          "• *Concept:* " + item.topic + "\n\n" +
+          "Please help me book a *Free 1-on-1 Concept Demo* for this topic.";
 
-            <div class="mt-3 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">
-              <div class="text-[11px] font-semibold uppercase tracking-wider text-emerald-300">Avoid Rote Trap</div>
-              <p class="mt-1 text-xs leading-relaxed text-zinc-300">${item.antiRote}</p>
-            </div>
-          </div>
+        window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg), "_blank");
+      }
 
-          <button
-            type="button"
-            onclick="bookConceptDemo('${item.id}')"
-            class="mt-5 w-full rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-bold text-zinc-950 transition hover:bg-amber-400"
-          >
-            Book Free 1-on-1 Concept Demo
-          </button>
-        </article>
-      `).join('');
-    }
+      function renderCards() {
+        const q = searchQuery.trim().toLowerCase();
+        const filtered = CONCEPTS.filter(function (c) {
+          const matchClass = activeClass === "ALL" || c.classGroup === activeClass;
+          const matchSub = activeSubject === "ALL" || c.subject === activeSubject;
+          const matchSearch =
+            !q ||
+            c.topic.toLowerCase().indexOf(q) !== -1 ||
+            c.intuition.toLowerCase().indexOf(q) !== -1 ||
+            c.formula.toLowerCase().indexOf(q) !== -1 ||
+            c.subject.toLowerCase().indexOf(q) !== -1 ||
+            c.classGroup.toLowerCase().indexOf(q) !== -1;
+          return matchClass && matchSub && matchSearch;
+        });
 
-    renderFilters();
-    renderCards();
+        const grid = document.getElementById("vaultGrid");
+        const countEl = document.getElementById("resultCount");
+        if (!grid || !countEl) return;
+
+        countEl.textContent =
+          "Showing " + filtered.length + " Concept" + (filtered.length === 1 ? "" : "s") +
+          " • " + (activeClass === "ALL" ? "All Classes" : activeClass) +
+          " • " + (activeSubject === "ALL" ? "All Subjects" : activeSubject);
+
+        if (filtered.length === 0) {
+          grid.innerHTML =
+            '<div class="col-span-full rounded-2xl border border-zinc-800 bg-zinc-900/70 p-8 text-center">' +
+              '<p class="text-sm text-zinc-300">Koi matching concept nahi mila. Filter ya search reset karke dekhein.</p>' +
+              '<button type="button" id="resetAllBtn" class="mt-4 rounded-xl bg-amber-500 px-5 py-2.5 text-xs font-bold text-zinc-950 hover:bg-amber-400">Show All 42 Concepts</button>' +
+            "</div>";
+          const resetBtn = document.getElementById("resetAllBtn");
+          if (resetBtn) {
+            resetBtn.addEventListener("click", function () {
+              activeClass = "ALL";
+              activeSubject = "ALL";
+              searchQuery = "";
+              const sInput = document.getElementById("searchInput");
+              if (sInput) sInput.value = "";
+              renderFilters();
+              renderCards();
+            });
+          }
+          return;
+        }
+
+        grid.innerHTML = filtered.map(function (item) {
+          return (
+            '<article class="flex flex-col justify-between rounded-2xl border border-zinc-800 bg-zinc-900/85 p-5 shadow-lg transition hover:border-amber-400/50">' +
+              "<div>" +
+                '<div class="flex flex-wrap items-center gap-2 text-[11px] font-bold">' +
+                  '<span class="rounded-md border border-amber-400/30 bg-amber-500/15 px-2.5 py-1 text-amber-300">' + escapeHtml(item.classGroup) + "</span>" +
+                  '<span class="rounded-md bg-zinc-800 px-2.5 py-1 text-zinc-200">' + escapeHtml(item.subject) + "</span>" +
+                "</div>" +
+                '<h2 class="mt-3 text-lg font-extrabold leading-snug text-white">' + escapeHtml(item.topic) + "</h2>" +
+
+                '<div class="mt-3.5">' +
+                  '<div class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Concept Intuition (Kyun &amp; Kaise)</div>' +
+                  '<p class="mt-1 text-xs sm:text-sm leading-relaxed text-zinc-300">' + escapeHtml(item.intuition) + "</p>" +
+                "</div>" +
+
+                '<div class="mt-3 rounded-xl border border-zinc-800 bg-zinc-950 p-3">' +
+                  '<div class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Core Formula / Mental Model</div>' +
+                  '<div class="mt-1 text-xs sm:text-sm font-bold text-amber-200">' + escapeHtml(item.formula) + "</div>" +
+                "</div>" +
+
+                '<div class="mt-3 rounded-xl border border-sky-500/20 bg-sky-500/5 p-3">' +
+                  '<div class="text-[10px] font-bold uppercase tracking-wider text-sky-300">Real-Life / Solved Example</div>' +
+                  '<p class="mt-1 text-xs leading-relaxed text-zinc-300">' + escapeHtml(item.example) + "</p>" +
+                "</div>" +
+
+                '<div class="mt-3 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">' +
+                  '<div class="text-[10px] font-bold uppercase tracking-wider text-emerald-300">Avoid Rote Trap</div>' +
+                  '<p class="mt-1 text-xs leading-relaxed text-zinc-300">' + escapeHtml(item.antiRote) + "</p>" +
+                "</div>" +
+              "</div>" +
+
+              '<button type="button" data-id="' + escapeHtml(item.id) + '" class="demo-btn mt-5 w-full rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-extrabold text-zinc-950 transition hover:bg-amber-400">' +
+                "Book Free 1-on-1 Concept Demo" +
+              "</button>" +
+            "</article>"
+          );
+        }).join("");
+
+        grid.querySelectorAll(".demo-btn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            bookConceptDemo(btn.getAttribute("data-id"));
+          });
+        });
+      }
+
+      function init() {
+        const sInput = document.getElementById("searchInput");
+        if (sInput) {
+          sInput.addEventListener("input", function (e) {
+            searchQuery = e.target.value || "";
+            renderCards();
+          });
+        }
+        renderFilters();
+        renderCards();
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+    })();
   </script>
 </body>
 </html>
