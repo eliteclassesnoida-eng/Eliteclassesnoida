@@ -308,369 +308,670 @@
   <section class="pb-10 px-3 sm:px-6">
     <div class="max-w-7xl mx-auto space-y-6">
       <!-- ================= ELITE CLASSES: SMART TUTOR AVAILABILITY WIDGET ================= -->
-<section id="ecAvailSection" aria-label="Check Tutor Availability">
+<section id="ecAvailSection" aria-label="Check Specialist Tutor Availability">
   <style>
     #ecAvailSection {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      max-width: 820px;
-      margin: 28px auto;
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      position: relative;
+      max-width: 920px;
+      margin: 36px auto;
       padding: 0 14px;
-      color: #f4f4f5;
+      color: #f8fafc;
       box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
     }
     #ecAvailSection * { box-sizing: border-box; }
-    .ec-av-card {
-      background: linear-gradient(180deg, #141418 0%, #0c0c0f 100%);
-      border: 1px solid rgba(245, 158, 11, 0.32);
-      border-radius: 20px;
-      padding: 20px 16px;
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+    .ecav-shell {
+      position: relative;
+      background: linear-gradient(165deg, rgba(16, 20, 31, 0.94) 0%, rgba(8, 10, 16, 0.98) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 26px;
+      padding: 24px 18px;
+      overflow: hidden;
+      box-shadow:
+        0 28px 70px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 rgba(255, 255, 255, 0.11);
     }
-    @media (min-width: 640px) { .ec-av-card { padding: 26px 28px; } }
-    .ec-av-badge {
+    @media (min-width: 640px) { .ecav-shell { padding: 34px 36px; } }
+    .ecav-shell::before {
+      content: "";
+      position: absolute;
+      top: -120px;
+      right: -80px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(212, 168, 83, 0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .ecav-shell::after {
+      content: "";
+      position: absolute;
+      bottom: -140px;
+      left: -100px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .ecav-inner { position: relative; z-index: 1; }
+
+    /* Top Header & Stepper */
+    .ecav-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .ecav-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      background: rgba(212, 168, 83, 0.1);
+      border: 1px solid rgba(212, 168, 83, 0.32);
+      color: #ebd094;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .ecav-live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2), 0 0 10px #34d399;
+    }
+    .ecav-steps-pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(245, 158, 11, 0.14);
-      border: 1px solid rgba(245, 158, 11, 0.4);
-      color: #fbbf24;
       font-size: 11px;
       font-weight: 700;
+      color: #64748b;
       letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 5px 11px;
+    }
+    .ecav-step-tag {
+      padding: 4px 10px;
       border-radius: 999px;
-      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      transition: all 0.25s ease;
     }
-    .ec-av-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: #22c55e; box-shadow: 0 0 8px #22c55e;
+    .ecav-step-tag.active {
+      background: rgba(212, 168, 83, 0.15);
+      border-color: rgba(212, 168, 83, 0.45);
+      color: #f3d58d;
     }
-    .ec-av-title {
-      margin: 0 0 6px;
-      font-size: 21px;
-      line-height: 1.25;
+    .ecav-step-tag.done {
+      background: rgba(52, 211, 153, 0.12);
+      border-color: rgba(52, 211, 153, 0.35);
+      color: #34d399;
+    }
+    .ecav-title {
+      margin: 0 0 8px;
+      font-size: 24px;
+      line-height: 1.2;
       font-weight: 800;
+      letter-spacing: -0.025em;
       color: #ffffff;
     }
-    .ec-av-title span { color: #fbbf24; }
-    .ec-av-sub {
-      margin: 0 0 16px;
-      font-size: 13px;
-      line-height: 1.5;
-      color: #a1a1aa;
+    @media (min-width: 640px) { .ecav-title { font-size: 31px; } }
+    .ecav-title span {
+      background: linear-gradient(95deg, #f7e4b4 0%, #d4a853 60%, #e9c97b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-    .ec-av-grid {
+    .ecav-sub {
+      margin: 0 0 22px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: #94a3b8;
+      max-width: 660px;
+    }
+
+    /* Field Labels */
+    .ecav-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #cbd5e1;
+      margin-bottom: 8px;
+    }
+    .ecav-label span {
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: 0;
+      color: #64748b;
+    }
+    .ecav-block { margin-bottom: 18px; }
+
+    /* Mode Selector Cards */
+    .ecav-mode-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
     }
-    @media (min-width: 640px) {
-      .ec-av-grid-2 { grid-template-columns: 1fr 1fr; }
+    @media (min-width: 640px) { .ecav-mode-grid { grid-template-columns: repeat(4, 1fr); } }
+    .ecav-mode-card {
+      position: relative;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 12px 12px;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+      color: #e2e8f0;
     }
-    .ec-av-label {
+    .ecav-mode-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(212, 168, 83, 0.38);
+      transform: translateY(-1px);
+    }
+    .ecav-mode-card.active {
+      background: linear-gradient(145deg, rgba(212, 168, 83, 0.14) 0%, rgba(212, 168, 83, 0.03) 100%);
+      border-color: #d4a853;
+      box-shadow: 0 0 0 1px rgba(212, 168, 83, 0.3), 0 12px 26px rgba(0, 0, 0, 0.35);
+    }
+    .ecav-mode-name {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .ecav-mode-card.active .ecav-mode-name { color: #f6e0a8; }
+    .ecav-mode-meta {
       display: block;
       font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #d4d4d8;
-      margin-bottom: 6px;
+      color: #64748b;
+      margin-top: 2px;
     }
-    .ec-av-input, .ec-av-select {
+    .ecav-mode-card.active .ecav-mode-meta { color: #cbd5e1; }
+
+    /* Inputs & Quick Chips */
+    .ecav-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    @media (min-width: 640px) { .ecav-grid-2 { grid-template-columns: 1fr 1fr; } }
+    .ecav-input, .ecav-select {
       width: 100%;
-      background: #18181d;
-      color: #ffffff;
-      border: 1px solid #2e2e36;
-      border-radius: 12px;
-      padding: 11px 12px;
+      background: rgba(11, 14, 22, 0.9);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 13px;
+      padding: 12px 14px;
       font-size: 14px;
+      font-weight: 500;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .ec-av-input:focus, .ec-av-select:focus { border-color: #f59e0b; }
-    .ec-av-pills {
+    .ecav-input::placeholder { color: #64748b; }
+    .ecav-input:focus, .ecav-select:focus {
+      border-color: #d4a853;
+      box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.14);
+    }
+    .ecav-quick-locs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .ecav-loc-chip {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .ecav-loc-chip:hover {
+      border-color: rgba(212, 168, 83, 0.5);
+      color: #f3d58d;
+    }
+
+    /* Subject Pills */
+    .ecav-pills {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
     }
-    .ec-av-pill {
-      background: #18181d;
-      color: #d4d4d8;
-      border: 1px solid #2e2e36;
+    .ecav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 999px;
-      padding: 7px 13px;
-      font-size: 12px;
+      padding: 8px 14px;
+      font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
       user-select: none;
-      transition: all 0.18s;
+      transition: all 0.2s ease;
     }
-    .ec-av-pill.active {
-      background: #f59e0b;
-      color: #09090b;
-      border-color: #f59e0b;
+    .ecav-pill:hover { border-color: rgba(212, 168, 83, 0.45); color: #ffffff; }
+    .ecav-pill.active {
+      background: linear-gradient(135deg, #f3d58d 0%, #cfa14a 100%);
+      color: #090b10;
+      border-color: #f3d58d;
       font-weight: 800;
+      box-shadow: 0 6px 18px rgba(212, 168, 83, 0.25);
     }
-    .ec-av-btn {
+    .ecav-pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.5);
+    }
+    .ecav-pill.active .ecav-pill-dot { background: #090b10; }
+
+    /* Buttons */
+    .ecav-btn {
       width: 100%;
-      margin-top: 16px;
-      padding: 13px 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 14px 20px;
       border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #09090b;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
-      transition: transform 0.15s, opacity 0.15s;
-    }
-    .ec-av-btn:active { transform: scale(0.99); }
-    .ec-av-btn:disabled { opacity: 0.65; cursor: not-allowed; }
-    .ec-av-btn-wa {
-      display: block;
-      text-align: center;
-      text-decoration: none;
-      background: #16a34a;
-      color: #ffffff;
-      box-shadow: 0 8px 22px rgba(22, 163, 74, 0.3);
-    }
-    .ec-av-btn-ghost {
-      display: block;
-      text-align: center;
-      text-decoration: none;
-      background: #1c1c22;
-      color: #fbbf24;
-      border: 1px solid rgba(245, 158, 11, 0.45);
-      box-shadow: none;
-      margin-top: 10px;
-    }
-    .ec-av-err {
-      display: none;
-      margin-top: 10px;
-      padding: 9px 12px;
-      border-radius: 10px;
-      background: rgba(239, 68, 68, 0.14);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      color: #fca5a5;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .ec-av-trust {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 14px;
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 1px solid #24242b;
-      font-size: 11.5px;
-      color: #a1a1aa;
-    }
-    .ec-av-trust a { color: #fbbf24; text-decoration: none; font-weight: 700; }
-    .ec-av-result-box {
-      background: rgba(34, 197, 94, 0.08);
-      border: 1px solid rgba(34, 197, 94, 0.35);
       border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 16px;
-    }
-    .ec-av-result-head {
+      background: linear-gradient(135deg, #f6e0a8 0%, #d4a853 55%, #be8f38 100%);
+      color: #090b10;
       font-size: 14px;
       font-weight: 800;
-      color: #4ade80;
-      margin-bottom: 4px;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(212, 168, 83, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+      transition: transform 0.16s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     }
-    .ec-av-schedule {
-      margin: 10px 0 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      grid-template-columns: 1fr;
+    .ecav-btn:hover { transform: translateY(-1px); box-shadow: 0 16px 36px rgba(212, 168, 83, 0.34); }
+    .ecav-btn:active { transform: scale(0.99); }
+    .ecav-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+    .ecav-btn-wa {
+      background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
+      color: #ffffff;
+      box-shadow: 0 12px 28px rgba(22, 163, 74, 0.3);
+    }
+    .ecav-btn-ghost {
+      margin-top: 10px;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(212, 168, 83, 0.38);
+      color: #f3d58d;
+      box-shadow: none;
+    }
+    .ecav-btn-ghost:hover { background: rgba(212, 168, 83, 0.08); box-shadow: none; }
+
+    /* Step 2 Match & Rotational Grid */
+    .ecav-back {
+      display: inline-flex;
+      align-items: center;
       gap: 6px;
-    }
-    @media (min-width: 640px) { .ec-av-schedule { grid-template-columns: 1fr 1fr; } }
-    .ec-av-schedule li {
-      background: #141418;
-      border: 1px solid #27272f;
-      border-radius: 9px;
-      padding: 8px 10px;
-      font-size: 12px;
-      color: #e4e4e7;
-    }
-    .ec-av-schedule li strong { color: #fbbf24; }
-    .ec-av-back {
       background: none;
       border: none;
-      color: #a1a1aa;
-      font-size: 12px;
+      color: #94a3b8;
+      font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
       padding: 0;
-      margin-bottom: 10px;
-      text-decoration: underline;
+      margin-bottom: 14px;
     }
-    .ec-av-hidden { display: none !important; }
+    .ecav-back:hover { color: #f3d58d; }
+    .ecav-match-panel {
+      background: linear-gradient(160deg, rgba(16, 185, 129, 0.09) 0%, rgba(15, 23, 42, 0.65) 100%);
+      border: 1px solid rgba(52, 211, 153, 0.32);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+    .ecav-match-head {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 15px;
+      font-weight: 800;
+      color: #34d399;
+      margin-bottom: 4px;
+    }
+    .ecav-match-meta {
+      font-size: 12.5px;
+      color: #cbd5e1;
+      margin-bottom: 14px;
+    }
+    .ecav-week-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    @media (min-width: 640px) { .ecav-week-grid { grid-template-columns: repeat(3, 1fr); } }
+    .ecav-day-card {
+      background: rgba(9, 12, 20, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 10px 11px;
+    }
+    .ecav-day-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: #d4a853;
+      margin-bottom: 3px;
+    }
+    .ecav-day-sub {
+      font-size: 12px;
+      font-weight: 600;
+      color: #f1f5f9;
+      line-height: 1.3;
+    }
+
+    /* Time Slot Chips */
+    .ecav-slots {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    @media (min-width: 640px) { .ecav-slots { grid-template-columns: repeat(4, 1fr); } }
+    .ecav-slot-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 11px;
+      padding: 10px 8px;
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.18s;
+    }
+    .ecav-slot-btn.active {
+      background: rgba(212, 168, 83, 0.14);
+      border-color: #d4a853;
+      color: #f6e0a8;
+      font-weight: 700;
+    }
+
+    /* Errors & Trust Footer */
+    .ecav-err {
+      display: none;
+      margin: 12px 0;
+      padding: 10px 13px;
+      border-radius: 11px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+    .ecav-trust {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px 16px;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .ecav-trust-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+    }
+    .ecav-trust-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ecav-trust a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #f3d58d;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .ecav-trust a:hover { text-decoration: underline; }
+    .ecav-hidden { display: none !important; }
+    .ecav-fade { animation: ecavFadeIn 0.28s ease; }
+    @keyframes ecavFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 
-  <div class="ec-av-card">
-    <div class="ec-av-badge">
-      <span class="ec-av-dot"></span>
-      <span>Live Specialist Availability • Noida &amp; Global 1-on-1</span>
-    </div>
-
-    <h2 class="ec-av-title">Apne Area Mein <span>Subject-Specialized Tutor</span> Check Karein</h2>
-    <p class="ec-av-sub">10 second mein dekhein ki aapke sector/society mein rotational subject experts aur free trial slot available hai ya nahi.</p>
-
-    <!-- STEP 1: NO-HESITATION AVAILABILITY CHECK -->
-    <div id="ecAvStep1">
-      <div class="ec-av-grid ec-av-grid-2">
-        <div>
-          <label class="ec-av-label" for="ecAvArea">Location / Mode</label>
-          <select id="ecAvArea" class="ec-av-select">
-            <option value="Noida Sectors">Home Tuition — Noida (All Sectors)</option>
-            <option value="Greater Noida West">Home Tuition — Greater Noida West</option>
-            <option value="Greater Noida">Home Tuition — Greater Noida</option>
-            <option value="Global Live 1-on-1 Online">Online — Global Live 1-on-1 Studio</option>
-          </select>
+  <div class="ecav-shell">
+    <div class="ecav-inner">
+      <div class="ecav-top">
+        <div class="ecav-badge">
+          <span class="ecav-live-dot"></span>
+          <span>Live Faculty Pod Availability</span>
         </div>
-
-        <div>
-          <label class="ec-av-label" for="ecAvSociety" id="ecAvSocietyLabel">Sector / Society Name</label>
-          <input id="ecAvSociety" class="ec-av-input" list="ecAvSocietyList" placeholder="e.g. Sector 75, JM Florence, Gaur City" autocomplete="off">
-          <datalist id="ecAvSocietyList">
-            <option value="Sector 35, Noida">
-            <option value="Sector 50, Noida">
-            <option value="Sector 62, Noida">
-            <option value="Sector 75 / 76 / 78, Noida">
-            <option value="Sector 137, Noida">
-            <option value="JM Florence, Greater Noida West">
-            <option value="Gaur City 1 & 2, Greater Noida West">
-            <option value="ATS / Mahagun / Cherry County">
-            <option value="Alpha / Beta / Gamma, Greater Noida">
-            <option value="Jaypee Greens / Pari Chowk">
-          </datalist>
-        </div>
-
-        <div>
-          <label class="ec-av-label" for="ecAvClass">Student Class / Target</label>
-          <select id="ecAvClass" class="ec-av-select">
-            <option value="">Select Class / Goal...</option>
-            <option value="Grades 1-3">Grades 1 – 3 (Foundation)</option>
-            <option value="Grades 4-5">Grades 4 – 5 (Primary Strong Base)</option>
-            <option value="Grades 6-8">Grades 6 – 8 (Middle School)</option>
-            <option value="Grades 9-10">Grades 9 – 10 (Boards Focus)</option>
-            <option value="Grades 11-12 Science">Grades 11 – 12 (Science: PCM / PCB)</option>
-            <option value="Grades 11-12 Commerce/Humanities">Grades 11 – 12 (Commerce / Humanities)</option>
-            <option value="Entrance (Sainik/Navodaya/RIMC)">Entrance Prep (Sainik / Navodaya / RIMC)</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="ec-av-label" for="ecAvBoard">Board / Curriculum</label>
-          <select id="ecAvBoard" class="ec-av-select">
-            <option value="CBSE">CBSE</option>
-            <option value="ICSE">ICSE / ISC</option>
-            <option value="IB / IGCSE">IB / IGCSE (International)</option>
-            <option value="Entrance Exam">Entrance Exam Syllabus</option>
-          </select>
+        <div class="ecav-steps-pill" aria-label="Progress">
+          <span class="ecav-step-tag active" id="ecAvStepInd1">01. Details</span>
+          <span>/</span>
+          <span class="ecav-step-tag" id="ecAvStepInd2">02. Schedule &amp; Trial</span>
         </div>
       </div>
 
-      <div style="margin-top: 12px;">
-        <span class="ec-av-label">Subjects Select Karein (1 ya Zyada)</span>
-        <div class="ec-av-pills" id="ecAvSubjectPills">
-          <button type="button" class="ec-av-pill active" data-sub="Mathematics">Mathematics</button>
-          <button type="button" class="ec-av-pill active" data-sub="Science">Science</button>
-          <button type="button" class="ec-av-pill" data-sub="English">English</button>
-          <button type="button" class="ec-av-pill" data-sub="Social Science">Social Science</button>
-          <button type="button" class="ec-av-pill" data-sub="Hindi">Hindi</button>
-          <button type="button" class="ec-av-pill" data-sub="Sanskrit">Sanskrit</button>
-          <button type="button" class="ec-av-pill" data-sub="Computer / AI">Computer / AI</button>
-          <button type="button" class="ec-av-pill" data-sub="Physics / Chem / Bio">Physics / Chem / Bio</button>
-          <button type="button" class="ec-av-pill" data-sub="Accounts / Eco">Accounts / Eco</button>
+      <h2 class="ecav-title">Check <span>Subject-Specialist</span> Availability</h2>
+      <p class="ecav-sub">Verify rotational faculty availability in your Noida sector, Greater Noida society, or global timezone—and preview a tailored weekly study schedule in 10 seconds.</p>
+
+      <!-- STEP 1 -->
+      <div id="ecAvStep1" class="ecav-fade">
+        <div class="ecav-block">
+          <span class="ecav-label">Learning Location &amp; Format</span>
+          <div class="ecav-mode-grid" id="ecAvModeGrid">
+            <button type="button" class="ecav-mode-card active" data-area="Noida Sectors">
+              <span class="ecav-mode-name">Noida Home</span>
+              <span class="ecav-mode-meta">All Sectors • 1-on-1</span>
+            </button>
+            <button type="button" class="ecav-mode-card" data-area="Greater Noida West">
+              <span class="ecav-mode-name">Gr. Noida West</span>
+              <span class="ecav-mode-meta">High-Rise Societies</span>
+            </button>
+            <button type="button" class="ecav-mode-card" data-area="Greater Noida">
+              <span class="ecav-mode-name">Greater Noida</span>
+              <span class="ecav-mode-meta">Sectors &amp; Greens</span>
+            </button>
+            <button type="button" class="ecav-mode-card" data-area="Global Live 1-on-1 Online">
+              <span class="ecav-mode-name">Global Online</span>
+              <span class="ecav-mode-meta">Live HD Studio</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="ecav-block">
+          <label class="ecav-label" for="ecAvSociety" id="ecAvSocietyLabel">Sector / Society Name <span>Quick-tap or type</span></label>
+          <input id="ecAvSociety" class="ecav-input" type="text" placeholder="e.g. Sector 75, JM Florence, Gaur City" autocomplete="off">
+          <div class="ecav-quick-locs" id="ecAvQuickLocs">
+            <button type="button" class="ecav-loc-chip">Sector 50</button>
+            <button type="button" class="ecav-loc-chip">Sector 75 / 76 / 78</button>
+            <button type="button" class="ecav-loc-chip">Sector 137</button>
+            <button type="button" class="ecav-loc-chip">JM Florence</button>
+            <button type="button" class="ecav-loc-chip">Gaur City 1 &amp; 2</button>
+          </div>
+        </div>
+
+        <div class="ecav-block ecav-grid-2">
+          <div>
+            <label class="ecav-label" for="ecAvClass">Student Grade / Target</label>
+            <select id="ecAvClass" class="ecav-select">
+              <option value="">Select Grade or Target Exam...</option>
+              <option value="Grades 1–3">Grades 1 – 3 (Early Foundation)</option>
+              <option value="Grades 4–5">Grades 4 – 5 (Primary Excellence)</option>
+              <option value="Grades 6–8" selected>Grades 6 – 8 (Middle School Specialists)</option>
+              <option value="Grades 9–10">Grades 9 – 10 (Board Mastery)</option>
+              <option value="Grades 11–12 Science">Grades 11 – 12 (Science: PCM / PCB)</option>
+              <option value="Grades 11–12 Commerce">Grades 11 – 12 (Commerce / Humanities)</option>
+              <option value="Sainik / JNVST / RIMC">Entrance Prep (Sainik / Navodaya / RIMC)</option>
+            </select>
+          </div>
+          <div>
+            <label class="ecav-label" for="ecAvBoard">Board / Curriculum</label>
+            <select id="ecAvBoard" class="ecav-select">
+              <option value="CBSE">CBSE (NCERT + Exemplar)</option>
+              <option value="ICSE / ISC">ICSE / ISC</option>
+              <option value="IB / IGCSE">IB / IGCSE (International)</option>
+              <option value="Entrance Syllabus">Competitive Entrance Syllabus</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ecav-block">
+          <span class="ecav-label">Select Subjects <span>Choose 1 or more</span></span>
+          <div class="ecav-pills" id="ecAvSubjectPills">
+            <button type="button" class="ecav-pill active" data-sub="Mathematics"><span class="ecav-pill-dot"></span>Mathematics</button>
+            <button type="button" class="ecav-pill active" data-sub="Science"><span class="ecav-pill-dot"></span>Science</button>
+            <button type="button" class="ecav-pill" data-sub="English"><span class="ecav-pill-dot"></span>English</button>
+            <button type="button" class="ecav-pill" data-sub="Social Science"><span class="ecav-pill-dot"></span>Social Science</button>
+            <button type="button" class="ecav-pill" data-sub="Hindi"><span class="ecav-pill-dot"></span>Hindi</button>
+            <button type="button" class="ecav-pill" data-sub="Computer / AI"><span class="ecav-pill-dot"></span>Computer / AI</button>
+            <button type="button" class="ecav-pill" data-sub="Physics / Chem / Bio"><span class="ecav-pill-dot"></span>Physics / Chem / Bio</button>
+            <button type="button" class="ecav-pill" data-sub="Accounts / Economics"><span class="ecav-pill-dot"></span>Accounts / Eco</button>
+          </div>
+        </div>
+
+        <div id="ecAvErr1" class="ecav-err"></div>
+        <button type="button" id="ecAvCheckBtn" class="ecav-btn">
+          <span>Check Availability &amp; Preview Rotational Schedule</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <!-- STEP 2 -->
+      <div id="ecAvStep2" class="ecav-hidden ecav-fade">
+        <button type="button" id="ecAvBackBtn" class="ecav-back">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          <span>Modify location or subjects</span>
+        </button>
+
+        <div class="ecav-match-panel">
+          <div class="ecav-match-head">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+            <span id="ecAvMatchTitle">Subject Specialists Available</span>
+          </div>
+          <div class="ecav-match-meta" id="ecAvMatchSub"></div>
+          <div class="ecav-week-grid" id="ecAvScheduleList"></div>
+        </div>
+
+        <div class="ecav-block ecav-grid-2">
+          <div>
+            <label class="ecav-label" for="ecAvName">Parent / Student Name *</label>
+            <input id="ecAvName" class="ecav-input" type="text" placeholder="Enter your full name" autocomplete="name">
+          </div>
+          <div>
+            <label class="ecav-label" for="ecAvPhone">WhatsApp Number *</label>
+            <input id="ecAvPhone" class="ecav-input" type="tel" inputmode="numeric" placeholder="10-digit WhatsApp number" autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="ecav-block">
+          <span class="ecav-label">Preferred Trial Slot</span>
+          <div class="ecav-slots" id="ecAvSlotGrid">
+            <button type="button" class="ecav-slot-btn active" data-slot="Evening (4:00 – 6:00 PM)">4:00 – 6:00 PM</button>
+            <button type="button" class="ecav-slot-btn" data-slot="Evening (6:00 – 8:00 PM)">6:00 – 8:00 PM</button>
+            <button type="button" class="ecav-slot-btn" data-slot="Afternoon (2:30 – 4:30 PM)">2:30 – 4:30 PM</button>
+            <button type="button" class="ecav-slot-btn" data-slot="Weekend / Flexible">Weekend Slot</button>
+          </div>
+        </div>
+
+        <div id="ecAvErr2" class="ecav-err"></div>
+        <button type="button" id="ecAvSubmitBtn" class="ecav-btn">
+          <span>Reserve Complimentary 1st Trial Class</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <!-- STEP 3 -->
+      <div id="ecAvStep3" class="ecav-hidden ecav-fade">
+        <div class="ecav-match-panel" style="margin-bottom: 16px;">
+          <div class="ecav-match-head">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+            <span>Trial Slot Request Confirmed</span>
+          </div>
+          <div class="ecav-match-meta" id="ecAvDoneText" style="margin-bottom:0;"></div>
+        </div>
+
+        <a id="ecAvWaLink" href="#" target="_blank" rel="noopener" class="ecav-btn ecav-btn-wa">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <span>Confirm Instantly on WhatsApp</span>
+        </a>
+        <a href="test.html" class="ecav-btn ecav-btn-ghost">
+          <span>Take the 10-Min Diagnostic Assessment</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <div style="text-align:center; margin-top:14px;">
+          <button type="button" id="ecAvResetBtn" class="ecav-back" style="margin:0;">Check availability for another student</button>
         </div>
       </div>
 
-      <div id="ecAvErr1" class="ec-av-err"></div>
-      <button type="button" id="ecAvCheckBtn" class="ec-av-btn">Check Specialist Availability &amp; Sample Schedule →</button>
-    </div>
-
-    <!-- STEP 2: LIVE ROTATIONAL PREVIEW + WHATSAPP UNLOCK -->
-    <div id="ecAvStep2" class="ec-av-hidden">
-      <button type="button" id="ecAvBackBtn" class="ec-av-back">← Change Area or Subjects</button>
-
-      <div class="ec-av-result-box">
-        <div class="ec-av-result-head" id="ecAvMatchTitle">✅ Subject Specialists Available!</div>
-        <div style="font-size: 12px; color: #d4d4d8;" id="ecAvMatchSub"></div>
-        <ul class="ec-av-schedule" id="ecAvScheduleList"></ul>
-      </div>
-
-      <div class="ec-av-grid ec-av-grid-2">
-        <div>
-          <label class="ec-av-label" for="ecAvName">Parent / Student Name *</label>
-          <input id="ecAvName" class="ec-av-input" type="text" placeholder="Apna naam likhein">
+      <div class="ecav-trust">
+        <div class="ecav-trust-items">
+          <span class="ecav-trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            Complimentary 1st Trial
+          </span>
+          <span class="ecav-trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            Zero Advance Fee
+          </span>
+          <span class="ecav-trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            Founder-Monitored Progress
+          </span>
         </div>
-        <div>
-          <label class="ec-av-label" for="ecAvPhone">WhatsApp Number *</label>
-          <input id="ecAvPhone" class="ec-av-input" type="tel" inputmode="numeric" placeholder="10-digit WhatsApp number">
-        </div>
+        <a href="https://g.page/r/CcQT_l9wCpWfEAE/review" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="#f3d58d"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span>Verified Google Reviews</span>
+        </a>
       </div>
-
-      <div style="margin-top: 12px;">
-        <label class="ec-av-label" for="ecAvSlot">Preferred Demo Time Slot</label>
-        <select id="ecAvSlot" class="ec-av-select">
-          <option value="Evening (4:00 PM - 6:00 PM)">Evening (4:00 PM – 6:00 PM)</option>
-          <option value="Evening (6:00 PM - 8:00 PM)">Evening (6:00 PM – 8:00 PM)</option>
-          <option value="Afternoon (2:30 PM - 4:30 PM)">Afternoon (2:30 PM – 4:30 PM)</option>
-          <option value="Weekend / Flexible">Weekend / Flexible Slot</option>
-        </select>
-      </div>
-
-      <div id="ecAvErr2" class="ec-av-err"></div>
-      <button type="button" id="ecAvSubmitBtn" class="ec-av-btn">Unlock Free 1st Trial Class &amp; Fee Quote →</button>
-    </div>
-
-    <!-- STEP 3: CONFIRMED + INSTANT WHATSAPP & FREE TEST -->
-    <div id="ecAvStep3" class="ec-av-hidden">
-      <div class="ec-av-result-box">
-        <div class="ec-av-result-head">🎉 Trial Slot Request Saved Successfully!</div>
-        <div style="font-size: 13px; color: #e4e4e7; line-height: 1.5; margin-top: 4px;" id="ecAvDoneText"></div>
-      </div>
-      <a id="ecAvWaLink" href="#" target="_blank" rel="noopener" class="ec-av-btn ec-av-btn-wa">💬 Instant Confirm on WhatsApp (Fastest) →</a>
-      <a href="test.html" class="ec-av-btn ec-av-btn-ghost">📝 Tab Tak 10-Min Free Diagnostic Test Dein →</a>
-      <div style="text-align: center; margin-top: 12px;">
-        <button type="button" id="ecAvResetBtn" class="ec-av-back" style="margin:0;">Check for another student</button>
-      </div>
-    </div>
-
-    <div class="ec-av-trust">
-      <span>✓ 1st Trial Class Free</span>
-      <span>✓ Zero Advance Fee</span>
-      <span>✓ Direct Monitoring by Ravi Yadav</span>
-      <a href="https://g.page/r/CcQT_l9wCpWfEAE/review" target="_blank" rel="noopener">★ View Google Reviews</a>
     </div>
   </div>
 
   <script>
     (function () {
-      // ===== SIRF YAHAN APNA APPS SCRIPT WEBHOOK URL PASTE KAREIN =====
+      // ===== PASTE YOUR APPS SCRIPT WEBHOOK URL BELOW =====
       var EC_AVAIL_CONFIG = {
-        crmUrl: 'https://script.google.com/macros/s/.../exec',
+        crmUrl: 'PASTE_YOUR_CRM_WEBHOOK_URL_HERE',
         whatsappNumber: '919675732501'
       };
 
-      var areaEl = document.getElementById('ecAvArea');
+      var selectedArea = 'Noida Sectors';
+      var selectedSlot = 'Evening (4:00 – 6:00 PM)';
+
+      var modeGrid = document.getElementById('ecAvModeGrid');
       var socEl = document.getElementById('ecAvSociety');
       var socLbl = document.getElementById('ecAvSocietyLabel');
+      var quickLocs = document.getElementById('ecAvQuickLocs');
       var clsEl = document.getElementById('ecAvClass');
       var brdEl = document.getElementById('ecAvBoard');
       var pillsWrap = document.getElementById('ecAvSubjectPills');
+      var slotGrid = document.getElementById('ecAvSlotGrid');
       var err1 = document.getElementById('ecAvErr1');
       var err2 = document.getElementById('ecAvErr2');
       var step1 = document.getElementById('ecAvStep1');
       var step2 = document.getElementById('ecAvStep2');
       var step3 = document.getElementById('ecAvStep3');
+      var ind1 = document.getElementById('ecAvStepInd1');
+      var ind2 = document.getElementById('ecAvStepInd2');
       var checkBtn = document.getElementById('ecAvCheckBtn');
       var backBtn = document.getElementById('ecAvBackBtn');
       var submitBtn = document.getElementById('ecAvSubmitBtn');
@@ -680,31 +981,71 @@
       var schedList = document.getElementById('ecAvScheduleList');
       var nameEl = document.getElementById('ecAvName');
       var phoneEl = document.getElementById('ecAvPhone');
-      var slotEl = document.getElementById('ecAvSlot');
       var doneText = document.getElementById('ecAvDoneText');
       var waLink = document.getElementById('ecAvWaLink');
 
-      // URL se ?ref= ya ?source= auto-capture karein (Society / Reel tracking)
+      var LOC_PRESETS = {
+        'Noida Sectors': ['Sector 35', 'Sector 50', 'Sector 75 / 76 / 78', 'Sector 137', 'Sector 62'],
+        'Greater Noida West': ['JM Florence', 'Gaur City 1 & 2', 'Cherry County', 'Mahagun Mywoods', 'ATS Happy Trails'],
+        'Greater Noida': ['Alpha / Beta / Gamma', 'Jaypee Greens', 'Pari Chowk', 'Omega / Chi-Phi', 'Eldeco Green Meadows'],
+        'Global Live 1-on-1 Online': ['Dubai, UAE', 'London, UK', 'Singapore', 'New York, USA', 'Mumbai / Bengaluru']
+      };
+
       var params = new URLSearchParams(window.location.search);
       var refTag = params.get('ref') || params.get('source') || params.get('utm_source') || '';
       if (refTag) { try { localStorage.setItem('ec_ref_source', refTag); } catch (e) {} }
       else { try { refTag = localStorage.getItem('ec_ref_source') || ''; } catch (e) {} }
 
-      areaEl.addEventListener('change', function () {
-        var isOnline = areaEl.value.indexOf('Online') !== -1;
-        socLbl.textContent = isOnline ? 'City / Country' : 'Sector / Society Name';
-        socEl.placeholder = isOnline ? 'e.g. Delhi, Mumbai, Dubai, London' : 'e.g. Sector 75, JM Florence, Gaur City';
-        phoneEl.placeholder = isOnline ? 'WhatsApp Number (with country code)' : '10-digit WhatsApp number';
+      function renderQuickLocs(area) {
+        var list = LOC_PRESETS[area] || LOC_PRESETS['Noida Sectors'];
+        quickLocs.innerHTML = '';
+        list.forEach(function (loc) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'ecav-loc-chip';
+          b.textContent = loc;
+          quickLocs.appendChild(b);
+        });
+      }
+
+      modeGrid.addEventListener('click', function (e) {
+        var card = e.target.closest('.ecav-mode-card');
+        if (!card) return;
+        selectedArea = card.getAttribute('data-area');
+        var all = modeGrid.querySelectorAll('.ecav-mode-card');
+        for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
+        card.classList.add('active');
+
+        var isOnline = selectedArea.indexOf('Online') !== -1;
+        socLbl.innerHTML = isOnline ? 'City &amp; Country <span>Quick-tap or type</span>' : 'Sector / Society Name <span>Quick-tap or type</span>';
+        socEl.placeholder = isOnline ? 'e.g. Dubai, London, Singapore, Mumbai' : 'e.g. Sector 75, JM Florence, Gaur City';
+        phoneEl.placeholder = isOnline ? 'WhatsApp number (with country code)' : '10-digit WhatsApp number';
+        renderQuickLocs(selectedArea);
+      });
+
+      quickLocs.addEventListener('click', function (e) {
+        var chip = e.target.closest('.ecav-loc-chip');
+        if (!chip) return;
+        socEl.value = chip.textContent;
+        socEl.focus();
       });
 
       pillsWrap.addEventListener('click', function (e) {
-        if (e.target.classList.contains('ec-av-pill')) {
-          e.target.classList.toggle('active');
-        }
+        var pill = e.target.closest('.ecav-pill');
+        if (pill) pill.classList.toggle('active');
+      });
+
+      slotGrid.addEventListener('click', function (e) {
+        var btn = e.target.closest('.ecav-slot-btn');
+        if (!btn) return;
+        selectedSlot = btn.getAttribute('data-slot');
+        var all = slotGrid.querySelectorAll('.ecav-slot-btn');
+        for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
+        btn.classList.add('active');
       });
 
       function getSelectedSubjects() {
-        var nodes = pillsWrap.querySelectorAll('.ec-av-pill.active');
+        var nodes = pillsWrap.querySelectorAll('.ecav-pill.active');
         var list = [];
         for (var i = 0; i < nodes.length; i++) list.push(nodes[i].getAttribute('data-sub'));
         return list;
@@ -716,88 +1057,104 @@
       }
 
       function buildSchedule(subs) {
-        var items = [];
+        var days = ['MON', 'TUE', 'WED', 'THU', 'FRI'];
+        var rows = [];
         if (subs.length === 1) {
-          items.push(['Mon / Wed / Fri', subs[0] + ' Specialist (1-on-1)']);
-          items.push(['Saturday', 'Concept Diagnostic Test & PDF Report']);
-        } else if (subs.length === 2) {
-          items.push(['Mon & Thu', subs[0] + ' Specialist']);
-          items.push(['Tue & Fri', subs[1] + ' Specialist']);
-          items.push(['Wednesday', 'Doubt Clearing & Practice Sheet']);
-          items.push(['Saturday', 'Weekly CBT Test & Parent Update']);
+          rows.push(['MON', subs[0] + ' Specialist']);
+          rows.push(['TUE', 'Guided Practice Sheet']);
+          rows.push(['WED', subs[0] + ' Specialist']);
+          rows.push(['THU', 'Concept Reinforcement']);
+          rows.push(['FRI', subs[0] + ' Specialist']);
+          rows.push(['SAT', 'CBT Diagnostic & PDF Report']);
         } else {
-          var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
           for (var i = 0; i < days.length; i++) {
-            items.push([days[i], subs[i % subs.length] + ' Specialist']);
+            rows.push([days[i], subs[i % subs.length] + ' Specialist']);
           }
-          items.push(['Saturday', 'Weekly Assessment & PDF Report']);
+          rows.push(['SAT', 'Weekly CBT & X-Ray PDF']);
         }
-        return items;
+        return rows;
       }
 
       checkBtn.addEventListener('click', function () {
         var soc = socEl.value.trim();
         var cls = clsEl.value;
         var subs = getSelectedSubjects();
-        if (!soc) return showErr(err1, 'Kripya apna Sector / Society (ya City) likhein.');
-        if (!cls) return showErr(err1, 'Kripya Student Class ya Target select karein.');
-        if (!subs.length) return showErr(err1, 'Kam se kam 1 subject select karein.');
+        if (!soc) return showErr(err1, 'Please select or enter your Sector, Society, or City.');
+        if (!cls) return showErr(err1, 'Please select a Student Grade or Target Exam.');
+        if (!subs.length) return showErr(err1, 'Please select at least one subject.');
         showErr(err1, '');
 
         checkBtn.disabled = true;
-        checkBtn.textContent = 'Checking Specialist Pod...';
+        checkBtn.querySelector('span').textContent = 'Matching Rotational Faculty Pod...';
 
         setTimeout(function () {
           checkBtn.disabled = false;
-          checkBtn.textContent = 'Check Specialist Availability & Sample Schedule →';
+          checkBtn.querySelector('span').textContent = 'Check Availability & Preview Rotational Schedule';
 
-          var isOnline = areaEl.value.indexOf('Online') !== -1;
+          var isOnline = selectedArea.indexOf('Online') !== -1;
           matchTitle.textContent = isOnline
-            ? '✅ Live 1-on-1 Subject Specialists Available (' + soc + ')'
-            : '✅ Rotational Specialists Available in ' + soc;
-          matchSub.textContent = cls + ' (' + brdEl.value + ') • Sample Weekly Rotational Plan:';
+            ? 'Live 1-on-1 Subject Specialists Available — ' + soc
+            : 'Rotational Specialists Available in ' + soc;
+          matchSub.textContent = cls + ' (' + brdEl.value + ') • Proposed Weekly Subject-Specialist Rotation:';
 
           var plan = buildSchedule(subs);
-          schedList.innerHTML = plan.map(function (row) {
-            return '<li><strong>' + row[0] + ':</strong> ' + row[1] + '</li>';
-          }).join('');
+          schedList.innerHTML = '';
+          plan.forEach(function (item) {
+            var card = document.createElement('div');
+            card.className = 'ecav-day-card';
+            var dLbl = document.createElement('div');
+            dLbl.className = 'ecav-day-label';
+            dLbl.textContent = item[0];
+            var dSub = document.createElement('div');
+            dSub.className = 'ecav-day-sub';
+            dSub.textContent = item[1];
+            card.appendChild(dLbl);
+            card.appendChild(dSub);
+            schedList.appendChild(card);
+          });
 
-          step1.classList.add('ec-av-hidden');
-          step2.classList.remove('ec-av-hidden');
-        }, 450);
+          ind1.classList.remove('active');
+          ind1.classList.add('done');
+          ind2.classList.add('active');
+          step1.classList.add('ecav-hidden');
+          step2.classList.remove('ecav-hidden');
+        }, 420);
       });
 
       backBtn.addEventListener('click', function () {
-        step2.classList.add('ec-av-hidden');
-        step1.classList.remove('ec-av-hidden');
+        ind1.classList.add('active');
+        ind1.classList.remove('done');
+        ind2.classList.remove('active');
+        step2.classList.add('ecav-hidden');
+        step1.classList.remove('ecav-hidden');
       });
 
       submitBtn.addEventListener('click', function () {
         var name = nameEl.value.trim();
         var rawPhone = phoneEl.value.replace(/\D/g, '');
-        var isOnline = areaEl.value.indexOf('Online') !== -1;
+        var isOnline = selectedArea.indexOf('Online') !== -1;
 
-        if (name.length < 2) return showErr(err2, 'Kripya apna poora naam likhein.');
+        if (name.length < 2) return showErr(err2, 'Please enter your full name.');
         if (!isOnline) {
           if (rawPhone.length === 12 && rawPhone.indexOf('91') === 0) rawPhone = rawPhone.slice(2);
           if (rawPhone.length === 11 && rawPhone.indexOf('0') === 0) rawPhone = rawPhone.slice(1);
           if (!/^[6-9]\d{9}$/.test(rawPhone)) {
-            return showErr(err2, 'Kripya sahi 10-digit Indian WhatsApp number daalein.');
+            return showErr(err2, 'Please enter a valid 10-digit Indian WhatsApp number.');
           }
         } else if (rawPhone.length < 8 || rawPhone.length > 15) {
-          return showErr(err2, 'Kripya valid WhatsApp number (country code ke saath) daalein.');
+          return showErr(err2, 'Please enter a valid WhatsApp number including country code.');
         }
         showErr(err2, '');
 
         var subs = getSelectedSubjects().join(', ');
         var modeText = isOnline ? 'Global Live 1-on-1 Online' : '1-on-1 Rotational Home Tuition';
-        var freqText = slotEl.value + ' | Availability Widget' + (refTag ? ' | Ref: ' + refTag : '');
+        var freqText = selectedSlot + ' | Availability Studio' + (refTag ? ' | Ref: ' + refTag : '');
 
         var payload = {
           type: 'STUDY_PLAN',
           name: name,
           phone: rawPhone,
-          area: areaEl.value,
+          area: selectedArea,
           society: socEl.value.trim(),
           classLabel: clsEl.value,
           board: brdEl.value,
@@ -807,7 +1164,7 @@
         };
 
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Locking Your Free Trial Slot...';
+        submitBtn.querySelector('span').textContent = 'Reserving Your Trial Slot...';
 
         if (EC_AVAIL_CONFIG.crmUrl && EC_AVAIL_CONFIG.crmUrl.indexOf('http') === 0) {
           try {
@@ -821,38 +1178,42 @@
         }
 
         var waMsg =
-          'Namaste Ravi Sir (ELITE CLASSES),\n' +
-          'Maine website par Tutor Availability check ki hai:\n\n' +
-          '• Name: ' + name + '\n' +
-          '• WhatsApp: ' + rawPhone + '\n' +
-          '• Class & Board: ' + clsEl.value + ' (' + brdEl.value + ')\n' +
-          '• Mode: ' + modeText + '\n' +
-          '• Area / Society: ' + socEl.value.trim() + ' (' + areaEl.value + ')\n' +
-          '• Subjects: ' + subs + '\n' +
-          '• Preferred Slot: ' + slotEl.value +
-          (refTag ? '\n• Source: ' + refTag : '') +
-          '\n\nPlease share Free 1st Trial Class details & monthly plan.';
+          'Hello Ravi Sir (ELITE CLASSES),\n' +
+          'I verified faculty availability on your website and would like to schedule our complimentary trial class:\n\n' +
+          'Name: ' + name + '\n' +
+          'WhatsApp: ' + rawPhone + '\n' +
+          'Grade & Board: ' + clsEl.value + ' (' + brdEl.value + ')\n' +
+          'Format: ' + modeText + '\n' +
+          'Location: ' + socEl.value.trim() + ' (' + selectedArea + ')\n' +
+          'Subjects: ' + subs + '\n' +
+          'Preferred Slot: ' + selectedSlot +
+          (refTag ? '\nSource: ' + refTag : '') +
+          '\n\nPlease confirm our 1st complimentary trial session and monthly plan.';
 
         waLink.href = 'https://wa.me/' + EC_AVAIL_CONFIG.whatsappNumber + '?text=' + encodeURIComponent(waMsg);
-        doneText.textContent = name + ' ji, aapki request (' + clsEl.value + ' • ' + socEl.value.trim() + ') record ho gayi hai. Turant response ke liye neeche WhatsApp button dabayein.';
+        doneText.textContent = 'Thank you, ' + name + '. Your trial request for ' + clsEl.value + ' (' + socEl.value.trim() + ') is logged. Tap below for priority confirmation on WhatsApp.';
 
         setTimeout(function () {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Unlock Free 1st Trial Class & Fee Quote →';
-          step2.classList.add('ec-av-hidden');
-          step3.classList.remove('ec-av-hidden');
-        }, 400);
+          submitBtn.querySelector('span').textContent = 'Reserve Complimentary 1st Trial Class';
+          ind2.classList.remove('active');
+          ind2.classList.add('done');
+          step2.classList.add('ecav-hidden');
+          step3.classList.remove('ecav-hidden');
+        }, 360);
       });
 
       resetBtn.addEventListener('click', function () {
-        step3.classList.add('ec-av-hidden');
-        step1.classList.remove('ec-av-hidden');
+        ind1.classList.add('active');
+        ind1.classList.remove('done');
+        ind2.classList.remove('active', 'done');
+        step3.classList.add('ecav-hidden');
+        step1.classList.remove('ecav-hidden');
       });
     })();
   </script>
 </section>
 <!-- ================= END SMART TUTOR AVAILABILITY WIDGET ================= -->
-
 
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
         <div class="bento-card rounded-2xl p-5 text-center">
@@ -969,820 +1330,876 @@
   <!-- =========================================================
      SECTION 8: INTERACTIVE FEE STUDIO & PACKAGES (INR / USD)
 ========================================================= -->
-<section id="pricing" aria-label="Transparent Monthly Fee Estimator">
+<section id="pricing" aria-label="Transparent Monthly Fee Studio">
   <style>
     #pricing {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       position: relative;
-      padding: 56px 14px;
+      padding: 68px 14px 72px;
       border-top: 1px solid rgba(255, 255, 255, 0.06);
-      color: #f4f4f5;
+      color: #f8fafc;
       overflow: hidden;
       box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
     }
     #pricing * { box-sizing: border-box; }
-    .ecp-glow-bg {
+    .ecp-aurora {
       position: absolute;
       inset: 0;
       pointer-events: none;
       background:
-        radial-gradient(600px 320px at 15% 15%, rgba(245, 158, 11, 0.11), transparent 70%),
-        radial-gradient(620px 340px at 88% 78%, rgba(99, 102, 241, 0.14), transparent 70%);
+        radial-gradient(640px 360px at 14% 12%, rgba(212, 168, 83, 0.11), transparent 70%),
+        radial-gradient(680px 380px at 88% 82%, rgba(56, 189, 248, 0.09), transparent 70%);
     }
-    .ecp-wrap {
+    .ecp-container {
       position: relative;
-      max-width: 1140px;
+      max-width: 1160px;
       margin: 0 auto;
       z-index: 1;
     }
-    .ecp-head {
+
+    /* Section Header */
+    .ecp-header {
       text-align: center;
-      max-width: 700px;
-      margin: 0 auto 28px;
+      max-width: 720px;
+      margin: 0 auto 36px;
     }
     .ecp-eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       padding: 6px 14px;
       border-radius: 999px;
-      background: rgba(245, 158, 11, 0.12);
-      border: 1px solid rgba(245, 158, 11, 0.38);
-      color: #fbbf24;
+      background: rgba(212, 168, 83, 0.1);
+      border: 1px solid rgba(212, 168, 83, 0.34);
+      color: #ebd094;
       font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
+      font-weight: 700;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
-    .ecp-pulse {
-      width: 7px;
-      height: 7px;
+    .ecp-eyebrow-dot {
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      background: #22c55e;
-      box-shadow: 0 0 10px #22c55e;
+      background: #34d399;
+      box-shadow: 0 0 10px #34d399;
     }
-    .ecp-title {
+    .ecp-h2 {
       margin: 0 0 10px;
-      font-size: 28px;
-      line-height: 1.18;
-      font-weight: 900;
-      letter-spacing: -0.02em;
+      font-size: 29px;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.03em;
       color: #ffffff;
     }
-    @media (min-width: 640px) { .ecp-title { font-size: 38px; } }
-    .ecp-title span {
-      background: linear-gradient(90deg, #fde68a 0%, #f59e0b 55%, #fbbf24 100%);
+    @media (min-width: 640px) { .ecp-h2 { font-size: 42px; } }
+    .ecp-h2 span {
+      background: linear-gradient(95deg, #f7e4b4 0%, #d4a853 55%, #f0cf82 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .ecp-sub {
+    .ecp-lead {
       margin: 0 auto;
-      font-size: 14px;
-      line-height: 1.55;
-      color: #a1a1aa;
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: #94a3b8;
     }
 
-    /* Currency Switcher */
-    .ecp-curr-bar {
-      display: inline-flex;
+    /* Sliding Glass Segmented Currency Control */
+    .ecp-curr-shell {
+      position: relative;
+      display: inline-grid;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 24px;
       padding: 5px;
-      margin-top: 20px;
       border-radius: 16px;
-      background: rgba(24, 24, 31, 0.9);
+      background: rgba(15, 19, 30, 0.92);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      gap: 5px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      width: 100%;
+      max-width: 430px;
+    }
+    .ecp-curr-thumb {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: calc(50% - 5px);
+      height: calc(100% - 10px);
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f6e0a8 0%, #d4a853 100%);
+      box-shadow: 0 6px 20px rgba(212, 168, 83, 0.32);
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+    .ecp-curr-shell[data-curr="USD"] .ecp-curr-thumb {
+      transform: translateX(100%);
     }
     .ecp-curr-btn {
+      position: relative;
+      z-index: 1;
       border: none;
+      background: transparent;
+      padding: 11px 12px;
       border-radius: 12px;
-      padding: 10px 16px;
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 800;
       cursor: pointer;
-      color: #a1a1aa;
-      background: transparent;
-      transition: all 0.22s ease;
+      color: #94a3b8;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: color 0.22s ease;
     }
-    .ecp-curr-btn.active {
-      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-      color: #ffffff;
-      box-shadow: 0 6px 18px rgba(99, 102, 241, 0.38);
-    }
+    .ecp-curr-btn.active { color: #090b10; }
 
-    /* Main 2-Column Studio */
-    .ecp-studio {
+    /* Studio Grid */
+    .ecp-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 20px;
+      gap: 22px;
       align-items: start;
     }
     @media (min-width: 960px) {
-      .ecp-studio {
-        grid-template-columns: 1.18fr 0.82fr;
-        gap: 24px;
-      }
+      .ecp-grid { grid-template-columns: 1.18fr 0.82fr; gap: 26px; }
     }
-    .ecp-panel {
-      background: linear-gradient(180deg, rgba(22, 22, 29, 0.94) 0%, rgba(12, 12, 16, 0.98) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      border-radius: 24px;
-      padding: 20px 16px;
-      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.52);
-    }
-    @media (min-width: 640px) { .ecp-panel { padding: 26px; } }
 
-    .ecp-step {
-      margin-bottom: 20px;
+    /* Left Customizer Glass Card */
+    .ecp-card {
+      background: linear-gradient(165deg, rgba(16, 20, 31, 0.92) 0%, rgba(9, 11, 18, 0.98) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.085);
+      border-radius: 26px;
+      padding: 22px 16px;
+      box-shadow: 0 26px 65px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
-    .ecp-step:last-child { margin-bottom: 0; }
-    .ecp-step-head {
+    @media (min-width: 640px) { .ecp-card { padding: 30px; } }
+
+    .ecp-section { margin-bottom: 24px; }
+    .ecp-section:last-child { margin-bottom: 0; }
+    .ecp-sec-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 10px;
+      gap: 10px;
+      margin-bottom: 12px;
     }
-    .ecp-step-label {
-      display: flex;
+    .ecp-sec-title {
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-size: 12px;
+      gap: 9px;
+      font-size: 11.5px;
       font-weight: 800;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #e4e4e7;
+      color: #e2e8f0;
     }
-    .ecp-step-num {
-      width: 21px;
-      height: 21px;
+    .ecp-sec-idx {
+      width: 22px;
+      height: 22px;
       border-radius: 7px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: rgba(245, 158, 11, 0.16);
-      border: 1px solid rgba(245, 158, 11, 0.42);
-      color: #fbbf24;
+      background: rgba(212, 168, 83, 0.14);
+      border: 1px solid rgba(212, 168, 83, 0.36);
+      color: #f3d58d;
       font-size: 11px;
-      font-weight: 900;
+      font-weight: 800;
     }
-    .ecp-step-hint {
-      font-size: 11px;
+    .ecp-sec-sub {
+      font-size: 11.5px;
       font-weight: 600;
-      color: #71717a;
+      color: #64748b;
     }
 
-    /* Interactive Option Grids */
-    .ecp-grade-grid {
+    /* Bento Selection Tiles */
+    .ecp-tiles-grade {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 9px;
+      gap: 10px;
     }
-    @media (min-width: 640px) {
-      .ecp-grade-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    .ecp-seg-3 {
+    @media (min-width: 640px) { .ecp-tiles-grade { grid-template-columns: repeat(3, 1fr); } }
+    .ecp-tiles-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 9px;
+      gap: 10px;
     }
-    .ecp-btn-opt {
+    .ecp-tile {
       position: relative;
       width: 100%;
       text-align: left;
-      background: #16161e;
-      border: 1px solid #2b2b36;
-      border-radius: 14px;
-      padding: 12px 12px;
-      color: #e4e4e7;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.085);
+      border-radius: 15px;
+      padding: 13px 13px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      color: #e2e8f0;
+      transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .ecp-btn-opt:hover {
-      border-color: rgba(251, 191, 36, 0.48);
-      background: #1b1b24;
+    .ecp-tile:hover {
+      background: rgba(255, 255, 255, 0.048);
+      border-color: rgba(212, 168, 83, 0.42);
+      transform: translateY(-1px);
     }
-    .ecp-btn-opt.active {
-      background: linear-gradient(145deg, rgba(245, 158, 11, 0.16) 0%, rgba(99, 102, 241, 0.14) 100%);
-      border-color: #f59e0b;
-      box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.35), 0 10px 24px rgba(245, 158, 11, 0.12);
+    .ecp-tile.active {
+      background: linear-gradient(150deg, rgba(212, 168, 83, 0.15) 0%, rgba(212, 168, 83, 0.03) 100%);
+      border-color: #d4a853;
+      box-shadow: 0 0 0 1px rgba(212, 168, 83, 0.32), 0 12px 28px rgba(0, 0, 0, 0.38);
     }
-    .ecp-opt-title {
+    .ecp-tile-center { text-align: center; padding: 13px 8px; }
+    .ecp-tile-name {
       display: block;
-      font-size: 13px;
-      font-weight: 800;
+      font-size: 13.5px;
+      font-weight: 700;
       color: #ffffff;
       line-height: 1.25;
     }
-    .ecp-btn-opt.active .ecp-opt-title { color: #fde68a; }
-    .ecp-opt-sub {
+    .ecp-tile.active .ecp-tile-name { color: #f7e4b4; }
+    .ecp-tile-meta {
       display: block;
       font-size: 11px;
-      font-weight: 600;
-      color: #9ca3af;
+      font-weight: 500;
+      color: #64748b;
       margin-top: 3px;
-      line-height: 1.25;
+      line-height: 1.3;
     }
-    .ecp-btn-opt.active .ecp-opt-sub { color: #d4d4d8; }
-    .ecp-opt-center { text-align: center; padding: 11px 8px; }
-    .ecp-mini-tag {
+    .ecp-tile.active .ecp-tile-meta { color: #cbd5e1; }
+
+    .ecp-ribbon {
       position: absolute;
-      top: -8px;
+      top: -9px;
       right: 10px;
-      padding: 2px 7px;
+      padding: 2px 8px;
       border-radius: 999px;
-      font-size: 9px;
-      font-weight: 900;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #09090b;
-    }
-    .ecp-mini-tag-green {
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: #052e16;
-    }
-    .ecp-global-note {
-      display: none;
-      margin-top: 8px;
-      padding: 9px 12px;
-      border-radius: 11px;
-      background: rgba(99, 102, 241, 0.14);
-      border: 1px solid rgba(99, 102, 241, 0.38);
-      color: #c7d2fe;
-      font-size: 11.5px;
-      font-weight: 600;
-    }
-
-    /* Comparison Mini Strip */
-    .ecp-compare {
-      margin-top: 18px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.07);
-    }
-    .ecp-cmp-box {
-      border-radius: 14px;
-      padding: 11px 12px;
-      font-size: 11.5px;
-      line-height: 1.45;
-    }
-    .ecp-cmp-old {
-      background: rgba(239, 68, 68, 0.07);
-      border: 1px solid rgba(239, 68, 68, 0.22);
-      color: #a1a1aa;
-    }
-    .ecp-cmp-new {
-      background: rgba(34, 197, 94, 0.08);
-      border: 1px solid rgba(34, 197, 94, 0.3);
-      color: #e4e4e7;
-    }
-    .ecp-cmp-head {
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 4px;
-    }
-    .ecp-cmp-old .ecp-cmp-head { color: #fca5a5; }
-    .ecp-cmp-new .ecp-cmp-head { color: #4ade80; }
-
-    /* Right Panel: Live Investment Summary Card */
-    .ecp-summary {
-      position: relative;
-      background: linear-gradient(165deg, #1b1814 0%, #12121a 55%, #0d0d14 100%);
-      border: 1.5px solid rgba(245, 158, 11, 0.55);
-      border-radius: 24px;
-      padding: 22px 18px;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.62), 0 0 36px rgba(245, 158, 11, 0.1);
-    }
-    @media (min-width: 960px) {
-      .ecp-summary { position: sticky; top: 20px; padding: 26px 24px; }
-    }
-    .ecp-plan-badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(99, 102, 241, 0.18);
-      border: 1px solid rgba(129, 140, 248, 0.42);
-      color: #c7d2fe;
-      font-size: 10.5px;
+      font-size: 9.5px;
       font-weight: 800;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      background: linear-gradient(135deg, #f6e0a8, #cfa14a);
+      color: #090b10;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
     }
-    .ecp-plan-name {
-      margin: 0 0 14px;
-      font-size: 18px;
-      font-weight: 900;
-      color: #ffffff;
-      line-height: 1.25;
+    .ecp-ribbon-emerald {
+      background: linear-gradient(135deg, #34d399, #10b981);
+      color: #042f2e;
     }
-    .ecp-price-stage {
-      background: rgba(9, 9, 13, 0.72);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-    .ecp-strike {
+    .ecp-global-banner {
       display: none;
-      font-size: 13px;
-      font-weight: 700;
-      color: #71717a;
-      text-decoration: line-through;
-      margin-bottom: 3px;
+      margin-top: 10px;
+      padding: 10px 13px;
+      border-radius: 12px;
+      background: rgba(56, 189, 248, 0.09);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      color: #bae6fd;
+      font-size: 12px;
+      line-height: 1.45;
     }
-    .ecp-price-row {
-      display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 6px;
+
+    /* Editorial Comparison Strip */
+    .ecp-versus {
+      margin-top: 22px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
     }
-    .ecp-price-val {
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: -0.025em;
-      color: #ffffff;
-      line-height: 1.1;
-      transition: transform 0.2s ease, opacity 0.2s ease;
+    @media (min-width: 640px) { .ecp-versus { grid-template-columns: 1fr 1fr; } }
+    .ecp-vs-card {
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-size: 12px;
+      line-height: 1.5;
     }
-    @media (min-width: 640px) { .ecp-price-val { font-size: 34px; } }
-    .ecp-price-val.ecp-pop {
-      transform: scale(1.03);
-      color: #fde68a;
+    .ecp-vs-std {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      color: #94a3b8;
     }
-    .ecp-price-unit {
-      font-size: 13px;
-      font-weight: 700;
-      color: #a1a1aa;
+    .ecp-vs-elite {
+      background: linear-gradient(155deg, rgba(212, 168, 83, 0.1) 0%, rgba(16, 185, 129, 0.06) 100%);
+      border: 1px solid rgba(212, 168, 83, 0.3);
+      color: #e2e8f0;
     }
-    .ecp-per-pill {
+    .ecp-vs-head {
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .ecp-vs-std .ecp-vs-head { color: #64748b; }
+    .ecp-vs-elite .ecp-vs-head { color: #f3d58d; }
+
+    /* Right Sticky Luxury Summary Studio */
+    .ecp-summary {
+      position: relative;
+      background: linear-gradient(170deg, rgba(23, 21, 18, 0.96) 0%, rgba(12, 15, 24, 0.98) 55%, rgba(8, 10, 16, 1) 100%);
+      border: 1px solid rgba(212, 168, 83, 0.48);
+      border-radius: 26px;
+      padding: 24px 20px;
+      box-shadow:
+        0 30px 75px rgba(0, 0, 0, 0.68),
+        0 0 42px rgba(212, 168, 83, 0.08),
+        inset 0 1px 0 rgba(246, 224, 168, 0.28);
+    }
+    @media (min-width: 960px) {
+      .ecp-summary { position: sticky; top: 22px; padding: 28px 26px; }
+    }
+    .ecp-plan-pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      margin-top: 10px;
       padding: 5px 11px;
       border-radius: 999px;
-      background: rgba(34, 197, 94, 0.14);
-      border: 1px solid rgba(34, 197, 94, 0.36);
-      color: #4ade80;
-      font-size: 12px;
-      font-weight: 800;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
     }
-    .ecp-save-box {
+    .ecp-plan-heading {
+      margin: 0 0 16px;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.015em;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+
+    .ecp-price-vault {
+      background: rgba(6, 8, 13, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 18px 16px;
+      margin-bottom: 18px;
+    }
+    .ecp-strike {
+      display: none;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #64748b;
+      text-decoration: line-through;
+      margin-bottom: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+    .ecp-price-line {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .ecp-price-digits {
+      font-size: 31px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      line-height: 1.08;
+      font-variant-numeric: tabular-nums;
+    }
+    @media (min-width: 640px) { .ecp-price-digits { font-size: 35px; } }
+    .ecp-price-unit {
+      font-size: 13px;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+    .ecp-per-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 11px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(52, 211, 153, 0.12);
+      border: 1px solid rgba(52, 211, 153, 0.32);
+      color: #34d399;
+      font-size: 12px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .ecp-save-ribbon {
       display: none;
       margin-top: 10px;
-      padding: 8px 11px;
+      padding: 9px 12px;
       border-radius: 11px;
-      background: rgba(245, 158, 11, 0.15);
-      border: 1px dashed rgba(251, 191, 36, 0.6);
-      color: #fde68a;
+      background: rgba(212, 168, 83, 0.12);
+      border: 1px solid rgba(212, 168, 83, 0.4);
+      color: #f6e0a8;
       font-size: 12px;
-      font-weight: 800;
-      line-height: 1.35;
+      font-weight: 700;
+      line-height: 1.4;
     }
-    .ecp-inc-title {
-      font-size: 11px;
+
+    .ecp-inc-label {
+      font-size: 10.5px;
       font-weight: 800;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #a1a1aa;
-      margin-bottom: 8px;
+      color: #64748b;
+      margin-bottom: 10px;
     }
     .ecp-inc-list {
       list-style: none;
-      margin: 0 0 16px;
+      margin: 0 0 18px;
       padding: 0;
       display: grid;
-      gap: 7px;
+      gap: 8px;
       font-size: 12.5px;
-      color: #e4e4e7;
+      color: #cbd5e1;
     }
     .ecp-inc-list li {
       display: flex;
       align-items: flex-start;
-      gap: 8px;
-      line-height: 1.35;
+      gap: 9px;
+      line-height: 1.4;
     }
-    .ecp-inc-list li::before {
-      content: "✓";
+    .ecp-inc-icon {
       flex-shrink: 0;
       width: 17px;
       height: 17px;
       border-radius: 50%;
-      background: rgba(34, 197, 94, 0.16);
-      color: #4ade80;
-      font-size: 11px;
-      font-weight: 900;
+      background: rgba(52, 211, 153, 0.14);
+      color: #34d399;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       margin-top: 1px;
     }
 
-    /* Inline Lead Form */
-    .ecp-form-box {
-      padding-top: 15px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    /* Quote Unlock Form */
+    .ecp-lead-wrap {
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.09);
     }
-    .ecp-form-title {
-      font-size: 13px;
-      font-weight: 800;
+    .ecp-lead-title {
+      font-size: 13.5px;
+      font-weight: 700;
       color: #ffffff;
-      margin-bottom: 10px;
+      margin-bottom: 11px;
     }
-    .ecp-inputs {
+    .ecp-fields {
       display: grid;
       gap: 9px;
     }
-    .ecp-input {
+    .ecp-field {
       width: 100%;
-      background: #14141c;
-      border: 1px solid #2e2e3a;
+      background: rgba(9, 12, 20, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.11);
       border-radius: 12px;
-      padding: 11px 13px;
-      color: #ffffff;
+      padding: 11.5px 13px;
+      color: #f8fafc;
       font-size: 13.5px;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .ecp-input::placeholder { color: #71717a; }
-    .ecp-input:focus { border-color: #f59e0b; }
+    .ecp-field::placeholder { color: #64748b; }
+    .ecp-field:focus {
+      border-color: #d4a853;
+      box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.14);
+    }
     .ecp-cta {
       width: 100%;
-      margin-top: 11px;
-      padding: 13px 16px;
+      margin-top: 12px;
+      padding: 14px 16px;
       border: none;
       border-radius: 13px;
-      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 55%, #d97706 100%);
-      color: #09090b;
+      background: linear-gradient(135deg, #f6e0a8 0%, #d4a853 55%, #be8f38 100%);
+      color: #090b10;
       font-size: 14px;
-      font-weight: 900;
+      font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 10px 26px rgba(245, 158, 11, 0.34);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       text-decoration: none;
-      display: block;
-      text-align: center;
-      transition: transform 0.15s ease, opacity 0.15s ease;
+      box-shadow: 0 12px 30px rgba(212, 168, 83, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+      transition: transform 0.16s ease, opacity 0.18s ease;
     }
+    .ecp-cta:hover { transform: translateY(-1px); }
     .ecp-cta:active { transform: scale(0.99); }
     .ecp-cta:disabled { opacity: 0.65; cursor: not-allowed; }
     .ecp-cta-wa {
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
       color: #ffffff;
-      box-shadow: 0 10px 24px rgba(22, 163, 74, 0.34);
+      box-shadow: 0 12px 26px rgba(22, 163, 74, 0.3);
     }
     .ecp-cta-ghost {
-      margin-top: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(251, 191, 36, 0.42);
-      color: #fde68a;
+      margin-top: 9px;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(212, 168, 83, 0.38);
+      color: #f3d58d;
       box-shadow: none;
       font-size: 13px;
-      padding: 11px 14px;
+      padding: 12px 14px;
     }
     .ecp-err {
       display: none;
       margin-top: 9px;
-      padding: 9px 11px;
+      padding: 9px 12px;
       border-radius: 10px;
-      background: rgba(239, 68, 68, 0.14);
-      border: 1px solid rgba(239, 68, 68, 0.4);
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
       color: #fca5a5;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 600;
     }
     .ecp-done {
       display: none;
-      padding: 14px;
+      padding: 15px;
       border-radius: 15px;
-      background: rgba(34, 197, 94, 0.1);
-      border: 1px solid rgba(34, 197, 94, 0.38);
+      background: rgba(16, 185, 129, 0.09);
+      border: 1px solid rgba(52, 211, 153, 0.32);
     }
     .ecp-done-head {
+      display: flex;
+      align-items: center;
+      gap: 7px;
       font-size: 14px;
-      font-weight: 900;
-      color: #4ade80;
+      font-weight: 800;
+      color: #34d399;
       margin-bottom: 5px;
     }
     .ecp-done-msg {
       font-size: 12.5px;
-      line-height: 1.45;
-      color: #e4e4e7;
-      margin-bottom: 11px;
+      line-height: 1.5;
+      color: #e2e8f0;
+      margin-bottom: 12px;
     }
-    .ecp-reset-link {
+    .ecp-edit-btn {
       background: none;
       border: none;
-      color: #a1a1aa;
-      font-size: 11.5px;
-      font-weight: 700;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 600;
       text-decoration: underline;
       cursor: pointer;
       display: block;
-      margin: 10px auto 0;
+      margin: 12px auto 0;
     }
-    .ecp-micro-note {
-      margin-top: 10px;
+    .ecp-disclaimer {
+      margin-top: 11px;
       font-size: 11px;
-      color: #71717a;
+      color: #64748b;
       text-align: center;
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
-    /* Bottom Trust Bar */
-    .ecp-trust-bar {
-      margin-top: 22px;
+    /* Bottom Luxury Guarantees */
+    .ecp-guarantees {
+      margin-top: 26px;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      gap: 11px;
     }
-    @media (min-width: 768px) {
-      .ecp-trust-bar { grid-template-columns: repeat(4, 1fr); }
+    @media (min-width: 768px) { .ecp-guarantees { grid-template-columns: repeat(4, 1fr); } }
+    .ecp-g-card {
+      background: rgba(15, 19, 30, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.075);
+      border-radius: 16px;
+      padding: 14px 14px;
+      text-align: left;
     }
-    .ecp-trust-item {
-      background: rgba(20, 20, 27, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 14px;
-      padding: 12px 13px;
-      font-size: 12px;
+    .ecp-g-title {
+      font-size: 12.5px;
       font-weight: 700;
-      color: #e4e4e7;
-      text-align: center;
+      color: #f8fafc;
+      margin-bottom: 3px;
     }
-    .ecp-trust-item span {
-      display: block;
-      font-size: 10.5px;
-      font-weight: 600;
-      color: #9ca3af;
-      margin-top: 2px;
+    .ecp-g-desc {
+      font-size: 11.5px;
+      color: #94a3b8;
+      line-height: 1.4;
     }
   </style>
 
-  <div class="ecp-glow-bg"></div>
+  <div class="ecp-aurora"></div>
 
-  <div class="ecp-wrap">
-    <!-- HEADER -->
-    <div class="ecp-head">
+  <div class="ecp-container">
+    <div class="ecp-header">
       <div class="ecp-eyebrow">
-        <span class="ecp-pulse"></span>
-        <span>Transparent Monthly Packages &amp; Fee Studio</span>
+        <span class="ecp-eyebrow-dot"></span>
+        <span>Transparent Tuition Architecture</span>
       </div>
-      <h2 class="ecp-title">Apne Plan Ki <span>Exact Monthly Fee</span> Calculate Karein</h2>
-      <p class="ecp-sub">Class, Board, Mode aur Society Study-Pod select karein—turant per-class cost, monthly investment aur savings dekhein. Zero hidden charges.</p>
+      <h2 class="ecp-h2">Calculate Your <span>Exact Monthly Plan</span></h2>
+      <p class="ecp-lead">Customise grade, curriculum, delivery mode, and Study-Pod format to preview your transparent monthly investment and per-session value.</p>
 
-      <div class="ecp-curr-bar" role="group" aria-label="Currency Toggle">
-        <button type="button" id="btn-inr" class="ecp-curr-btn active" onclick="window.setCurrency('INR')">🇮🇳 India (Noida Home / Hybrid)</button>
-        <button type="button" id="btn-usd" class="ecp-curr-btn" onclick="window.setCurrency('USD')">🌍 Global (Live 1-on-1 USD)</button>
+      <div class="ecp-curr-shell" id="ecpCurrShell" data-curr="INR" role="group" aria-label="Currency Selector">
+        <div class="ecp-curr-thumb" aria-hidden="true"></div>
+        <button type="button" id="ecpCurrInr" class="ecp-curr-btn active">
+          <span>India • INR</span>
+        </button>
+        <button type="button" id="ecpCurrUsd" class="ecp-curr-btn">
+          <span>Global • USD</span>
+        </button>
       </div>
     </div>
 
-    <!-- 2-COLUMN INTERACTIVE STUDIO -->
-    <div class="ecp-studio">
-      <!-- LEFT: CUSTOMIZER CONTROLS -->
-      <div class="ecp-panel">
-        <!-- STEP 1: CLASS -->
-        <div class="ecp-step">
-          <div class="ecp-step-head">
-            <span class="ecp-step-label"><span class="ecp-step-num">1</span> Select Grade / Target Exam</span>
-            <span class="ecp-step-hint">1-on-1 Personalised</span>
+    <div class="ecp-grid">
+      <!-- LEFT: INTERACTIVE CONFIGURATOR -->
+      <div class="ecp-card">
+        <div class="ecp-section">
+          <div class="ecp-sec-head">
+            <span class="ecp-sec-title"><span class="ecp-sec-idx">1</span> Grade &amp; Academic Track</span>
+            <span class="ecp-sec-sub">1-on-1 Personalised</span>
           </div>
-          <div class="ecp-grade-grid" id="ecpClassGrid">
-            <button type="button" class="ecp-btn-opt" data-val="g1_5">
-              <span class="ecp-opt-title">Grades 1 – 5</span>
-              <span class="ecp-opt-sub">Foundation Pod</span>
+          <div class="ecp-tiles-grade" id="ecpClassGrid">
+            <button type="button" class="ecp-tile" data-val="g1_5">
+              <span class="ecp-tile-name">Grades 1 – 5</span>
+              <span class="ecp-tile-meta">Foundation Pod</span>
             </button>
-            <button type="button" class="ecp-btn-opt active" data-val="g6_8">
-              <span class="ecp-mini-tag">Popular</span>
-              <span class="ecp-opt-title">Grades 6 – 8</span>
-              <span class="ecp-opt-sub">Rotational Specialists</span>
+            <button type="button" class="ecp-tile active" data-val="g6_8">
+              <span class="ecp-ribbon">Most Chosen</span>
+              <span class="ecp-tile-name">Grades 6 – 8</span>
+              <span class="ecp-tile-meta">Rotational Specialists</span>
             </button>
-            <button type="button" class="ecp-btn-opt" data-val="g9_10">
-              <span class="ecp-mini-tag">Boards</span>
-              <span class="ecp-opt-title">Grades 9 – 10</span>
-              <span class="ecp-opt-sub">Board Mastery</span>
+            <button type="button" class="ecp-tile" data-val="g9_10">
+              <span class="ecp-ribbon">Boards</span>
+              <span class="ecp-tile-name">Grades 9 – 10</span>
+              <span class="ecp-tile-meta">Board Mastery</span>
             </button>
-            <button type="button" class="ecp-btn-opt" data-val="g11_12">
-              <span class="ecp-opt-title">Grades 11 – 12</span>
-              <span class="ecp-opt-sub">Science / Commerce</span>
+            <button type="button" class="ecp-tile" data-val="g11_12">
+              <span class="ecp-tile-name">Grades 11 – 12</span>
+              <span class="ecp-tile-meta">Science / Commerce</span>
             </button>
-            <button type="button" class="ecp-btn-opt" data-val="entrance">
-              <span class="ecp-opt-title">Sainik / JNVST</span>
-              <span class="ecp-opt-sub">RIMC &amp; Entrance Prep</span>
+            <button type="button" class="ecp-tile" data-val="entrance">
+              <span class="ecp-tile-name">Sainik / JNVST</span>
+              <span class="ecp-tile-meta">RIMC &amp; Entrance</span>
             </button>
           </div>
         </div>
 
-        <!-- STEP 2: BOARD -->
-        <div class="ecp-step">
-          <div class="ecp-step-head">
-            <span class="ecp-step-label"><span class="ecp-step-num">2</span> Board / Curriculum</span>
-            <span class="ecp-step-hint">Board-Aligned Material</span>
+        <div class="ecp-section">
+          <div class="ecp-sec-head">
+            <span class="ecp-sec-title"><span class="ecp-sec-idx">2</span> Board / Curriculum</span>
+            <span class="ecp-sec-sub">Syllabus-Aligned</span>
           </div>
-          <div class="ecp-seg-3" id="ecpBoardSeg">
-            <button type="button" class="ecp-btn-opt ecp-opt-center active" data-val="CBSE">
-              <span class="ecp-opt-title">CBSE</span>
-              <span class="ecp-opt-sub">NCERT + Exemplar</span>
+          <div class="ecp-tiles-3" id="ecpBoardSeg">
+            <button type="button" class="ecp-tile ecp-tile-center active" data-val="CBSE">
+              <span class="ecp-tile-name">CBSE</span>
+              <span class="ecp-tile-meta">NCERT + Exemplar</span>
             </button>
-            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="ICSE">
-              <span class="ecp-opt-title">ICSE / ISC</span>
-              <span class="ecp-opt-sub">In-Depth Concept</span>
+            <button type="button" class="ecp-tile ecp-tile-center" data-val="ICSE">
+              <span class="ecp-tile-name">ICSE / ISC</span>
+              <span class="ecp-tile-meta">In-Depth Concept</span>
             </button>
-            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="IB_IGCSE">
-              <span class="ecp-opt-title">IB / IGCSE</span>
-              <span class="ecp-opt-sub">International</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- STEP 3: LEARNING MODE -->
-        <div class="ecp-step" id="ecpModeWrap">
-          <div class="ecp-step-head">
-            <span class="ecp-step-label"><span class="ecp-step-num">3</span> Learning Mode</span>
-            <span class="ecp-step-hint">Flexible Switch Anytime</span>
-          </div>
-          <div class="ecp-seg-3" id="ecpModeSeg">
-            <button type="button" class="ecp-btn-opt ecp-opt-center active" data-val="home">
-              <span class="ecp-opt-title">Home Tuition</span>
-              <span class="ecp-opt-sub">Noida / Gr. Noida</span>
-            </button>
-            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="hybrid">
-              <span class="ecp-mini-tag ecp-mini-tag-green">-10%</span>
-              <span class="ecp-opt-title">Hybrid Mode</span>
-              <span class="ecp-opt-sub">Home + Live HD</span>
-            </button>
-            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="online">
-              <span class="ecp-mini-tag ecp-mini-tag-green">-25%</span>
-              <span class="ecp-opt-title">1-on-1 Online</span>
-              <span class="ecp-opt-sub">Live Studio + Board</span>
-            </button>
-          </div>
-          <div class="ecp-global-note" id="ecpGlobalNote">
-            🌍 Global USD mode automatically selects <strong>1-on-1 Live HD Online Studio</strong> (flexible timezone slots for UAE, UK, USA, Singapore &amp; Europe).
-          </div>
-        </div>
-
-        <!-- STEP 4: FREQUENCY -->
-        <div class="ecp-step">
-          <div class="ecp-step-head">
-            <span class="ecp-step-label"><span class="ecp-step-num">4</span> Monthly Classes</span>
-            <span class="ecp-step-hint">60-Min Focused Sessions</span>
-          </div>
-          <div class="ecp-seg-3" id="ecpFreqSeg">
-            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="12">
-              <span class="ecp-opt-title">3 Days / Wk</span>
-              <span class="ecp-opt-sub">12 Classes / Mo</span>
-            </button>
-            <button type="button" class="ecp-btn-opt ecp-opt-center active" data-val="20">
-              <span class="ecp-mini-tag">Best</span>
-              <span class="ecp-opt-title">5 Days / Wk</span>
-              <span class="ecp-opt-sub">20 Classes / Mo</span>
-            </button>
-            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="24">
-              <span class="ecp-opt-title">6 Days / Wk</span>
-              <span class="ecp-opt-sub">24 Classes / Mo</span>
+            <button type="button" class="ecp-tile ecp-tile-center" data-val="IB_IGCSE">
+              <span class="ecp-tile-name">IB / IGCSE</span>
+              <span class="ecp-tile-meta">International</span>
             </button>
           </div>
         </div>
 
-        <!-- STEP 5: SOCIETY STUDY-POD -->
-        <div class="ecp-step">
-          <div class="ecp-step-head">
-            <span class="ecp-step-label"><span class="ecp-step-num">5</span> Society Study-Pod (Save Up To 30%)</span>
-            <span class="ecp-step-hint">Same Tower / Friends</span>
+        <div class="ecp-section">
+          <div class="ecp-sec-head">
+            <span class="ecp-sec-title"><span class="ecp-sec-idx">3</span> Learning Mode</span>
+            <span class="ecp-sec-sub">Flexible Switching</span>
           </div>
-          <div class="ecp-seg-3" id="ecpPodSeg">
-            <button type="button" class="ecp-btn-opt ecp-opt-center active" data-val="1">
-              <span class="ecp-opt-title">Solo 1-on-1</span>
-              <span class="ecp-opt-sub">100% Personal</span>
+          <div class="ecp-tiles-3" id="ecpModeSeg">
+            <button type="button" class="ecp-tile ecp-tile-center active" data-val="home">
+              <span class="ecp-tile-name">Home Tuition</span>
+              <span class="ecp-tile-meta">Noida / Gr. Noida</span>
             </button>
-            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="2">
-              <span class="ecp-mini-tag ecp-mini-tag-green">Save 20%</span>
-              <span class="ecp-opt-title">2-Student Pod</span>
-              <span class="ecp-opt-sub">Per Student Fee</span>
+            <button type="button" class="ecp-tile ecp-tile-center" data-val="hybrid">
+              <span class="ecp-ribbon ecp-ribbon-emerald">Save 10%</span>
+              <span class="ecp-tile-name">Hybrid Mode</span>
+              <span class="ecp-tile-meta">Home + Live HD</span>
             </button>
-            <button type="button" class="ecp-btn-opt ecp-opt-center" data-val="3">
-              <span class="ecp-mini-tag ecp-mini-tag-green">Save 30%</span>
-              <span class="ecp-opt-title">3-Student Pod</span>
-              <span class="ecp-opt-sub">Per Student Fee</span>
+            <button type="button" class="ecp-tile ecp-tile-center" data-val="online">
+              <span class="ecp-ribbon ecp-ribbon-emerald">Save 25%</span>
+              <span class="ecp-tile-name">1-on-1 Online</span>
+              <span class="ecp-tile-meta">Live Whiteboard</span>
+            </button>
+          </div>
+          <div class="ecp-global-banner" id="ecpGlobalBanner">
+            <strong>Global Live 1-on-1 Studio Active:</strong> Designed for international students across UAE, UK, USA, Singapore, and Europe with flexible timezone scheduling.
+          </div>
+        </div>
+
+        <div class="ecp-section">
+          <div class="ecp-sec-head">
+            <span class="ecp-sec-title"><span class="ecp-sec-idx">4</span> Monthly Cadence</span>
+            <span class="ecp-sec-sub">60-Min Focused Sessions</span>
+          </div>
+          <div class="ecp-tiles-3" id="ecpFreqSeg">
+            <button type="button" class="ecp-tile ecp-tile-center" data-val="12">
+              <span class="ecp-tile-name">3 Days / Wk</span>
+              <span class="ecp-tile-meta">12 Sessions / Mo</span>
+            </button>
+            <button type="button" class="ecp-tile ecp-tile-center active" data-val="20">
+              <span class="ecp-ribbon">Recommended</span>
+              <span class="ecp-tile-name">5 Days / Wk</span>
+              <span class="ecp-tile-meta">20 Sessions / Mo</span>
+            </button>
+            <button type="button" class="ecp-tile ecp-tile-center" data-val="24">
+              <span class="ecp-tile-name">6 Days / Wk</span>
+              <span class="ecp-tile-meta">24 Sessions / Mo</span>
             </button>
           </div>
         </div>
 
-        <!-- VALUE COMPARISON STRIP -->
-        <div class="ecp-compare">
-          <div class="ecp-cmp-box ecp-cmp-old">
-            <div class="ecp-cmp-head">✗ Normal Local Tutor</div>
-            1 hi teacher sab subjects padhata hai • No weekly CBT tests • Teacher chhutti par toh class cancel.
+        <div class="ecp-section">
+          <div class="ecp-sec-head">
+            <span class="ecp-sec-title"><span class="ecp-sec-idx">5</span> Society Study-Pod</span>
+            <span class="ecp-sec-sub">Share with same-grade peers</span>
           </div>
-          <div class="ecp-cmp-box ecp-cmp-new">
-            <div class="ecp-cmp-head">✓ ELITE Rotational Pod</div>
-            Maths, Science &amp; Languages ke alag Subject Specialists • Weekly PDF X-Ray Report • 24-Hr Backup Tutor.
+          <div class="ecp-tiles-3" id="ecpPodSeg">
+            <button type="button" class="ecp-tile ecp-tile-center active" data-val="1">
+              <span class="ecp-tile-name">Solo 1-on-1</span>
+              <span class="ecp-tile-meta">100% Dedicated</span>
+            </button>
+            <button type="button" class="ecp-tile ecp-tile-center" data-val="2">
+              <span class="ecp-ribbon ecp-ribbon-emerald">Save 20%</span>
+              <span class="ecp-tile-name">2-Student Pod</span>
+              <span class="ecp-tile-meta">Per Student Rate</span>
+            </button>
+            <button type="button" class="ecp-tile ecp-tile-center" data-val="3">
+              <span class="ecp-ribbon ecp-ribbon-emerald">Save 30%</span>
+              <span class="ecp-tile-name">3-Student Pod</span>
+              <span class="ecp-tile-meta">Per Student Rate</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="ecp-versus">
+          <div class="ecp-vs-card ecp-vs-std">
+            <div class="ecp-vs-head">Conventional Home Tutor</div>
+            One generalist covers every subject with no structured weekly diagnostics, no digital progress tracking, and cancelled classes during tutor absences.
+          </div>
+          <div class="ecp-vs-card ecp-vs-elite">
+            <div class="ecp-vs-head">ELITE Rotational Model</div>
+            Dedicated Maths, Science &amp; Humanities specialists rotate on schedule—backed by weekly CBT X-Ray PDF reports and a 24-hour backup faculty guarantee.
           </div>
         </div>
       </div>
 
-      <!-- RIGHT: LIVE INVESTMENT CARD + INSTANT LOCK -->
+      <!-- RIGHT: LIVE INVESTMENT VAULT -->
       <div class="ecp-summary">
-        <div class="ecp-plan-badge" id="ecpPlanBadge">Specialist Rotational Pod • CBSE</div>
-        <h3 class="ecp-plan-name" id="ecpPlanName">Grades 6 – 8 • Home Tuition (20 Classes/Mo)</h3>
+        <div class="ecp-plan-pill" id="ecpPlanBadge">Specialist Rotational Pod • CBSE</div>
+        <h3 class="ecp-plan-heading" id="ecpPlanName">Grades 6 – 8 • Home Tuition (20 Sessions/Mo)</h3>
 
-        <div class="ecp-price-stage">
-          <div class="ecp-strike" id="ecpStrike">Solo Fee: ₹8,500 – ₹10,000 / month</div>
-          <div class="ecp-price-row">
-            <div class="ecp-price-val" id="ecpPriceVal">₹8,500 – ₹10,000</div>
+        <div class="ecp-price-vault">
+          <div class="ecp-strike" id="ecpStrike"></div>
+          <div class="ecp-price-line">
+            <div class="ecp-price-digits" id="ecpPriceVal">₹8,500 – ₹10,000</div>
             <span class="ecp-price-unit">/ month</span>
           </div>
-          <div class="ecp-per-pill" id="ecpPerClass">~₹425 – ₹500 per 1-on-1 class</div>
-          <div class="ecp-save-box" id="ecpSaveBox"></div>
+          <div class="ecp-per-badge" id="ecpPerClass">~₹425 – ₹500 per session</div>
+          <div class="ecp-save-ribbon" id="ecpSaveBox"></div>
         </div>
 
-        <div class="ecp-inc-title">Included Free With Your Plan</div>
-        <ul class="ecp-inc-list" id="ecpIncludedList">
-          <li>Subject-Specialized Rotational Faculty (STEM + Humanities)</li>
-          <li>Weekly CBT Diagnostic Tests + Branded X-Ray PDF Reports</li>
-          <li>3D Interactive STEM Labs, Digital Notes &amp; Attendance App</li>
-          <li>24-Hr Backup Tutor Guarantee + Direct Monitoring by Ravi Sir</li>
+        <div class="ecp-inc-label">Complimentary Inclusions</div>
+        <ul class="ecp-inc-list">
+          <li>
+            <span class="ecp-inc-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <span>Subject-Specialized Rotational Faculty (STEM &amp; Humanities)</span>
+          </li>
+          <li>
+            <span class="ecp-inc-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <span>Weekly CBT Diagnostic Exams &amp; Branded X-Ray PDF Reports</span>
+          </li>
+          <li>
+            <span class="ecp-inc-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <span>3D Interactive STEM Labs, Concept Vault &amp; Parent Portal</span>
+          </li>
+          <li>
+            <span class="ecp-inc-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <span>24-Hr Backup Tutor Guarantee &amp; Monthly Review with Ravi Sir</span>
+          </li>
         </ul>
 
-        <!-- LEAD CAPTURE TO LOCK EXACT QUOTE & FREE TRIAL -->
-        <div class="ecp-form-box">
+        <div class="ecp-lead-wrap">
           <div id="ecpFormWrap">
-            <div class="ecp-form-title">🎁 Exact Quote &amp; 1st Free Trial Class Unlock Karein:</div>
-            <div class="ecp-inputs">
-              <input id="ecpName" class="ecp-input" type="text" placeholder="Parent / Student Name *" autocomplete="name">
-              <input id="ecpPhone" class="ecp-input" type="tel" inputmode="numeric" placeholder="10-Digit WhatsApp Number *" autocomplete="tel">
-              <input id="ecpArea" class="ecp-input" type="text" placeholder="Sector / Society (e.g. Sector 75, JM Florence) *">
+            <div class="ecp-lead-title">Unlock Your Exact Quote &amp; Complimentary 1st Trial</div>
+            <div class="ecp-fields">
+              <input id="ecpName" class="ecp-field" type="text" placeholder="Parent / Student Name *" autocomplete="name">
+              <input id="ecpPhone" class="ecp-field" type="tel" inputmode="numeric" placeholder="10-Digit WhatsApp Number *" autocomplete="tel">
+              <input id="ecpArea" class="ecp-field" type="text" placeholder="Sector / Society (e.g. Sector 75, JM Florence) *">
             </div>
             <div id="ecpErr" class="ecp-err"></div>
-            <button type="button" id="ecpSubmitBtn" class="ecp-cta">Lock Exact Quote &amp; Book Free 1st Trial →</button>
+            <button type="button" id="ecpSubmitBtn" class="ecp-cta">
+              <span>Lock Exact Quote &amp; Book Free Trial</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
           </div>
 
           <div id="ecpDoneBox" class="ecp-done">
-            <div class="ecp-done-head">🎉 Plan Request Saved Successfully!</div>
+            <div class="ecp-done-head">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+              <span>Custom Plan Saved</span>
+            </div>
             <div class="ecp-done-msg" id="ecpDoneMsg"></div>
-            <a id="ecpWaBtn" href="#" target="_blank" rel="noopener" class="ecp-cta ecp-cta-wa" style="margin-top:0;">💬 Get Instant Confirmation on WhatsApp →</a>
-            <a href="test.html" class="ecp-cta ecp-cta-ghost">📝 Tab Tak 10-Min Free Diagnostic Test Dein →</a>
-            <button type="button" id="ecpEditQuoteBtn" class="ecp-reset-link">Edit plan or check for another child</button>
+            <a id="ecpWaBtn" href="#" target="_blank" rel="noopener" class="ecp-cta ecp-cta-wa" style="margin-top:0;">
+              <span>Receive Confirmation on WhatsApp</span>
+            </a>
+            <a href="test.html" class="ecp-cta ecp-cta-ghost">
+              <span>Take the 10-Min Diagnostic Test</span>
+            </a>
+            <button type="button" id="ecpEditQuoteBtn" class="ecp-edit-btn">Adjust plan or check another grade</button>
           </div>
 
-          <div class="ecp-micro-note">*Final exact fee aapke sector distance aur exact subject count ke saath WhatsApp par confirm hogi.</div>
+          <div class="ecp-disclaimer">Final fee is confirmed on WhatsApp based on exact subject selection and sector distance.</div>
         </div>
       </div>
     </div>
 
-    <!-- TRUST & RISK-REVERSAL BAR -->
-    <div class="ecp-trust-bar">
-      <div class="ecp-trust-item">1st Trial Class Free<span>Pehle padhai dekhein, phir decide karein</span></div>
-      <div class="ecp-trust-item">Zero Advance Fee<span>Satisfaction ke baad hi enrollment</span></div>
-      <div class="ecp-trust-item">24-Hr Backup Tutor<span>Exams ke time zero class loss</span></div>
-      <div class="ecp-trust-item">Founder Monitored<span>Monthly 1-on-1 review with Ravi Sir</span></div>
+    <div class="ecp-guarantees">
+      <div class="ecp-g-card">
+        <div class="ecp-g-title">Complimentary 1st Trial</div>
+        <div class="ecp-g-desc">Evaluate teaching clarity and student comfort before enrolling.</div>
+      </div>
+      <div class="ecp-g-card">
+        <div class="ecp-g-title">Zero Advance Fee</div>
+        <div class="ecp-g-desc">Pay only after complete academic satisfaction with your faculty pod.</div>
+      </div>
+      <div class="ecp-g-card">
+        <div class="ecp-g-title">24-Hr Backup Faculty</div>
+        <div class="ecp-g-desc">Uninterrupted syllabus continuity during pre-boards and finals.</div>
+      </div>
+      <div class="ecp-g-card">
+        <div class="ecp-g-title">Founder Oversight</div>
+        <div class="ecp-g-desc">Direct monthly academic strategy reviews with Ravi Yadav.</div>
+      </div>
     </div>
   </div>
 
   <script>
     (function () {
-      // ===== SIRF YAHAN APNA APPS SCRIPT WEBHOOK URL PASTE KAREIN =====
+      // ===== PASTE YOUR APPS SCRIPT WEBHOOK URL BELOW =====
       var ECP_CONFIG = {
         crmUrl: 'PASTE_YOUR_CRM_WEBHOOK_URL_HERE',
         whatsappNumber: '919675732501',
 
-        // Exact Approved India Home Tuition Per-Class Base Rates (INR)
         INR_BASE: {
-          g1_5:     { label: 'Grades 1 – 5',            podName: 'Foundation Pod',            min: 350, max: 425 },
-          g6_8:     { label: 'Grades 6 – 8',            podName: 'Specialist Rotational Pod', min: 425, max: 500 },
-          g9_10:    { label: 'Grades 9 – 10 (Boards)',  podName: 'Board Mastery Pod',         min: 500, max: 600 },
-          g11_12:   { label: 'Grades 11 – 12 (Sci/Com)',podName: 'Senior Specialist Pod',     min: 650, max: 800 },
-          entrance: { label: 'Sainik / JNVST / RIMC',   podName: 'Entrance Ranker Pod',       min: 450, max: 550 }
+          g1_5:     { label: 'Grades 1 – 5',             podName: 'Foundation Pod',            min: 350, max: 425 },
+          g6_8:     { label: 'Grades 6 – 8',             podName: 'Specialist Rotational Pod', min: 425, max: 500 },
+          g9_10:    { label: 'Grades 9 – 10 (Boards)',   podName: 'Board Mastery Pod',         min: 500, max: 600 },
+          g11_12:   { label: 'Grades 11 – 12 (Sci/Com)', podName: 'Senior Specialist Pod',     min: 650, max: 800 },
+          entrance: { label: 'Sainik / JNVST / RIMC',    podName: 'Entrance Ranker Pod',       min: 450, max: 550 }
         },
-
-        // Global Live 1-on-1 Per-Class Base Rates (USD)
         USD_BASE: {
-          g1_5:     { label: 'Grades 1 – 5',            podName: 'Global Foundation 1-on-1',  min: 11, max: 13 },
-          g6_8:     { label: 'Grades 6 – 8',            podName: 'Global Rotational 1-on-1',  min: 13, max: 16 },
-          g9_10:    { label: 'Grades 9 – 10 (Boards)',  podName: 'Global Board Mastery',      min: 15, max: 18 },
-          g11_12:   { label: 'Grades 11 – 12 (Sci/Com)',podName: 'Global Senior Specialist',  min: 18, max: 22 },
-          entrance: { label: 'Sainik / JNVST / RIMC',   podName: 'Global Entrance Mastery',   min: 14, max: 17 }
+          g1_5:     { label: 'Grades 1 – 5',             podName: 'Global Foundation 1-on-1',  min: 11, max: 13 },
+          g6_8:     { label: 'Grades 6 – 8',             podName: 'Global Rotational 1-on-1',  min: 13, max: 16 },
+          g9_10:    { label: 'Grades 9 – 10 (Boards)',   podName: 'Global Board Mastery',      min: 15, max: 18 },
+          g11_12:   { label: 'Grades 11 – 12 (Sci/Com)', podName: 'Global Senior Specialist',  min: 18, max: 22 },
+          entrance: { label: 'Sainik / JNVST / RIMC',    podName: 'Global Entrance Mastery',   min: 14, max: 17 }
         },
-
         MODES: {
-          home:   { label: 'Home Tuition',      factor: 1.00 },
-          hybrid: { label: 'Hybrid (Home+HD)',  factor: 0.90 },
-          online: { label: '1-on-1 Live Online',factor: 0.75 }
+          home:   { label: 'Home Tuition',       factor: 1.00 },
+          hybrid: { label: 'Hybrid (Home+HD)',   factor: 0.90 },
+          online: { label: '1-on-1 Live Online', factor: 0.75 }
         },
-
         BOARDS: {
           CBSE:     { label: 'CBSE',       factor: 1.00 },
           ICSE:     { label: 'ICSE / ISC', factor: 1.05 },
           IB_IGCSE: { label: 'IB / IGCSE', factor: 1.20 }
         },
-
         PODS: {
           '1': { label: 'Solo 1-on-1',         factor: 1.00, pct: 0 },
           '2': { label: '2-Student Study-Pod', factor: 0.80, pct: 20 },
@@ -1790,19 +2207,14 @@
         }
       };
 
-      var state = {
-        currency: 'INR',
-        cls: 'g6_8',
-        board: 'CBSE',
-        mode: 'home',
-        classesPerMo: 20,
-        pod: '1'
-      };
+      var state = { currency: 'INR', cls: 'g6_8', board: 'CBSE', mode: 'home', classesPerMo: 20, pod: '1' };
+      var displayNums = { min: 8500, max: 10000, animId: null };
+      var lastEstimateText = '';
 
-      var btnInr = document.getElementById('btn-inr');
-      var btnUsd = document.getElementById('btn-usd');
-      var modeSeg = document.getElementById('ecpModeSeg');
-      var globalNote = document.getElementById('ecpGlobalNote');
+      var currShell = document.getElementById('ecpCurrShell');
+      var btnInr = document.getElementById('ecpCurrInr');
+      var btnUsd = document.getElementById('ecpCurrUsd');
+      var globalBanner = document.getElementById('ecpGlobalBanner');
 
       var badgeEl = document.getElementById('ecpPlanBadge');
       var namePlanEl = document.getElementById('ecpPlanName');
@@ -1822,8 +2234,6 @@
       var waBtn = document.getElementById('ecpWaBtn');
       var editQuoteBtn = document.getElementById('ecpEditQuoteBtn');
 
-      var lastEstimateText = '';
-
       function fmtMoney(n, curr) {
         if (curr === 'USD') return '$' + Math.round(n).toLocaleString('en-US');
         return '₹' + Math.round(n).toLocaleString('en-IN');
@@ -1834,16 +2244,48 @@
         return Math.round(n / step) * step;
       }
 
-      function setActiveInGroup(containerId, val) {
+      function setActiveTile(containerId, val) {
         var wrap = document.getElementById(containerId);
         if (!wrap) return;
-        var btns = wrap.querySelectorAll('.ecp-btn-opt');
-        for (var i = 0; i < btns.length; i++) {
-          btns[i].classList.toggle('active', btns[i].getAttribute('data-val') === String(val));
+        var tiles = wrap.querySelectorAll('.ecp-tile');
+        for (var i = 0; i < tiles.length; i++) {
+          tiles[i].classList.toggle('active', tiles[i].getAttribute('data-val') === String(val));
         }
       }
 
-      function renderPrice(animate) {
+      function animatePrice(targetMin, targetMax, curr, instant) {
+        if (displayNums.animId) cancelAnimationFrame(displayNums.animId);
+        if (instant) {
+          displayNums.min = targetMin;
+          displayNums.max = targetMax;
+          priceValEl.textContent = fmtMoney(targetMin, curr) + ' – ' + fmtMoney(targetMax, curr);
+          return;
+        }
+        var startMin = displayNums.min;
+        var startMax = displayNums.max;
+        var startTime = performance.now();
+        var duration = 260;
+
+        function tick(now) {
+          var t = Math.min(1, (now - startTime) / duration);
+          var ease = 1 - Math.pow(1 - t, 3);
+          var curMin = startMin + (targetMin - startMin) * ease;
+          var curMax = startMax + (targetMax - startMax) * ease;
+          displayNums.min = curMin;
+          displayNums.max = curMax;
+          priceValEl.textContent = fmtMoney(curMin, curr) + ' – ' + fmtMoney(curMax, curr);
+          if (t < 1) {
+            displayNums.animId = requestAnimationFrame(tick);
+          } else {
+            displayNums.min = targetMin;
+            displayNums.max = targetMax;
+            priceValEl.textContent = fmtMoney(targetMin, curr) + ' – ' + fmtMoney(targetMax, curr);
+          }
+        }
+        displayNums.animId = requestAnimationFrame(tick);
+      }
+
+      function renderStudio(instant) {
         var isUSD = state.currency === 'USD';
         var base = isUSD ? ECP_CONFIG.USD_BASE[state.cls] : ECP_CONFIG.INR_BASE[state.cls];
         var boardObj = ECP_CONFIG.BOARDS[state.board];
@@ -1863,72 +2305,77 @@
         lastEstimateText = fmtMoney(finalMinMo, state.currency) + ' – ' + fmtMoney(finalMaxMo, state.currency) + '/mo';
 
         badgeEl.textContent = base.podName + ' • ' + boardObj.label;
-        namePlanEl.textContent = base.label + ' • ' + (isUSD ? 'Global Live 1-on-1' : modeObj.label) + ' (' + state.classesPerMo + ' Classes/Mo)';
-        priceValEl.textContent = fmtMoney(finalMinMo, state.currency) + ' – ' + fmtMoney(finalMaxMo, state.currency);
-        perEl.textContent = '~' + fmtMoney(perMin, state.currency) + ' – ' + fmtMoney(perMax, state.currency) + ' per class' + (podObj.pct > 0 ? ' / student' : '');
+        namePlanEl.textContent = base.label + ' • ' + (isUSD ? 'Global Live 1-on-1' : modeObj.label) + ' (' + state.classesPerMo + ' Sessions/Mo)';
+        animatePrice(finalMinMo, finalMaxMo, state.currency, instant);
+        perEl.textContent = '~' + fmtMoney(perMin, state.currency) + ' – ' + fmtMoney(perMax, state.currency) + ' per session' + (podObj.pct > 0 ? ' / student' : '');
 
         if (podObj.pct > 0) {
           var savedMin = soloMinMo - finalMinMo;
           strikeEl.style.display = 'block';
-          strikeEl.textContent = 'Solo 1-on-1 Fee: ' + fmtMoney(soloMinMo, state.currency) + ' – ' + fmtMoney(soloMaxMo, state.currency) + ' / mo';
+          strikeEl.textContent = 'Solo 1-on-1 Rate: ' + fmtMoney(soloMinMo, state.currency) + ' – ' + fmtMoney(soloMaxMo, state.currency) + ' / mo';
           saveBoxEl.style.display = 'block';
-          saveBoxEl.textContent = '🎉 ' + podObj.label + ': Save ' + fmtMoney(savedMin, state.currency) + '+ every month per student (' + podObj.pct + '% OFF)!';
+          saveBoxEl.textContent = podObj.label + ' Savings: Save ' + fmtMoney(savedMin, state.currency) + '+ per student every month (' + podObj.pct + '% off).';
         } else {
           strikeEl.style.display = 'none';
           saveBoxEl.style.display = 'none';
         }
 
-        if (animate) {
-          priceValEl.classList.add('ecp-pop');
-          setTimeout(function () { priceValEl.classList.remove('ecp-pop'); }, 180);
-        }
-
         var isIntl = isUSD || state.mode === 'online';
         phoneEl.placeholder = isIntl ? 'WhatsApp Number (with country code) *' : '10-Digit WhatsApp Number *';
-        areaEl.placeholder = isIntl ? 'City / Country (e.g. Dubai, London, Delhi) *' : 'Sector / Society (e.g. Sector 75, JM Florence) *';
+        areaEl.placeholder = isIntl ? 'City / Country (e.g. Dubai, London, Mumbai) *' : 'Sector / Society (e.g. Sector 75, JM Florence) *';
       }
 
-      window.setCurrency = function (curr) {
+      function switchCurrency(curr) {
+        var prev = state.currency;
         state.currency = curr === 'USD' ? 'USD' : 'INR';
-        if (btnInr) btnInr.classList.toggle('active', state.currency === 'INR');
-        if (btnUsd) btnUsd.classList.toggle('active', state.currency === 'USD');
+        currShell.setAttribute('data-curr', state.currency);
+        btnInr.classList.toggle('active', state.currency === 'INR');
+        btnUsd.classList.toggle('active', state.currency === 'USD');
 
         if (state.currency === 'USD') {
           state.mode = 'online';
-          setActiveInGroup('ecpModeSeg', 'online');
-          if (globalNote) globalNote.style.display = 'block';
+          setActiveTile('ecpModeSeg', 'online');
+          globalBanner.style.display = 'block';
         } else {
-          if (globalNote) globalNote.style.display = 'none';
+          if (prev === 'USD') {
+            state.mode = 'home';
+            setActiveTile('ecpModeSeg', 'home');
+          }
+          globalBanner.style.display = 'none';
         }
-        renderPrice(true);
-      };
+        renderStudio(true);
+      }
 
-      function bindGroup(id, key, isNum) {
+      btnInr.addEventListener('click', function () { switchCurrency('INR'); });
+      btnUsd.addEventListener('click', function () { switchCurrency('USD'); });
+
+      function bindTiles(id, key, isNum) {
         var wrap = document.getElementById(id);
         if (!wrap) return;
         wrap.addEventListener('click', function (e) {
-          var btn = e.target.closest('.ecp-btn-opt');
-          if (!btn) return;
-          var val = btn.getAttribute('data-val');
+          var tile = e.target.closest('.ecp-tile');
+          if (!tile) return;
+          var val = tile.getAttribute('data-val');
           if (key === 'mode' && state.currency === 'USD' && val !== 'online') {
             state.currency = 'INR';
-            if (btnInr) btnInr.classList.add('active');
-            if (btnUsd) btnUsd.classList.remove('active');
-            if (globalNote) globalNote.style.display = 'none';
+            currShell.setAttribute('data-curr', 'INR');
+            btnInr.classList.add('active');
+            btnUsd.classList.remove('active');
+            globalBanner.style.display = 'none';
           }
           state[key] = isNum ? parseInt(val, 10) : val;
-          setActiveInGroup(id, val);
-          renderPrice(true);
+          setActiveTile(id, val);
+          renderStudio(false);
         });
       }
 
-      bindGroup('ecpClassGrid', 'cls', false);
-      bindGroup('ecpBoardSeg', 'board', false);
-      bindGroup('ecpModeSeg', 'mode', false);
-      bindGroup('ecpFreqSeg', 'classesPerMo', true);
-      bindGroup('ecpPodSeg', 'pod', false);
+      bindTiles('ecpClassGrid', 'cls', false);
+      bindTiles('ecpBoardSeg', 'board', false);
+      bindTiles('ecpModeSeg', 'mode', false);
+      bindTiles('ecpFreqSeg', 'classesPerMo', true);
+      bindTiles('ecpPodSeg', 'pod', false);
 
-      renderPrice(false);
+      renderStudio(true);
 
       submitBtn.addEventListener('click', function () {
         var name = nameEl.value.trim();
@@ -1936,26 +2383,22 @@
         var area = areaEl.value.trim();
         var isIntl = state.currency === 'USD' || state.mode === 'online';
 
-        if (name.length < 2) {
-          errEl.textContent = 'Kripya apna poora naam likhein.';
-          errEl.style.display = 'block';
-          return;
-        }
+        if (name.length < 2) { errEl.textContent = 'Please enter your full name.'; errEl.style.display = 'block'; return; }
         if (!isIntl) {
           if (rawPhone.length === 12 && rawPhone.indexOf('91') === 0) rawPhone = rawPhone.slice(2);
           if (rawPhone.length === 11 && rawPhone.indexOf('0') === 0) rawPhone = rawPhone.slice(1);
           if (!/^[6-9]\d{9}$/.test(rawPhone)) {
-            errEl.textContent = 'Kripya sahi 10-digit Indian WhatsApp number daalein.';
+            errEl.textContent = 'Please enter a valid 10-digit Indian WhatsApp number.';
             errEl.style.display = 'block';
             return;
           }
         } else if (rawPhone.length < 8 || rawPhone.length > 15) {
-          errEl.textContent = 'Kripya valid WhatsApp number (country code ke saath) daalein.';
+          errEl.textContent = 'Please enter a valid WhatsApp number including country code.';
           errEl.style.display = 'block';
           return;
         }
         if (area.length < 2) {
-          errEl.textContent = isIntl ? 'Kripya apna City / Country likhein.' : 'Kripya apna Sector / Society likhein.';
+          errEl.textContent = isIntl ? 'Please enter your City or Country.' : 'Please enter your Sector or Society name.';
           errEl.style.display = 'block';
           return;
         }
@@ -1980,11 +2423,11 @@
           board: boardObj.label,
           mode: (isUSD ? 'Global Live 1-on-1' : modeObj.label) + ' | ' + podObj.label,
           subjects: 'Estimate: ' + lastEstimateText,
-          frequency: state.classesPerMo + ' Classes/Mo | Fee Studio' + (refTag ? ' | Ref: ' + refTag : '')
+          frequency: state.classesPerMo + ' Sessions/Mo | Fee Studio' + (refTag ? ' | Ref: ' + refTag : '')
         };
 
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Locking Exact Quote...';
+        submitBtn.querySelector('span').textContent = 'Locking Your Plan...';
 
         if (ECP_CONFIG.crmUrl && ECP_CONFIG.crmUrl.indexOf('http') === 0) {
           try {
@@ -1998,27 +2441,27 @@
         }
 
         var waMsg =
-          'Namaste Ravi Sir (ELITE CLASSES),\n' +
-          'Maine website par Fee Studio se apna plan banaya hai:\n\n' +
-          '• Name: ' + name + '\n' +
-          '• WhatsApp: ' + rawPhone + '\n' +
-          '• Class & Board: ' + base.label + ' (' + boardObj.label + ')\n' +
-          '• Mode & Format: ' + (isUSD ? 'Global Live 1-on-1' : modeObj.label) + ' — ' + podObj.label + '\n' +
-          '• Frequency: ' + state.classesPerMo + ' Classes/Month\n' +
-          '• Area / City: ' + area + '\n' +
-          '• Estimated Plan: ' + lastEstimateText +
-          (refTag ? '\n• Source: ' + refTag : '') +
-          '\n\nPlease confirm exact monthly fee & book my Free 1st Trial Class.';
+          'Hello Ravi Sir (ELITE CLASSES),\n' +
+          'I customised my monthly tuition plan on the Fee Studio:\n\n' +
+          'Name: ' + name + '\n' +
+          'WhatsApp: ' + rawPhone + '\n' +
+          'Grade & Board: ' + base.label + ' (' + boardObj.label + ')\n' +
+          'Delivery & Format: ' + (isUSD ? 'Global Live 1-on-1' : modeObj.label) + ' — ' + podObj.label + '\n' +
+          'Cadence: ' + state.classesPerMo + ' Sessions/Month\n' +
+          'Location: ' + area + '\n' +
+          'Estimated Plan: ' + lastEstimateText +
+          (refTag ? '\nSource: ' + refTag : '') +
+          '\n\nPlease confirm our exact monthly fee and schedule the complimentary 1st trial class.';
 
         waBtn.href = 'https://wa.me/' + ECP_CONFIG.whatsappNumber + '?text=' + encodeURIComponent(waMsg);
-        doneMsg.textContent = name + ' ji, aapka plan (' + base.label + ' • ' + lastEstimateText + ') save ho gaya hai. Turant confirmation ke liye neeche WhatsApp button dabayein.';
+        doneMsg.textContent = 'Thank you, ' + name + '. Your tailored plan (' + base.label + ' • ' + lastEstimateText + ') has been saved. Tap below for priority WhatsApp confirmation.';
 
         setTimeout(function () {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Lock Exact Quote & Book Free 1st Trial →';
+          submitBtn.querySelector('span').textContent = 'Lock Exact Quote & Book Free Trial';
           formWrap.style.display = 'none';
           doneBox.style.display = 'block';
-        }, 320);
+        }, 300);
       });
 
       editQuoteBtn.addEventListener('click', function () {
@@ -2029,8 +2472,6 @@
   </script>
 </section>
 
-
-  <!-- =====================================================================
        SECTION 9: 3D CONCEPT REELS & QUICK LESSONS
        ===================================================================== -->
   <section id="reels-hub" class="py-12 sm:py-16 px-3 sm:px-6 border-t border-white/5">
