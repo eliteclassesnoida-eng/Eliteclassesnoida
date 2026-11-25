@@ -298,8 +298,9 @@
       </div>
     </div>
   </header>
-<!-- =========================================================
-     ELITE CLASSES: 3D WEBGL INTERACTIVE HERO STUDIO
+
+ <!-- =========================================================
+     ELITE CLASSES: 3D WEBGL INTERACTIVE HERO STUDIO (CMS LIVE)
 ========================================================= -->
 <section id="ecHero3D" aria-label="ELITE CLASSES 3D Interactive Showcase">
   <style>
@@ -410,7 +411,7 @@
     .ech3-h1 {
       margin: 0 0 12px;
       font-size: 27px;
-      line-height: 1.13;
+      line-height: 1.14;
       font-weight: 900;
       letter-spacing: -0.03em;
       color: #ffffff;
@@ -689,6 +690,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
+      min-width: 0;
     }
     .ech3-bar-btn {
       background: none;
@@ -696,6 +698,7 @@
       padding: 4px 0;
       text-align: left;
       cursor: pointer;
+      min-width: 0;
     }
     .ech3-bar-track {
       height: 3.5px;
@@ -754,7 +757,7 @@
       <div class="ech3-floor-grid" aria-hidden="true"></div>
 
       <div class="ech3-grid">
-        <!-- LEFT: EXECUTIVE COPY & LIVE CTAs -->
+        <!-- LEFT: EXECUTIVE COPY & LIVE CTAs (AUTO-SYNCED WITH ADMIN CMS) -->
         <div>
           <div class="ech3-eyebrow">
             <span class="ech3-live-dot"></span>
@@ -908,7 +911,7 @@
       var root = document.getElementById('ecHero3D');
       if (!root) return;
 
-      var SLIDES = [
+      var DEFAULT_SLIDES = [
         {
           eyebrow: 'FREE DIAGNOSTIC ASSESSMENT • GRADES 1–12 • EN | हिंदी',
           titleTop: 'Beyond Rote Learning.',
@@ -919,7 +922,8 @@
           cta2Text: 'Check Tutor Availability',
           cta2Href: '#ecAvailSection',
           cta2Ext: false,
-          stageTag: '3D X-Ray Core'
+          stageTag: '3D X-Ray Core',
+          tabLabel: '01. Diagnostic X-Ray'
         },
         {
           eyebrow: 'NOIDA & GREATER NOIDA • 1-ON-1 HOME TUITION',
@@ -931,7 +935,8 @@
           cta2Text: 'Calculate Monthly Fee',
           cta2Href: '#pricing',
           cta2Ext: false,
-          stageTag: '3D Rotational Gyro'
+          stageTag: '3D Rotational Gyro',
+          tabLabel: '02. Rotational Pod'
         },
         {
           eyebrow: 'CBSE • ICSE • IB / IGCSE • GLOBAL LIVE 1-ON-1',
@@ -943,9 +948,13 @@
           cta2Text: 'Book Free Trial on WhatsApp',
           cta2Href: 'https://wa.me/919675732501?text=' + encodeURIComponent('Hello Ravi Sir (ELITE CLASSES), I visited your website and would like to book a complimentary 1st trial class.'),
           cta2Ext: true,
-          stageTag: '3D Global Network'
+          stageTag: '3D Global Network',
+          tabLabel: '03. Global Studio'
         }
       ];
+
+      var SLIDES = DEFAULT_SLIDES.slice();
+      var STAGE_TAGS = ['3D X-Ray Core', '3D Rotational Gyro', '3D Global Network'];
 
       var DIAG_DATA = {
         math: { title: 'Mathematics Clarity Index', sub: 'Algebra, Geometry & Speed Diagnostics', score: 96, color: '#e5c17b', hex: 0xe5c17b },
@@ -984,6 +993,7 @@
       var activeAccentHex = 0xe5c17b;
       var activeAccentCss = '#e5c17b';
       var usingWebGL = false;
+      var lastCmsSig = '';
 
       /* DOM Refs */
       var eyebrowEl = document.getElementById('ech3Eyebrow');
@@ -996,25 +1006,71 @@
       var cta2El = document.getElementById('ech3Cta2');
       var cta2TextEl = document.getElementById('ech3Cta2Text');
       var stageTagEl = document.getElementById('ech3StageTag');
-      var fills = [document.getElementById('ech3Fill0'), document.getElementById('ech3Fill1'), document.getElementById('ech3Fill2')];
+      var barsWrap = document.getElementById('ech3Bars');
       var huds = [document.getElementById('ech3Hud0'), document.getElementById('ech3Hud1'), document.getElementById('ech3Hud2')];
-      var barBtns = root.querySelectorAll('.ech3-bar-btn');
       var canvasLayer = document.getElementById('ech3CanvasLayer');
       var fallbackCanvas = document.getElementById('ech3FallbackCanvas');
       var webglMount = document.getElementById('ech3WebglMount');
       var surfaceEl = document.getElementById('ech3Surface');
 
-      function goToSlide(idx) {
-        currentSlide = (idx + SLIDES.length) % SLIDES.length;
-        slideElapsed = 0;
-        var s = SLIDES[currentSlide];
+      function getSculptureIndex(slideIdx) {
+        return slideIdx % 3;
+      }
 
-        headlineEl.classList.add('ech3-swap');
-        descEl.classList.add('ech3-swap');
+      /* Smart Split of Admin CMS Headline into Crisp White + Champagne Gold */
+      function splitHeadline(raw) {
+        var text = String(raw || '').trim();
+        if (!text) return { top: 'ELITE CLASSES', gold: 'Futuristic Education.' };
+        var sepMatch = text.match(/^(.+?[.!?:—|-])\s+(.+)$/);
+        if (sepMatch && sepMatch[1].length >= 6 && sepMatch[2].length >= 6) {
+          return { top: sepMatch[1], gold: sepMatch[2] };
+        }
+        var words = text.split(/\s+/);
+        if (words.length <= 2) return { top: '', gold: text };
+        var cut = Math.max(1, Math.floor(words.length * 0.45));
+        return {
+          top: words.slice(0, cut).join(' '),
+          gold: words.slice(cut).join(' ')
+        };
+      }
 
-        setTimeout(function () {
+      function rebuildProgressBars() {
+        var count = SLIDES.length;
+        barsWrap.style.gridTemplateColumns = 'repeat(' + count + ', minmax(0, 1fr))';
+        barsWrap.innerHTML = '';
+        for (var i = 0; i < count; i++) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'ech3-bar-btn' + (i === currentSlide ? ' active' : '');
+          btn.setAttribute('data-idx', String(i));
+
+          var track = document.createElement('div');
+          track.className = 'ech3-bar-track';
+          var fill = document.createElement('div');
+          fill.className = 'ech3-bar-fill';
+          fill.id = 'ech3Fill' + i;
+          fill.style.width = i < currentSlide ? '100%' : '0%';
+          track.appendChild(fill);
+
+          var lbl = document.createElement('span');
+          lbl.className = 'ech3-bar-lbl';
+          var numPrefix = (i + 1 < 10 ? '0' : '') + (i + 1) + '. ';
+          lbl.textContent = SLIDES[i].tabLabel || (numPrefix + (SLIDES[i].titleGold || SLIDES[i].titleTop));
+
+          btn.appendChild(track);
+          btn.appendChild(lbl);
+          barsWrap.appendChild(btn);
+        }
+      }
+
+      function applySlideContent(idx, animateText) {
+        var s = SLIDES[idx] || SLIDES[0];
+        var scIdx = getSculptureIndex(idx);
+
+        function writeDOM() {
           eyebrowEl.textContent = s.eyebrow;
           titleTopEl.textContent = s.titleTop;
+          titleTopEl.style.display = s.titleTop ? 'inline' : 'none';
           titleGoldEl.textContent = s.titleGold;
           descEl.textContent = s.desc;
           cta1TextEl.textContent = s.cta1Text;
@@ -1028,24 +1084,91 @@
             cta2El.removeAttribute('target');
             cta2El.removeAttribute('rel');
           }
-          stageTagEl.textContent = s.stageTag;
+          stageTagEl.textContent = STAGE_TAGS[scIdx];
           headlineEl.classList.remove('ech3-swap');
           descEl.classList.remove('ech3-swap');
-        }, 160);
-
-        for (var i = 0; i < SLIDES.length; i++) {
-          barBtns[i].classList.toggle('active', i === currentSlide);
-          huds[i].classList.toggle('active', i === currentSlide);
-          fills[i].style.width = i < currentSlide ? '100%' : '0%';
         }
 
+        if (animateText) {
+          headlineEl.classList.add('ech3-swap');
+          descEl.classList.add('ech3-swap');
+          setTimeout(writeDOM, 150);
+        } else {
+          writeDOM();
+        }
+
+        var barBtns = barsWrap.querySelectorAll('.ech3-bar-btn');
+        for (var i = 0; i < barBtns.length; i++) {
+          barBtns[i].classList.toggle('active', i === idx);
+          var f = document.getElementById('ech3Fill' + i);
+          if (f) f.style.width = i < idx ? '100%' : '0%';
+        }
+        for (var h = 0; h < huds.length; h++) {
+          huds[h].classList.toggle('active', h === scIdx);
+        }
+      }
+
+      function goToSlide(idx) {
+        currentSlide = (idx + SLIDES.length) % SLIDES.length;
+        slideElapsed = 0;
+        applySlideContent(currentSlide, true);
         rotVelY = 0.045;
-        targetGlobeRotY = currentSlide === 2 ? HUBS[0].rotY : null;
+        targetGlobeRotY = getSculptureIndex(currentSlide) === 2 ? HUBS[0].rotY : null;
+      }
+
+      /* ===== LIVE SYNC WITH ADMIN CMS (appState.banners + Firebase) ===== */
+      function syncFromAdminCMS() {
+        var cmsList = null;
+        try {
+          if (typeof appState !== 'undefined' && appState && Array.isArray(appState.banners) && appState.banners.length > 0) {
+            cmsList = appState.banners;
+          } else if (window.appState && Array.isArray(window.appState.banners) && window.appState.banners.length > 0) {
+            cmsList = window.appState.banners;
+          }
+        } catch (e) {}
+
+        if (!cmsList || !cmsList.length) return;
+
+        var sig = cmsList.map(function (b) {
+          return [b.id || '', b.badge || '', b.headline || '', b.subtext || '', b.ctaText || b.btnText || b.primaryText || '', b.ctaLink || b.btnLink || b.primaryLink || ''].join('|');
+        }).join('||');
+
+        if (sig === lastCmsSig) return;
+        lastCmsSig = sig;
+
+        SLIDES = cmsList.map(function (b, idx) {
+          var fallback = DEFAULT_SLIDES[idx % DEFAULT_SLIDES.length];
+          var parts = splitHeadline(b.headline);
+          var c1Text = b.ctaText || b.btnText || b.primaryText || b.buttonText || fallback.cta1Text;
+          var c1Href = b.ctaLink || b.btnLink || b.btnUrl || b.primaryLink || b.link || fallback.cta1Href;
+          var c2Text = b.cta2Text || b.secondaryText || fallback.cta2Text;
+          var c2Href = b.cta2Link || b.secondaryLink || fallback.cta2Href;
+          var isExt = /^https?:\/\//i.test(c2Href) && c2Href.indexOf('eliteclassesnoida.in') === -1;
+          var numPrefix = (idx + 1 < 10 ? '0' : '') + (idx + 1) + '. ';
+
+          return {
+            eyebrow: (b.badge || fallback.eyebrow).toUpperCase(),
+            titleTop: parts.top,
+            titleGold: parts.gold,
+            desc: b.subtext || fallback.desc,
+            cta1Text: c1Text,
+            cta1Href: c1Href,
+            cta2Text: c2Text,
+            cta2Href: c2Href,
+            cta2Ext: isExt,
+            stageTag: STAGE_TAGS[idx % 3],
+            tabLabel: numPrefix + (parts.gold || parts.top)
+          };
+        });
+
+        if (currentSlide >= SLIDES.length) currentSlide = 0;
+        rebuildProgressBars();
+        applySlideContent(currentSlide, false);
       }
 
       document.getElementById('ech3Prev').addEventListener('click', function () { goToSlide(currentSlide - 1); });
       document.getElementById('ech3Next').addEventListener('click', function () { goToSlide(currentSlide + 1); });
-      document.getElementById('ech3Bars').addEventListener('click', function (e) {
+      barsWrap.addEventListener('click', function (e) {
         var btn = e.target.closest('.ech3-bar-btn');
         if (!btn) return;
         goToSlide(parseInt(btn.getAttribute('data-idx'), 10));
@@ -1176,7 +1299,7 @@
       surfaceEl.addEventListener('mouseenter', function () { isPaused = true; });
       surfaceEl.addEventListener('mouseleave', function () { if (!isDragging) isPaused = false; });
 
-      /* Pause Animation When Out of Viewport (Battery & PageSpeed Friendly) */
+      /* Pause Animation When Out of Viewport */
       if ('IntersectionObserver' in window) {
         var obs = new IntersectionObserver(function (entries) {
           isVisible = entries[0].isIntersecting;
@@ -1230,9 +1353,10 @@
       function drawFallbackFrame(timeSec) {
         ctx.clearRect(0, 0, fw, fh);
         var sc = Math.min(fw, fh) * 0.25;
+        var scIdx = getSculptureIndex(currentSlide);
         ctx.lineWidth = 1.25;
 
-        if (currentSlide === 0) {
+        if (scIdx === 0) {
           ctx.strokeStyle = activeAccentCss;
           ctx.globalAlpha = 0.85;
           var pts = icoVerts.map(function (v) { return proj3D(v[0], v[1], v[2], userRotX, userRotY, sc); });
@@ -1243,7 +1367,6 @@
             ctx.lineTo(p2[0], p2[1]);
           }
           ctx.stroke();
-          /* Orbital ring */
           ctx.strokeStyle = 'rgba(246, 224, 168, 0.45)';
           ctx.beginPath();
           for (var k = 0; k <= 48; k++) {
@@ -1252,8 +1375,7 @@
             if (k === 0) ctx.moveTo(rp[0], rp[1]); else ctx.lineTo(rp[0], rp[1]);
           }
           ctx.stroke();
-        } else if (currentSlide === 1) {
-          /* 3D Gyroscope Rings + Orbiting Specialist Nodes */
+        } else if (scIdx === 1) {
           var rings = [[0, '#e5c17b'], [1.05, '#38bdf8'], [2.1, '#34d399']];
           for (var r = 0; r < rings.length; r++) {
             ctx.strokeStyle = rings[r][1];
@@ -1276,7 +1398,6 @@
             ctx.fill();
           }
         } else {
-          /* 3D Wireframe Globe */
           ctx.strokeStyle = 'rgba(229, 193, 123, 0.42)';
           for (var lat = -60; lat <= 60; lat += 30) {
             var lr = (lat * Math.PI) / 180;
@@ -1351,7 +1472,7 @@
         masterGroup.position.y = 0.28;
         scene.add(masterGroup);
 
-        /* --- GROUP 0: GOLDEN DIAGNOSTIC CRYSTAL + ORBITS + PARTICLES --- */
+        /* GROUP 0: GOLDEN DIAGNOSTIC CRYSTAL */
         var g0 = new THREE.Group();
         var icoGeo = new THREE.IcosahedronGeometry(1.12, 0);
         var icoCore = new THREE.Mesh(icoGeo, new THREE.MeshStandardMaterial({
@@ -1381,11 +1502,10 @@
         }
         var pGeo = new THREE.BufferGeometry();
         pGeo.setAttribute('position', new THREE.Float32BufferAttribute(pPos, 3));
-        var pMat = new THREE.PointsMaterial({ color: 0xf6e0a8, size: 0.045, transparent: true, opacity: 0.85 });
-        var stars = new THREE.Points(pGeo, pMat);
+        var stars = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0xf6e0a8, size: 0.045, transparent: true, opacity: 0.85 }));
         g0.add(stars);
 
-        /* --- GROUP 1: ROTATIONAL GYROSCOPIC TORUS-KNOT + 4 SPECIALIST NODES --- */
+        /* GROUP 1: ROTATIONAL GYROSCOPIC TORUS-KNOT */
         var g1 = new THREE.Group();
         var tkGeo = new THREE.TorusKnotGeometry(0.84, 0.21, 92, 14);
         var tkMesh = new THREE.Mesh(tkGeo, new THREE.MeshStandardMaterial({
@@ -1408,7 +1528,7 @@
         }
         g1.scale.setScalar(0.001);
 
-        /* --- GROUP 2: GLOBAL HOLOGRAPHIC WIREFRAME GLOBE + FLIGHT ARCS --- */
+        /* GROUP 2: GLOBAL HOLOGRAPHIC GLOBE */
         var g2 = new THREE.Group();
         var globeRadius = 1.24;
         var globeCore = new THREE.Mesh(
@@ -1422,11 +1542,11 @@
         g2.add(globeCore, globeWire);
 
         var cityCoords = [
-          [28.53, 77.39, 0xf6e0a8],  /* Noida HQ */
-          [25.20, 55.27, 0x38bdf8],  /* Dubai */
-          [51.50, -0.12, 0x34d399],  /* London */
-          [40.71, -74.00, 0x38bdf8], /* New York */
-          [1.35, 103.82, 0x34d399]   /* Singapore */
+          [28.53, 77.39, 0xf6e0a8],
+          [25.20, 55.27, 0x38bdf8],
+          [51.50, -0.12, 0x34d399],
+          [40.71, -74.00, 0x38bdf8],
+          [1.35, 103.82, 0x34d399]
         ];
         var noidaPos = latLonToVec3(cityCoords[0][0], cityCoords[0][1], globeRadius + 0.02);
         var arcCurves = [];
@@ -1444,9 +1564,7 @@
           if (c > 0) {
             var mid = noidaPos.clone().add(cPos).multiplyScalar(0.5).normalize().multiplyScalar(globeRadius * 1.48);
             var curve = new THREE.QuadraticBezierCurve3(noidaPos, mid, cPos);
-            var arcPts = curve.getPoints(32);
-            var arcGeo = new THREE.BufferGeometry().setFromPoints(arcPts);
-            var arcLine = new THREE.Line(arcGeo, new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.55 }));
+            var arcLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(32)), new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.55 }));
             g2.add(arcLine);
             arcCurves.push(curve);
 
@@ -1480,7 +1598,6 @@
         fallbackCanvas.style.display = 'none';
       }
 
-      /* Handle Resize for Both Engines */
       function onResize() {
         resizeFallback();
         if (threeState) {
@@ -1502,20 +1619,20 @@
         var dt = Math.min(50, now - lastFrameTime);
         lastFrameTime = now;
         var timeSec = now * 0.001;
+        var scIdx = getSculptureIndex(currentSlide);
 
-        /* Story Progress Bar Auto-Advance */
         if (!isPaused) {
           slideElapsed += dt;
           var pct = Math.min(100, (slideElapsed / slideDuration) * 100);
-          fills[currentSlide].style.width = pct + '%';
+          var activeFill = document.getElementById('ech3Fill' + currentSlide);
+          if (activeFill) activeFill.style.width = pct + '%';
           if (slideElapsed >= slideDuration) {
             goToSlide(currentSlide + 1);
           }
         }
 
-        /* Smooth Inertia & Target Globe Longitude */
         if (!isDragging) {
-          if (currentSlide === 2 && targetGlobeRotY !== null) {
+          if (scIdx === 2 && targetGlobeRotY !== null) {
             userRotY += (targetGlobeRotY - userRotY) * 0.065;
             userRotX += (0.22 - userRotX) * 0.05;
           } else {
@@ -1534,7 +1651,7 @@
 
           for (var i = 0; i < 3; i++) {
             var g = threeState.groups[i];
-            var targetS = i === currentSlide ? 1.0 : 0.001;
+            var targetS = i === scIdx ? 1.0 : 0.001;
             var nextS = g.scale.x + (targetS - g.scale.x) * 0.12;
             g.scale.setScalar(nextS);
             g.visible = nextS > 0.015;
@@ -1560,9 +1677,18 @@
         }
       }
 
+      /* Watch Hidden Old Stage + Firebase Poll so Admin CMS Updates Reflect Instantly */
+      var oldStage = document.getElementById('hero-banner-stage');
+      if (oldStage && 'MutationObserver' in window) {
+        new MutationObserver(syncFromAdminCMS).observe(oldStage, { childList: true, subtree: true });
+      }
+      syncFromAdminCMS();
+      setTimeout(syncFromAdminCMS, 350);
+      setTimeout(syncFromAdminCMS, 1100);
+      setInterval(syncFromAdminCMS, 1500);
+
       requestAnimationFrame(animate);
 
-      /* Dynamically Load Three.js r128 Without Blocking Page or Firebase */
       if (window.THREE) {
         initThreeWebGL();
       } else {
@@ -1578,10 +1704,7 @@
 <!-- =========================================================
      END 3D WEBGL INTERACTIVE HERO STUDIO
 ========================================================= -->
-
-  <!-- =====================================================================
-       SECTION 3: HERO DESIGNER POSTER CAROUSEL
-       ===================================================================== -->
+      
   <section style="display:none !important;"
  class="pt-4 sm:pt-6 pb-6 px-3 sm:px-6">
     <div class="max-w-7xl mx-auto">
