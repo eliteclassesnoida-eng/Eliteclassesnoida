@@ -298,11 +298,1292 @@
       </div>
     </div>
   </header>
+<!-- =========================================================
+     ELITE CLASSES: 3D WEBGL INTERACTIVE HERO STUDIO
+========================================================= -->
+<section id="ecHero3D" aria-label="ELITE CLASSES 3D Interactive Showcase">
+  <style>
+    #ecHero3D {
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      margin: 14px auto 28px;
+      padding: 0 12px;
+      box-sizing: border-box;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    #ecHero3D *, #ecHero3D *::before, #ecHero3D *::after {
+      box-sizing: border-box;
+    }
+
+    /* Outer Luxury Obsidian & Champagne Frame */
+    .ech3-frame {
+      position: relative;
+      border-radius: 28px;
+      padding: 1.5px;
+      background: linear-gradient(135deg, rgba(229, 193, 123, 0.55) 0%, rgba(255, 255, 255, 0.08) 38%, rgba(56, 189, 248, 0.28) 72%, rgba(229, 193, 123, 0.45) 100%);
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.68),
+        0 0 50px rgba(212, 168, 83, 0.1);
+      overflow: hidden;
+    }
+    .ech3-surface {
+      position: relative;
+      border-radius: 26.5px;
+      background:
+        radial-gradient(620px 380px at 82% 18%, rgba(212, 168, 83, 0.14), transparent 68%),
+        radial-gradient(540px 360px at 14% 88%, rgba(56, 189, 248, 0.1), transparent 68%),
+        linear-gradient(160deg, #0b0e17 0%, #07090f 55%, #05070c 100%);
+      padding: 20px 16px 18px;
+      color: #f8fafc;
+      overflow: hidden;
+    }
+    @media (min-width: 640px) {
+      .ech3-surface { padding: 28px 28px 22px; }
+    }
+    @media (min-width: 960px) {
+      .ech3-surface { padding: 36px 40px 26px; }
+    }
+
+    /* Subtle 3D Perspective Floor Grid */
+    .ech3-floor-grid {
+      position: absolute;
+      left: -20%;
+      right: -20%;
+      bottom: -40px;
+      height: 210px;
+      pointer-events: none;
+      opacity: 0.24;
+      background-image:
+        linear-gradient(rgba(229, 193, 123, 0.24) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(229, 193, 123, 0.24) 1px, transparent 1px);
+      background-size: 38px 38px;
+      transform: perspective(420px) rotateX(68deg);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 92%);
+      mask-image: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 92%);
+    }
+
+    /* Main 2-Column Responsive Layout */
+    .ech3-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+    @media (min-width: 960px) {
+      .ech3-grid {
+        grid-template-columns: 1.06fr 0.94fr;
+        gap: 34px;
+      }
+    }
+    .ech3-grid > * { min-width: 0; }
+
+    /* Left Copy Column */
+    .ech3-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      background: rgba(212, 168, 83, 0.11);
+      border: 1px solid rgba(229, 193, 123, 0.36);
+      color: #f3d58d;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.085em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      max-width: 100%;
+    }
+    .ech3-live-dot {
+      flex-shrink: 0;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.22), 0 0 10px #34d399;
+    }
+    .ech3-h1 {
+      margin: 0 0 12px;
+      font-size: 27px;
+      line-height: 1.13;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    @media (min-width: 640px) { .ech3-h1 { font-size: 36px; } }
+    @media (min-width: 960px) { .ech3-h1 { font-size: 44px; } }
+    .ech3-h1-gold {
+      display: block;
+      background: linear-gradient(95deg, #fbf0cf 0%, #e5c17b 48%, #c7953b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .ech3-desc {
+      margin: 0 0 20px;
+      font-size: 13.5px;
+      line-height: 1.62;
+      color: #cbd5e1;
+      max-width: 540px;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    @media (min-width: 640px) { .ech3-desc { font-size: 15px; } }
+    .ech3-swap {
+      opacity: 0 !important;
+      transform: translateY(6px) !important;
+    }
+
+    /* Action Buttons */
+    .ech3-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    @media (min-width: 520px) {
+      .ech3-actions { flex-direction: row; flex-wrap: wrap; }
+    }
+    .ech3-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13.5px 20px;
+      border-radius: 14px;
+      font-size: 13.5px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.2s ease, background 0.2s ease;
+      white-space: nowrap;
+    }
+    .ech3-btn:active { transform: scale(0.985); }
+    .ech3-btn-primary {
+      background: linear-gradient(135deg, #f8e6b8 0%, #dca94d 55%, #bf8b2e 100%);
+      color: #080a0f;
+      box-shadow: 0 12px 28px rgba(212, 168, 83, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    }
+    .ech3-btn-primary:hover {
+      transform: translateY(-1.5px);
+      box-shadow: 0 16px 36px rgba(212, 168, 83, 0.42);
+    }
+    .ech3-btn-secondary {
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #f8fafc;
+      backdrop-filter: blur(10px);
+    }
+    .ech3-btn-secondary:hover {
+      background: rgba(229, 193, 123, 0.1);
+      border-color: rgba(229, 193, 123, 0.48);
+      color: #f8e6b8;
+    }
+
+    /* Compact Micro Trust Metrics */
+    .ech3-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .ech3-metric {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 9px 10px;
+    }
+    .ech3-metric-val {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #f5dda0;
+      line-height: 1.2;
+    }
+    .ech3-metric-lbl {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-top: 2px;
+      line-height: 1.25;
+    }
+
+    /* Right 3D Interactive Hologram Stage */
+    .ech3-stage {
+      position: relative;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(212, 168, 83, 0.12) 0%, rgba(15, 23, 42, 0.45) 55%, rgba(6, 8, 14, 0.92) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 20px 50px rgba(0, 0, 0, 0.55);
+      height: 320px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    @media (min-width: 640px) { .ech3-stage { height: 370px; } }
+    @media (min-width: 960px) { .ech3-stage { height: 425px; } }
+
+    .ech3-canvas-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+      touch-action: pan-y;
+    }
+    .ech3-canvas-layer:active { cursor: grabbing; }
+    .ech3-canvas-layer canvas {
+      position: absolute;
+      inset: 0;
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+    /* Top Stage Badges */
+    .ech3-stage-top {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px 13px 0;
+      pointer-events: none;
+    }
+    .ech3-chip-glass {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(8, 11, 19, 0.68);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #e2e8f0;
+    }
+    .ech3-chip-gold {
+      border-color: rgba(229, 193, 123, 0.38);
+      color: #f3d58d;
+    }
+
+    /* VisionOS Frosted Spatial HUD Dock inside 3D Stage */
+    .ech3-hud {
+      position: relative;
+      z-index: 4;
+      margin: 0 11px 11px;
+      padding: 11px 12px;
+      border-radius: 16px;
+      background: rgba(10, 14, 24, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    .ech3-hud-panel { display: none; }
+    .ech3-hud-panel.active { display: block; animation: ech3Fade 0.25s ease; }
+    @keyframes ech3Fade {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HUD 1: Diagnostic X-Ray */
+    .ech3-hud-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 9px;
+    }
+    .ech3-ring-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .ech3-ring-svg {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      transform: rotate(-90deg);
+    }
+    .ech3-ring-bg { fill: none; stroke: rgba(255,255,255,0.1); stroke-width: 4; }
+    .ech3-ring-fg {
+      fill: none;
+      stroke: #e5c17b;
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 106.8;
+      stroke-dashoffset: 6.4;
+      transition: stroke-dashoffset 0.45s cubic-bezier(0.22, 1, 0.36, 1), stroke 0.3s ease;
+    }
+    .ech3-hud-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+    .ech3-hud-sub {
+      font-size: 10.5px;
+      color: #94a3b8;
+      line-height: 1.3;
+      margin-top: 2px;
+    }
+    .ech3-score-num {
+      font-size: 16px;
+      font-weight: 900;
+      color: #f6e0a8;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+    .ech3-hud-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .ech3-hud-pill {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: #cbd5e1;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 10.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .ech3-hud-pill:hover { border-color: rgba(229, 193, 123, 0.5); color: #ffffff; }
+    .ech3-hud-pill.active {
+      background: linear-gradient(135deg, #f6e0a8, #cfa14a);
+      border-color: #f6e0a8;
+      color: #090b10;
+      font-weight: 800;
+    }
+
+    /* Bottom Story Progress & Controls Dock */
+    .ech3-dock {
+      position: relative;
+      z-index: 3;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .ech3-bars {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .ech3-bar-btn {
+      background: none;
+      border: none;
+      padding: 4px 0;
+      text-align: left;
+      cursor: pointer;
+    }
+    .ech3-bar-track {
+      height: 3.5px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .ech3-bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f7e4b4, #d4a853);
+    }
+    .ech3-bar-lbl {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #64748b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: color 0.2s ease;
+    }
+    .ech3-bar-btn.active .ech3-bar-lbl { color: #f3d58d; }
+
+    .ech3-nav-arrows {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      flex-shrink: 0;
+    }
+    .ech3-arrow {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.04);
+      color: #f8fafc;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .ech3-arrow:hover {
+      border-color: #d4a853;
+      background: rgba(212, 168, 83, 0.14);
+      color: #f6e0a8;
+    }
+  </style>
+
+  <div class="ech3-frame">
+    <div class="ech3-surface" id="ech3Surface">
+      <div class="ech3-floor-grid" aria-hidden="true"></div>
+
+      <div class="ech3-grid">
+        <!-- LEFT: EXECUTIVE COPY & LIVE CTAs -->
+        <div>
+          <div class="ech3-eyebrow">
+            <span class="ech3-live-dot"></span>
+            <span id="ech3Eyebrow">FREE DIAGNOSTIC ASSESSMENT • GRADES 1–12 • EN | हिंदी</span>
+          </div>
+
+          <h1 class="ech3-h1" id="ech3Headline">
+            <span id="ech3TitleTop">Beyond Rote Learning.</span>
+            <span class="ech3-h1-gold" id="ech3TitleGold">Measure True Conceptual Clarity.</span>
+          </h1>
+
+          <p class="ech3-desc" id="ech3Desc">
+            Take our 10-minute bilingual CBT diagnostic across Maths, Science, English, and Social Science—unlock an instant subject-wise X-Ray scorecard and branded PDF report free.
+          </p>
+
+          <div class="ech3-actions">
+            <a id="ech3Cta1" href="test.html" class="ech3-btn ech3-btn-primary">
+              <span id="ech3Cta1Text">Take Free Diagnostic Test</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a id="ech3Cta2" href="#ecAvailSection" class="ech3-btn ech3-btn-secondary">
+              <span id="ech3Cta2Text">Check Tutor Availability</span>
+            </a>
+          </div>
+
+          <div class="ech3-metrics">
+            <div class="ech3-metric">
+              <div class="ech3-metric-val">1-on-1</div>
+              <div class="ech3-metric-lbl">Rotational Specialists</div>
+            </div>
+            <div class="ech3-metric">
+              <div class="ech3-metric-val">24-Hr</div>
+              <div class="ech3-metric-lbl">Backup Tutor Cover</div>
+            </div>
+            <div class="ech3-metric">
+              <div class="ech3-metric-val">₹0 Advance</div>
+              <div class="ech3-metric-lbl">Free 1st Trial Class</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: INTERACTIVE 3D WEBGL STAGE + SPATIAL HUD -->
+        <div class="ech3-stage">
+          <div class="ech3-canvas-layer" id="ech3CanvasLayer" aria-label="Interactive 3D Hologram — drag to rotate">
+            <canvas id="ech3FallbackCanvas"></canvas>
+            <div id="ech3WebglMount" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></div>
+          </div>
+
+          <div class="ech3-stage-top">
+            <span class="ech3-chip-glass ech3-chip-gold" id="ech3StageTag">3D X-Ray Core</span>
+            <span class="ech3-chip-glass">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+              <span>Drag to Spin</span>
+            </span>
+          </div>
+
+          <div class="ech3-hud">
+            <!-- HUD 0: DIAGNOSTIC X-RAY -->
+            <div class="ech3-hud-panel active" id="ech3Hud0">
+              <div class="ech3-hud-row">
+                <div class="ech3-ring-box">
+                  <svg class="ech3-ring-svg" viewBox="0 0 40 40">
+                    <circle class="ech3-ring-bg" cx="20" cy="20" r="17"></circle>
+                    <circle class="ech3-ring-fg" id="ech3RingFg" cx="20" cy="20" r="17"></circle>
+                  </svg>
+                  <div>
+                    <div class="ech3-hud-title" id="ech3DiagTitle">Mathematics Clarity Index</div>
+                    <div class="ech3-hud-sub" id="ech3DiagSub">Algebra, Geometry &amp; Speed Diagnostics</div>
+                  </div>
+                </div>
+                <div class="ech3-score-num" id="ech3DiagScore">96%</div>
+              </div>
+              <div class="ech3-hud-pills" id="ech3DiagPills">
+                <button type="button" class="ech3-hud-pill active" data-sub="math">Maths</button>
+                <button type="button" class="ech3-hud-pill" data-sub="sci">Science</button>
+                <button type="button" class="ech3-hud-pill" data-sub="eng">English</button>
+              </div>
+            </div>
+
+            <!-- HUD 1: ROTATIONAL POD -->
+            <div class="ech3-hud-panel" id="ech3Hud1">
+              <div class="ech3-hud-row">
+                <div>
+                  <div class="ech3-hud-title" id="ech3PodTitle">Monday • Mathematics Specialist</div>
+                  <div class="ech3-hud-sub" id="ech3PodSub">Dedicated subject faculty • 24-Hr backup guarantee active</div>
+                </div>
+                <div class="ech3-score-num" style="font-size:11px;color:#34d399;">ACTIVE</div>
+              </div>
+              <div class="ech3-hud-pills" id="ech3PodPills">
+                <button type="button" class="ech3-hud-pill active" data-day="0">MON</button>
+                <button type="button" class="ech3-hud-pill" data-day="1">TUE</button>
+                <button type="button" class="ech3-hud-pill" data-day="2">WED</button>
+                <button type="button" class="ech3-hud-pill" data-day="3">THU</button>
+                <button type="button" class="ech3-hud-pill" data-day="4">FRI</button>
+                <button type="button" class="ech3-hud-pill" data-day="5">SAT</button>
+              </div>
+            </div>
+
+            <!-- HUD 2: GLOBAL LIVE STUDIO -->
+            <div class="ech3-hud-panel" id="ech3Hud2">
+              <div class="ech3-hud-row">
+                <div>
+                  <div class="ech3-hud-title" id="ech3HubTitle">Noida HQ • Home &amp; Hybrid Hub</div>
+                  <div class="ech3-hud-sub" id="ech3HubSub">All Noida Sectors &amp; Greater Noida West • IST</div>
+                </div>
+                <div class="ech3-score-num" style="font-size:11px;color:#38bdf8;" id="ech3HubPing">LIVE</div>
+              </div>
+              <div class="ech3-hud-pills" id="ech3HubPills">
+                <button type="button" class="ech3-hud-pill active" data-hub="0">Noida</button>
+                <button type="button" class="ech3-hud-pill" data-hub="1">Dubai</button>
+                <button type="button" class="ech3-hud-pill" data-hub="2">London</button>
+                <button type="button" class="ech3-hud-pill" data-hub="3">New York</button>
+                <button type="button" class="ech3-hud-pill" data-hub="4">Singapore</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM STORY PROGRESS & NAVIGATION DOCK -->
+      <div class="ech3-dock">
+        <div class="ech3-bars" id="ech3Bars">
+          <button type="button" class="ech3-bar-btn active" data-idx="0">
+            <div class="ech3-bar-track"><div class="ech3-bar-fill" id="ech3Fill0"></div></div>
+            <span class="ech3-bar-lbl">01. Diagnostic X-Ray</span>
+          </button>
+          <button type="button" class="ech3-bar-btn" data-idx="1">
+            <div class="ech3-bar-track"><div class="ech3-bar-fill" id="ech3Fill1"></div></div>
+            <span class="ech3-bar-lbl">02. Rotational Pod</span>
+          </button>
+          <button type="button" class="ech3-bar-btn" data-idx="2">
+            <div class="ech3-bar-track"><div class="ech3-bar-fill" id="ech3Fill2"></div></div>
+            <span class="ech3-bar-lbl">03. Global Studio</span>
+          </button>
+        </div>
+
+        <div class="ech3-nav-arrows">
+          <button type="button" class="ech3-arrow" id="ech3Prev" aria-label="Previous slide">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <button type="button" class="ech3-arrow" id="ech3Next" aria-label="Next slide">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById('ecHero3D');
+      if (!root) return;
+
+      var SLIDES = [
+        {
+          eyebrow: 'FREE DIAGNOSTIC ASSESSMENT • GRADES 1–12 • EN | हिंदी',
+          titleTop: 'Beyond Rote Learning.',
+          titleGold: 'Measure True Conceptual Clarity.',
+          desc: 'Take our 10-minute bilingual CBT diagnostic across Maths, Science, English, and Social Science—unlock an instant subject-wise X-Ray scorecard and branded PDF report free.',
+          cta1Text: 'Take Free Diagnostic Test',
+          cta1Href: 'test.html',
+          cta2Text: 'Check Tutor Availability',
+          cta2Href: '#ecAvailSection',
+          cta2Ext: false,
+          stageTag: '3D X-Ray Core'
+        },
+        {
+          eyebrow: 'NOIDA & GREATER NOIDA • 1-ON-1 HOME TUITION',
+          titleTop: 'One Student. Dedicated',
+          titleGold: 'Subject-Specialist Faculty.',
+          desc: 'Replace generalist home tutors with our Subject-Specialized Rotational Pod—Maths, Science, and Humanities experts visit on a structured weekly schedule with 24-hour backup coverage.',
+          cta1Text: 'Check Area Availability',
+          cta1Href: '#ecAvailSection',
+          cta2Text: 'Calculate Monthly Fee',
+          cta2Href: '#pricing',
+          cta2Ext: false,
+          stageTag: '3D Rotational Gyro'
+        },
+        {
+          eyebrow: 'CBSE • ICSE • IB / IGCSE • GLOBAL LIVE 1-ON-1',
+          titleTop: 'World-Class 1-on-1',
+          titleGold: 'Global Live Study Studio.',
+          desc: 'Built-in HD smart whiteboard, 3D interactive STEM labs, and transparent INR/USD monthly plans—personally monitored by founder Ravi Yadav for families in Noida and worldwide.',
+          cta1Text: 'Explore Fee Studio (INR / USD)',
+          cta1Href: '#pricing',
+          cta2Text: 'Book Free Trial on WhatsApp',
+          cta2Href: 'https://wa.me/919675732501?text=' + encodeURIComponent('Hello Ravi Sir (ELITE CLASSES), I visited your website and would like to book a complimentary 1st trial class.'),
+          cta2Ext: true,
+          stageTag: '3D Global Network'
+        }
+      ];
+
+      var DIAG_DATA = {
+        math: { title: 'Mathematics Clarity Index', sub: 'Algebra, Geometry & Speed Diagnostics', score: 96, color: '#e5c17b', hex: 0xe5c17b },
+        sci:  { title: 'Science Concept Index', sub: 'Physics, Chemistry & Visual STEM Mastery', score: 94, color: '#38bdf8', hex: 0x38bdf8 },
+        eng:  { title: 'English Expression Index', sub: 'Grammar, Comprehension & Writing Depth', score: 92, color: '#34d399', hex: 0x34d399 }
+      };
+
+      var POD_DAYS = [
+        { title: 'Monday • Mathematics Specialist', sub: 'Concept mastery + problem-solving drills', boost: 0.055 },
+        { title: 'Tuesday • Science Specialist', sub: 'Physics, Chemistry & 3D STEM labs', boost: 0.065 },
+        { title: 'Wednesday • English & Grammar Expert', sub: 'Comprehension, articulation & writing', boost: 0.05 },
+        { title: 'Thursday • Mathematics Specialist', sub: 'Application worksheets & speed mastery', boost: 0.06 },
+        { title: 'Friday • Social Science & Humanities', sub: 'Structured answers & map/case analysis', boost: 0.055 },
+        { title: 'Saturday • Weekly CBT & X-Ray PDF', sub: 'Timed test + founder progress review', boost: 0.075 }
+      ];
+
+      var HUBS = [
+        { name: 'Noida HQ • Home & Hybrid Hub', sub: 'All Noida Sectors & Greater Noida West • IST', rotY: -1.35, ping: 'HQ LIVE' },
+        { name: 'Dubai, UAE • Live 1-on-1 Studio', sub: 'CBSE, IB & IGCSE • Gulf Timezone Slots', rotY: -0.96, ping: 'GST LIVE' },
+        { name: 'London, UK • Live 1-on-1 Studio', sub: 'IGCSE, GCSE & IB Specialists • GMT/BST', rotY: 0.02, ping: 'UK LIVE' },
+        { name: 'New York, USA • Live 1-on-1 Studio', sub: 'STEM, Maths & IB Mastery • EST/EDT', rotY: 1.28, ping: 'US LIVE' },
+        { name: 'Singapore • Live 1-on-1 Studio', sub: 'IB, IGCSE & Olympiad Prep • SGT', rotY: -1.82, ping: 'SG LIVE' }
+      ];
+
+      var currentSlide = 0;
+      var slideDuration = 7800;
+      var slideElapsed = 0;
+      var lastFrameTime = performance.now();
+      var isVisible = true;
+      var isPaused = false;
+      var isDragging = false;
+      var dragX = 0, dragY = 0;
+      var rotVelX = 0.002, rotVelY = 0.008;
+      var userRotX = 0.18, userRotY = 0;
+      var targetGlobeRotY = null;
+      var activeAccentHex = 0xe5c17b;
+      var activeAccentCss = '#e5c17b';
+      var usingWebGL = false;
+
+      /* DOM Refs */
+      var eyebrowEl = document.getElementById('ech3Eyebrow');
+      var headlineEl = document.getElementById('ech3Headline');
+      var titleTopEl = document.getElementById('ech3TitleTop');
+      var titleGoldEl = document.getElementById('ech3TitleGold');
+      var descEl = document.getElementById('ech3Desc');
+      var cta1El = document.getElementById('ech3Cta1');
+      var cta1TextEl = document.getElementById('ech3Cta1Text');
+      var cta2El = document.getElementById('ech3Cta2');
+      var cta2TextEl = document.getElementById('ech3Cta2Text');
+      var stageTagEl = document.getElementById('ech3StageTag');
+      var fills = [document.getElementById('ech3Fill0'), document.getElementById('ech3Fill1'), document.getElementById('ech3Fill2')];
+      var huds = [document.getElementById('ech3Hud0'), document.getElementById('ech3Hud1'), document.getElementById('ech3Hud2')];
+      var barBtns = root.querySelectorAll('.ech3-bar-btn');
+      var canvasLayer = document.getElementById('ech3CanvasLayer');
+      var fallbackCanvas = document.getElementById('ech3FallbackCanvas');
+      var webglMount = document.getElementById('ech3WebglMount');
+      var surfaceEl = document.getElementById('ech3Surface');
+
+      function goToSlide(idx) {
+        currentSlide = (idx + SLIDES.length) % SLIDES.length;
+        slideElapsed = 0;
+        var s = SLIDES[currentSlide];
+
+        headlineEl.classList.add('ech3-swap');
+        descEl.classList.add('ech3-swap');
+
+        setTimeout(function () {
+          eyebrowEl.textContent = s.eyebrow;
+          titleTopEl.textContent = s.titleTop;
+          titleGoldEl.textContent = s.titleGold;
+          descEl.textContent = s.desc;
+          cta1TextEl.textContent = s.cta1Text;
+          cta1El.setAttribute('href', s.cta1Href);
+          cta2TextEl.textContent = s.cta2Text;
+          cta2El.setAttribute('href', s.cta2Href);
+          if (s.cta2Ext) {
+            cta2El.setAttribute('target', '_blank');
+            cta2El.setAttribute('rel', 'noopener');
+          } else {
+            cta2El.removeAttribute('target');
+            cta2El.removeAttribute('rel');
+          }
+          stageTagEl.textContent = s.stageTag;
+          headlineEl.classList.remove('ech3-swap');
+          descEl.classList.remove('ech3-swap');
+        }, 160);
+
+        for (var i = 0; i < SLIDES.length; i++) {
+          barBtns[i].classList.toggle('active', i === currentSlide);
+          huds[i].classList.toggle('active', i === currentSlide);
+          fills[i].style.width = i < currentSlide ? '100%' : '0%';
+        }
+
+        rotVelY = 0.045;
+        targetGlobeRotY = currentSlide === 2 ? HUBS[0].rotY : null;
+      }
+
+      document.getElementById('ech3Prev').addEventListener('click', function () { goToSlide(currentSlide - 1); });
+      document.getElementById('ech3Next').addEventListener('click', function () { goToSlide(currentSlide + 1); });
+      document.getElementById('ech3Bars').addEventListener('click', function (e) {
+        var btn = e.target.closest('.ech3-bar-btn');
+        if (!btn) return;
+        goToSlide(parseInt(btn.getAttribute('data-idx'), 10));
+      });
+
+      /* Interactive HUD 0: Diagnostic Subject Switcher */
+      var ringFg = document.getElementById('ech3RingFg');
+      var diagTitle = document.getElementById('ech3DiagTitle');
+      var diagSub = document.getElementById('ech3DiagSub');
+      var diagScore = document.getElementById('ech3DiagScore');
+      var threeAccentMaterials = [];
+
+      document.getElementById('ech3DiagPills').addEventListener('click', function (e) {
+        var pill = e.target.closest('.ech3-hud-pill');
+        if (!pill) return;
+        var key = pill.getAttribute('data-sub');
+        var d = DIAG_DATA[key];
+        if (!d) return;
+        var all = pill.parentElement.querySelectorAll('.ech3-hud-pill');
+        for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
+        pill.classList.add('active');
+
+        diagTitle.textContent = d.title;
+        diagSub.textContent = d.sub;
+        diagScore.textContent = d.score + '%';
+        diagScore.style.color = d.color;
+        ringFg.style.stroke = d.color;
+        ringFg.style.strokeDashoffset = (106.8 * (1 - d.score / 100)).toFixed(1);
+        activeAccentHex = d.hex;
+        activeAccentCss = d.color;
+        rotVelY = 0.06;
+        slideElapsed = 0;
+
+        for (var j = 0; j < threeAccentMaterials.length; j++) {
+          threeAccentMaterials[j].color.setHex(d.hex);
+        }
+      });
+
+      /* Interactive HUD 1: Rotational Mon-Sat Switcher */
+      var podTitle = document.getElementById('ech3PodTitle');
+      var podSub = document.getElementById('ech3PodSub');
+      document.getElementById('ech3PodPills').addEventListener('click', function (e) {
+        var pill = e.target.closest('.ech3-hud-pill');
+        if (!pill) return;
+        var d = POD_DAYS[parseInt(pill.getAttribute('data-day'), 10)];
+        if (!d) return;
+        var all = pill.parentElement.querySelectorAll('.ech3-hud-pill');
+        for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
+        pill.classList.add('active');
+        podTitle.textContent = d.title;
+        podSub.textContent = d.sub;
+        rotVelY = d.boost;
+        slideElapsed = 0;
+      });
+
+      /* Interactive HUD 2: Global City Switcher */
+      var hubTitle = document.getElementById('ech3HubTitle');
+      var hubSub = document.getElementById('ech3HubSub');
+      var hubPing = document.getElementById('ech3HubPing');
+      document.getElementById('ech3HubPills').addEventListener('click', function (e) {
+        var pill = e.target.closest('.ech3-hud-pill');
+        if (!pill) return;
+        var h = HUBS[parseInt(pill.getAttribute('data-hub'), 10)];
+        if (!h) return;
+        var all = pill.parentElement.querySelectorAll('.ech3-hud-pill');
+        for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
+        pill.classList.add('active');
+        hubTitle.textContent = h.name;
+        hubSub.textContent = h.sub;
+        hubPing.textContent = h.ping;
+        targetGlobeRotY = h.rotY;
+        slideElapsed = 0;
+      });
+
+      /* Drag-to-Spin Pointer Physics on 3D Stage */
+      function onDragStart(x, y) {
+        isDragging = true;
+        isPaused = true;
+        dragX = x;
+        dragY = y;
+        targetGlobeRotY = null;
+      }
+      function onDragMove(x, y) {
+        if (!isDragging) return;
+        var dx = x - dragX;
+        var dy = y - dragY;
+        dragX = x;
+        dragY = y;
+        rotVelY = dx * 0.011;
+        rotVelX = dy * 0.007;
+        userRotY += rotVelY;
+        userRotX = Math.max(-0.85, Math.min(0.85, userRotX + rotVelX));
+      }
+      function onDragEnd() {
+        isDragging = false;
+        isPaused = false;
+      }
+
+      canvasLayer.addEventListener('mousedown', function (e) { onDragStart(e.clientX, e.clientY); });
+      window.addEventListener('mousemove', function (e) { if (isDragging) onDragMove(e.clientX, e.clientY); });
+      window.addEventListener('mouseup', onDragEnd);
+
+      canvasLayer.addEventListener('touchstart', function (e) {
+        if (e.touches.length === 1) onDragStart(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      canvasLayer.addEventListener('touchmove', function (e) {
+        if (isDragging && e.touches.length === 1) onDragMove(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      canvasLayer.addEventListener('touchend', onDragEnd, { passive: true });
+
+      /* Swipe Slides on Copy Area (Mobile Friendly) */
+      var swipeStartX = 0, swipeStartY = 0;
+      surfaceEl.addEventListener('touchstart', function (e) {
+        if (e.target.closest('#ech3CanvasLayer') || e.target.closest('.ech3-hud')) return;
+        swipeStartX = e.touches[0].clientX;
+        swipeStartY = e.touches[0].clientY;
+      }, { passive: true });
+      surfaceEl.addEventListener('touchend', function (e) {
+        if (!swipeStartX) return;
+        var dx = e.changedTouches[0].clientX - swipeStartX;
+        var dy = e.changedTouches[0].clientY - swipeStartY;
+        swipeStartX = 0;
+        if (Math.abs(dx) > 52 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+          goToSlide(dx < 0 ? currentSlide + 1 : currentSlide - 1);
+        }
+      }, { passive: true });
+
+      surfaceEl.addEventListener('mouseenter', function () { isPaused = true; });
+      surfaceEl.addEventListener('mouseleave', function () { if (!isDragging) isPaused = false; });
+
+      /* Pause Animation When Out of Viewport (Battery & PageSpeed Friendly) */
+      if ('IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function (entries) {
+          isVisible = entries[0].isIntersecting;
+          if (isVisible) lastFrameTime = performance.now();
+        }, { threshold: 0.08 });
+        obs.observe(root);
+      }
+
+      /* ===== INSTANT BUILT-IN 2D-3D PROJECTION ENGINE (FRAME 1 ZERO-BLANK) ===== */
+      var ctx = fallbackCanvas.getContext('2d');
+      var fw = 360, fh = 320;
+      function resizeFallback() {
+        var rect = canvasLayer.getBoundingClientRect();
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        fw = Math.max(240, rect.width || 360);
+        fh = Math.max(240, rect.height || 320);
+        fallbackCanvas.width = fw * dpr;
+        fallbackCanvas.height = fh * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resizeFallback();
+
+      var phi = (1 + Math.sqrt(5)) / 2;
+      var icoVerts = [
+        [-1, phi, 0], [1, phi, 0], [-1, -phi, 0], [1, -phi, 0],
+        [0, -1, phi], [0, 1, phi], [0, -1, -phi], [0, 1, -phi],
+        [phi, 0, -1], [phi, 0, 1], [-phi, 0, -1], [-phi, 0, 1]
+      ].map(function (v) {
+        var len = Math.hypot(v[0], v[1], v[2]);
+        return [v[0] / len, v[1] / len, v[2] / len];
+      });
+      var icoEdges = [];
+      for (var a = 0; a < icoVerts.length; a++) {
+        for (var b = a + 1; b < icoVerts.length; b++) {
+          var dist = Math.hypot(icoVerts[a][0] - icoVerts[b][0], icoVerts[a][1] - icoVerts[b][1], icoVerts[a][2] - icoVerts[b][2]);
+          if (dist < 1.15) icoEdges.push([a, b]);
+        }
+      }
+
+      function proj3D(x, y, z, rx, ry, scale) {
+        var cy = Math.cos(ry), sy = Math.sin(ry);
+        var x1 = x * cy - z * sy;
+        var z1 = x * sy + z * cy;
+        var cx = Math.cos(rx), sx = Math.sin(rx);
+        var y2 = y * cx - z1 * sx;
+        var z2 = y * sx + z1 * cx;
+        var persp = 3.6 / (3.6 - z2);
+        return [fw * 0.5 + x1 * scale * persp, fh * 0.41 + y2 * scale * persp, z2];
+      }
+
+      function drawFallbackFrame(timeSec) {
+        ctx.clearRect(0, 0, fw, fh);
+        var sc = Math.min(fw, fh) * 0.25;
+        ctx.lineWidth = 1.25;
+
+        if (currentSlide === 0) {
+          ctx.strokeStyle = activeAccentCss;
+          ctx.globalAlpha = 0.85;
+          var pts = icoVerts.map(function (v) { return proj3D(v[0], v[1], v[2], userRotX, userRotY, sc); });
+          ctx.beginPath();
+          for (var i = 0; i < icoEdges.length; i++) {
+            var p1 = pts[icoEdges[i][0]], p2 = pts[icoEdges[i][1]];
+            ctx.moveTo(p1[0], p1[1]);
+            ctx.lineTo(p2[0], p2[1]);
+          }
+          ctx.stroke();
+          /* Orbital ring */
+          ctx.strokeStyle = 'rgba(246, 224, 168, 0.45)';
+          ctx.beginPath();
+          for (var k = 0; k <= 48; k++) {
+            var ang = (k / 48) * Math.PI * 2;
+            var rp = proj3D(Math.cos(ang) * 1.38, Math.sin(ang) * 0.35, Math.sin(ang) * 1.38, userRotX + 0.4, userRotY - timeSec * 0.5, sc);
+            if (k === 0) ctx.moveTo(rp[0], rp[1]); else ctx.lineTo(rp[0], rp[1]);
+          }
+          ctx.stroke();
+        } else if (currentSlide === 1) {
+          /* 3D Gyroscope Rings + Orbiting Specialist Nodes */
+          var rings = [[0, '#e5c17b'], [1.05, '#38bdf8'], [2.1, '#34d399']];
+          for (var r = 0; r < rings.length; r++) {
+            ctx.strokeStyle = rings[r][1];
+            ctx.globalAlpha = 0.7;
+            ctx.beginPath();
+            for (var t = 0; t <= 48; t++) {
+              var th = (t / 48) * Math.PI * 2;
+              var gp = proj3D(Math.cos(th) * 1.25, Math.sin(th) * Math.cos(rings[r][0]) * 1.25, Math.sin(th) * Math.sin(rings[r][0]) * 1.25, userRotX, userRotY + r * 0.6, sc);
+              if (t === 0) ctx.moveTo(gp[0], gp[1]); else ctx.lineTo(gp[0], gp[1]);
+            }
+            ctx.stroke();
+          }
+          ctx.globalAlpha = 1;
+          for (var n = 0; n < 4; n++) {
+            var na = timeSec * 1.4 + n * (Math.PI / 2);
+            var np = proj3D(Math.cos(na) * 1.32, Math.sin(na * 1.5) * 0.55, Math.sin(na) * 1.32, userRotX, userRotY, sc);
+            ctx.fillStyle = n % 2 === 0 ? '#f6e0a8' : '#38bdf8';
+            ctx.beginPath();
+            ctx.arc(np[0], np[1], 4.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        } else {
+          /* 3D Wireframe Globe */
+          ctx.strokeStyle = 'rgba(229, 193, 123, 0.42)';
+          for (var lat = -60; lat <= 60; lat += 30) {
+            var lr = (lat * Math.PI) / 180;
+            var rad = Math.cos(lr) * 1.25;
+            var yy = Math.sin(lr) * 1.25;
+            ctx.beginPath();
+            for (var s = 0; s <= 36; s++) {
+              var a2 = (s / 36) * Math.PI * 2;
+              var vp = proj3D(Math.cos(a2) * rad, yy, Math.sin(a2) * rad, userRotX, userRotY, sc);
+              if (s === 0) ctx.moveTo(vp[0], vp[1]); else ctx.lineTo(vp[0], vp[1]);
+            }
+            ctx.stroke();
+          }
+          for (var lon = 0; lon < 6; lon++) {
+            var la = (lon / 6) * Math.PI;
+            ctx.beginPath();
+            for (var s2 = 0; s2 <= 36; s2++) {
+              var a3 = (s2 / 36) * Math.PI * 2;
+              var vp2 = proj3D(Math.sin(a3) * Math.cos(la) * 1.25, Math.cos(a3) * 1.25, Math.sin(a3) * Math.sin(la) * 1.25, userRotX, userRotY, sc);
+              if (s2 === 0) ctx.moveTo(vp2[0], vp2[1]); else ctx.lineTo(vp2[0], vp2[1]);
+            }
+            ctx.stroke();
+          }
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      /* ===== REAL-TIME THREE.JS WEBGL 3D ENGINE ===== */
+      var threeState = null;
+
+      function latLonToVec3(lat, lon, r) {
+        var phiA = (90 - lat) * (Math.PI / 180);
+        var thetaA = (lon + 180) * (Math.PI / 180);
+        return new window.THREE.Vector3(
+          -r * Math.sin(phiA) * Math.cos(thetaA),
+          r * Math.cos(phiA),
+          r * Math.sin(phiA) * Math.sin(thetaA)
+        );
+      }
+
+      function initThreeWebGL() {
+        if (!window.THREE || threeState) return;
+        var THREE = window.THREE;
+        var renderer;
+        try {
+          renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
+        } catch (err) {
+          return;
+        }
+
+        var rect = canvasLayer.getBoundingClientRect();
+        var w = Math.max(240, rect.width || 360);
+        var h = Math.max(240, rect.height || 320);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(w, h);
+        webglMount.innerHTML = '';
+        webglMount.appendChild(renderer.domElement);
+
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 100);
+        camera.position.set(0, -0.25, 4.9);
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.65));
+        var keyLight = new THREE.PointLight(0xf6e0a8, 2.2, 20);
+        keyLight.position.set(4, 4, 5);
+        scene.add(keyLight);
+        var rimLight = new THREE.PointLight(0x38bdf8, 1.4, 20);
+        rimLight.position.set(-4, -2, 3);
+        scene.add(rimLight);
+
+        var masterGroup = new THREE.Group();
+        masterGroup.position.y = 0.28;
+        scene.add(masterGroup);
+
+        /* --- GROUP 0: GOLDEN DIAGNOSTIC CRYSTAL + ORBITS + PARTICLES --- */
+        var g0 = new THREE.Group();
+        var icoGeo = new THREE.IcosahedronGeometry(1.12, 0);
+        var icoCore = new THREE.Mesh(icoGeo, new THREE.MeshStandardMaterial({
+          color: 0x101624, metalness: 0.78, roughness: 0.22, flatShading: true
+        }));
+        var icoWireMat = new THREE.LineBasicMaterial({ color: activeAccentHex, transparent: true, opacity: 0.92 });
+        threeAccentMaterials.push(icoWireMat);
+        var icoWire = new THREE.LineSegments(new THREE.EdgesGeometry(icoGeo), icoWireMat);
+        icoWire.scale.setScalar(1.03);
+        g0.add(icoCore, icoWire);
+
+        var ringMat1 = new THREE.MeshBasicMaterial({ color: activeAccentHex, transparent: true, opacity: 0.55 });
+        threeAccentMaterials.push(ringMat1);
+        var ring1 = new THREE.Mesh(new THREE.TorusGeometry(1.52, 0.016, 12, 80), ringMat1);
+        ring1.rotation.x = 1.25;
+        var ring2 = new THREE.Mesh(new THREE.TorusGeometry(1.74, 0.012, 12, 80), new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.36 }));
+        ring2.rotation.x = 0.9;
+        ring2.rotation.y = 0.7;
+        g0.add(ring1, ring2);
+
+        var pPos = [];
+        for (var p = 0; p < 56; p++) {
+          var rad = 1.45 + Math.random() * 0.7;
+          var th = Math.random() * Math.PI * 2;
+          var ph = Math.acos(2 * Math.random() - 1);
+          pPos.push(rad * Math.sin(ph) * Math.cos(th), rad * Math.sin(ph) * Math.sin(th), rad * Math.cos(ph));
+        }
+        var pGeo = new THREE.BufferGeometry();
+        pGeo.setAttribute('position', new THREE.Float32BufferAttribute(pPos, 3));
+        var pMat = new THREE.PointsMaterial({ color: 0xf6e0a8, size: 0.045, transparent: true, opacity: 0.85 });
+        var stars = new THREE.Points(pGeo, pMat);
+        g0.add(stars);
+
+        /* --- GROUP 1: ROTATIONAL GYROSCOPIC TORUS-KNOT + 4 SPECIALIST NODES --- */
+        var g1 = new THREE.Group();
+        var tkGeo = new THREE.TorusKnotGeometry(0.84, 0.21, 92, 14);
+        var tkMesh = new THREE.Mesh(tkGeo, new THREE.MeshStandardMaterial({
+          color: 0xd4a853, metalness: 0.85, roughness: 0.24
+        }));
+        var tkWire = new THREE.LineSegments(new THREE.WireframeGeometry(tkGeo), new THREE.LineBasicMaterial({
+          color: 0xfbf0cf, transparent: true, opacity: 0.16
+        }));
+        g1.add(tkMesh, tkWire);
+
+        var nodeColors = [0xf6e0a8, 0x38bdf8, 0x34d399, 0xfbbf24];
+        var podNodes = [];
+        for (var n = 0; n < 4; n++) {
+          var node = new THREE.Mesh(
+            new THREE.SphereGeometry(0.11, 16, 16),
+            new THREE.MeshStandardMaterial({ color: nodeColors[n], metalness: 0.4, roughness: 0.25, emissive: nodeColors[n], emissiveIntensity: 0.35 })
+          );
+          podNodes.push(node);
+          g1.add(node);
+        }
+        g1.scale.setScalar(0.001);
+
+        /* --- GROUP 2: GLOBAL HOLOGRAPHIC WIREFRAME GLOBE + FLIGHT ARCS --- */
+        var g2 = new THREE.Group();
+        var globeRadius = 1.24;
+        var globeCore = new THREE.Mesh(
+          new THREE.SphereGeometry(globeRadius * 0.985, 28, 20),
+          new THREE.MeshStandardMaterial({ color: 0x0a1120, metalness: 0.5, roughness: 0.65, transparent: true, opacity: 0.88 })
+        );
+        var globeWire = new THREE.LineSegments(
+          new THREE.WireframeGeometry(new THREE.SphereGeometry(globeRadius, 22, 16)),
+          new THREE.LineBasicMaterial({ color: 0xe5c17b, transparent: true, opacity: 0.3 })
+        );
+        g2.add(globeCore, globeWire);
+
+        var cityCoords = [
+          [28.53, 77.39, 0xf6e0a8],  /* Noida HQ */
+          [25.20, 55.27, 0x38bdf8],  /* Dubai */
+          [51.50, -0.12, 0x34d399],  /* London */
+          [40.71, -74.00, 0x38bdf8], /* New York */
+          [1.35, 103.82, 0x34d399]   /* Singapore */
+        ];
+        var noidaPos = latLonToVec3(cityCoords[0][0], cityCoords[0][1], globeRadius + 0.02);
+        var arcCurves = [];
+        var arcPulses = [];
+
+        for (var c = 0; c < cityCoords.length; c++) {
+          var cPos = latLonToVec3(cityCoords[c][0], cityCoords[c][1], globeRadius + 0.025);
+          var dot = new THREE.Mesh(
+            new THREE.SphereGeometry(c === 0 ? 0.068 : 0.048, 12, 12),
+            new THREE.MeshBasicMaterial({ color: cityCoords[c][2] })
+          );
+          dot.position.copy(cPos);
+          g2.add(dot);
+
+          if (c > 0) {
+            var mid = noidaPos.clone().add(cPos).multiplyScalar(0.5).normalize().multiplyScalar(globeRadius * 1.48);
+            var curve = new THREE.QuadraticBezierCurve3(noidaPos, mid, cPos);
+            var arcPts = curve.getPoints(32);
+            var arcGeo = new THREE.BufferGeometry().setFromPoints(arcPts);
+            var arcLine = new THREE.Line(arcGeo, new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.55 }));
+            g2.add(arcLine);
+            arcCurves.push(curve);
+
+            var pulse = new THREE.Mesh(
+              new THREE.SphereGeometry(0.032, 10, 10),
+              new THREE.MeshBasicMaterial({ color: 0xfbf0cf })
+            );
+            g2.add(pulse);
+            arcPulses.push(pulse);
+          }
+        }
+        g2.scale.setScalar(0.001);
+
+        masterGroup.add(g0, g1, g2);
+
+        threeState = {
+          renderer: renderer,
+          scene: scene,
+          camera: camera,
+          masterGroup: masterGroup,
+          groups: [g0, g1, g2],
+          ring1: ring1,
+          ring2: ring2,
+          stars: stars,
+          podNodes: podNodes,
+          arcCurves: arcCurves,
+          arcPulses: arcPulses
+        };
+
+        usingWebGL = true;
+        fallbackCanvas.style.display = 'none';
+      }
+
+      /* Handle Resize for Both Engines */
+      function onResize() {
+        resizeFallback();
+        if (threeState) {
+          var rect = canvasLayer.getBoundingClientRect();
+          var w = Math.max(240, rect.width || 360);
+          var h = Math.max(240, rect.height || 320);
+          threeState.camera.aspect = w / h;
+          threeState.camera.updateProjectionMatrix();
+          threeState.renderer.setSize(w, h);
+        }
+      }
+      window.addEventListener('resize', onResize);
+
+      /* Main 60fps Animation Loop */
+      function animate(now) {
+        requestAnimationFrame(animate);
+        if (!isVisible) return;
+
+        var dt = Math.min(50, now - lastFrameTime);
+        lastFrameTime = now;
+        var timeSec = now * 0.001;
+
+        /* Story Progress Bar Auto-Advance */
+        if (!isPaused) {
+          slideElapsed += dt;
+          var pct = Math.min(100, (slideElapsed / slideDuration) * 100);
+          fills[currentSlide].style.width = pct + '%';
+          if (slideElapsed >= slideDuration) {
+            goToSlide(currentSlide + 1);
+          }
+        }
+
+        /* Smooth Inertia & Target Globe Longitude */
+        if (!isDragging) {
+          if (currentSlide === 2 && targetGlobeRotY !== null) {
+            userRotY += (targetGlobeRotY - userRotY) * 0.065;
+            userRotX += (0.22 - userRotX) * 0.05;
+          } else {
+            rotVelY += (0.0065 - rotVelY) * 0.04;
+            rotVelX *= 0.92;
+            userRotY += rotVelY;
+            userRotX += rotVelX;
+            userRotX += (0.2 - userRotX) * 0.015;
+          }
+        }
+
+        if (usingWebGL && threeState) {
+          threeState.masterGroup.rotation.y = userRotY;
+          threeState.masterGroup.rotation.x = userRotX;
+          threeState.masterGroup.position.y = 0.28 + Math.sin(timeSec * 1.4) * 0.05;
+
+          for (var i = 0; i < 3; i++) {
+            var g = threeState.groups[i];
+            var targetS = i === currentSlide ? 1.0 : 0.001;
+            var nextS = g.scale.x + (targetS - g.scale.x) * 0.12;
+            g.scale.setScalar(nextS);
+            g.visible = nextS > 0.015;
+          }
+
+          threeState.ring1.rotation.z = timeSec * 0.55;
+          threeState.ring2.rotation.z = -timeSec * 0.42;
+          threeState.stars.rotation.y = -timeSec * 0.14;
+
+          for (var n = 0; n < threeState.podNodes.length; n++) {
+            var a = timeSec * 1.25 + n * (Math.PI / 2);
+            threeState.podNodes[n].position.set(Math.cos(a) * 1.45, Math.sin(a * 1.6) * 0.55, Math.sin(a) * 1.45);
+          }
+
+          for (var p = 0; p < threeState.arcPulses.length; p++) {
+            var t = (timeSec * 0.36 + p * 0.24) % 1;
+            threeState.arcPulses[p].position.copy(threeState.arcCurves[p].getPoint(t));
+          }
+
+          threeState.renderer.render(threeState.scene, threeState.camera);
+        } else {
+          drawFallbackFrame(timeSec);
+        }
+      }
+
+      requestAnimationFrame(animate);
+
+      /* Dynamically Load Three.js r128 Without Blocking Page or Firebase */
+      if (window.THREE) {
+        initThreeWebGL();
+      } else {
+        var sTag = document.createElement('script');
+        sTag.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+        sTag.async = true;
+        sTag.onload = initThreeWebGL;
+        document.head.appendChild(sTag);
+      }
+    })();
+  </script>
+</section>
+<!-- =========================================================
+     END 3D WEBGL INTERACTIVE HERO STUDIO
+========================================================= -->
 
   <!-- =====================================================================
        SECTION 3: HERO DESIGNER POSTER CAROUSEL
        ===================================================================== -->
-  <section class="pt-4 sm:pt-6 pb-6 px-3 sm:px-6">
+  <section style="display:none !important;"
+ class="pt-4 sm:pt-6 pb-6 px-3 sm:px-6">
     <div class="max-w-7xl mx-auto">
       <div class="relative rounded-3xl overflow-hidden border border-white/15 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)]">
         <div id="hero-banner-stage" class="min-h-[430px] sm:min-h-[450px] lg:min-h-[470px] flex items-center transition-all duration-500"></div>
