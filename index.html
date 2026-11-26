@@ -300,7 +300,7 @@
   </header>
 
  <!-- =========================================================
-     ELITE CLASSES: 3D WEBGL INTERACTIVE HERO STUDIO (CMS LIVE)
+     ELITE CLASSES: 3D WEBGL INTERACTIVE HERO STUDIO (FIREBASE + PHOTO 3D)
 ========================================================= -->
 <section id="ecHero3D" aria-label="ELITE CLASSES 3D Interactive Showcase">
   <style>
@@ -324,7 +324,7 @@
       position: relative;
       border-radius: 28px;
       padding: 1.5px;
-      background: linear-gradient(135deg, rgba(229, 193, 123, 0.55) 0%, rgba(255, 255, 255, 0.08) 38%, rgba(56, 189, 248, 0.28) 72%, rgba(229, 193, 123, 0.45) 100%);
+      background: linear-gradient(135deg, rgba(229, 193, 123, 0.55) 0%, rgba(255, 255, 255, 0.08) 38%, rgba(56, 189, 248, 0.34) 72%, rgba(229, 193, 123, 0.45) 100%);
       box-shadow:
         0 30px 80px rgba(0, 0, 0, 0.68),
         0 0 50px rgba(212, 168, 83, 0.1);
@@ -335,7 +335,7 @@
       border-radius: 26.5px;
       background:
         radial-gradient(620px 380px at 82% 18%, rgba(212, 168, 83, 0.14), transparent 68%),
-        radial-gradient(540px 360px at 14% 88%, rgba(56, 189, 248, 0.1), transparent 68%),
+        radial-gradient(540px 360px at 14% 88%, rgba(56, 189, 248, 0.11), transparent 68%),
         linear-gradient(160deg, #0b0e17 0%, #07090f 55%, #05070c 100%);
       padding: 20px 16px 18px;
       color: #f8fafc;
@@ -522,14 +522,15 @@
         radial-gradient(circle at 50% 42%, rgba(212, 168, 83, 0.12) 0%, rgba(15, 23, 42, 0.45) 55%, rgba(6, 8, 14, 0.92) 100%);
       border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 20px 50px rgba(0, 0, 0, 0.55);
-      height: 320px;
+      height: 335px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transition: background 0.35s ease, border-color 0.35s ease;
     }
-    @media (min-width: 640px) { .ech3-stage { height: 370px; } }
-    @media (min-width: 960px) { .ech3-stage { height: 425px; } }
+    @media (min-width: 640px) { .ech3-stage { height: 380px; } }
+    @media (min-width: 960px) { .ech3-stage { height: 435px; } }
 
     .ech3-canvas-layer {
       position: absolute;
@@ -546,6 +547,73 @@
       width: 100% !important;
       height: 100% !important;
       display: block;
+    }
+
+    /* Founder 3D Hologram Portrait Stage (Shown When Slide Has Photo URL) */
+    .ech3-photo-stage {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 82px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .ech3-photo-stage.active {
+      display: flex;
+    }
+    .ech3-photo-rig {
+      position: relative;
+      width: 176px;
+      height: 176px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+      transition: transform 0.18s ease-out;
+    }
+    @media (min-width: 640px) {
+      .ech3-photo-rig { width: 206px; height: 206px; }
+    }
+    .ech3-photo-ring-gold {
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 2px solid rgba(229, 193, 123, 0.72);
+      border-top-color: transparent;
+      border-bottom-color: rgba(56, 189, 248, 0.75);
+      box-shadow: 0 0 28px rgba(229, 193, 123, 0.25);
+      animation: ech3SpinSlow 11s linear infinite;
+    }
+    .ech3-photo-ring-cyan {
+      position: absolute;
+      inset: -22px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(56, 189, 248, 0.55);
+      animation: ech3SpinRev 16s linear infinite;
+    }
+    @keyframes ech3SpinSlow { to { transform: rotate(360deg); } }
+    @keyframes ech3SpinRev { to { transform: rotate(-360deg); } }
+
+    .ech3-photo-core {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(145deg, #f8e6b8, #d4a853 50%, #38bdf8 100%);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75), 0 0 36px rgba(212, 168, 83, 0.28);
+      overflow: hidden;
+    }
+    .ech3-photo-core img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 50%;
+      display: block;
+      background: #0b0e17;
     }
 
     /* Top Stage Badges */
@@ -574,9 +642,10 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: #e2e8f0;
+      transition: border-color 0.3s ease, color 0.3s ease;
     }
     .ech3-chip-gold {
-      border-color: rgba(229, 193, 123, 0.38);
+      border-color: rgba(229, 193, 123, 0.42);
       color: #f3d58d;
     }
 
@@ -600,7 +669,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* HUD 1: Diagnostic X-Ray */
     .ech3-hud-row {
       display: flex;
       align-items: center;
@@ -672,6 +740,12 @@
       color: #090b10;
       font-weight: 800;
     }
+    .ech3-hud-pill.cyan-pill.active {
+      background: linear-gradient(135deg, #7dd3fc, #0284c7);
+      border-color: #7dd3fc;
+      color: #050a14;
+      font-weight: 800;
+    }
 
     /* Bottom Story Progress & Controls Dock */
     .ech3-dock {
@@ -688,7 +762,7 @@
     .ech3-bars {
       flex: 1;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
       min-width: 0;
     }
@@ -759,7 +833,7 @@
       <div class="ech3-grid">
         <!-- LEFT: EXECUTIVE COPY & LIVE CTAs (AUTO-SYNCED WITH ADMIN CMS) -->
         <div>
-          <div class="ech3-eyebrow">
+          <div class="ech3-eyebrow" id="ech3EyebrowWrap">
             <span class="ech3-live-dot"></span>
             <span id="ech3Eyebrow">FREE DIAGNOSTIC ASSESSMENT • GRADES 1–12 • EN | हिंदी</span>
           </div>
@@ -799,18 +873,29 @@
           </div>
         </div>
 
-        <!-- RIGHT: INTERACTIVE 3D WEBGL STAGE + SPATIAL HUD -->
-        <div class="ech3-stage">
+        <!-- RIGHT: INTERACTIVE 3D WEBGL STAGE + FOUNDER PHOTO HOLOGRAM + SPATIAL HUD -->
+        <div class="ech3-stage" id="ech3StageBox">
           <div class="ech3-canvas-layer" id="ech3CanvasLayer" aria-label="Interactive 3D Hologram — drag to rotate">
             <canvas id="ech3FallbackCanvas"></canvas>
             <div id="ech3WebglMount" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></div>
+          </div>
+
+          <!-- Founder 3D Hologram Portrait (Auto-activates when CMS slide has an image URL) -->
+          <div class="ech3-photo-stage" id="ech3PhotoStage">
+            <div class="ech3-photo-rig" id="ech3PhotoRig">
+              <div class="ech3-photo-ring-cyan"></div>
+              <div class="ech3-photo-ring-gold"></div>
+              <div class="ech3-photo-core">
+                <img id="ech3FounderImg" src="" alt="Ravi Yadav — Founder & Chief Mentor, ELITE CLASSES" loading="eager" />
+              </div>
+            </div>
           </div>
 
           <div class="ech3-stage-top">
             <span class="ech3-chip-glass ech3-chip-gold" id="ech3StageTag">3D X-Ray Core</span>
             <span class="ech3-chip-glass">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
-              <span>Drag to Spin</span>
+              <span id="ech3DragHint">Drag to Spin</span>
             </span>
           </div>
 
@@ -873,6 +958,38 @@
                 <button type="button" class="ech3-hud-pill" data-hub="4">Singapore</button>
               </div>
             </div>
+
+            <!-- HUD 3: ELECTRIC CYAN 3D CUBE MATRIX -->
+            <div class="ech3-hud-panel" id="ech3Hud3">
+              <div class="ech3-hud-row">
+                <div>
+                  <div class="ech3-hud-title" id="ech3MatTitle">3D STEM Labs &amp; Concept Vault</div>
+                  <div class="ech3-hud-sub" id="ech3MatSub">Interactive Physics, Chemistry &amp; Maths 3D Visuals</div>
+                </div>
+                <div class="ech3-score-num" style="font-size:11px;color:#38bdf8;" id="ech3MatBadge">3D MATRIX</div>
+              </div>
+              <div class="ech3-hud-pills" id="ech3MatPills">
+                <button type="button" class="ech3-hud-pill cyan-pill active" data-mat="labs">3D STEM Labs</button>
+                <button type="button" class="ech3-hud-pill cyan-pill" data-mat="notes">PYQs &amp; Notes</button>
+                <button type="button" class="ech3-hud-pill cyan-pill" data-mat="cbt">Smart CBT</button>
+              </div>
+            </div>
+
+            <!-- HUD 4: FOUNDER MENTORSHIP HUD (FOR PHOTO SLIDES) -->
+            <div class="ech3-hud-panel" id="ech3Hud4">
+              <div class="ech3-hud-row">
+                <div>
+                  <div class="ech3-hud-title" id="ech3FndTitle">Ravi Yadav • Founder &amp; Chief Mentor</div>
+                  <div class="ech3-hud-sub" id="ech3FndSub">100% Personalized Study Roadmap • 24-Hr Backup</div>
+                </div>
+                <div class="ech3-score-num" style="font-size:11px;color:#f6e0a8;" id="ech3FndBadge">VERIFIED</div>
+              </div>
+              <div class="ech3-hud-pills" id="ech3FndPills">
+                <button type="button" class="ech3-hud-pill active" data-fnd="plan">1-on-1 Roadmap</button>
+                <button type="button" class="ech3-hud-pill" data-fnd="track">Weekly X-Ray</button>
+                <button type="button" class="ech3-hud-pill" data-fnd="trial">₹0 Free Trial</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -891,6 +1008,10 @@
           <button type="button" class="ech3-bar-btn" data-idx="2">
             <div class="ech3-bar-track"><div class="ech3-bar-fill" id="ech3Fill2"></div></div>
             <span class="ech3-bar-lbl">03. Global Studio</span>
+          </button>
+          <button type="button" class="ech3-bar-btn" data-idx="3">
+            <div class="ech3-bar-track"><div class="ech3-bar-fill" id="ech3Fill3"></div></div>
+            <span class="ech3-bar-lbl">04. 3D STEM Matrix</span>
           </button>
         </div>
 
@@ -911,6 +1032,18 @@
       var root = document.getElementById('ecHero3D');
       if (!root) return;
 
+      var MODEL_NAMES = ['crystal', 'gyro', 'globe', 'matrix'];
+      var STAGE_TAGS = ['3D X-Ray Core', '3D Rotational Gyro', '3D Global Network', '3D Cube Matrix'];
+      var DEFAULT_COLORS = ['#e5c17b', '#e5c17b', '#38bdf8', '#38bdf8'];
+
+      var NAMED_COLORS = {
+        cyan: '#38bdf8', electric: '#38bdf8', blue: '#38bdf8',
+        gold: '#e5c17b', champagne: '#e5c17b',
+        emerald: '#34d399', green: '#34d399',
+        violet: '#a855f7', purple: '#a855f7',
+        rose: '#fb7185', pink: '#fb7185', amber: '#fbbf24'
+      };
+
       var DEFAULT_SLIDES = [
         {
           eyebrow: 'FREE DIAGNOSTIC ASSESSMENT • GRADES 1–12 • EN | हिंदी',
@@ -922,7 +1055,9 @@
           cta2Text: 'Check Tutor Availability',
           cta2Href: '#ecAvailSection',
           cta2Ext: false,
-          stageTag: '3D X-Ray Core',
+          modelIdx: 0,
+          customColor: '#e5c17b',
+          photoUrl: '',
           tabLabel: '01. Diagnostic X-Ray'
         },
         {
@@ -935,7 +1070,9 @@
           cta2Text: 'Calculate Monthly Fee',
           cta2Href: '#pricing',
           cta2Ext: false,
-          stageTag: '3D Rotational Gyro',
+          modelIdx: 1,
+          customColor: '#e5c17b',
+          photoUrl: '',
           tabLabel: '02. Rotational Pod'
         },
         {
@@ -948,18 +1085,34 @@
           cta2Text: 'Book Free Trial on WhatsApp',
           cta2Href: 'https://wa.me/919675732501?text=' + encodeURIComponent('Hello Ravi Sir (ELITE CLASSES), I visited your website and would like to book a complimentary 1st trial class.'),
           cta2Ext: true,
-          stageTag: '3D Global Network',
+          modelIdx: 2,
+          customColor: '#38bdf8',
+          photoUrl: '',
           tabLabel: '03. Global Studio'
+        },
+        {
+          eyebrow: '3D STEM LABS • SMART REVISION • BOARD & OLYMPIAD',
+          titleTop: 'Interactive 3D Matrix.',
+          titleGold: 'Visual Learning & Exam Vault.',
+          desc: 'Master complex Science, Maths, and Board concepts with interactive 3D visualizations, chapter-wise mindmaps, flashcards, and timed CBT practice drills.',
+          cta1Text: 'Explore Courses & Fee Studio',
+          cta1Href: '#pricing',
+          cta2Text: 'Check Tutor Availability',
+          cta2Href: '#ecAvailSection',
+          cta2Ext: false,
+          modelIdx: 3,
+          customColor: '#38bdf8',
+          photoUrl: '',
+          tabLabel: '04. 3D STEM Matrix'
         }
       ];
 
       var SLIDES = DEFAULT_SLIDES.slice();
-      var STAGE_TAGS = ['3D X-Ray Core', '3D Rotational Gyro', '3D Global Network'];
 
       var DIAG_DATA = {
-        math: { title: 'Mathematics Clarity Index', sub: 'Algebra, Geometry & Speed Diagnostics', score: 96, color: '#e5c17b', hex: 0xe5c17b },
-        sci:  { title: 'Science Concept Index', sub: 'Physics, Chemistry & Visual STEM Mastery', score: 94, color: '#38bdf8', hex: 0x38bdf8 },
-        eng:  { title: 'English Expression Index', sub: 'Grammar, Comprehension & Writing Depth', score: 92, color: '#34d399', hex: 0x34d399 }
+        math: { title: 'Mathematics Clarity Index', sub: 'Algebra, Geometry & Speed Diagnostics', score: 96, color: '#e5c17b' },
+        sci:  { title: 'Science Concept Index', sub: 'Physics, Chemistry & Visual STEM Mastery', score: 94, color: '#38bdf8' },
+        eng:  { title: 'English Expression Index', sub: 'Grammar, Comprehension & Writing Depth', score: 92, color: '#34d399' }
       };
 
       var POD_DAYS = [
@@ -979,6 +1132,18 @@
         { name: 'Singapore • Live 1-on-1 Studio', sub: 'IB, IGCSE & Olympiad Prep • SGT', rotY: -1.82, ping: 'SG LIVE' }
       ];
 
+      var MATRIX_MODES = {
+        labs:  { title: '3D STEM Labs & Concept Vault', sub: 'Interactive Physics, Chemistry & Maths 3D Visuals', badge: '3D MATRIX', color: '#38bdf8' },
+        notes: { title: 'PYQs, Mindmaps & Study Notes', sub: 'Chapter-wise Board & Olympiad Revision Packs', badge: 'NOTES SYNC', color: '#22d3ee' },
+        cbt:   { title: 'Smart CBT & Flashcard Engine', sub: 'Timed Practice Drills & Instant Accuracy Analytics', badge: 'CBT LIVE', color: '#34d399' }
+      };
+
+      var FOUNDER_MODES = {
+        plan:  { title: 'Ravi Yadav • Founder & Chief Mentor', sub: '100% Personalized Study Roadmap • Grades 1–12', badge: 'VERIFIED' },
+        track: { title: 'Direct Founder Progress Oversight', sub: 'Weekly CBT X-Ray & Parent Feedback Reports', badge: '94% MASTERY' },
+        trial: { title: 'Complimentary 1st Demo Class', sub: 'Zero Advance Fee • Noida Home & Global Live', badge: '₹0 TRIAL' }
+      };
+
       var currentSlide = 0;
       var slideDuration = 7800;
       var slideElapsed = 0;
@@ -988,12 +1153,13 @@
       var isDragging = false;
       var dragX = 0, dragY = 0;
       var rotVelX = 0.002, rotVelY = 0.008;
-      var userRotX = 0.18, userRotY = 0;
+      var userRotX = 0.22, userRotY = 0.35;
       var targetGlobeRotY = null;
-      var activeAccentHex = 0xe5c17b;
-      var activeAccentCss = '#e5c17b';
+      var activeColorCss = '#e5c17b';
+      var activeColorHex = 0xe5c17b;
       var usingWebGL = false;
       var lastCmsSig = '';
+      var photoFailed = false;
 
       /* DOM Refs */
       var eyebrowEl = document.getElementById('ech3Eyebrow');
@@ -1006,18 +1172,95 @@
       var cta2El = document.getElementById('ech3Cta2');
       var cta2TextEl = document.getElementById('ech3Cta2Text');
       var stageTagEl = document.getElementById('ech3StageTag');
+      var dragHintEl = document.getElementById('ech3DragHint');
+      var stageBoxEl = document.getElementById('ech3StageBox');
+      var photoStageEl = document.getElementById('ech3PhotoStage');
+      var photoRigEl = document.getElementById('ech3PhotoRig');
+      var founderImgEl = document.getElementById('ech3FounderImg');
       var barsWrap = document.getElementById('ech3Bars');
-      var huds = [document.getElementById('ech3Hud0'), document.getElementById('ech3Hud1'), document.getElementById('ech3Hud2')];
+      var huds = [
+        document.getElementById('ech3Hud0'),
+        document.getElementById('ech3Hud1'),
+        document.getElementById('ech3Hud2'),
+        document.getElementById('ech3Hud3'),
+        document.getElementById('ech3Hud4')
+      ];
       var canvasLayer = document.getElementById('ech3CanvasLayer');
       var fallbackCanvas = document.getElementById('ech3FallbackCanvas');
       var webglMount = document.getElementById('ech3WebglMount');
       var surfaceEl = document.getElementById('ech3Surface');
 
-      function getSculptureIndex(slideIdx) {
-        return slideIdx % 3;
+      var modelTintMaterials = [[], [], [], []];
+
+      founderImgEl.addEventListener('error', function () {
+        photoFailed = true;
+        photoStageEl.classList.remove('active');
+        stageTagEl.textContent = STAGE_TAGS[SLIDES[currentSlide].modelIdx || 0];
+        dragHintEl.textContent = 'Drag to Spin';
+        for (var h = 0; h < huds.length; h++) {
+          huds[h].classList.toggle('active', h === (SLIDES[currentSlide].modelIdx || 0));
+        }
+      });
+      founderImgEl.addEventListener('load', function () {
+        photoFailed = false;
+      });
+
+      function cssToHexInt(css) {
+        var clean = String(css || '#e5c17b').trim().replace('#', '');
+        if (clean.length === 3) clean = clean[0] + clean[0] + clean[1] + clean[1] + clean[2] + clean[2];
+        var num = parseInt(clean, 16);
+        return isNaN(num) ? 0xe5c17b : num;
       }
 
-      /* Smart Split of Admin CMS Headline into Crisp White + Champagne Gold */
+      function hexToRgba(hexCss, alpha) {
+        var n = cssToHexInt(hexCss);
+        return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + alpha + ')';
+      }
+
+      function parseCmsVisualControl(rawVal, defaultIdx) {
+        var defModel = defaultIdx % 4;
+        var defColor = DEFAULT_COLORS[defModel];
+        var raw = String(rawVal || '').trim();
+        if (!raw) return { modelIdx: defModel, color: defColor, photoUrl: '' };
+
+        if (/^https?:\/\//i.test(raw)) {
+          return { modelIdx: defModel, color: '#e5c17b', photoUrl: raw };
+        }
+
+        var lower = raw.toLowerCase();
+        var modelIdx = defModel;
+        var color = defColor;
+        var parts = lower.split(/[:|,;\s]+/);
+        for (var i = 0; i < parts.length; i++) {
+          var tok = parts[i].trim();
+          if (!tok) continue;
+          if (MODEL_NAMES.indexOf(tok) !== -1) {
+            modelIdx = MODEL_NAMES.indexOf(tok);
+            color = DEFAULT_COLORS[modelIdx];
+          } else if (/^#?[0-9a-f]{3}([0-9a-f]{3})?$/.test(tok)) {
+            color = tok.charAt(0) === '#' ? tok : '#' + tok;
+          } else if (NAMED_COLORS[tok]) {
+            color = NAMED_COLORS[tok];
+          }
+        }
+        return { modelIdx: modelIdx, color: color, photoUrl: '' };
+      }
+
+      function applyStageColor(modelIdx, cssColor) {
+        activeColorCss = cssColor || DEFAULT_COLORS[modelIdx] || '#e5c17b';
+        activeColorHex = cssToHexInt(activeColorCss);
+        stageTagEl.style.color = activeColorCss;
+        stageTagEl.style.borderColor = hexToRgba(activeColorCss, 0.45);
+        stageBoxEl.style.background =
+          'radial-gradient(circle at 50% 42%, ' + hexToRgba(activeColorCss, 0.16) + ' 0%, rgba(15, 23, 42, 0.46) 55%, rgba(6, 8, 14, 0.94) 100%)';
+
+        var mats = modelTintMaterials[modelIdx] || [];
+        for (var i = 0; i < mats.length; i++) {
+          if (mats[i].color) mats[i].color.setHex(activeColorHex);
+          if (mats[i].emissive) mats[i].emissive.setHex(activeColorHex);
+        }
+      }
+
       function splitHeadline(raw) {
         var text = String(raw || '').trim();
         if (!text) return { top: 'ELITE CLASSES', gold: 'Futuristic Education.' };
@@ -1028,10 +1271,7 @@
         var words = text.split(/\s+/);
         if (words.length <= 2) return { top: '', gold: text };
         var cut = Math.max(1, Math.floor(words.length * 0.45));
-        return {
-          top: words.slice(0, cut).join(' '),
-          gold: words.slice(cut).join(' ')
-        };
+        return { top: words.slice(0, cut).join(' '), gold: words.slice(cut).join(' ') };
       }
 
       function rebuildProgressBars() {
@@ -1065,7 +1305,8 @@
 
       function applySlideContent(idx, animateText) {
         var s = SLIDES[idx] || SLIDES[0];
-        var scIdx = getSculptureIndex(idx);
+        var mIdx = typeof s.modelIdx === 'number' ? s.modelIdx : (idx % 4);
+        var hasPhoto = Boolean(s.photoUrl);
 
         function writeDOM() {
           eyebrowEl.textContent = s.eyebrow;
@@ -1084,7 +1325,21 @@
             cta2El.removeAttribute('target');
             cta2El.removeAttribute('rel');
           }
-          stageTagEl.textContent = STAGE_TAGS[scIdx];
+
+          if (hasPhoto) {
+            photoFailed = false;
+            if (founderImgEl.getAttribute('src') !== s.photoUrl) {
+              founderImgEl.setAttribute('src', s.photoUrl);
+            }
+            photoStageEl.classList.add('active');
+            stageTagEl.textContent = 'Founder 3D Hologram';
+            dragHintEl.textContent = '3D Parallax';
+          } else {
+            photoStageEl.classList.remove('active');
+            stageTagEl.textContent = STAGE_TAGS[mIdx];
+            dragHintEl.textContent = 'Drag to Spin';
+          }
+
           headlineEl.classList.remove('ech3-swap');
           descEl.classList.remove('ech3-swap');
         }
@@ -1097,14 +1352,17 @@
           writeDOM();
         }
 
+        applyStageColor(mIdx, s.customColor);
+
         var barBtns = barsWrap.querySelectorAll('.ech3-bar-btn');
         for (var i = 0; i < barBtns.length; i++) {
           barBtns[i].classList.toggle('active', i === idx);
           var f = document.getElementById('ech3Fill' + i);
           if (f) f.style.width = i < idx ? '100%' : '0%';
         }
+        var activeHud = (hasPhoto && !photoFailed) ? 4 : mIdx;
         for (var h = 0; h < huds.length; h++) {
-          huds[h].classList.toggle('active', h === scIdx);
+          huds[h].classList.toggle('active', h === activeHud);
         }
       }
 
@@ -1113,30 +1371,25 @@
         slideElapsed = 0;
         applySlideContent(currentSlide, true);
         rotVelY = 0.045;
-        targetGlobeRotY = getSculptureIndex(currentSlide) === 2 ? HUBS[0].rotY : null;
+        var s = SLIDES[currentSlide];
+        targetGlobeRotY = (s && !s.photoUrl && s.modelIdx === 2) ? HUBS[0].rotY : null;
       }
 
-      /* ===== LIVE SYNC WITH ADMIN CMS (appState.banners + Firebase) ===== */
-      function syncFromAdminCMS() {
-        var cmsList = null;
-        try {
-          if (typeof appState !== 'undefined' && appState && Array.isArray(appState.banners) && appState.banners.length > 0) {
-            cmsList = appState.banners;
-          } else if (window.appState && Array.isArray(window.appState.banners) && window.appState.banners.length > 0) {
-            cmsList = window.appState.banners;
-          }
-        } catch (e) {}
+      /* ===== UNIVERSAL ADMIN CMS + FIREBASE LIVE SYNC ===== */
+      function ingestCmsBanners(rawList) {
+        if (!Array.isArray(rawList) || rawList.length === 0) return;
+        var cleanList = rawList.filter(function (b) { return b && (b.headline || b.badge || b.subtext); });
+        if (!cleanList.length) return;
 
-        if (!cmsList || !cmsList.length) return;
-
-        var sig = cmsList.map(function (b) {
-          return [b.id || '', b.badge || '', b.headline || '', b.subtext || '', b.ctaText || b.btnText || b.primaryText || '', b.ctaLink || b.btnLink || b.primaryLink || ''].join('|');
+        var sig = cleanList.map(function (b) {
+          var vis = b.image || b.imageUrl || b.img || b.bgImage || b.mediaUrl || '';
+          return [b.id || '', b.badge || '', b.headline || '', b.subtext || '', b.ctaText || b.btnText || b.primaryText || '', b.ctaLink || b.btnLink || b.primaryLink || '', vis].join('|');
         }).join('||');
 
         if (sig === lastCmsSig) return;
         lastCmsSig = sig;
 
-        SLIDES = cmsList.map(function (b, idx) {
+        SLIDES = cleanList.map(function (b, idx) {
           var fallback = DEFAULT_SLIDES[idx % DEFAULT_SLIDES.length];
           var parts = splitHeadline(b.headline);
           var c1Text = b.ctaText || b.btnText || b.primaryText || b.buttonText || fallback.cta1Text;
@@ -1144,6 +1397,8 @@
           var c2Text = b.cta2Text || b.secondaryText || fallback.cta2Text;
           var c2Href = b.cta2Link || b.secondaryLink || fallback.cta2Href;
           var isExt = /^https?:\/\//i.test(c2Href) && c2Href.indexOf('eliteclassesnoida.in') === -1;
+          var visRaw = b.image || b.imageUrl || b.img || b.bgImage || b.mediaUrl || '';
+          var visCtrl = parseCmsVisualControl(visRaw, idx);
           var numPrefix = (idx + 1 < 10 ? '0' : '') + (idx + 1) + '. ';
 
           return {
@@ -1156,7 +1411,9 @@
             cta2Text: c2Text,
             cta2Href: c2Href,
             cta2Ext: isExt,
-            stageTag: STAGE_TAGS[idx % 3],
+            modelIdx: visCtrl.modelIdx,
+            customColor: visCtrl.color,
+            photoUrl: visCtrl.photoUrl,
             tabLabel: numPrefix + (parts.gold || parts.top)
           };
         });
@@ -1165,6 +1422,69 @@
         rebuildProgressBars();
         applySlideContent(currentSlide, false);
       }
+
+      function hookFirebaseSync() {
+        try {
+          if (!window.firebase || !window.firebase.database || !window.firebase.database.Reference) return false;
+          var proto = window.firebase.database.Reference.prototype;
+          if (proto.__ecHeroHooked) return true;
+          proto.__ecHeroHooked = true;
+          var origOn = proto.on;
+          proto.on = function (eventType, callback, cancelCallback, context) {
+            var wrapped = callback;
+            if (eventType === 'value' && typeof callback === 'function') {
+              wrapped = function (snap) {
+                try {
+                  var v = snap && typeof snap.val === 'function' ? snap.val() : null;
+                  if (v) {
+                    if (Array.isArray(v.banners) && v.banners.length) {
+                      ingestCmsBanners(v.banners);
+                    } else if (v.banners && typeof v.banners === 'object') {
+                      ingestCmsBanners(Object.values(v.banners));
+                    } else if (Array.isArray(v) && v.length && v[0] && (v[0].headline || v[0].badge)) {
+                      ingestCmsBanners(v);
+                    }
+                  }
+                } catch (e) {}
+                return callback.apply(this, arguments);
+              };
+            }
+            return origOn.call(this, eventType, wrapped, cancelCallback, context);
+          };
+          return true;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function scanSourcesForBanners() {
+        hookFirebaseSync();
+        try {
+          if (window.appState && Array.isArray(window.appState.banners) && window.appState.banners.length) {
+            ingestCmsBanners(window.appState.banners);
+            return;
+          }
+          for (var i = 0; i < localStorage.length; i++) {
+            var k = localStorage.key(i);
+            var raw = localStorage.getItem(k);
+            if (!raw || raw.indexOf('"headline"') === -1) continue;
+            var parsed = JSON.parse(raw);
+            if (parsed && Array.isArray(parsed.banners) && parsed.banners.length) {
+              ingestCmsBanners(parsed.banners);
+              return;
+            }
+            if (Array.isArray(parsed) && parsed.length && parsed[0] && parsed[0].headline) {
+              ingestCmsBanners(parsed);
+              return;
+            }
+          }
+        } catch (e) {}
+      }
+
+      var fbHookTimer = setInterval(function () {
+        if (hookFirebaseSync()) clearInterval(fbHookTimer);
+      }, 80);
+      setTimeout(function () { clearInterval(fbHookTimer); }, 10000);
 
       document.getElementById('ech3Prev').addEventListener('click', function () { goToSlide(currentSlide - 1); });
       document.getElementById('ech3Next').addEventListener('click', function () { goToSlide(currentSlide + 1); });
@@ -1179,13 +1499,11 @@
       var diagTitle = document.getElementById('ech3DiagTitle');
       var diagSub = document.getElementById('ech3DiagSub');
       var diagScore = document.getElementById('ech3DiagScore');
-      var threeAccentMaterials = [];
 
       document.getElementById('ech3DiagPills').addEventListener('click', function (e) {
         var pill = e.target.closest('.ech3-hud-pill');
         if (!pill) return;
-        var key = pill.getAttribute('data-sub');
-        var d = DIAG_DATA[key];
+        var d = DIAG_DATA[pill.getAttribute('data-sub')];
         if (!d) return;
         var all = pill.parentElement.querySelectorAll('.ech3-hud-pill');
         for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
@@ -1197,14 +1515,9 @@
         diagScore.style.color = d.color;
         ringFg.style.stroke = d.color;
         ringFg.style.strokeDashoffset = (106.8 * (1 - d.score / 100)).toFixed(1);
-        activeAccentHex = d.hex;
-        activeAccentCss = d.color;
+        applyStageColor(0, d.color);
         rotVelY = 0.06;
         slideElapsed = 0;
-
-        for (var j = 0; j < threeAccentMaterials.length; j++) {
-          threeAccentMaterials[j].color.setHex(d.hex);
-        }
       });
 
       /* Interactive HUD 1: Rotational Mon-Sat Switcher */
@@ -1243,7 +1556,46 @@
         slideElapsed = 0;
       });
 
-      /* Drag-to-Spin Pointer Physics on 3D Stage */
+      /* Interactive HUD 3: Electric Cyan 3D Cube Matrix Switcher */
+      var matTitle = document.getElementById('ech3MatTitle');
+      var matSub = document.getElementById('ech3MatSub');
+      var matBadge = document.getElementById('ech3MatBadge');
+      document.getElementById('ech3MatPills').addEventListener('click', function (e) {
+        var pill = e.target.closest('.ech3-hud-pill');
+        if (!pill) return;
+        var m = MATRIX_MODES[pill.getAttribute('data-mat')];
+        if (!m) return;
+        var all = pill.parentElement.querySelectorAll('.ech3-hud-pill');
+        for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
+        pill.classList.add('active');
+        matTitle.textContent = m.title;
+        matSub.textContent = m.sub;
+        matBadge.textContent = m.badge;
+        matBadge.style.color = m.color;
+        applyStageColor(3, m.color);
+        rotVelY = 0.065;
+        slideElapsed = 0;
+      });
+
+      /* Interactive HUD 4: Founder Mentorship Switcher */
+      var fndTitle = document.getElementById('ech3FndTitle');
+      var fndSub = document.getElementById('ech3FndSub');
+      var fndBadge = document.getElementById('ech3FndBadge');
+      document.getElementById('ech3FndPills').addEventListener('click', function (e) {
+        var pill = e.target.closest('.ech3-hud-pill');
+        if (!pill) return;
+        var f = FOUNDER_MODES[pill.getAttribute('data-fnd')];
+        if (!f) return;
+        var all = pill.parentElement.querySelectorAll('.ech3-hud-pill');
+        for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
+        pill.classList.add('active');
+        fndTitle.textContent = f.title;
+        fndSub.textContent = f.sub;
+        fndBadge.textContent = f.badge;
+        slideElapsed = 0;
+      });
+
+      /* Drag-to-Spin & 3D Portrait Parallax Physics */
       function onDragStart(x, y) {
         isDragging = true;
         isPaused = true;
@@ -1261,10 +1613,16 @@
         rotVelX = dy * 0.007;
         userRotY += rotVelY;
         userRotX = Math.max(-0.85, Math.min(0.85, userRotX + rotVelX));
+        if (photoStageEl.classList.contains('active')) {
+          var tiltY = Math.max(-18, Math.min(18, dx * 0.7));
+          var tiltX = Math.max(-14, Math.min(14, -dy * 0.7));
+          photoRigEl.style.transform = 'perspective(700px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) scale(1.03)';
+        }
       }
       function onDragEnd() {
         isDragging = false;
         isPaused = false;
+        photoRigEl.style.transform = '';
       }
 
       canvasLayer.addEventListener('mousedown', function (e) { onDragStart(e.clientX, e.clientY); });
@@ -1279,7 +1637,7 @@
       }, { passive: true });
       canvasLayer.addEventListener('touchend', onDragEnd, { passive: true });
 
-      /* Swipe Slides on Copy Area (Mobile Friendly) */
+      /* Swipe Slides on Copy Area */
       var swipeStartX = 0, swipeStartY = 0;
       surfaceEl.addEventListener('touchstart', function (e) {
         if (e.target.closest('#ech3CanvasLayer') || e.target.closest('.ech3-hud')) return;
@@ -1299,7 +1657,6 @@
       surfaceEl.addEventListener('mouseenter', function () { isPaused = true; });
       surfaceEl.addEventListener('mouseleave', function () { if (!isDragging) isPaused = false; });
 
-      /* Pause Animation When Out of Viewport */
       if ('IntersectionObserver' in window) {
         var obs = new IntersectionObserver(function (entries) {
           isVisible = entries[0].isIntersecting;
@@ -1352,12 +1709,15 @@
 
       function drawFallbackFrame(timeSec) {
         ctx.clearRect(0, 0, fw, fh);
+        var s = SLIDES[currentSlide] || SLIDES[0];
+        if (s.photoUrl && !photoFailed) return;
+
         var sc = Math.min(fw, fh) * 0.25;
-        var scIdx = getSculptureIndex(currentSlide);
+        var mIdx = typeof s.modelIdx === 'number' ? s.modelIdx : (currentSlide % 4);
         ctx.lineWidth = 1.25;
 
-        if (scIdx === 0) {
-          ctx.strokeStyle = activeAccentCss;
+        if (mIdx === 0) {
+          ctx.strokeStyle = activeColorCss;
           ctx.globalAlpha = 0.85;
           var pts = icoVerts.map(function (v) { return proj3D(v[0], v[1], v[2], userRotX, userRotY, sc); });
           ctx.beginPath();
@@ -1367,19 +1727,11 @@
             ctx.lineTo(p2[0], p2[1]);
           }
           ctx.stroke();
-          ctx.strokeStyle = 'rgba(246, 224, 168, 0.45)';
-          ctx.beginPath();
-          for (var k = 0; k <= 48; k++) {
-            var ang = (k / 48) * Math.PI * 2;
-            var rp = proj3D(Math.cos(ang) * 1.38, Math.sin(ang) * 0.35, Math.sin(ang) * 1.38, userRotX + 0.4, userRotY - timeSec * 0.5, sc);
-            if (k === 0) ctx.moveTo(rp[0], rp[1]); else ctx.lineTo(rp[0], rp[1]);
-          }
-          ctx.stroke();
-        } else if (scIdx === 1) {
-          var rings = [[0, '#e5c17b'], [1.05, '#38bdf8'], [2.1, '#34d399']];
+        } else if (mIdx === 1) {
+          var rings = [[0, activeColorCss], [1.05, '#38bdf8'], [2.1, '#34d399']];
           for (var r = 0; r < rings.length; r++) {
             ctx.strokeStyle = rings[r][1];
-            ctx.globalAlpha = 0.7;
+            ctx.globalAlpha = 0.72;
             ctx.beginPath();
             for (var t = 0; t <= 48; t++) {
               var th = (t / 48) * Math.PI * 2;
@@ -1388,38 +1740,35 @@
             }
             ctx.stroke();
           }
-          ctx.globalAlpha = 1;
-          for (var n = 0; n < 4; n++) {
-            var na = timeSec * 1.4 + n * (Math.PI / 2);
-            var np = proj3D(Math.cos(na) * 1.32, Math.sin(na * 1.5) * 0.55, Math.sin(na) * 1.32, userRotX, userRotY, sc);
-            ctx.fillStyle = n % 2 === 0 ? '#f6e0a8' : '#38bdf8';
-            ctx.beginPath();
-            ctx.arc(np[0], np[1], 4.5, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        } else {
-          ctx.strokeStyle = 'rgba(229, 193, 123, 0.42)';
+        } else if (mIdx === 2) {
+          ctx.strokeStyle = activeColorCss;
+          ctx.globalAlpha = 0.45;
           for (var lat = -60; lat <= 60; lat += 30) {
             var lr = (lat * Math.PI) / 180;
             var rad = Math.cos(lr) * 1.25;
             var yy = Math.sin(lr) * 1.25;
             ctx.beginPath();
-            for (var s = 0; s <= 36; s++) {
-              var a2 = (s / 36) * Math.PI * 2;
+            for (var s2 = 0; s2 <= 36; s2++) {
+              var a2 = (s2 / 36) * Math.PI * 2;
               var vp = proj3D(Math.cos(a2) * rad, yy, Math.sin(a2) * rad, userRotX, userRotY, sc);
-              if (s === 0) ctx.moveTo(vp[0], vp[1]); else ctx.lineTo(vp[0], vp[1]);
+              if (s2 === 0) ctx.moveTo(vp[0], vp[1]); else ctx.lineTo(vp[0], vp[1]);
             }
             ctx.stroke();
           }
-          for (var lon = 0; lon < 6; lon++) {
-            var la = (lon / 6) * Math.PI;
-            ctx.beginPath();
-            for (var s2 = 0; s2 <= 36; s2++) {
-              var a3 = (s2 / 36) * Math.PI * 2;
-              var vp2 = proj3D(Math.sin(a3) * Math.cos(la) * 1.25, Math.cos(a3) * 1.25, Math.sin(a3) * Math.sin(la) * 1.25, userRotX, userRotY, sc);
-              if (s2 === 0) ctx.moveTo(vp2[0], vp2[1]); else ctx.lineTo(vp2[0], vp2[1]);
+        } else {
+          ctx.fillStyle = activeColorCss;
+          var step = 0.72;
+          for (var ix = -1; ix <= 1; ix++) {
+            for (var iy = -1; iy <= 1; iy++) {
+              for (var iz = -1; iz <= 1; iz++) {
+                var pulse = 1 + 0.1 * Math.sin(timeSec * 2.5 + ix + iy + iz);
+                var mp = proj3D(ix * step * pulse, iy * step * pulse, iz * step * pulse, userRotX, userRotY, sc);
+                ctx.globalAlpha = 0.55 + (mp[2] + 1.5) * 0.15;
+                ctx.beginPath();
+                ctx.arc(mp[0], mp[1], 3.4, 0, Math.PI * 2);
+                ctx.fill();
+              }
             }
-            ctx.stroke();
           }
         }
         ctx.globalAlpha = 1;
@@ -1458,13 +1807,13 @@
 
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 100);
-        camera.position.set(0, -0.25, 4.9);
+        camera.position.set(0, -0.25, 4.95);
 
         scene.add(new THREE.AmbientLight(0xffffff, 0.65));
         var keyLight = new THREE.PointLight(0xf6e0a8, 2.2, 20);
         keyLight.position.set(4, 4, 5);
         scene.add(keyLight);
-        var rimLight = new THREE.PointLight(0x38bdf8, 1.4, 20);
+        var rimLight = new THREE.PointLight(0x38bdf8, 1.6, 20);
         rimLight.position.set(-4, -2, 3);
         scene.add(rimLight);
 
@@ -1478,20 +1827,19 @@
         var icoCore = new THREE.Mesh(icoGeo, new THREE.MeshStandardMaterial({
           color: 0x101624, metalness: 0.78, roughness: 0.22, flatShading: true
         }));
-        var icoWireMat = new THREE.LineBasicMaterial({ color: activeAccentHex, transparent: true, opacity: 0.92 });
-        threeAccentMaterials.push(icoWireMat);
+        var icoWireMat = new THREE.LineBasicMaterial({ color: 0xe5c17b, transparent: true, opacity: 0.92 });
         var icoWire = new THREE.LineSegments(new THREE.EdgesGeometry(icoGeo), icoWireMat);
         icoWire.scale.setScalar(1.03);
         g0.add(icoCore, icoWire);
 
-        var ringMat1 = new THREE.MeshBasicMaterial({ color: activeAccentHex, transparent: true, opacity: 0.55 });
-        threeAccentMaterials.push(ringMat1);
+        var ringMat1 = new THREE.MeshBasicMaterial({ color: 0xe5c17b, transparent: true, opacity: 0.55 });
         var ring1 = new THREE.Mesh(new THREE.TorusGeometry(1.52, 0.016, 12, 80), ringMat1);
         ring1.rotation.x = 1.25;
         var ring2 = new THREE.Mesh(new THREE.TorusGeometry(1.74, 0.012, 12, 80), new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.36 }));
         ring2.rotation.x = 0.9;
         ring2.rotation.y = 0.7;
         g0.add(ring1, ring2);
+        modelTintMaterials[0].push(icoWireMat, ringMat1);
 
         var pPos = [];
         for (var p = 0; p < 56; p++) {
@@ -1508,13 +1856,13 @@
         /* GROUP 1: ROTATIONAL GYROSCOPIC TORUS-KNOT */
         var g1 = new THREE.Group();
         var tkGeo = new THREE.TorusKnotGeometry(0.84, 0.21, 92, 14);
-        var tkMesh = new THREE.Mesh(tkGeo, new THREE.MeshStandardMaterial({
-          color: 0xd4a853, metalness: 0.85, roughness: 0.24
-        }));
+        var tkMat = new THREE.MeshStandardMaterial({ color: 0xd4a853, metalness: 0.85, roughness: 0.24 });
+        var tkMesh = new THREE.Mesh(tkGeo, tkMat);
         var tkWire = new THREE.LineSegments(new THREE.WireframeGeometry(tkGeo), new THREE.LineBasicMaterial({
           color: 0xfbf0cf, transparent: true, opacity: 0.16
         }));
         g1.add(tkMesh, tkWire);
+        modelTintMaterials[1].push(tkMat);
 
         var nodeColors = [0xf6e0a8, 0x38bdf8, 0x34d399, 0xfbbf24];
         var podNodes = [];
@@ -1535,11 +1883,13 @@
           new THREE.SphereGeometry(globeRadius * 0.985, 28, 20),
           new THREE.MeshStandardMaterial({ color: 0x0a1120, metalness: 0.5, roughness: 0.65, transparent: true, opacity: 0.88 })
         );
+        var globeWireMat = new THREE.LineBasicMaterial({ color: 0xe5c17b, transparent: true, opacity: 0.34 });
         var globeWire = new THREE.LineSegments(
           new THREE.WireframeGeometry(new THREE.SphereGeometry(globeRadius, 22, 16)),
-          new THREE.LineBasicMaterial({ color: 0xe5c17b, transparent: true, opacity: 0.3 })
+          globeWireMat
         );
         g2.add(globeCore, globeWire);
+        modelTintMaterials[2].push(globeWireMat);
 
         var cityCoords = [
           [28.53, 77.39, 0xf6e0a8],
@@ -1578,24 +1928,51 @@
         }
         g2.scale.setScalar(0.001);
 
-        masterGroup.add(g0, g1, g2);
+        /* GROUP 3: ELECTRIC CYAN 3x3x3 3D CUBE MATRIX */
+        var g3 = new THREE.Group();
+        var subCubeGeo = new THREE.BoxGeometry(0.32, 0.32, 0.32);
+        var subEdgesGeo = new THREE.EdgesGeometry(subCubeGeo);
+        var subCoreMat = new THREE.MeshStandardMaterial({
+          color: 0x091322, metalness: 0.78, roughness: 0.22, emissive: 0x38bdf8, emissiveIntensity: 0.14
+        });
+        var subEdgeMat = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.88 });
+        var outerCageMat = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.24 });
+        modelTintMaterials[3].push(subCoreMat, subEdgeMat, outerCageMat);
+
+        var outerCage = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(1.92, 1.92, 1.92)), outerCageMat);
+        g3.add(outerCage);
+
+        var matrixCells = [];
+        var spacing = 0.56;
+        for (var ix = -1; ix <= 1; ix++) {
+          for (var iy = -1; iy <= 1; iy++) {
+            for (var iz = -1; iz <= 1; iz++) {
+              var cell = new THREE.Group();
+              var mBody = new THREE.Mesh(subCubeGeo, subCoreMat);
+              var mWire = new THREE.LineSegments(subEdgesGeo, subEdgeMat);
+              cell.add(mBody, mWire);
+              cell.position.set(ix * spacing, iy * spacing, iz * spacing);
+              g3.add(cell);
+              matrixCells.push({
+                mesh: cell, bx: ix * spacing, by: iy * spacing, bz: iz * spacing,
+                phase: (ix + 1) * 0.9 + (iy + 1) * 1.1 + (iz + 1) * 0.7
+              });
+            }
+          }
+        }
+        g3.scale.setScalar(0.001);
+
+        masterGroup.add(g0, g1, g2, g3);
 
         threeState = {
-          renderer: renderer,
-          scene: scene,
-          camera: camera,
-          masterGroup: masterGroup,
-          groups: [g0, g1, g2],
-          ring1: ring1,
-          ring2: ring2,
-          stars: stars,
-          podNodes: podNodes,
-          arcCurves: arcCurves,
-          arcPulses: arcPulses
+          renderer: renderer, scene: scene, camera: camera, masterGroup: masterGroup,
+          groups: [g0, g1, g2, g3], ring1: ring1, ring2: ring2, stars: stars,
+          podNodes: podNodes, arcCurves: arcCurves, arcPulses: arcPulses, matrixCells: matrixCells
         };
 
         usingWebGL = true;
         fallbackCanvas.style.display = 'none';
+        applyStageColor(SLIDES[currentSlide].modelIdx, SLIDES[currentSlide].customColor);
       }
 
       function onResize() {
@@ -1619,7 +1996,9 @@
         var dt = Math.min(50, now - lastFrameTime);
         lastFrameTime = now;
         var timeSec = now * 0.001;
-        var scIdx = getSculptureIndex(currentSlide);
+        var s = SLIDES[currentSlide] || SLIDES[0];
+        var mIdx = typeof s.modelIdx === 'number' ? s.modelIdx : (currentSlide % 4);
+        var showingPhoto = Boolean(s.photoUrl) && !photoFailed;
 
         if (!isPaused) {
           slideElapsed += dt;
@@ -1632,7 +2011,7 @@
         }
 
         if (!isDragging) {
-          if (scIdx === 2 && targetGlobeRotY !== null) {
+          if (!showingPhoto && mIdx === 2 && targetGlobeRotY !== null) {
             userRotY += (targetGlobeRotY - userRotY) * 0.065;
             userRotX += (0.22 - userRotX) * 0.05;
           } else {
@@ -1640,52 +2019,60 @@
             rotVelX *= 0.92;
             userRotY += rotVelY;
             userRotX += rotVelX;
-            userRotX += (0.2 - userRotX) * 0.015;
+            userRotX += (0.22 - userRotX) * 0.015;
           }
         }
 
         if (usingWebGL && threeState) {
-          threeState.masterGroup.rotation.y = userRotY;
-          threeState.masterGroup.rotation.x = userRotX;
-          threeState.masterGroup.position.y = 0.28 + Math.sin(timeSec * 1.4) * 0.05;
+          threeState.masterGroup.visible = !showingPhoto;
+          if (!showingPhoto) {
+            threeState.masterGroup.rotation.y = userRotY;
+            threeState.masterGroup.rotation.x = userRotX;
+            threeState.masterGroup.position.y = 0.28 + Math.sin(timeSec * 1.4) * 0.05;
 
-          for (var i = 0; i < 3; i++) {
-            var g = threeState.groups[i];
-            var targetS = i === scIdx ? 1.0 : 0.001;
-            var nextS = g.scale.x + (targetS - g.scale.x) * 0.12;
-            g.scale.setScalar(nextS);
-            g.visible = nextS > 0.015;
+            for (var i = 0; i < 4; i++) {
+              var g = threeState.groups[i];
+              var targetS = i === mIdx ? 1.0 : 0.001;
+              var nextS = g.scale.x + (targetS - g.scale.x) * 0.12;
+              g.scale.setScalar(nextS);
+              g.visible = nextS > 0.015;
+            }
+
+            threeState.ring1.rotation.z = timeSec * 0.55;
+            threeState.ring2.rotation.z = -timeSec * 0.42;
+            threeState.stars.rotation.y = -timeSec * 0.14;
+
+            for (var n = 0; n < threeState.podNodes.length; n++) {
+              var a = timeSec * 1.25 + n * (Math.PI / 2);
+              threeState.podNodes[n].position.set(Math.cos(a) * 1.45, Math.sin(a * 1.6) * 0.55, Math.sin(a) * 1.45);
+            }
+
+            for (var p = 0; p < threeState.arcPulses.length; p++) {
+              var t = (timeSec * 0.36 + p * 0.24) % 1;
+              threeState.arcPulses[p].position.copy(threeState.arcCurves[p].getPoint(t));
+            }
+
+            if (mIdx === 3) {
+              for (var c = 0; c < threeState.matrixCells.length; c++) {
+                var cellObj = threeState.matrixCells[c];
+                var wave = Math.sin(timeSec * 2.3 + cellObj.phase);
+                var expand = 1 + wave * 0.085;
+                var scCell = 1 + wave * 0.14;
+                cellObj.mesh.position.set(cellObj.bx * expand, cellObj.by * expand, cellObj.bz * expand);
+                cellObj.mesh.scale.setScalar(scCell);
+              }
+            }
           }
-
-          threeState.ring1.rotation.z = timeSec * 0.55;
-          threeState.ring2.rotation.z = -timeSec * 0.42;
-          threeState.stars.rotation.y = -timeSec * 0.14;
-
-          for (var n = 0; n < threeState.podNodes.length; n++) {
-            var a = timeSec * 1.25 + n * (Math.PI / 2);
-            threeState.podNodes[n].position.set(Math.cos(a) * 1.45, Math.sin(a * 1.6) * 0.55, Math.sin(a) * 1.45);
-          }
-
-          for (var p = 0; p < threeState.arcPulses.length; p++) {
-            var t = (timeSec * 0.36 + p * 0.24) % 1;
-            threeState.arcPulses[p].position.copy(threeState.arcCurves[p].getPoint(t));
-          }
-
           threeState.renderer.render(threeState.scene, threeState.camera);
         } else {
           drawFallbackFrame(timeSec);
         }
       }
 
-      /* Watch Hidden Old Stage + Firebase Poll so Admin CMS Updates Reflect Instantly */
-      var oldStage = document.getElementById('hero-banner-stage');
-      if (oldStage && 'MutationObserver' in window) {
-        new MutationObserver(syncFromAdminCMS).observe(oldStage, { childList: true, subtree: true });
-      }
-      syncFromAdminCMS();
-      setTimeout(syncFromAdminCMS, 350);
-      setTimeout(syncFromAdminCMS, 1100);
-      setInterval(syncFromAdminCMS, 1500);
+      scanSourcesForBanners();
+      setTimeout(scanSourcesForBanners, 400);
+      setTimeout(scanSourcesForBanners, 1200);
+      setInterval(scanSourcesForBanners, 2000);
 
       requestAnimationFrame(animate);
 
@@ -1704,6 +2091,7 @@
 <!-- =========================================================
      END 3D WEBGL INTERACTIVE HERO STUDIO
 ========================================================= -->
+
       
   <section style="display:none !important;"
  class="pt-4 sm:pt-6 pb-6 px-3 sm:px-6">
