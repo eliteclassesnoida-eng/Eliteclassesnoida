@@ -6621,6 +6621,119 @@
   setInterval(mountCleanAdminCrm, 800);
 })();
 </script>
+<!-- ELITE CLASSES: FINAL VERIFIED LEADS & CLOUD CRM CONTROL -->
+<script>
+(function () {
+  var DEFAULT_HOOK = "https://script.google.com/macros/s/AKfycbyS3Mnl7qPniy8vNe_cFc2hy55coUUbKdLLcWtVA95dFmarYr0Za67JQuz41Y9c6Q1f/exec";
+  var CRM_SHEET_URL = "https://docs.google.com/spreadsheets/d/1NojWK3--3nBNYaJr4LBwU0TlVgqnp7SVcwqXKKBcd1U/edit";
+  var liveHook = localStorage.getItem("ec_crm_webhook_url") || DEFAULT_HOOK;
+
+  if (!window.__ecFetchHooked) {
+    window.__ecFetchHooked = true;
+    var origFetch = window.fetch;
+    window.fetch = function (resource, init) {
+      if (typeof resource === "string" && resource.indexOf("script.google.com/macros/s/") !== -1) {
+        resource = liveHook;
+      }
+      return origFetch.call(this, resource, init);
+    };
+  }
+
+  setTimeout(function () {
+    try {
+      if (window.firebase && firebase.apps && firebase.apps.length && firebase.database) {
+        firebase.database().ref("ec_config/crm_webhook").on("value", function (snap) {
+          var val = snap.val();
+          if (val && typeof val === "string" && val.indexOf("script.google.com/macros/s/") !== -1) {
+            liveHook = val;
+            localStorage.setItem("ec_crm_webhook_url", val);
+            var inp = document.getElementById("ecSheetHookInput");
+            if (inp) inp.value = val;
+          }
+        });
+      }
+    } catch (e) {}
+  }, 1500);
+
+  setInterval(function () {
+    if (document.getElementById("ecSheetCrmCard")) return;
+
+    var connectBtn = Array.from(document.querySelectorAll("button")).find(function (b) {
+      return b.offsetParent !== null && b.textContent.trim() === "Connect Cloud";
+    });
+    if (!connectBtn) return;
+
+    // Exact outer "Connect Cloud" card pakdega (Parent Leads card ke theek upar)
+    var card = connectBtn.parentElement;
+    while (card && card.parentElement && !/Parent Leads/i.test(card.parentElement.textContent || "")) {
+      card = card.parentElement;
+    }
+    if (!card || !card.parentElement) return;
+
+    var box = document.createElement("div");
+    box.id = "ecSheetCrmCard";
+    box.style.cssText = "display:block;width:100%;box-sizing:border-box;margin:14px 0;padding:16px;border-radius:16px;background:linear-gradient(145deg,#0b1120,#060913);border:1px solid rgba(229,193,123,0.45);color:#f8fafc;";
+    box.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;">' +
+        '<strong style="font-size:14.5px;color:#f3d58d;">📊 Google Sheet CRM Webhook</strong>' +
+        '<span style="font-size:11px;padding:3px 9px;border-radius:999px;background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.35);">● Live Sync</span>' +
+      '</div>' +
+      '<p style="margin:0 0 10px;font-size:12px;color:#94a3b8;line-height:1.45;">Sabhi Parent Leads, Study Plans aur Diagnostic Tests isi Google Sheet &amp; Email par sync hoti hain:</p>' +
+      '<input id="ecSheetHookInput" type="url" value="' + liveHook + '" style="width:100%;box-sizing:border-box;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.16);background:#04070f;color:#fff;font-size:12px;margin-bottom:10px;" />' +
+      '<div style="display:flex;flex-wrap:wrap;gap:8px;">' +
+        '<button type="button" id="ecSheetSaveBtn" style="padding:9px 14px;border:none;border-radius:10px;background:linear-gradient(135deg,#f8e6b8,#cfa14a);color:#080a0f;font-weight:800;font-size:12px;cursor:pointer;">Save Webhook</button>' +
+        '<button type="button" id="ecSheetTestBtn" style="padding:9px 14px;border:1px solid rgba(56,189,248,0.45);background:rgba(56,189,248,0.12);color:#7dd3fc;font-weight:700;font-size:12px;cursor:pointer;">Send Test Lead</button>' +
+        '<a href="' + CRM_SHEET_URL + '" target="_blank" rel="noopener" style="padding:9px 14px;border-radius:10px;border:1px solid rgba(52,211,153,0.45);background:rgba(52,211,153,0.12);color:#6ee7b7;font-weight:700;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;">Open CRM Sheet ↗</a>' +
+      '</div>' +
+      '<div id="ecSheetToast" style="margin-top:8px;font-size:12px;color:#34d399;"></div>';
+
+    card.parentElement.insertBefore(box, card.nextSibling);
+
+    document.getElementById("ecSheetSaveBtn").onclick = function () {
+      var val = (document.getElementById("ecSheetHookInput").value || "").trim().replace(/^Https:/i, "https:");
+      var toast = document.getElementById("ecSheetToast");
+      if (!val || val.indexOf("script.google.com/macros/s/") === -1) {
+        toast.style.color = "#fb7185";
+        toast.textContent = "Valid Apps Script /exec URL paste karein.";
+        return;
+      }
+      liveHook = val;
+      localStorage.setItem("ec_crm_webhook_url", val);
+      document.getElementById("ecSheetHookInput").value = val;
+      try {
+        if (window.firebase && firebase.apps && firebase.apps.length && firebase.database) {
+          firebase.database().ref("ec_config/crm_webhook").set(val);
+        }
+      } catch (e) {}
+      toast.style.color = "#34d399";
+      toast.textContent = "Saved! Sabhi devices par naya Webhook URL active ho gaya.";
+    };
+
+    document.getElementById("ecSheetTestBtn").onclick = function () {
+      var toast = document.getElementById("ecSheetToast");
+      toast.style.color = "#38bdf8";
+      toast.textContent = "Test lead bheji ja rahi hai...";
+      window.fetch(liveHook, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          type: "GENERAL_LEAD",
+          name: "Ravi Yadav (Admin Test)",
+          phone: "9675732501",
+          source: "Leads & Cloud Panel"
+        })
+      }).then(function () {
+        toast.style.color = "#34d399";
+        toast.textContent = "Test lead sent! Open CRM Sheet aur ravi@eliteclassesnoida.in check karein.";
+      }).catch(function () {
+        toast.style.color = "#fb7185";
+        toast.textContent = "Network error—dobara try karein.";
+      });
+    };
+  }, 600);
+})();
+</script>
 
 </body>
 </html>
