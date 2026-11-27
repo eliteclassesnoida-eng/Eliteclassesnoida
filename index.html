@@ -6734,6 +6734,20 @@
   }, 600);
 })();
 </script>
+<!-- ELITE CLASSES: HIDE CRM BOX FROM PUBLIC PAGE -->
+<style>
+  #ecCleanCrmBox, #ecAutoCrmPanel { display: none !important; }
+</style>
+<script>
+(function () {
+  function hidePublicCrm() {
+    var badBox = document.getElementById("ecCleanCrmBox");
+    if (badBox) badBox.remove();
+  }
+  hidePublicCrm();
+  setInterval(hidePublicCrm, 300);
+})();
+</script>
 
 </body>
 </html>
