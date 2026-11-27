@@ -6507,6 +6507,120 @@
   setInterval(injectAdminCrmCard, 1200);
 })();
 </script>
+<!-- ELITE CLASSES: CLEAN ADMIN CRM CONTROL (SAFE & LAYOUT-LOCKED) -->
+<div id="ecAutoCrmPanel" style="display:none !important;"></div>
+<script>
+(function () {
+  var DEFAULT_HOOK = "https://script.google.com/macros/s/AKfycbyS3Mnl7qPniy8vNe_cFc2hy55coUUbKdLLcWtVA95dFmarYr0Za67JQuz41Y9c6Q1f/exec";
+  var CRM_SHEET_URL = "https://docs.google.com/spreadsheets/d/1NojWK3--3nBNYaJr4LBwU0TlVgqnp7SVcwqXKKBcd1U/edit";
+  var liveHook = localStorage.getItem("ec_crm_webhook_url") || DEFAULT_HOOK;
+
+  function ensureSentinel() {
+    var oldCards = document.querySelectorAll("#ecAutoCrmPanel");
+    oldCards.forEach(function (node) {
+      if (node.parentElement !== document.body) node.remove();
+    });
+    if (!document.getElementById("ecAutoCrmPanel") && document.body) {
+      var sentinel = document.createElement("div");
+      sentinel.id = "ecAutoCrmPanel";
+      sentinel.style.cssText = "display:none !important;";
+      document.body.appendChild(sentinel);
+    }
+  }
+
+  function mountCleanAdminCrm() {
+    ensureSentinel();
+    if (document.getElementById("ecCleanCrmBox")) return;
+
+    var candidates = Array.from(document.querySelectorAll("div, section")).filter(function (el) {
+      if (el.offsetParent === null || el.offsetWidth < 280 || el.offsetHeight < 140) return false;
+      var cs = window.getComputedStyle(el);
+      var isSafeBlock = cs.display === "block" || (cs.display === "flex" && cs.flexDirection === "column");
+      if (!isSafeBlock) return false;
+
+      var txt = el.textContent || "";
+      if (/Student\/Parent/i.test(txt)) return false;
+
+      var pwd = el.querySelector('input[type="password"]');
+      if (pwd && pwd.offsetParent !== null) return false;
+
+      var hasAdminControls = /Logout|Sign Out|Slide|Hero|Banner|Announcement|Save Changes|Sync|Founder|CMS/i.test(txt);
+      var visibleInputs = Array.from(el.querySelectorAll("input, textarea, select")).filter(function (inp) {
+        return inp.offsetParent !== null && inp.type !== "password";
+      });
+      return hasAdminControls && visibleInputs.length >= 2 && el.innerHTML.length > 200 && el.innerHTML.length < 60000;
+    });
+
+    var target = candidates.sort(function (a, b) { return a.innerHTML.length - b.innerHTML.length; })[0];
+    if (!target) return;
+
+    var box = document.createElement("div");
+    box.id = "ecCleanCrmBox";
+    box.style.cssText = "display:block;width:100%;max-width:100%;clear:both;box-sizing:border-box;margin:12px 0 16px;padding:16px;border-radius:16px;background:linear-gradient(145deg,#0b1120,#060913);border:1px solid rgba(229,193,123,0.45);color:#f8fafc;box-shadow:0 10px 28px rgba(0,0,0,0.45);";
+    box.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;">' +
+        '<strong style="font-size:15px;color:#f3d58d;">📊 ELITE CRM & Webhook Control</strong>' +
+        '<span style="font-size:11px;padding:3px 9px;border-radius:999px;background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.35);">● Live Sync</span>' +
+      '</div>' +
+      '<p style="margin:0 0 10px;font-size:12px;color:#94a3b8;line-height:1.45;">Yahin se Google Sheet Webhook badlein, Test Lead bhejein ya CRM Sheet kholein:</p>' +
+      '<input id="ecCleanHookInput" type="url" value="' + liveHook + '" style="width:100%;box-sizing:border-box;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.18);background:#04070f;color:#fff;font-size:12px;margin-bottom:10px;" />' +
+      '<div style="display:flex;flex-wrap:wrap;gap:8px;">' +
+        '<button type="button" id="ecCleanSaveBtn" style="padding:9px 14px;border:none;border-radius:10px;background:linear-gradient(135deg,#f8e6b8,#cfa14a);color:#080a0f;font-weight:800;font-size:12px;cursor:pointer;">Save URL</button>' +
+        '<button type="button" id="ecCleanTestBtn" style="padding:9px 14px;border:1px solid rgba(56,189,248,0.45);background:rgba(56,189,248,0.12);color:#7dd3fc;font-weight:700;font-size:12px;cursor:pointer;">Send Test Lead</button>' +
+        '<a href="' + CRM_SHEET_URL + '" target="_blank" rel="noopener" style="padding:9px 14px;border-radius:10px;border:1px solid rgba(52,211,153,0.45);background:rgba(52,211,153,0.12);color:#6ee7b7;font-weight:700;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;">Open CRM Sheet ↗</a>' +
+      '</div>' +
+      '<div id="ecCleanToast" style="margin-top:8px;font-size:12px;color:#34d399;"></div>';
+
+    target.prepend(box);
+
+    document.getElementById("ecCleanSaveBtn").onclick = function () {
+      var val = (document.getElementById("ecCleanHookInput").value || "").trim().replace(/^Https:/i, "https:");
+      var toast = document.getElementById("ecCleanToast");
+      if (!val || val.indexOf("script.google.com/macros/s/") === -1) {
+        toast.style.color = "#fb7185";
+        toast.textContent = "Valid Apps Script /exec URL paste karein.";
+        return;
+      }
+      liveHook = val;
+      localStorage.setItem("ec_crm_webhook_url", val);
+      document.getElementById("ecCleanHookInput").value = val;
+      try {
+        if (window.firebase && firebase.apps && firebase.apps.length && firebase.database) {
+          firebase.database().ref("ec_config/crm_webhook").set(val);
+        }
+      } catch (e) {}
+      toast.style.color = "#34d399";
+      toast.textContent = "Saved! Sabhi devices aur forms par naya Webhook URL active ho gaya.";
+    };
+
+    document.getElementById("ecCleanTestBtn").onclick = function () {
+      var toast = document.getElementById("ecCleanToast");
+      toast.style.color = "#38bdf8";
+      toast.textContent = "Test lead bheji ja rahi hai...";
+      fetch(liveHook, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          type: "GENERAL_LEAD",
+          name: "Ravi Yadav (Admin Test)",
+          phone: "9675732501",
+          source: "Founder Admin CRM Control"
+        })
+      }).then(function () {
+        toast.style.color = "#34d399";
+        toast.textContent = "Test lead sent! Open CRM Sheet aur ravi@eliteclassesnoida.in check karein.";
+      }).catch(function () {
+        toast.style.color = "#fb7185";
+        toast.textContent = "Network error—dobara try karein.";
+      });
+    };
+  }
+
+  ensureSentinel();
+  setInterval(mountCleanAdminCrm, 800);
+})();
+</script>
 
 </body>
 </html>
